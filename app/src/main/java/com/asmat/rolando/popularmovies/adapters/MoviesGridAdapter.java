@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies;
+package com.asmat.rolando.popularmovies.adapters;
 
 import android.graphics.Movie;
 import android.support.v7.widget.RecyclerView;
