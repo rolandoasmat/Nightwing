@@ -38,7 +38,7 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
     }
 
     /**
-     * Sort 
+     * Sort
      */
     public void sortBy() {
 
