@@ -2,7 +2,6 @@ package com.asmat.rolando.popularmovies.utilities;
 
 import android.net.Uri;
 import android.util.Log;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -11,7 +10,6 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Scanner;
-
 
 /**
  * Created by rolandoasmat on 2/10/17.
@@ -29,7 +27,7 @@ public final class NetworkUtils {
      *
      * @return URL representation of endpoint + parameters.
      */
-    public static URL buildUrl(String endpoint, Hashtable<String, String> queryParameters) {
+    public static URL buildUrl(String endpoint, Hashtable<String, String> queryParameters) throws IOException {
         // Build Uri
         Uri.Builder builder = Uri.parse(endpoint).buildUpon();
         for(Enumeration<String> keys = queryParameters.keys(); keys.hasMoreElements();) {
@@ -39,12 +37,7 @@ public final class NetworkUtils {
         }
         Uri uri = builder.build();
         // Create URL
-        URL url = null;
-        try {
-            url = new URL(uri.toString());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        URL url = new URL(uri.toString());
         Log.v(TAG, "Built URL: " + url);
         return url;
     }

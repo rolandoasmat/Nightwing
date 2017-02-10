@@ -1,21 +1,19 @@
 package com.asmat.rolando.popularmovies.managers;
 
-/**
- * Created by rolandoasmat on 2/10/17.
- */
-
-
 import com.asmat.rolando.popularmovies.BuildConfig;
 import com.asmat.rolando.popularmovies.models.Movie;
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Hashtable;
 import java.util.Locale;
 
 /**
- * Utils for interacting with The Movie Database API
+ * Created by rolandoasmat on 2/10/17.
+ */
+
+/**
+ * Utils for communicating with The Movie Database API
  * https://developers.themoviedb.org/3
  */
 public final class MovieApiManager {
@@ -69,7 +67,7 @@ public final class MovieApiManager {
         params.put(API_KEY_PARAM, API_KEY_VALUE);
         params.put(LANGUAGE_PARAM, LANGUAGE_VALUE);
         params.put(PAGE_PARAM, Integer.toString(page));
-        // Transform into URL
+        // Transform String into URL
         URL url = NetworkUtils.buildUrl(completeUrl, params);
         // Make request
         String jsonResponse =  NetworkUtils.httpRequest(url);
