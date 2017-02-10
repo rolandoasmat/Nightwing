@@ -13,23 +13,33 @@ import java.util.ArrayList;
 
 public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.MoviesGridAdapterViewHolder> {
 
-    // List of movies
+    /**
+     * Data set of Movie objects
+     */
     ArrayList<Movie> mMovies;
 
-    // Default constructor
+    /**
+     * Default constructor
+     */
     public MoviesGridAdapter() {}
 
-    // init list of movies
+    /**
+     * Set list of movies
+     */
     public void setMovies() {
 
     }
 
-
-    // Add any newly fetched movies from API
+    /**
+     * Add any newly fetched movies from API
+     */
     public void addMovies() {
 
     }
 
+    /**
+     * Sort 
+     */
     public void sortBy() {
 
     }
