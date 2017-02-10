@@ -24,8 +24,8 @@ public final class NetworkUtils {
     /**
      * Create a URL object given a string endpoint and a map of parameters.
      *
-     * @param endpoint Endpoint to make request to.
-     * @param queryParameters Key and value pairs of query parameters to include in request.
+     * @param endpoint Endpoint to transform.
+     * @param queryParameters Key and value pairs of query parameters.
      *
      * @return URL representation of endpoint + parameters.
      */
@@ -49,6 +49,13 @@ public final class NetworkUtils {
         return url;
     }
 
+    /**
+     * GET request the provided URL.
+     *
+     * @param url URL to query.
+     *
+     * @return String json response.
+     */
     public static String httpRequest(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
@@ -66,8 +73,6 @@ public final class NetworkUtils {
         } finally {
             urlConnection.disconnect();
         }
-
-
     }
 
 }
