@@ -21,12 +21,20 @@ public final class NetworkUtils {
 
     private static String TAG = NetworkUtils.class.getSimpleName();
 
+    /**
+     * Create a URL object given a string endpoint and a map of parameters.
+     *
+     * @param endpoint Endpoint to make request to.
+     * @param queryParameters Key and value pairs of query parameters to include in request.
+     *
+     * @return URL representation of endpoint + parameters.
+     */
     public static URL buildUrl(String endpoint, Hashtable<String, String> queryParameters) {
         // Build Uri
         Uri.Builder builder = Uri.parse(endpoint).buildUpon();
         for(Enumeration<String> keys = queryParameters.keys(); keys.hasMoreElements();) {
             String key = keys.nextElement();
-            String value = (String) queryParameters.get(key);
+            String value = queryParameters.get(key);
             builder.appendQueryParameter(key, value);
         }
         Uri uri = builder.build();
@@ -37,9 +45,7 @@ public final class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-
         Log.v(TAG, "Built URL: " + url);
-
         return url;
     }
 
