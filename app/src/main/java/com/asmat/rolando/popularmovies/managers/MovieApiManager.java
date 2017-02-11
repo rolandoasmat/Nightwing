@@ -135,7 +135,7 @@ public final class MovieApiManager {
         JSONObject forecastJson = new JSONObject(jsonStr);
         JSONArray results = forecastJson.getJSONArray("results");
         Movie[] movies = new Movie[results.length()];
-        for(int i = 0; i < results.length()-1; i++){
+        for(int i = 0; i < results.length(); i++){
             JSONObject movieJson = results.getJSONObject(i);
             movies[i] = mapMovie(movieJson);
         }
