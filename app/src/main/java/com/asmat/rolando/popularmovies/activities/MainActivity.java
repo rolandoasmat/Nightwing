@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.support.design.widget.Snackbar;
 
 import com.asmat.rolando.popularmovies.adapters.MoviesGridAdapter;
 import com.asmat.rolando.popularmovies.R;
@@ -14,12 +14,14 @@ import com.asmat.rolando.popularmovies.models.Movie;
 import com.asmat.rolando.popularmovies.models.Request;
 import com.asmat.rolando.popularmovies.models.RequestTypeEnum;
 
-import static android.R.attr.type;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mMoviesGrid;
     private MoviesGridAdapter mMoviesGridAdapter;
+    private GridLayoutManager mMoviesGridLayoutManager;
+
+    private Request request;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,20 +32,53 @@ public class MainActivity extends AppCompatActivity {
         // Grid will not be of fixed size
         mMoviesGrid.setHasFixedSize(false);
         // Set layout manager: grid layout manager with 2 columns
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
-        mMoviesGrid.setLayoutManager(layoutManager);
+        mMoviesGridLayoutManager = new GridLayoutManager(this, 2);
+        mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
         // Set adapter
         mMoviesGridAdapter = new MoviesGridAdapter();
         mMoviesGrid.setAdapter(mMoviesGridAdapter);
         // Load date
         loadData();
+        // Setup scroll listener
+        setScrollListener();
     }
 
-    public void loadData(){
+    private void loadData(){
         // Create request
-        Request request = new Request(RequestTypeEnum.POPULAR, 1);
+        this.request = new Request(RequestTypeEnum.POPULAR, 1);
         // Execute
-        new FetchMoviesTask().execute(request);
+        new FetchMoviesTask().execute(this.request);
+    }
+
+    private void setScrollListener() {
+        mMoviesGrid.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(dy > 0) {
+                    // User is scrolling down
+                    int positionOfLastItem = mMoviesGridLayoutManager.getItemCount()-1;
+                    int currentPositionOfLastVisibleItem = mMoviesGridLayoutManager.findLastCompletelyVisibleItemPosition();
+                    if(positionOfLastItem == currentPositionOfLastVisibleItem){
+                        lastItemReached();
+                    }
+                }
+            }
+        }
+        );
+    }
+
+    private void lastItemReached() {
+        this.request.nextPage();
+        // Execute
+        new FetchMoviesTask().execute(this.request);
+    }
+
+    private void showErrorSnackBar(){
+
+        Snackbar snackbar = Snackbar
+                .make(mMoviesGrid, "No Internet Connection", Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 
     // ----------------------------- AsyncTask -----------------------------
@@ -74,7 +109,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Movie[] movieData) {
             if (movieData != null) {
-                mMoviesGridAdapter.setMovies(movieData);
+                if(request.getPage() == 1) {
+                    mMoviesGridAdapter.setMovies(movieData);
+                } else {
+                    mMoviesGridAdapter.addMovies(movieData);
+                }
+            } else {
+                // Something went wrong fetching the data
+                showErrorSnackBar();
             }
         }
     }

@@ -28,4 +28,12 @@ public class Request {
     public void setPage(int page) {
         this.page = page;
     }
+
+    public void nextPage(){
+        this.page++;
+    }
+
+    public void resetPage(){
+        this.page = 1;
+    }
 }

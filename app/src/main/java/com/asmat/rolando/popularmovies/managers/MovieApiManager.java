@@ -160,7 +160,7 @@ public final class MovieApiManager {
     private static Movie mapMovie(JSONObject json) throws JSONException, ParseException {
         // Get properties
         String title           = json.getString("original_title");
-        String posterURL       = "http://image.tmdb.org/t/p/w342/"+json.getString("poster_path");
+        String posterURL       = "http://image.tmdb.org/t/p/w500/"+json.getString("poster_path");
         String plotSynopsis    = json.getString("overview");
         double userRating      = json.getDouble("vote_average");
         String releaseDateStr  = json.getString("release_date");

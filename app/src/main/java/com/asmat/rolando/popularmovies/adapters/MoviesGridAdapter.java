@@ -43,8 +43,8 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
     /**
      * Add any newly fetched movies from API
      */
-    public void addMovies(Movie movie) {
-        mMovies.add(movie);
+    public void addMovies(Movie[] movies) {
+        mMovies.addAll(new ArrayList<>(Arrays.asList(movies)));
         int position = mMovies.size();
         notifyItemInserted(position);
     }
