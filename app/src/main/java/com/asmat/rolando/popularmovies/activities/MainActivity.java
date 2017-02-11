@@ -1,5 +1,6 @@
 package com.asmat.rolando.popularmovies.activities;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.asmat.rolando.popularmovies.adapters.MoviesGridAdapter;
 import com.asmat.rolando.popularmovies.R;
+import com.asmat.rolando.popularmovies.models.Movie;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,5 +30,16 @@ public class MainActivity extends AppCompatActivity {
         mMoviesGridAdapter = new MoviesGridAdapter();
         mMoviesGrid.setAdapter(mMoviesGridAdapter);
     }
+
+    // ----------------------------- AsyncTask -----------------------------
+    public class FetchMoviesTask extends AsyncTask<String, Void, Movie[]> {
+
+        @Override
+        protected Movie[] doInBackground(String... params) {
+
+            return new Movie[0];
+        }
+    }
+    // ----------------------------------------------------------
 
 }

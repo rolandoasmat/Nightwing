@@ -172,6 +172,4 @@ public final class MovieApiManager {
         return new Movie(title,posterURL,plotSynopsis,userRating,releaseDate);
     }
 
-
-
 }
