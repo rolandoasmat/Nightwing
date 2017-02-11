@@ -2,12 +2,10 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/holo_red_dark">
+    android:layout_height="wrap_content">
     
     <ImageView
         android:id="@+id/iv_movie_grid_item"
-        android:background="@android:color/holo_blue_bright"
         android:layout_width="match_parent"
         android:scaleType="fitStart"
         android:adjustViewBounds="true"
