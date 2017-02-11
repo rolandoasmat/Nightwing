@@ -3,8 +3,17 @@ package com.asmat.rolando.popularmovies.managers;
 import com.asmat.rolando.popularmovies.BuildConfig;
 import com.asmat.rolando.popularmovies.models.Movie;
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Locale;
 
@@ -47,11 +56,31 @@ public final class MovieApiManager {
      *  Public METHODS ----------------------------------------------------------
      */
 
-    public static Movie[] fetchPopularMovies(int page) throws IOException {
+    /**
+     * Fetch all the popular movies from movie API.
+     *
+     * @param page Which page to get.
+     *
+     * @return Array of movie objects.
+     *
+     * @throws IOException
+     * @throws JSONException
+     */
+    public static Movie[] fetchPopularMovies(int page) throws IOException, JSONException, ParseException {
         return httpRequest(BASE_URL, MOVIES, GET_POPULAR, page);
     }
 
-    public static Movie[] fetchTopRatedMovies(int page) throws IOException {
+    /**
+     * Fetch the top rated movies from movie API.
+     *
+     * @param page Which page to get.
+     *
+     * @return Array of movie objects.
+     *
+     * @throws IOException
+     * @throws JSONException
+     */
+    public static Movie[] fetchTopRatedMovies(int page) throws IOException, JSONException, ParseException {
         return httpRequest(BASE_URL, MOVIES, GET_TOP_RATED, page);
     }
 
@@ -59,7 +88,20 @@ public final class MovieApiManager {
      *  Private METHODS ----------------------------------------------------------
      */
 
-    private static Movie[] httpRequest(String baseURL, String subComponent, String endpoint, int page) throws IOException {
+    /**
+     * Helper method to make http request.
+     *
+     * @param baseURL Base url of endpoint.
+     * @param subComponent Sub component of endpoint.
+     * @param endpoint Endpoint.
+     * @param page Which page to return.
+     *
+     * @return Array of movie objects.
+     *
+     * @throws IOException
+     * @throws JSONException
+     */
+    private static Movie[] httpRequest(String baseURL, String subComponent, String endpoint, int page) throws IOException, JSONException, ParseException {
         // Concat url parts
         String completeUrl = baseURL+"/"+subComponent+"/"+endpoint;
         // Create params
@@ -76,12 +118,33 @@ public final class MovieApiManager {
         return movies;
     }
 
-    private static Movie[] mapMovies(String json) {
-        return null;
+    /**
+     * Mappings ----------------------------------------------------------------
+     */
+
+    /**
+     * Map json response into array of Movie objects.
+     *
+     * @param jsonStr JSON response from API.
+     *
+     * @return Array of Movie objects.
+     *
+     * @throws JSONException
+     */
+    private static Movie[] mapMovies(String jsonStr) throws JSONException, ParseException {
+        JSONObject forecastJson = new JSONObject(jsonStr);
+        JSONArray results = forecastJson.getJSONArray("results");
+        ArrayList<Movie> movies = new ArrayList<>();
+        for(int i = 0; i < results.length()-1; i++){
+            JSONObject movieJson = results.getJSONObject(i);
+            Movie movie = mapMovie(movieJson);
+            movies.add(movie);
+        }
+        return (Movie[]) movies.toArray();
     }
 
     /**
-     * Mappings
+     * Maps a Movie json object into Movie model
      *
      * Movie Model          | JSON Field Names (https://developers.themoviedb.org/3/movies/get-popular-movies)
      * ---------------------|-------------------------
@@ -90,6 +153,25 @@ public final class MovieApiManager {
      * String plotSynopsis; | overview
      * double userRating;   | vote_average, range of 0-10
      * Date releaseDate;    | release_date, format: yyyy-mm-dd
+     *
+     * @param json Movie json object
+     *
+     * @return Movie object
      */
+    private static Movie mapMovie(JSONObject json) throws JSONException, ParseException {
+        // Get properties
+        String title           = json.getString("original_title");
+        String posterURL       = json.getString("poster_path");
+        String plotSynopsis    = json.getString("overview");
+        double userRating      = json.getDouble("vote_average");
+        String releaseDateStr  = json.getString("release_date");
+        // Create Date object
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date releaseDate = dateFormat.parse(releaseDateStr);
+        // Create Movie object
+        return new Movie(title,posterURL,plotSynopsis,userRating,releaseDate);
+    }
+
+
 
 }
