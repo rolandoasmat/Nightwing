@@ -59,7 +59,8 @@ public final class NetworkUtils {
 
             boolean hasInput = scanner.hasNext();
             if (hasInput) {
-                return scanner.next();
+                String response = scanner.next();
+                return response;
             } else {
                 return null;
             }

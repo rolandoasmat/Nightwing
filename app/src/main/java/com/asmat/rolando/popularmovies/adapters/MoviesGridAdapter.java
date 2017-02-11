@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
 /**
  * Created by rolandoasmat on 2/9/17.
  */
@@ -35,7 +36,8 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
      * Set list of movies
      */
     public void setMovies(Movie[] movies) {
-        mMovies  = new ArrayList<Movie>(Arrays.asList(movies));
+        mMovies  = new ArrayList<>(Arrays.asList(movies));
+        notifyDataSetChanged();
     }
 
     /**
@@ -78,7 +80,7 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
         Movie movie = mMovies.get(position);
         String posterURL = movie.getPosterURL();
         ImageView imageView = holder.mMoviePoster;
-        Picasso.with(imageView.getContext()).load("http://i.imgur.com/DvpvklR.png").into(imageView);
+        Picasso.with(imageView.getContext()).load(posterURL).into(imageView);
     }
 
     @Override

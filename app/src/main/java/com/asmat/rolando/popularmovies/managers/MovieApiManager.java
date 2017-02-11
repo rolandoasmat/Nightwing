@@ -134,13 +134,12 @@ public final class MovieApiManager {
     private static Movie[] mapMovies(String jsonStr) throws JSONException, ParseException {
         JSONObject forecastJson = new JSONObject(jsonStr);
         JSONArray results = forecastJson.getJSONArray("results");
-        ArrayList<Movie> movies = new ArrayList<>();
+        Movie[] movies = new Movie[results.length()];
         for(int i = 0; i < results.length()-1; i++){
             JSONObject movieJson = results.getJSONObject(i);
-            Movie movie = mapMovie(movieJson);
-            movies.add(movie);
+            movies[i] = mapMovie(movieJson);
         }
-        return (Movie[]) movies.toArray();
+        return movies;
     }
 
     /**
