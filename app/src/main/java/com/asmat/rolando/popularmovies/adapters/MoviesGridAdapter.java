@@ -1,15 +1,15 @@
 package com.asmat.rolando.popularmovies.adapters;
 
 import android.content.Context;
-import android.graphics.Movie;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.asmat.rolando.popularmovies.R;
+import com.asmat.rolando.popularmovies.models.Movie;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +30,7 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
      */
     public MoviesGridAdapter() {}
 
+    // ----------------------------- API -----------------------------
     /**
      * Set list of movies
      */
@@ -42,12 +43,12 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
      */
     public void addMovies(Movie movie) {
         mMovies.add(movie);
+        int position = mMovies.size();
+        notifyItemInserted(position);
     }
+    // ----------------------------------------------------------
 
-    /**
-     * OVERRIDES -----------------------------------------------
-     */
-
+    // ----------------------------- Overrides -----------------------------
     /**
      * Called whenever a ViewHolder is needed. Happens when the RecyclerView is layed out
      * Enough are created to fill the screen.
@@ -66,24 +67,33 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
         return new MoviesGridAdapterViewHolder(view);
     }
 
-
+    /**
+     * Called by RecyclerView to specify how to display data on the passed in position.
+     *
+     * @param holder ViewHolder to update with correct data, using given position.
+     * @param position The position of the item within the adapter's data set.
+     */
     @Override
     public void onBindViewHolder(MoviesGridAdapterViewHolder holder, int position) {
-
+        Movie movie = mMovies.get(position);
+        String posterURL = movie.getPosterURL();
+        ImageView imageView = holder.mMoviePoster;
+        Picasso.with(imageView.getContext()).load("http://i.imgur.com/DvpvklR.png").into(imageView);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        if(mMovies == null){
+            return 0;
+        } else {
+            return mMovies.size();
+        }
     }
 
-    /**
-     *  ----------------------------------------------- OVERRIDES
-     */
+    // ----------------------------------------------------------
 
 
-
-
+    // ----------------------------- ViewHolder -----------------------------
     /**
      * Cache of the children views for a forecast list item.
      */
@@ -101,4 +111,5 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
             mMoviePoster = (ImageView) itemView.findViewById(R.id.iv_movie_grid_item);
         }
     }
+    // ----------------------------------------------------------
 }
