@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 
 import com.asmat.rolando.popularmovies.adapters.MoviesGridAdapter;
 import com.asmat.rolando.popularmovies.R;
@@ -13,31 +14,31 @@ import com.asmat.rolando.popularmovies.managers.MovieApiManager;
 import com.asmat.rolando.popularmovies.models.Movie;
 import com.asmat.rolando.popularmovies.models.Request;
 import com.asmat.rolando.popularmovies.models.RequestTypeEnum;
+import com.asmat.rolando.popularmovies.utilities.NetworkUtils;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    private static String TAG = MainActivity.class.getSimpleName();
     private RecyclerView mMoviesGrid;
     private MoviesGridAdapter mMoviesGridAdapter;
     private GridLayoutManager mMoviesGridLayoutManager;
-
-    private Request request;
+    private Request mRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Get reference to layout elements
+        // RecyclerView reference
         mMoviesGrid = (RecyclerView) findViewById(R.id.movie_grid_rv);
-        // Grid will not be of fixed size
         mMoviesGrid.setHasFixedSize(false);
-        // Set layout manager: grid layout manager with 2 columns
+        // LayoutManager
         mMoviesGridLayoutManager = new GridLayoutManager(this, 2);
         mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
         // Set adapter
         mMoviesGridAdapter = new MoviesGridAdapter();
         mMoviesGrid.setAdapter(mMoviesGridAdapter);
-        // Load date
+        // Load inital data
         loadData();
         // Setup scroll listener
         setScrollListener();
@@ -45,18 +46,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadData(){
         // Create request
-        this.request = new Request(RequestTypeEnum.POPULAR, 1);
+        mRequest = new Request(RequestTypeEnum.POPULAR, 1);
         // Execute
-        new FetchMoviesTask().execute(this.request);
+        new FetchMoviesTask().execute(this.mRequest);
     }
 
     private void setScrollListener() {
         mMoviesGrid.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if(dy > 0) {
-                    // User is scrolling down
+                if(dy > 0) { // User is scrolling down
                     int positionOfLastItem = mMoviesGridLayoutManager.getItemCount()-1;
                     int currentPositionOfLastVisibleItem = mMoviesGridLayoutManager.findLastCompletelyVisibleItemPosition();
                     if(positionOfLastItem == currentPositionOfLastVisibleItem){
@@ -69,16 +68,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void lastItemReached() {
-        this.request.nextPage();
-        // Execute
-        new FetchMoviesTask().execute(this.request);
+        Log.v(TAG, "Reached last item of list.");
+        mRequest.nextPage();
+        // Fetch more movies
+        new FetchMoviesTask().execute(mRequest);
     }
 
     private void showErrorSnackBar(){
-
-        Snackbar snackbar = Snackbar
-                .make(mMoviesGrid, "No Internet Connection", Snackbar.LENGTH_LONG);
-        snackbar.show();
+        Snackbar.make(mMoviesGrid, "No Internet Connection", Snackbar.LENGTH_LONG).show();
     }
 
     // ----------------------------- AsyncTask -----------------------------
@@ -95,11 +92,13 @@ public class MainActivity extends AppCompatActivity {
             try {
                 switch (type){
                     case POPULAR:
+                        Log.v(TAG, "Fetching page "+page+" of POPULAR movies...");
                         return MovieApiManager.fetchPopularMovies(page);
                     case TOP_RATED:
+                        Log.v(TAG, "Fetching page "+page+" of TOP_RATED movies...");
                         return MovieApiManager.fetchTopRatedMovies(page);
                 }
-                return new Movie[0];
+                return null;
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
@@ -108,10 +107,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Movie[] movieData) {
-            if (movieData != null) {
-                if(request.getPage() == 1) {
+            if (movieData != null && movieData.length > 0) {
+                if(mRequest.getPage() == 1) {
+                    Log.v(TAG, "Fetch complete! SETTING data set");
                     mMoviesGridAdapter.setMovies(movieData);
                 } else {
+                    Log.v(TAG, "Fetch complete! ADDING to data set");
                     mMoviesGridAdapter.addMovies(movieData);
                 }
             } else {

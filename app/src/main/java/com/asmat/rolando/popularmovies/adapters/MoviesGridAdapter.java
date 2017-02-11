@@ -24,7 +24,7 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
     /**
      * Data set of Movie objects
      */
-    private ArrayList<Movie> mMovies;
+    private Movie[] mMovies;
 
     /**
      * Default constructor
@@ -36,7 +36,7 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
      * Set list of movies
      */
     public void setMovies(Movie[] movies) {
-        mMovies  = new ArrayList<>(Arrays.asList(movies));
+        mMovies  = movies;
         notifyDataSetChanged();
     }
 
@@ -44,9 +44,18 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
      * Add any newly fetched movies from API
      */
     public void addMovies(Movie[] movies) {
-        mMovies.addAll(new ArrayList<>(Arrays.asList(movies)));
-        int position = mMovies.size();
-        notifyItemInserted(position);
+        int firstArrayLength = mMovies.length;
+        int secondArrayLength = movies.length;
+        int newSize = firstArrayLength + secondArrayLength;
+        Movie[] combined = new Movie[newSize];
+        for(int i = 0; i < firstArrayLength; i++){
+            combined[i] = mMovies[i];
+        }
+        for(int i = 0; i < secondArrayLength; i++){
+            combined[firstArrayLength+i] = movies[i];
+        }
+        mMovies = combined;
+        notifyDataSetChanged();
     }
     // ----------------------------------------------------------
 
@@ -77,7 +86,7 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
      */
     @Override
     public void onBindViewHolder(MoviesGridAdapterViewHolder holder, int position) {
-        Movie movie = mMovies.get(position);
+        Movie movie = mMovies[position];
         String posterURL = movie.getPosterURL();
         ImageView imageView = holder.mMoviePoster;
         Picasso.with(imageView.getContext()).load(posterURL).into(imageView);
@@ -88,7 +97,7 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
         if(mMovies == null){
             return 0;
         } else {
-            return mMovies.size();
+            return mMovies.length;
         }
     }
 
