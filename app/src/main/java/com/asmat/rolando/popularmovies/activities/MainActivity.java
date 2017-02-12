@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        updateActionBarTitle(R.string.most_popular);
         // UI references
         mErrorMessageTextView = (TextView) findViewById(R.id.tv_error_message);
         mLoadingBar = (ProgressBar) findViewById(R.id.pb_loading_bar);
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         // Set adapter
         mMoviesGridAdapter = new MoviesGridAdapter();
         mMoviesGrid.setAdapter(mMoviesGridAdapter);
-        // Load inital data
+        // Load initial data
         loadData();
         // Setup scroll listener
         setScrollListener();
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             mRequest.resetPage();
             mRequest.setRequestType(RequestTypeEnum.TOP_RATED);
             executeRequest();
+            updateActionBarTitle(R.string.top_rated);
         }
     }
 
@@ -97,7 +99,16 @@ public class MainActivity extends AppCompatActivity {
             mRequest.resetPage();
             mRequest.setRequestType(RequestTypeEnum.POPULAR);
             executeRequest();
+            updateActionBarTitle(R.string.most_popular);
         }
+    }
+
+    private void updateActionBarTitle(String title){
+        getSupportActionBar().setTitle(title);
+    }
+
+    private void updateActionBarTitle(int stringID){
+        updateActionBarTitle(getString(stringID));
     }
 
     private void executeRequest(){
