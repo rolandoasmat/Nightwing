@@ -11,9 +11,6 @@ import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.models.Movie;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 
 /**
  * Created by rolandoasmat on 2/9/17.
@@ -55,7 +52,7 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
             combined[firstArrayLength+i] = movies[i];
         }
         mMovies = combined;
-        notifyDataSetChanged();
+        notifyItemRangeInserted(firstArrayLength,secondArrayLength);
     }
     // ----------------------------------------------------------
 

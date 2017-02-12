@@ -7,6 +7,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.asmat.rolando.popularmovies.adapters.MoviesGridAdapter;
 import com.asmat.rolando.popularmovies.R;
@@ -20,7 +23,12 @@ import com.asmat.rolando.popularmovies.utilities.NetworkUtils;
 public class MainActivity extends AppCompatActivity {
 
     private static String TAG = MainActivity.class.getSimpleName();
+
     private RecyclerView mMoviesGrid;
+    private TextView mErrorMessageTextView;
+    private ProgressBar mLoadingBar;
+
+
     private MoviesGridAdapter mMoviesGridAdapter;
     private GridLayoutManager mMoviesGridLayoutManager;
     private Request mRequest;
@@ -29,8 +37,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // RecyclerView reference
-        mMoviesGrid = (RecyclerView) findViewById(R.id.movie_grid_rv);
+        // UI references
+        mErrorMessageTextView = (TextView) findViewById(R.id.tv_error_message);
+        mLoadingBar = (ProgressBar) findViewById(R.id.pb_loading_bar);
+        mMoviesGrid = (RecyclerView) findViewById(R.id.rv_movie_grid);
         mMoviesGrid.setHasFixedSize(false);
         // LayoutManager
         mMoviesGridLayoutManager = new GridLayoutManager(this, 2);
@@ -74,12 +84,33 @@ public class MainActivity extends AppCompatActivity {
         new FetchMoviesTask().execute(mRequest);
     }
 
-    private void showErrorSnackBar(){
+    private void showErrorState() {
+        mMoviesGrid.setVisibility(View.INVISIBLE);
+        mErrorMessageTextView.setVisibility(View.VISIBLE);
+        mLoadingBar.setVisibility(View.INVISIBLE);
         Snackbar.make(mMoviesGrid, "No Internet Connection", Snackbar.LENGTH_LONG).show();
+    }
+
+    private void showLoadingState() {
+        mErrorMessageTextView.setVisibility(View.INVISIBLE);
+        mLoadingBar.setVisibility(View.VISIBLE);
+        Snackbar.make(mMoviesGrid, "Loading", Snackbar.LENGTH_SHORT).show();
+    }
+
+    private void showGrid() {
+        mMoviesGrid.setVisibility(View.VISIBLE);
+        mErrorMessageTextView.setVisibility(View.INVISIBLE);
+        mLoadingBar.setVisibility(View.INVISIBLE);
     }
 
     // ----------------------------- AsyncTask -----------------------------
     public class FetchMoviesTask extends AsyncTask<Request, Void, Movie[]> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showLoadingState();
+        }
 
         @Override
         protected Movie[] doInBackground(Request... params) {
@@ -100,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return null;
             } catch (Exception e) {
+                Log.e(TAG, "Something went wrong fetching data!");
                 e.printStackTrace();
                 return null;
             }
@@ -111,13 +143,16 @@ public class MainActivity extends AppCompatActivity {
                 if(mRequest.getPage() == 1) {
                     Log.v(TAG, "Fetch complete! SETTING data set");
                     mMoviesGridAdapter.setMovies(movieData);
+                    showGrid();
                 } else {
                     Log.v(TAG, "Fetch complete! ADDING to data set");
                     mMoviesGridAdapter.addMovies(movieData);
+                    showGrid();
                 }
             } else {
+                Log.e(TAG, "Showing error state");
                 // Something went wrong fetching the data
-                showErrorSnackBar();
+                showErrorState();
             }
         }
     }
