@@ -7,6 +7,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private MoviesGridAdapter mMoviesGridAdapter;
     private GridLayoutManager mMoviesGridLayoutManager;
     private Request mRequest;
+    private boolean isLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,18 +58,64 @@ public class MainActivity extends AppCompatActivity {
         setScrollListener();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.sort_by_top_rated:
+                Log.v(TAG, "Sort by top rated");
+                sortByTopRated();
+                return true;
+            case R.id.sort_by_most_popular:
+                Log.v(TAG, "Sort by most popular");
+                sortByMostPopular();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void sortByTopRated() {
+        if(mRequest.getRequestType() != RequestTypeEnum.TOP_RATED) {
+            // Only sort if not already sorted by top rated
+            mRequest.resetPage();
+            mRequest.setRequestType(RequestTypeEnum.TOP_RATED);
+            executeRequest();
+        }
+    }
+
+    private void sortByMostPopular() {
+        if(mRequest.getRequestType() != RequestTypeEnum.POPULAR) {
+            // Only sort if not already sorted by most popular
+            mRequest.resetPage();
+            mRequest.setRequestType(RequestTypeEnum.POPULAR);
+            executeRequest();
+        }
+    }
+
+    private void executeRequest(){
+        new FetchMoviesTask().execute(this.mRequest);
+    }
+
     private void loadData(){
         // Create request
         mRequest = new Request(RequestTypeEnum.POPULAR, 1);
         // Execute
-        new FetchMoviesTask().execute(this.mRequest);
+        executeRequest();
     }
 
     private void setScrollListener() {
         mMoviesGrid.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if(dy > 0) { // User is scrolling down
+                if(dy > 0 && isLoading == false) { // User is scrolling down
                     int positionOfLastItem = mMoviesGridLayoutManager.getItemCount()-1;
                     int currentPositionOfLastVisibleItem = mMoviesGridLayoutManager.findLastCompletelyVisibleItemPosition();
                     if(positionOfLastItem == currentPositionOfLastVisibleItem){
@@ -92,12 +142,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showLoadingState() {
+        isLoading = true;
         mErrorMessageTextView.setVisibility(View.INVISIBLE);
         mLoadingBar.setVisibility(View.VISIBLE);
         Snackbar.make(mMoviesGrid, "Loading", Snackbar.LENGTH_SHORT).show();
     }
 
     private void showGrid() {
+        isLoading = false;
         mMoviesGrid.setVisibility(View.VISIBLE);
         mErrorMessageTextView.setVisibility(View.INVISIBLE);
         mLoadingBar.setVisibility(View.INVISIBLE);
