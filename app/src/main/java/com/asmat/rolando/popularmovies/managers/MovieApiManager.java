@@ -31,6 +31,7 @@ public final class MovieApiManager {
      * Base API url
      */
     private static final String BASE_URL = "https://api.themoviedb.org/3";
+    private static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w342"; // "w92", "w154", "w185", "w342", "w500", "w780"
 
     /**
      * API sub-component
@@ -160,7 +161,8 @@ public final class MovieApiManager {
     private static Movie mapMovie(JSONObject json) throws JSONException, ParseException {
         // Get properties
         String title           = json.getString("original_title");
-        String posterURL       = "http://image.tmdb.org/t/p/w342/"+json.getString("poster_path");// "w92", "w154", "w185", "w342", "w500", "w780"
+        String posterURL       = IMAGE_BASE_URL+json.getString("poster_path");
+        String backdropURL     = IMAGE_BASE_URL+json.getString("backdrop_path");
         String plotSynopsis    = json.getString("overview");
         double userRating      = json.getDouble("vote_average");
         String releaseDateStr  = json.getString("release_date");
@@ -168,7 +170,7 @@ public final class MovieApiManager {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date releaseDate = dateFormat.parse(releaseDateStr);
         // Create Movie object
-        return new Movie(title,posterURL,plotSynopsis,userRating,releaseDate);
+        return new Movie(title, posterURL, backdropURL, plotSynopsis, userRating, releaseDate);
     }
 
 }
