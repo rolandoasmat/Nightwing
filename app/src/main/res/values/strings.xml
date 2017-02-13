@@ -1,9 +1,14 @@
 <resources>
     <string name="app_name">Popular Movies</string>
+
+    <!-- Main Activity -->
     <string name="error_message">Error fetching movie data!</string>
     <string name="most_popular">Most Popular</string>
     <string name="top_rated">Top Rated</string>
     <string name="sort_menu_title">Sort</string>
     <string name="sort_most_popular">Sort by Most Popular</string>
     <string name="sort_top_rated">Sort by Top Rated</string>
+
+    <!--Activity Movie Detail -->
+    <string name="synopsis">Synopsis</string>
 </resources>

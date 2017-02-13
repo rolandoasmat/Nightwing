@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.models.Movie;
+import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
 import com.squareup.picasso.Picasso;
 
 
@@ -24,11 +25,17 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
     private Movie[] mMovies;
 
     /**
-     * Default constructor
+     * OnClick listener
      */
-    public MoviesGridAdapter() {}
+    private final MovieAdapterOnClickHandler mClickHandler;
 
     // ----------------------------- API -----------------------------
+    /**
+     * Default constructor
+     */
+    public MoviesGridAdapter(MovieAdapterOnClickHandler handler) {
+        this.mClickHandler = handler;
+    }
     /**
      * Set list of movies
      */
@@ -105,7 +112,7 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
     /**
      * Cache of the children views for a forecast list item.
      */
-    class MoviesGridAdapterViewHolder extends RecyclerView.ViewHolder {
+    class MoviesGridAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public final ImageView mMoviePoster;
 
@@ -117,6 +124,19 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
         public MoviesGridAdapterViewHolder(View itemView) {
             super(itemView);
             mMoviePoster = (ImageView) itemView.findViewById(R.id.iv_movie_grid_item);
+            itemView.setOnClickListener(this);
+        }
+
+        /**
+         * This gets called by the child views during a click.
+         *
+         * @param v The View that was clicked
+         */
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            Movie movie = mMovies[position];
+            mClickHandler.onClick(movie);
         }
     }
     // ----------------------------------------------------------

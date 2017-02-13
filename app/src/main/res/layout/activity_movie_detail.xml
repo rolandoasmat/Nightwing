@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.asmat.rolando.popularmovies.activities.MovieDetailActivity">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.asmat.rolando.popularmovies.activities.MovieDetailActivity">
+
+        <ImageView
+            android:id="@+id/iv_movie_backdrop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@android:color/holo_blue_bright"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_poster_thumbnail"
+                android:layout_width="80dp"
+                android:layout_height="120dp"
+                android:layout_margin="16dp"
+                android:background="@android:color/holo_red_dark"/>
+
+            <TextView
+                android:id="@+id/tv_movie_title"
+                android:text="Movie title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_toRightOf="@+id/iv_poster_thumbnail"/>
+
+            <TextView
+                android:id="@+id/tv_release_date"
+                android:text="April 4, 1992"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_below="@id/tv_movie_title"
+                android:layout_toRightOf="@+id/iv_poster_thumbnail"/>
+
+            <TextView
+                android:id="@+id/tv_movie_rating"
+                android:text="10/10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_below="@+id/tv_release_date"
+                android:layout_toRightOf="@+id/iv_poster_thumbnail"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_synopsis_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:text="@string/synopsis"/>
+
+        <TextView
+            android:id="@+id/tv_synopsis_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:text="Movie summary."/>
+    </LinearLayout>
+
+</ScrollView>
+
+

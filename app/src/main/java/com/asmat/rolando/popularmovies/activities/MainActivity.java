@@ -1,5 +1,7 @@
 package com.asmat.rolando.popularmovies.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,12 +20,13 @@ import com.asmat.rolando.popularmovies.adapters.MoviesGridAdapter;
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.managers.MovieApiManager;
 import com.asmat.rolando.popularmovies.models.Movie;
+import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.models.Request;
 import com.asmat.rolando.popularmovies.models.RequestTypeEnum;
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MovieAdapterOnClickHandler{
 
     private static String TAG = MainActivity.class.getSimpleName();
 
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         mMoviesGridLayoutManager = new GridLayoutManager(this, 2);
         mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
         // Set adapter
-        mMoviesGridAdapter = new MoviesGridAdapter();
+        mMoviesGridAdapter = new MoviesGridAdapter(this);
         mMoviesGrid.setAdapter(mMoviesGridAdapter);
         // Load initial data
         loadData();
@@ -81,6 +84,15 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onClick(Movie movie) {
+        Context context = this;
+        Class destinationClass = MovieDetailActivity.class;
+        Intent intentToStartDetailActivity = new Intent(context, destinationClass);
+        intentToStartDetailActivity.putExtra("MOVIE_DATA", movie);
+        startActivity(intentToStartDetailActivity);
     }
 
     private void sortByTopRated() {

@@ -1,12 +1,15 @@
 package com.asmat.rolando.popularmovies.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
  * Created by rolandoasmat on 2/9/17.
  */
 
-public class Movie {
+public class Movie implements Parcelable {
 
     String title;
     String posterURL;
@@ -72,4 +75,40 @@ public class Movie {
         this.releaseDate = releaseDate;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.title);
+        dest.writeString(this.posterURL);
+        dest.writeString(this.backdropURL);
+        dest.writeString(this.plotSynopsis);
+        dest.writeDouble(this.userRating);
+        dest.writeLong(releaseDate.getTime());
+    }
+
+    protected Movie(Parcel in) {
+        title = in.readString();
+        posterURL = in.readString();
+        backdropURL = in.readString();
+        plotSynopsis = in.readString();
+        userRating = in.readDouble();
+        long tmpReleaseDate = in.readLong();
+        releaseDate =  new Date(tmpReleaseDate);
+    }
+
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 }
