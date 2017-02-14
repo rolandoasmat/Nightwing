@@ -23,8 +23,6 @@ import com.asmat.rolando.popularmovies.models.Movie;
 import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.models.Request;
 import com.asmat.rolando.popularmovies.models.RequestTypeEnum;
-import com.asmat.rolando.popularmovies.utilities.NetworkUtils;
-
 
 public class MainActivity extends AppCompatActivity implements MovieAdapterOnClickHandler{
 
@@ -33,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     private RecyclerView mMoviesGrid;
     private TextView mErrorMessageTextView;
     private ProgressBar mLoadingBar;
-
 
     private MoviesGridAdapter mMoviesGridAdapter;
     private GridLayoutManager mMoviesGridLayoutManager;

@@ -13,9 +13,9 @@
 
         <menu>
             <item android:id="@+id/sort_by_most_popular"
-                android:title="@string/most_popular" />
+                android:title="@string/sort_most_popular" />
             <item android:id="@+id/sort_by_top_rated"
-                android:title="@string/top_rated" />
+                android:title="@string/sort_top_rated" />
         </menu>
 
     </item>
