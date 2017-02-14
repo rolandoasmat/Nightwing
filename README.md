@@ -20,3 +20,7 @@ The sort order can be by most popular, or by top rated
     - A plot synopsis (called overview in the api)
     - user rating (called vote_average in the api)
     - release date
+
+## To Run:
+- Open gradle.properties
+- Update API_KEY with personal key
