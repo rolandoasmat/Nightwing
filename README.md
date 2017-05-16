@@ -16,5 +16,5 @@ Lastly, you’ll optimize your app experience for tablet.
 
 ## To Run:
 - Open gradle.properties
-- Update API_KEY with personal key from <a target="_blank" href="https://www.themoviedb.org/">The Movie DB</a> Api.
+- Update API_KEY with personal key from <a href="https://www.themoviedb.org/" target="_blank">The Movie DB</a> Api.
 - Execute! :)
