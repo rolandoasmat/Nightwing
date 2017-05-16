@@ -16,6 +16,7 @@
     <string name="release_date">Release date</string>
     <string name="movie_rating">Movie rating</string>
     <string name="synopsis">Synopsis</string>
+    <string name="out_of_ten" translatable="false">/10.0</string>
 
     <!--Error Messages-->
     <string name="generic_error">"Oops! something went horribly wrong :'("</string>

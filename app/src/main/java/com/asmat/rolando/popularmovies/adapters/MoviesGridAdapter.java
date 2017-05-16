@@ -93,7 +93,7 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
         Movie movie = mMovies[position];
         String posterURL = movie.getPosterURL();
         ImageView imageView = holder.mMoviePoster;
-        Picasso.with(imageView.getContext()).load(posterURL).into(imageView);
+        Picasso.with(imageView.getContext()).load(posterURL).into(imageView); // TODO add download/error placeholder
     }
 
     @Override

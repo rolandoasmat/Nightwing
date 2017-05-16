@@ -1,8 +1,6 @@
 package com.asmat.rolando.popularmovies.activities;
 
 import android.content.Intent;
-import android.icu.text.DateFormat;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -26,6 +24,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     private TextView mMovieSynopsis;
 
     final private String INTENT_EXTRA_TAG = "MOVIE_DATA";
+    final private String DATE_FORMAT = "MMMM dd, yyyy";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +51,11 @@ public class MovieDetailActivity extends AppCompatActivity {
         Picasso.with(this).load(movie.getbackdropURL()).into(mMovieBackdrop);
         Picasso.with(this).load(movie.getPosterURL()).into(mMoviePoster);
         mMovieTitle.setText(movie.getTitle());
-        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
         String dateString = sdf.format(movie.getReleaseDate());
         mReleaseDate.setText(dateString);
-        mMovieRating.setText(movie.getUserRating()+"/10.0");
+        String rating = movie.getUserRating()+getString(R.string.out_of_ten);
+        mMovieRating.setText(rating);
         mMovieSynopsis.setText(movie.getPlotSynopsis());
 
     }
