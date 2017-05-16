@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.Snackbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         mMoviesGrid = (RecyclerView) findViewById(R.id.rv_movie_grid);
         mMoviesGrid.setHasFixedSize(false);
         // LayoutManager
-        mMoviesGridLayoutManager = new GridLayoutManager(this, 2);
+        mMoviesGridLayoutManager = new GridLayoutManager(this, calculateNoOfColumns(this));
         mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
         // Set adapter
         mMoviesGridAdapter = new MoviesGridAdapter(this);
@@ -173,6 +174,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         mMoviesGrid.setVisibility(View.VISIBLE);
         mErrorMessageTextView.setVisibility(View.INVISIBLE);
         mLoadingBar.setVisibility(View.INVISIBLE);
+    }
+
+    private int calculateNoOfColumns(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        int noOfColumns = (int) (dpWidth / 180);
+        return noOfColumns;
     }
 
     // ----------------------------- AsyncTask -----------------------------
