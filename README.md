@@ -1,26 +1,20 @@
-# Popular Movies, Stage 1
+# Udacity Android Nanodegre Project 2
 
-[![Build Status](https://travis-ci.org/rolandoasmat/PopularMoviesStage1.svg?branch=master)](https://travis-ci.org/rolandoasmat/PopularMoviesStage1)
 ![](https://img.shields.io/badge/platform-Android-blue.svg?style=flat)
 
-## Udacity Project 1: Popular Movies, Stage 1
+## Popular Movies Stage 2: Trailers, Reviews, and Favorites
 
-This Android application will show movies to users in a grid layout and link to a details page when clicked.
+In this stage you’ll add additional functionality to the app you built in Stage 1.
 
-## Requirements:
+You’ll add more information to your movie details view:
+ - You’ll allow users to view and play trailers ( either in the youtube app or a web browser).
+ - You’ll allow users to read reviews of a selected movie.
+ - You’ll also allow users to mark a movie as a favorite in the details view by tapping a button(star). This is for a local movies collection that you will maintain and does not require an API request*.
+ - You’ll modify the existing sorting criteria for the main view to include an additional pivot to show their favorites collection.
 
-- Upon launch, present the user with an grid arrangement of movie posters.
-
-- Allow your user to change sort order via a setting:
-The sort order can be by most popular, or by top rated
-
-- Allow the user to tap on a movie poster and transition to a details screen with additional information such as:
-    - original title
-    - movie poster image thumbnail
-    - A plot synopsis (called overview in the api)
-    - user rating (called vote_average in the api)
-    - release date
+Lastly, you’ll optimize your app experience for tablet.
 
 ## To Run:
 - Open gradle.properties
-- Update API_KEY with personal key
+- Update API_KEY with personal key from <a target="\_blank" href="https://www.themoviedb.org/">The Movie DB</a> Api.
+- Execute! :)
