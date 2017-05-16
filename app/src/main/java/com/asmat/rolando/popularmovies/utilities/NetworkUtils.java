@@ -1,5 +1,8 @@
 package com.asmat.rolando.popularmovies.utilities;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
 import java.io.IOException;
@@ -18,6 +21,13 @@ import java.util.Scanner;
 public final class NetworkUtils {
 
     private static String TAG = NetworkUtils.class.getSimpleName();
+
+
+    public static boolean isOnline(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
 
     /**
      * Create a URL object given a string endpoint and a map of parameters.

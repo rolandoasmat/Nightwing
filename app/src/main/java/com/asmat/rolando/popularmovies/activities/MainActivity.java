@@ -24,6 +24,7 @@ import com.asmat.rolando.popularmovies.models.Movie;
 import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.models.Request;
 import com.asmat.rolando.popularmovies.models.RequestTypeEnum;
+import com.asmat.rolando.popularmovies.utilities.NetworkUtils;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapterOnClickHandler{
 
@@ -155,11 +156,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         new FetchMoviesTask().execute(mRequest);
     }
 
-    private void showErrorState() {
+    private void showErrorState(String message) {
         mMoviesGrid.setVisibility(View.INVISIBLE);
         mErrorMessageTextView.setVisibility(View.VISIBLE);
         mLoadingBar.setVisibility(View.INVISIBLE);
-        Snackbar.make(mMoviesGrid, "No Internet Connection", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mMoviesGrid, message, Snackbar.LENGTH_LONG).show();
     }
 
     private void showLoadingState() {
@@ -190,6 +191,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         protected void onPreExecute() {
             super.onPreExecute();
             showLoadingState();
+            if(!NetworkUtils.isOnline(getBaseContext())) {
+                // User has no internet connection
+                this.cancel(true);
+            }
         }
 
         @Override
@@ -232,8 +237,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
             } else {
                 Log.e(TAG, "Showing error state");
                 // Something went wrong fetching the data
-                showErrorState();
+                showErrorState("Oops! something went horribly wrong :'(");
             }
+        }
+
+        @Override
+        protected void onCancelled() {
+            Log.e(TAG, "Showing error state");
+            // Something went wrong fetching the data
+            showErrorState("THE INTERNET IS DOWN >:O");
         }
     }
     // ----------------------------------------------------------
