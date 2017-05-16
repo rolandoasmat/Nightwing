@@ -194,6 +194,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
             if(!NetworkUtils.isOnline(getBaseContext())) {
                 // User has no internet connection
                 this.cancel(true);
+                Log.e(TAG, "Showing error state");
+                // Something went wrong fetching the data
+                showErrorState(getString(R.string.no_internet));
             }
         }
 
@@ -237,15 +240,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
             } else {
                 Log.e(TAG, "Showing error state");
                 // Something went wrong fetching the data
-                showErrorState("Oops! something went horribly wrong :'(");
+                showErrorState(getString(R.string.generic_error));
             }
-        }
-
-        @Override
-        protected void onCancelled() {
-            Log.e(TAG, "Showing error state");
-            // Something went wrong fetching the data
-            showErrorState("THE INTERNET IS DOWN >:O");
         }
     }
     // ----------------------------------------------------------

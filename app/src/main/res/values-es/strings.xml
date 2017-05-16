@@ -16,4 +16,8 @@
     <string name="release_date">Fecha de lanzamiento</string>
     <string name="movie_rating">Valuación</string>
     <string name="synopsis">Sinopsis</string>
+
+    <!--Error Messages-->
+    <string name="generic_error">"Oops! Algo salió horriblemente mal:'("</string>
+    <string name="no_internet">"EL INTERNET ESTÁ ABAJO >:O"</string>
 </resources>
