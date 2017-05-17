@@ -26,13 +26,16 @@ import com.asmat.rolando.popularmovies.models.Request;
 import com.asmat.rolando.popularmovies.models.RequestType;
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity implements MovieAdapterOnClickHandler{
 
     private static String TAG = MainActivity.class.getSimpleName();
 
-    private RecyclerView mMoviesGrid;
-    private TextView mErrorMessageTextView;
-    private ProgressBar mLoadingBar;
+    @BindView(R.id.rv_movie_grid) RecyclerView mMoviesGrid;
+    @BindView(R.id.tv_error_message) TextView mErrorMessageTextView;
+    @BindView(R.id.pb_loading_bar) ProgressBar mLoadingBar;
 
     private MoviesGridAdapter mMoviesGridAdapter;
     private GridLayoutManager mMoviesGridLayoutManager;
@@ -43,11 +46,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         updateActionBarTitle(R.string.most_popular);
-        // UI references
-        mErrorMessageTextView = (TextView) findViewById(R.id.tv_error_message);
-        mLoadingBar = (ProgressBar) findViewById(R.id.pb_loading_bar);
-        mMoviesGrid = (RecyclerView) findViewById(R.id.rv_movie_grid);
         mMoviesGrid.setHasFixedSize(false);
         // LayoutManager
         mMoviesGridLayoutManager = new GridLayoutManager(this, calculateNoOfColumns(this));
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         mMoviesGrid.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if(dy > 0 && isLoading == false) { // User is scrolling down
+                if(dy > 0 && !isLoading) { // User is scrolling down
                     int positionOfLastItem = mMoviesGridLayoutManager.getItemCount()-1;
                     int currentPositionOfLastVisibleItem = mMoviesGridLayoutManager.findLastCompletelyVisibleItemPosition();
                     if(positionOfLastItem == currentPositionOfLastVisibleItem){
@@ -180,12 +180,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     private int calculateNoOfColumns(Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        int noOfColumns = (int) (dpWidth / 180);
-        return noOfColumns;
+        return (int) (dpWidth / 180);
     }
 
     // ----------------------------- AsyncTask -----------------------------
-    public class FetchMoviesTask extends AsyncTask<Request, Void, Movie[]> {
+    private class FetchMoviesTask extends AsyncTask<Request, Void, Movie[]> {
 
         @Override
         protected void onPreExecute() {

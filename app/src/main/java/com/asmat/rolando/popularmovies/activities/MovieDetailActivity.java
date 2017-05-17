@@ -12,16 +12,19 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MovieDetailActivity extends AppCompatActivity {
 
-    private ImageView mMovieBackdrop;
+    @BindView(R.id.iv_movie_backdrop) ImageView mMovieBackdrop;
 
-    private ImageView mMoviePoster;
-    private TextView mMovieTitle;
-    private TextView mReleaseDate;
-    private TextView mMovieRating;
+    @BindView(R.id.iv_poster_thumbnail) ImageView mMoviePoster;
+    @BindView(R.id.tv_movie_title) TextView mMovieTitle;
+    @BindView(R.id.tv_release_date) TextView mReleaseDate;
+    @BindView(R.id.tv_movie_rating) TextView mMovieRating;
 
-    private TextView mMovieSynopsis;
+    @BindView(R.id.tv_synopsis_content) TextView mMovieSynopsis;
 
     final private String INTENT_EXTRA_TAG = "MOVIE_DATA";
     final private String DATE_FORMAT = "MMMM dd, yyyy";
@@ -30,12 +33,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
-        mMovieBackdrop = (ImageView) findViewById(R.id.iv_movie_backdrop);
-        mMoviePoster = (ImageView) findViewById(R.id.iv_poster_thumbnail);
-        mMovieTitle = (TextView) findViewById(R.id.tv_movie_title);
-        mReleaseDate = (TextView) findViewById(R.id.tv_release_date);
-        mMovieRating = (TextView) findViewById(R.id.tv_movie_rating);
-        mMovieSynopsis = (TextView) findViewById(R.id.tv_synopsis_content);
+        ButterKnife.bind(this);
 
         Intent intentThatStartedThisActivity = getIntent();
         if(intentThatStartedThisActivity != null) {
