@@ -5,19 +5,19 @@ package com.asmat.rolando.popularmovies.models;
  */
 
 public class Request {
-    RequestTypeEnum requestType;
+    int requestType;
     int page;
 
-    public Request(RequestTypeEnum requestType, int page) {
+    public Request(int requestType, int page) {
         this.requestType = requestType;
         this.page = page;
     }
 
-    public RequestTypeEnum getRequestType() {
+    public int getRequestType() {
         return requestType;
     }
 
-    public void setRequestType(RequestTypeEnum requestType) {
+    public void setRequestType(int requestType) {
         this.requestType = requestType;
     }
 

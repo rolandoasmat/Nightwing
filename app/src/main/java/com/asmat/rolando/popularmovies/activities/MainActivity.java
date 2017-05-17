@@ -23,7 +23,7 @@ import com.asmat.rolando.popularmovies.managers.MovieApiManager;
 import com.asmat.rolando.popularmovies.models.Movie;
 import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.models.Request;
-import com.asmat.rolando.popularmovies.models.RequestTypeEnum;
+import com.asmat.rolando.popularmovies.models.RequestType;
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapterOnClickHandler{
@@ -95,20 +95,20 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     }
 
     private void sortByTopRated() {
-        if(mRequest.getRequestType() != RequestTypeEnum.TOP_RATED) {
+        if(mRequest.getRequestType() != RequestType.TOP_RATED) {
             // Only sort if not already sorted by top rated
             mRequest.resetPage();
-            mRequest.setRequestType(RequestTypeEnum.TOP_RATED);
+            mRequest.setRequestType(RequestType.TOP_RATED);
             executeRequest();
             updateActionBarTitle(R.string.top_rated);
         }
     }
 
     private void sortByMostPopular() {
-        if(mRequest.getRequestType() != RequestTypeEnum.POPULAR) {
+        if(mRequest.getRequestType() != RequestType.POPULAR) {
             // Only sort if not already sorted by most popular
             mRequest.resetPage();
-            mRequest.setRequestType(RequestTypeEnum.POPULAR);
+            mRequest.setRequestType(RequestType.POPULAR);
             executeRequest();
             updateActionBarTitle(R.string.most_popular);
         }
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
 
     private void loadData(){
         // Create request
-        mRequest = new Request(RequestTypeEnum.POPULAR, 1);
+        mRequest = new Request(RequestType.POPULAR, 1);
         // Execute
         executeRequest();
     }
@@ -206,14 +206,14 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
                 return null;
             }
             Request request = params[0];
-            RequestTypeEnum type = request.getRequestType();
+            int type = request.getRequestType();
             int page = request.getPage();
             try {
                 switch (type){
-                    case POPULAR:
+                    case RequestType.POPULAR:
                         Log.v(TAG, "Fetching page "+page+" of POPULAR movies...");
                         return MovieApiManager.fetchPopularMovies(page);
-                    case TOP_RATED:
+                    case RequestType.TOP_RATED:
                         Log.v(TAG, "Fetching page "+page+" of TOP_RATED movies...");
                         return MovieApiManager.fetchTopRatedMovies(page);
                 }
