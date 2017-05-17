@@ -23,19 +23,19 @@
 
             <ImageView
                 android:id="@+id/iv_poster_thumbnail"
-                android:layout_width="80dp"
+                android:layout_width="@dimen/poster_width"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:layout_margin="16dp"/>
+                android:layout_margin="@dimen/activity_margin_general"/>
 
             <TextView
                 android:id="@+id/tv_movie_title"
                 tools:text="@string/movie_title"
                 android:textStyle="bold"
-                android:textSize="22sp"
+                android:textSize="@dimen/movie_title_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_toRightOf="@+id/iv_poster_thumbnail"/>
 
             <TextView
@@ -43,7 +43,7 @@
                 tools:text="@string/release_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin_small"
                 android:layout_below="@id/tv_movie_title"
                 android:layout_toRightOf="@+id/iv_poster_thumbnail"/>
 
@@ -52,7 +52,7 @@
                 tools:text="@string/movie_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin_small"
                 android:layout_below="@+id/tv_release_date"
                 android:layout_toRightOf="@+id/iv_poster_thumbnail"/>
         </RelativeLayout>
@@ -61,7 +61,7 @@
             android:id="@+id/tv_synopsis_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             tools:text="@string/synopsis"/>
     </LinearLayout>
 

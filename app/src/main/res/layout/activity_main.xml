@@ -16,16 +16,16 @@
         android:id="@+id/tv_error_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/error_message"
-        android:textSize="22sp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin_small"
+        android:layout_marginTop="@dimen/activity_vertical_margin_small"
+        tools:text="@string/error_message"
+        android:textSize="@dimen/error_text_size"
         android:visibility="invisible"/>
-<!--TODO move all hardcoded sizes to a dimens.xml file-->
+
     <ProgressBar
         android:id="@+id/pb_loading_bar"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
+        android:layout_width="@dimen/loader_size"
+        android:layout_height="@dimen/loader_size"
         android:layout_gravity="center"
         android:visibility="invisible"/>
 
