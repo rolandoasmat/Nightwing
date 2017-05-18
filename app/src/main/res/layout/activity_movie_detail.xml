@@ -64,6 +64,18 @@
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             tools:text="@string/synopsis"/>
+
+        <include
+            android:id="@+id/trailers"
+            layout="@layout/trailers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <include
+            android:id="@+id/reviews"
+            layout="@layout/reviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </ScrollView>
