@@ -6,9 +6,12 @@
     <string name="error_message">Error fetching movie data!</string>
     <string name="most_popular">Most Popular Movies</string>
     <string name="top_rated">Top Rated Movies</string>
+    <string name="favorites">Favorites</string>
+    <!--Menu-->
     <string name="sort_menu_title">Sort</string>
     <string name="sort_most_popular">Sort by Most Popular</string>
     <string name="sort_top_rated">Sort by Top Rated</string>
+    <string name="show_favorites">Show Favorites</string>
 
     <!--Activity Movie Detail -->
     <string name="movie_detail_activity_title">Movie Details</string>

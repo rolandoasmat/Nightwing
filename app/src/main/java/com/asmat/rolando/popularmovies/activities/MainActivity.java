@@ -80,6 +80,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
                 Log.v(TAG, "Sort by most popular");
                 sortByMostPopular();
                 return true;
+            case R.id.show_favorites:
+                Log.v(TAG, "Show favorites");
+                // showFavorites(); TODO create this method to show faves using ContentProvider
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
