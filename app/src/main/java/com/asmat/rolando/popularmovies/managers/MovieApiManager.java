@@ -32,7 +32,6 @@ public final class MovieApiManager {
      * Base API url
      */
     private static final String BASE_URL = "https://api.themoviedb.org/3";
-    private static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w342"; // "w92", "w154", "w185", "w342", "w500", "w780"
 
     /**
      * API sub-component
@@ -42,10 +41,10 @@ public final class MovieApiManager {
     /**
      * Endpoints
      */
-    private static final String GET_POPULAR   = "popular"; // GET /movie/popular
-    private static final String GET_TOP_RATED = "top_rated"; // GET/movie/top_rated
-    private static final String GET_VIDEOS = "videos"; // GET /movie/{movie_id}/videos
-    private static final String GET_REVIEWS = "reviews"; // GET /movie/{movie_id}/reviews
+    private static final String GET_POPULAR     = "popular"; // GET /movie/popular
+    private static final String GET_TOP_RATED   = "top_rated"; // GET/movie/top_rated
+    private static final String GET_VIDEOS      = "videos"; // GET /movie/{movie_id}/videos
+    private static final String GET_REVIEWS     = "reviews"; // GET /movie/{movie_id}/reviews
 
     /**
      * Universal Query Parameters
@@ -56,6 +55,8 @@ public final class MovieApiManager {
     private static final String LANGUAGE_VALUE = Locale.getDefault().getLanguage();
     private static final String PAGE_PARAM     = "page";
 
+    private static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w342"; // "w92", "w154", "w185", "w342", "w500", "w780"
+
     /**
      *  ---------------------------- API ----------------------------
      */
@@ -63,12 +64,13 @@ public final class MovieApiManager {
     /**
      * Fetch all the popular movies from movie API.
      *
-     * @param page Which page to get.
+     * @param page Page to fetch.
      *
-     * @return Array of movie objects.
+     * @return Array of movies.
      *
      * @throws IOException
      * @throws JSONException
+     * @throws ParseException
      */
     public static Movie[] fetchPopularMovies(int page) throws IOException, JSONException, ParseException {
         return fetchMovies(BASE_URL, MOVIES, GET_POPULAR, page);
@@ -77,21 +79,48 @@ public final class MovieApiManager {
     /**
      * Fetch the top rated movies from movie API.
      *
-     * @param page Which page to get.
+     * @param page Page to fetch.
      *
-     * @return Array of movie objects.
+     * @return Array of movies.
      *
      * @throws IOException
      * @throws JSONException
+     * @throws ParseException
      */
     public static Movie[] fetchTopRatedMovies(int page) throws IOException, JSONException, ParseException {
         return fetchMovies(BASE_URL, MOVIES, GET_TOP_RATED, page);
     }
 
+    /**
+     * Fetch reviews of specified movie id.
+     *
+     * @param id ID of movie.
+     *
+     * @param page Page to fetch.
+     *
+     * @return Array of reviews.
+     *
+     * @throws IOException
+     * @throws JSONException
+     * @throws ParseException
+     */
     public static Review[] fetchMovieReviews(String id, int page) throws IOException, JSONException, ParseException {
         return fetchReviews(id, BASE_URL, MOVIES, GET_REVIEWS, page);
     }
 
+    /**
+     * Fetch videos(trailers and teasers) of specified movie id.
+     *
+     * @param id ID of movie.
+     *
+     * @param page Page to fetch.
+     *
+     * @return Array of videos.
+     *
+     * @throws IOException
+     * @throws JSONException
+     * @throws ParseException
+     */
     public static Video[] fetchMovieVideos(String id, int page) throws IOException, JSONException, ParseException {
         return fetchVideos(id, BASE_URL, MOVIES, GET_VIDEOS, page);
     }
@@ -100,19 +129,6 @@ public final class MovieApiManager {
      * ---------------------------- Private Methods ----------------------------
      */
 
-    /**
-     * Helper method to make http request.
-     *
-     * @param baseURL Base url of endpoint.
-     * @param subComponent Sub component of endpoint.
-     * @param endpoint Endpoint.
-     * @param page Which page to return.
-     *
-     * @return Array of movie objects.
-     *
-     * @throws IOException
-     * @throws JSONException
-     */
     private static Movie[] fetchMovies(String baseURL,
                                        String subComponent,
                                        String endpoint,
@@ -169,15 +185,6 @@ public final class MovieApiManager {
      * ---------------------------- Mappings ----------------------------
      */
 
-    /**
-     * Map json response into array of Movie objects.
-     *
-     * @param jsonStr JSON response from API.
-     *
-     * @return Array of Movie objects.
-     *
-     * @throws JSONException
-     */
     private static Movie[] mapMovies(String jsonStr) throws JSONException, ParseException {
         JSONObject forecastJson = new JSONObject(jsonStr);
         JSONArray results = forecastJson.getJSONArray("results");
@@ -211,21 +218,6 @@ public final class MovieApiManager {
         return reviews;
     }
 
-    /**
-     * Maps a Movie json object into Movie model
-     *
-     * Movie Model          | JSON Field Names (https://developers.themoviedb.org/3/movies/get-popular-movies)
-     * ---------------------|-------------------------
-     * String title;        | original_title
-     * String posterURL;    | poster_path, may be null
-     * String plotSynopsis; | overview
-     * double userRating;   | vote_average, range of 0-10
-     * Date releaseDate;    | release_date, format: yyyy-mm-dd
-     *
-     * @param json Movie json object
-     *
-     * @return Movie object
-     */
     private static Movie mapMovie(JSONObject json) throws JSONException, ParseException {
         // Get properties
         String id              = json.getString("id");
