@@ -11,20 +11,26 @@ import java.util.Date;
 
 public class Movie implements Parcelable {
 
-    String title;
-    String posterURL;
-    String backdropURL;
-    String plotSynopsis;
-    double userRating;
-    Date releaseDate;
+    private String id;
+    private String title;
+    private String posterURL;
+    private String backdropURL;
+    private String plotSynopsis;
+    private double userRating;
+    private Date releaseDate;
 
-    public Movie(String title, String posterURL, String backdropURL, String plotSynopsis, double userRating, Date releaseDate) {
+    public Movie(String id, String title, String posterURL, String backdropURL, String plotSynopsis, double userRating, Date releaseDate) {
+        this.id = id;
         this.title = title;
         this.posterURL = posterURL;
         this.backdropURL = backdropURL;
         this.plotSynopsis = plotSynopsis;
         this.userRating = userRating;
         this.releaseDate = releaseDate;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getTitle() {
