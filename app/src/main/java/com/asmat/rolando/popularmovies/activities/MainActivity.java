@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         Context context = this;
         Class destinationClass = MovieDetailActivity.class;
         Intent intentToStartDetailActivity = new Intent(context, destinationClass);
-        intentToStartDetailActivity.putExtra("MOVIE_DATA", movie);
+        intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_TAG, movie);
         startActivity(intentToStartDetailActivity);
     }
 
