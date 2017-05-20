@@ -17,13 +17,11 @@
             android:adjustViewBounds="true"/>
 
         <include
-            android:id="@+id/primary_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             layout="@layout/primary_details"/>
 
         <include
-            android:id="@+id/star_and_share"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             layout="@layout/star_and_share"/>
@@ -34,13 +32,12 @@
             android:layout_height="wrap_content">
         </android.support.v7.widget.RecyclerView>
 
-        <!--<include-->
-            <!--android:id="@+id/reviews"-->
-            <!--layout="@layout/reviews"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"/>-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_reviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
     </LinearLayout>
-
 </ScrollView>
 
 
