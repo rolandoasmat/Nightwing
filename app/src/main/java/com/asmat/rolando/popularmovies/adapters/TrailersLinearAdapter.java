@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asmat.rolando.popularmovies.R;
-import com.asmat.rolando.popularmovies.models.TrailerAdapterOnclickHandler;
+import com.asmat.rolando.popularmovies.models.TrailerAdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.models.Video;
 import com.squareup.picasso.Picasso;
 
@@ -28,13 +28,13 @@ public class TrailersLinearAdapter
     /**
      * OnClick listener
      */
-    private final TrailerAdapterOnclickHandler mClickHandler;
+    private final TrailerAdapterOnClickHandler mClickHandler;
 
     // ----------------------------- API -----------------------------
     /**
      * Default constructor
      */
-    public TrailersLinearAdapter(TrailerAdapterOnclickHandler handler) { this.mClickHandler = handler; }
+    public TrailersLinearAdapter(TrailerAdapterOnClickHandler handler) { this.mClickHandler = handler; }
 
     /**
      * Set list of trailers

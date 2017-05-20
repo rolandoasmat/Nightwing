@@ -17,15 +17,10 @@ import com.asmat.rolando.popularmovies.adapters.TrailersLinearAdapter;
 import com.asmat.rolando.popularmovies.managers.MovieApiManager;
 import com.asmat.rolando.popularmovies.models.Movie;
 import com.asmat.rolando.popularmovies.models.Review;
-import com.asmat.rolando.popularmovies.models.TrailerAdapterOnclickHandler;
+import com.asmat.rolando.popularmovies.models.TrailerAdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.models.Video;
-import com.asmat.rolando.popularmovies.utilities.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-
-import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +30,7 @@ import butterknife.ButterKnife;
 
 public class MovieDetailActivity
         extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<List>, TrailerAdapterOnclickHandler {
+        implements LoaderManager.LoaderCallbacks<List>, TrailerAdapterOnClickHandler {
 
     @BindView(R.id.iv_movie_backdrop) ImageView mMovieBackdrop;
     @BindView(R.id.iv_poster_thumbnail) ImageView mMoviePoster;
