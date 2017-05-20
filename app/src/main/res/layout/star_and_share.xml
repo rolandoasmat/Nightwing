@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -10,15 +10,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="192dp" />
+        app:layout_constraintGuide_percent="0.5"/>
 
     <ImageView
         android:id="@+id/star"
         android:src="@drawable/ic_star_black_24dp"
         android:layout_width="@dimen/icon_size"
         android:layout_height="@dimen/icon_size"
+        android:layout_marginTop="@dimen/activity_vertical_margin_small"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/guideline" />
@@ -29,16 +28,18 @@
         android:layout_height="wrap_content"
         android:text="@string/favorite"
         android:textSize="@dimen/icon_label_size"
-        android:layout_marginTop="@dimen/activity_vertical_margin_small"
+        android:layout_margin="@dimen/activity_vertical_margin_small"
         app:layout_constraintTop_toBottomOf="@+id/star"
         app:layout_constraintLeft_toLeftOf="@+id/star"
-        app:layout_constraintRight_toRightOf="@+id/star"/>
+        app:layout_constraintRight_toRightOf="@+id/star"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageView
         android:id="@+id/share"
         android:src="@drawable/ic_share_black_24dp"
         android:layout_width="@dimen/icon_size"
         android:layout_height="@dimen/icon_size"
+        android:layout_marginTop="@dimen/activity_vertical_margin_small"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
         app:layout_constraintRight_toRightOf="parent"/>
@@ -49,10 +50,11 @@
         android:layout_height="wrap_content"
         android:text="@string/share"
         android:textSize="@dimen/icon_label_size"
-        android:layout_marginTop="@dimen/activity_vertical_margin_small"
+        android:layout_margin="@dimen/activity_vertical_margin_small"
         app:layout_constraintTop_toBottomOf="@+id/share"
         app:layout_constraintLeft_toLeftOf="@+id/share"
-        app:layout_constraintRight_toRightOf="@+id/share"/>
+        app:layout_constraintRight_toRightOf="@+id/share"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <View
         android:layout_width="1dp"

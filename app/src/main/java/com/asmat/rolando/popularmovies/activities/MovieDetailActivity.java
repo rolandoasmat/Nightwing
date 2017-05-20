@@ -6,10 +6,13 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asmat.rolando.popularmovies.R;
+import com.asmat.rolando.popularmovies.adapters.TrailersLinearAdapter;
 import com.asmat.rolando.popularmovies.managers.MovieApiManager;
 import com.asmat.rolando.popularmovies.models.Movie;
 import com.asmat.rolando.popularmovies.models.Review;
@@ -35,6 +38,10 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
     @BindView(R.id.tv_release_date) TextView mReleaseDate;
     @BindView(R.id.tv_movie_rating) TextView mMovieRating;
     @BindView(R.id.tv_synopsis_content) TextView mMovieSynopsis;
+
+    //@BindView(R.id.rv_trailers) RecyclerView mTrailers;
+    //private LinearLayoutManager mTrailersLayoutManager;
+    //private TrailersLinearAdapter mTrailersLinearAdapter;
 
     final static String INTENT_EXTRA_TAG = "MOVIE_DATA";
     final private String DATE_FORMAT = "MMMM dd, yyyy";
@@ -66,6 +73,10 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
         setReviewsLoaderCallback();
         getSupportLoaderManager().initLoader(VIDEOS_LOADER, null, videosCallbacks);
         getSupportLoaderManager().initLoader(REVIEWS_LOADER, null, reviewsCallbacks);
+
+        //mTrailers.setHasFixedSize(true);
+        //mTrailersLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+
     }
 
     private void setVideosLoaderCallback() {

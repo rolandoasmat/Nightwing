@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         updateActionBarTitle(R.string.most_popular);
-        mMoviesGrid.setHasFixedSize(false);
+        mMoviesGrid.setHasFixedSize(true);
         // LayoutManager
         mMoviesGridLayoutManager = new GridLayoutManager(this, calculateNoOfColumns(this));
         mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);

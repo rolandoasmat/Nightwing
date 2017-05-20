@@ -28,17 +28,17 @@
             android:layout_height="wrap_content"
             layout="@layout/star_and_share"/>
 
-        <include
-            android:id="@+id/trailers"
-            layout="@layout/trailers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        <!--<include-->
+            <!--android:id="@+id/trailers"-->
+            <!--layout="@layout/trailers"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"/>-->
 
-        <include
-            android:id="@+id/reviews"
-            layout="@layout/reviews"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        <!--<include-->
+            <!--android:id="@+id/reviews"-->
+            <!--layout="@layout/reviews"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"/>-->
     </LinearLayout>
 
 </ScrollView>
