@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 
 public class MovieDetailActivity
         extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<List>, TrailerAdapterOnClickHandler {
+        implements TrailerAdapterOnClickHandler {
 
     @BindView(R.id.iv_movie_backdrop) ImageView mMovieBackdrop;
     @BindView(R.id.iv_poster_thumbnail) ImageView mMoviePoster;
@@ -216,22 +216,4 @@ public class MovieDetailActivity
         updateActionBarTitle(getString(stringID));
     }
 
-    /**
-     * ---------------------------- Loader ----------------------------
-     */
-
-    @Override
-    public Loader<List> onCreateLoader(int id, Bundle args) {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<List> loader, List data) {
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<List> loader) {
-
-    }
 }
