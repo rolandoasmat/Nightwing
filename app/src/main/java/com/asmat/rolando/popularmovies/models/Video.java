@@ -18,6 +18,14 @@ public class Video {
         this.type = type;
     }
 
+    public String youtubeUrl() {
+        return "https://www.youtube.com/watch?v="+key;
+    }
+
+    public String youtubeThumbnail() {
+        return "http://img.youtube.com/vi/"+key+"/0.jpg";
+    }
+
     public String getName() {
         return name;
     }

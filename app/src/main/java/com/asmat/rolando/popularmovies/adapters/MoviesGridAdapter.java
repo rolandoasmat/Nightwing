@@ -12,12 +12,12 @@ import com.asmat.rolando.popularmovies.models.Movie;
 import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
 import com.squareup.picasso.Picasso;
 
-
 /**
  * Created by rolandoasmat on 2/9/17.
  */
 
-public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.MoviesGridAdapterViewHolder> {
+public class MoviesGridAdapter
+        extends RecyclerView.Adapter<MoviesGridAdapter.MoviesGridAdapterViewHolder> {
 
     /**
      * Data set of Movie objects
@@ -36,6 +36,7 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
     public MoviesGridAdapter(MovieAdapterOnClickHandler handler) {
         this.mClickHandler = handler;
     }
+
     /**
      * Set list of movies
      */
@@ -116,7 +117,8 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
     /**
      * Cache of the children views for a forecast list item.
      */
-    class MoviesGridAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class MoviesGridAdapterViewHolder
+            extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public final ImageView mMoviePoster;
 

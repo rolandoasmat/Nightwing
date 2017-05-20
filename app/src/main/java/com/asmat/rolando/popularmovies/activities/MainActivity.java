@@ -29,7 +29,9 @@ import com.asmat.rolando.popularmovies.utilities.NetworkUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements MovieAdapterOnClickHandler{
+public class MainActivity
+        extends AppCompatActivity
+        implements MovieAdapterOnClickHandler{
 
     private static String TAG = MainActivity.class.getSimpleName();
 

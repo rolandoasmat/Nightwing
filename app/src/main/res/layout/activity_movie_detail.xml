@@ -28,11 +28,11 @@
             android:layout_height="wrap_content"
             layout="@layout/star_and_share"/>
 
-        <!--<include-->
-            <!--android:id="@+id/trailers"-->
-            <!--layout="@layout/trailers"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"/>-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_trailers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
 
         <!--<include-->
             <!--android:id="@+id/reviews"-->

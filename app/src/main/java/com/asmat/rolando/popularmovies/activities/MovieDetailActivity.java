@@ -1,5 +1,6 @@
 package com.asmat.rolando.popularmovies.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -16,6 +17,7 @@ import com.asmat.rolando.popularmovies.adapters.TrailersLinearAdapter;
 import com.asmat.rolando.popularmovies.managers.MovieApiManager;
 import com.asmat.rolando.popularmovies.models.Movie;
 import com.asmat.rolando.popularmovies.models.Review;
+import com.asmat.rolando.popularmovies.models.TrailerAdapterOnclickHandler;
 import com.asmat.rolando.popularmovies.models.Video;
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils;
 import com.squareup.picasso.Picasso;
@@ -25,12 +27,15 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MovieDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List>{
+public class MovieDetailActivity
+        extends AppCompatActivity
+        implements LoaderManager.LoaderCallbacks<List>, TrailerAdapterOnclickHandler {
 
     @BindView(R.id.iv_movie_backdrop) ImageView mMovieBackdrop;
     @BindView(R.id.iv_poster_thumbnail) ImageView mMoviePoster;
@@ -39,9 +44,9 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
     @BindView(R.id.tv_movie_rating) TextView mMovieRating;
     @BindView(R.id.tv_synopsis_content) TextView mMovieSynopsis;
 
-    //@BindView(R.id.rv_trailers) RecyclerView mTrailers;
-    //private LinearLayoutManager mTrailersLayoutManager;
-    //private TrailersLinearAdapter mTrailersLinearAdapter;
+    @BindView(R.id.rv_trailers) RecyclerView mTrailers;
+    private LinearLayoutManager mTrailersLayoutManager;
+    private TrailersLinearAdapter mTrailersLinearAdapter;
 
     final static String INTENT_EXTRA_TAG = "MOVIE_DATA";
     final private String DATE_FORMAT = "MMMM dd, yyyy";
@@ -71,12 +76,23 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
         updateActionBarTitle(R.string.movie_detail_activity_title);
         setVideosLoaderCallback();
         setReviewsLoaderCallback();
+
+        mTrailers.setHasFixedSize(true);
+        mTrailersLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        mTrailers.setLayoutManager(mTrailersLayoutManager);
+        mTrailersLinearAdapter = new TrailersLinearAdapter(this);
+        mTrailers.setAdapter(mTrailersLinearAdapter);
+
         getSupportLoaderManager().initLoader(VIDEOS_LOADER, null, videosCallbacks);
         getSupportLoaderManager().initLoader(REVIEWS_LOADER, null, reviewsCallbacks);
+    }
 
-        //mTrailers.setHasFixedSize(true);
-        //mTrailersLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-
+    @Override
+    public void onClick(Video trailer) {
+        Context context = this;
+        Class destinationClass = MovieDetailActivity.class;
+        //TODO create intent to launch video
+        System.out.print(trailer.youtubeUrl());
     }
 
     private void setVideosLoaderCallback() {
@@ -109,7 +125,16 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
                 if(data == null) {
                     // TODO show error message
                 } else {
-                    System.out.print("GOT VIDEOS");
+                    System.out.print("Videos fetched.");
+                    ArrayList<Video> trailers = new ArrayList<>();
+                    for(Video video: data) {
+                        if(video.getType().equals("Trailer")){
+                            trailers.add(video);
+                        }
+                    }
+                    System.out.print("Filter Trailers.");
+                    Video[] array = trailers.toArray(new Video[0]);
+                    mTrailersLinearAdapter.setTrailers(array);
                 }
             }
 
