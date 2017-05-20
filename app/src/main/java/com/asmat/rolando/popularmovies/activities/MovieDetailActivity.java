@@ -94,13 +94,16 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
 
             @Override
             public void onLoadFinished(Loader<Video[]> loader, Video[] data) {
-
+                // TODO hide loader
+                if(data == null) {
+                    // TODO show error message
+                } else {
+                    System.out.print("GOT VIDEOS");
+                }
             }
 
             @Override
-            public void onLoaderReset(Loader<Video[]> loader) {
-
-            }
+            public void onLoaderReset(Loader<Video[]> loader) { }
         };
     }
 
@@ -130,13 +133,16 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
 
             @Override
             public void onLoadFinished(Loader<Review[]> loader, Review[] data) {
-
+                // TODO hide loader
+                if(data == null) {
+                    // TODO show error message
+                } else {
+                    System.out.print("GOT REVIEWS");
+                }
             }
 
             @Override
-            public void onLoaderReset(Loader<Review[]> loader) {
-
-            }
+            public void onLoaderReset(Loader<Review[]> loader) { }
         };
     }
 

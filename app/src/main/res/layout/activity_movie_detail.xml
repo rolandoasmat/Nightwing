@@ -2,13 +2,12 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <ImageView
@@ -17,53 +16,17 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"/>
 
-        <RelativeLayout
+        <include
+            android:id="@+id/primary_details"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/iv_poster_thumbnail"
-                android:layout_width="@dimen/poster_width"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:layout_margin="@dimen/activity_margin_general"/>
-
-            <TextView
-                android:id="@+id/tv_movie_title"
-                tools:text="@string/movie_title"
-                android:textStyle="bold"
-                android:textSize="@dimen/movie_title_text_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_toRightOf="@+id/iv_poster_thumbnail"/>
-
-            <TextView
-                android:id="@+id/tv_release_date"
-                tools:text="@string/release_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin_small"
-                android:layout_below="@id/tv_movie_title"
-                android:layout_toRightOf="@+id/iv_poster_thumbnail"/>
-
-            <TextView
-                android:id="@+id/tv_movie_rating"
-                tools:text="@string/movie_rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin_small"
-                android:layout_below="@+id/tv_release_date"
-                android:layout_toRightOf="@+id/iv_poster_thumbnail"/>
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tv_synopsis_content"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            tools:text="@string/synopsis"/>
+            layout="@layout/primary_details"/>
+
+        <include
+            android:id="@+id/star_and_share"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/star_and_share"/>
 
         <include
             android:id="@+id/trailers"

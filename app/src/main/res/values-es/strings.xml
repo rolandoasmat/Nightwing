@@ -19,6 +19,8 @@
     <string name="release_date">Fecha de lanzamiento</string>
     <string name="movie_rating">Valuación</string>
     <string name="synopsis">Sinopsis</string>
+    <string name="favorite">Favorito</string>
+    <string name="share">Compartir</string>
 
     <!--Error Messages-->
     <string name="generic_error">"Oops! Algo salió horriblemente mal:'("</string>
