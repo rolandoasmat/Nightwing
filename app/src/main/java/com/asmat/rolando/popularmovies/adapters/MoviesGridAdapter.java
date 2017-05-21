@@ -92,7 +92,7 @@ public class MoviesGridAdapter
     @Override
     public void onBindViewHolder(MoviesGridAdapterViewHolder holder, int position) {
         Movie movie = mMovies[position];
-        String posterURL = movie.getPosterURL();
+        String posterURL = movie.getPosterUrlComplete();
         ImageView imageView = holder.mMoviePoster;
         Picasso.with(imageView.getContext())
                 .load(posterURL)
