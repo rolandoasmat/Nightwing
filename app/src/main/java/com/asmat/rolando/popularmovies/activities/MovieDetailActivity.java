@@ -2,6 +2,7 @@ package com.asmat.rolando.popularmovies.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.adapters.ReviewsLinearAdapter;
 import com.asmat.rolando.popularmovies.adapters.TrailersLinearAdapter;
+import com.asmat.rolando.popularmovies.data.PopularMoviesDBHelper;
 import com.asmat.rolando.popularmovies.managers.MovieApiManager;
 import com.asmat.rolando.popularmovies.models.Movie;
 import com.asmat.rolando.popularmovies.models.Review;
@@ -125,6 +127,10 @@ public class MovieDetailActivity
                 .setType(mimeType)
                 .setText(textToShare).getIntent();
         startActivity(intent);
+    }
+
+    public void onStar(View view) {
+        // Use content provider to save movie as a favortie
     }
 
     private void setVideosLoaderCallback() {
