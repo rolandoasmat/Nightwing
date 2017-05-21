@@ -1,7 +1,10 @@
 package com.asmat.rolando.popularmovies.models;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.asmat.rolando.popularmovies.data.PopularMoviesContract;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -144,4 +147,15 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
+
+    public static Movie getMovieFromCursorEntry(Cursor cursor) {
+        int id = cursor.getInt(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_MOVIE_ID));
+        String title = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_TITLE));
+        String posterUrl = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_POSTER_URL));
+        String backdropUrl = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_BACKDROP_URL));
+        String synopsis = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_SYNOPSIS));
+        double rating = cursor.getDouble(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_RATING));
+        String releaseDate = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_RELEASE_DATE));
+        return new Movie(id, title, posterUrl, backdropUrl, synopsis, rating, releaseDate);
+    }
 }

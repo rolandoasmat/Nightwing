@@ -47,13 +47,16 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // TODO save state of current filter in between app rotations
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         updateActionBarTitle(R.string.most_popular);
         setupRecyclerView();
         loadData();
-        setScrollListener();
+        if(mRequest.getRequestType() != RequestType.FAVORITES) {
+            setScrollListener();
+        }
     }
 
     @Override
@@ -101,28 +104,21 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     }
 
     private void showFavorites() {
+        mRequest.setRequestType(RequestType.FAVORITES);
+        updateActionBarTitle(R.string.favorites);
         ContentResolver resolver = getContentResolver();
         Cursor cursor = resolver.query(PopularMoviesContract.FavoritesEntry.CONTENT_URI,null,null,null,null);
         ArrayList<Movie> favoriteMovies = new ArrayList<>();
         while(cursor.moveToNext()) {
-            favoriteMovies.add(getMovieFromCursorEntry(cursor));
+            favoriteMovies.add(Movie.getMovieFromCursorEntry(cursor));
         }
         Movie[] movies = favoriteMovies.toArray(new Movie[0]);
         mMoviesGridAdapter.setMovies(movies);
-    }
-
-    private Movie getMovieFromCursorEntry(Cursor cursor) {
-        int id = cursor.getInt(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_MOVIE_ID));
-        String title = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_TITLE));
-        String posterUrl = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_POSTER_URL));
-        String backdropUrl = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_BACKDROP_URL));
-        String synopsis = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_SYNOPSIS));
-        double rating = cursor.getDouble(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_RATING));
-        String releaseDate = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_RELEASE_DATE));
-        return new Movie(id, title, posterUrl, backdropUrl, synopsis, rating, releaseDate);
+        removeScrollListener();
     }
 
     private void sortByTopRated() {
+        setScrollListener();
         if(mRequest.getRequestType() != RequestType.TOP_RATED) {
             // Only sort if not already sorted by top rated
             mRequest.resetPage();
@@ -133,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     }
 
     private void sortByMostPopular() {
+        setScrollListener();
         if(mRequest.getRequestType() != RequestType.POPULAR) {
             // Only sort if not already sorted by most popular
             mRequest.resetPage();
@@ -159,20 +156,25 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         executeRequest();
     }
 
-    private void setScrollListener() {
-        mMoviesGrid.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if(dy > 0 && !isLoading) { // User is scrolling down
-                    int positionOfLastItem = mMoviesGridLayoutManager.getItemCount()-1;
-                    int currentPositionOfLastVisibleItem = mMoviesGridLayoutManager.findLastCompletelyVisibleItemPosition();
-                    if(positionOfLastItem == currentPositionOfLastVisibleItem){
-                        lastItemReached();
-                    }
+    private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            if(dy > 0 && !isLoading) { // User is scrolling down
+                int positionOfLastItem = mMoviesGridLayoutManager.getItemCount()-1;
+                int currentPositionOfLastVisibleItem = mMoviesGridLayoutManager.findLastCompletelyVisibleItemPosition();
+                if(positionOfLastItem == currentPositionOfLastVisibleItem){
+                    lastItemReached();
                 }
             }
         }
-        );
+    };
+
+    private void setScrollListener() {
+        mMoviesGrid.addOnScrollListener(mOnScrollListener);
+    }
+
+    private void removeScrollListener() {
+        mMoviesGrid.clearOnScrollListeners();
     }
 
     private void lastItemReached() {

@@ -1,10 +1,13 @@
 package com.asmat.rolando.popularmovies.activities;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.AsyncTaskLoader;
@@ -51,6 +54,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     @BindView(R.id.rv_reviews) RecyclerView mReviews;
     private LinearLayoutManager mReviewsLinearLayoutManager;
     private ReviewsLinearAdapter mReviewsLinearAdapter;
+    @BindView(R.id.star) ImageView star;
     final static String INTENT_EXTRA_TAG = "MOVIE_DATA";
     private static final int VIDEOS_LOADER = 3948;
     private static final int REVIEWS_LOADER = 2938;
@@ -80,6 +84,8 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
         getSupportLoaderManager().initLoader(VIDEOS_LOADER, null, videosCallbacks);
         getSupportLoaderManager().initLoader(REVIEWS_LOADER, null, reviewsCallbacks);
+
+        setStarStatus();
     }
 
     @Override
@@ -89,6 +95,34 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         if(intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
+    }
+
+    private void setStarStatus() {
+        if(isMovieFavorited()) {
+            fillStar();
+        } else {
+            unfillStar();
+        }
+    }
+
+    private boolean isMovieFavorited() {
+        int id = movie.getId();
+        ContentResolver resolver = getContentResolver();
+        Cursor cursor = resolver.query(PopularMoviesContract.FavoritesEntry.CONTENT_URI,null,null,null,null);
+        while(cursor.moveToNext()) {
+            if(Movie.getMovieFromCursorEntry(cursor).getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void fillStar() {
+        star.setImageResource(R.drawable.ic_star_yellow_24dp);
+    }
+
+    private void unfillStar() {
+        star.setImageResource(R.drawable.ic_star_gray_24dp);
     }
 
     public void onShare(View view) {
@@ -106,6 +140,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     }
 
     public void onStar(View view) {
+        fillStar();
         int movieID = movie.getId();
         String movieTitle = movie.getTitle();
         String posterUrl = movie.getPosterURL();
