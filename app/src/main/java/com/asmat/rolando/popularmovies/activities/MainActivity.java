@@ -1,7 +1,9 @@
 package com.asmat.rolando.popularmovies.activities;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -98,6 +100,11 @@ public class MainActivity
         Intent intentToStartDetailActivity = new Intent(context, destinationClass);
         intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_TAG, movie);
         startActivity(intentToStartDetailActivity);
+    }
+
+    private void fetchFavoriteMovies() {
+        ContentResolver resolver = getContentResolver();
+        Cursor cursor = resolver.query(PopularMoviesContract.CONTENT_URI,null,null,null,null);
     }
 
     private void sortByTopRated() {
