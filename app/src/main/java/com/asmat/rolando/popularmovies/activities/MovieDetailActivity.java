@@ -114,6 +114,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                 return true;
             }
         }
+        cursor.close();
         return false;
     }
 
