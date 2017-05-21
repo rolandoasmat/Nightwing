@@ -2,6 +2,7 @@ package com.asmat.rolando.popularmovies.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -104,10 +105,8 @@ public class MovieDetailActivity
 
     @Override
     public void onClick(Video trailer) {
-        Context context = this;
-        Class destinationClass = MovieDetailActivity.class;
-        //TODO create intent to launch video
-        System.out.print(trailer.youtubeUrl());
+        String url = trailer.youtubeUrl();
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
 
     private void setVideosLoaderCallback() {
