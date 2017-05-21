@@ -55,8 +55,6 @@ public final class MovieApiManager {
     private static final String LANGUAGE_VALUE = Locale.getDefault().getLanguage();
     private static final String PAGE_PARAM     = "page";
 
-    private static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w342"; // "w92", "w154", "w185", "w342", "w500", "w780"
-
     /**
      *  ---------------------------- API ----------------------------
      */
@@ -104,7 +102,7 @@ public final class MovieApiManager {
      * @throws JSONException
      * @throws ParseException
      */
-    public static Review[] fetchMovieReviews(String id, int page) throws IOException, JSONException, ParseException {
+    public static Review[] fetchMovieReviews(int id, int page) throws IOException, JSONException, ParseException {
         return fetchReviews(id, BASE_URL, MOVIES, GET_REVIEWS, page);
     }
 
@@ -121,7 +119,7 @@ public final class MovieApiManager {
      * @throws JSONException
      * @throws ParseException
      */
-    public static Video[] fetchMovieVideos(String id, int page) throws IOException, JSONException, ParseException {
+    public static Video[] fetchMovieVideos(int id, int page) throws IOException, JSONException, ParseException {
         return fetchVideos(id, BASE_URL, MOVIES, GET_VIDEOS, page);
     }
 
@@ -140,7 +138,7 @@ public final class MovieApiManager {
         return movies;
     }
 
-    private static Review[] fetchReviews(String id,
+    private static Review[] fetchReviews(int id,
                                          String baseURL,
                                          String subComponent,
                                          String endpoint,
@@ -152,7 +150,7 @@ public final class MovieApiManager {
         return reviews;
     }
 
-    private static Video[] fetchVideos(String id,
+    private static Video[] fetchVideos(int id,
                                         String baseURL,
                                         String subComponent,
                                         String endpoint,
@@ -219,18 +217,13 @@ public final class MovieApiManager {
     }
 
     private static Movie mapMovie(JSONObject json) throws JSONException, ParseException {
-        // Get properties
-        String id              = json.getString("id");
-        String title           = json.getString("original_title");
-        String posterURL       = IMAGE_BASE_URL+json.getString("poster_path");
-        String backdropURL     = IMAGE_BASE_URL+json.getString("backdrop_path");
-        String plotSynopsis    = json.getString("overview");
-        double userRating      = json.getDouble("vote_average");
-        String releaseDateStr  = json.getString("release_date");
-        // Create Date object
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date releaseDate = dateFormat.parse(releaseDateStr);
-        // Create Movie object
+        String posterURL    = json.getString("poster_path");
+        String plotSynopsis = json.getString("overview");
+        String releaseDate  = json.getString("release_date");
+        int id              = json.getInt("id");
+        String title        = json.getString("original_title");
+        String backdropURL  = json.getString("backdrop_path");
+        double userRating   = json.getDouble("vote_average");
         return new Movie(id, title, posterURL, backdropURL, plotSynopsis, userRating, releaseDate);
     }
 

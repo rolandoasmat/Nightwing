@@ -3,6 +3,8 @@ package com.asmat.rolando.popularmovies.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -11,15 +13,18 @@ import java.util.Date;
 
 public class Movie implements Parcelable {
 
-    private String id;
+    private int id;
     private String title;
     private String posterURL;
     private String backdropURL;
     private String plotSynopsis;
     private double userRating;
-    private Date releaseDate;
+    private String releaseDate;
 
-    public Movie(String id, String title, String posterURL, String backdropURL, String plotSynopsis, double userRating, Date releaseDate) {
+    private static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w342"; // "w92", "w154", "w185", "w342", "w500", "w780"
+
+    public Movie(int id, String title, String posterURL, String backdropURL,
+                 String plotSynopsis, double userRating, String releaseDate) {
         this.id = id;
         this.title = title;
         this.posterURL = posterURL;
@@ -29,7 +34,26 @@ public class Movie implements Parcelable {
         this.releaseDate = releaseDate;
     }
 
-    public String getId() {
+    public String getReleaseDateFormatted() {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = sdf.parse(releaseDate);
+            return sdf.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "Unknown date.";
+        }
+    }
+
+    public String getBackdropUrlComplete() {
+        return IMAGE_BASE_URL + backdropURL;
+    }
+
+    public String getPosterUrlComplete() {
+        return IMAGE_BASE_URL + posterURL;
+    }
+
+    public int getId() {
         return id;
     }
 
@@ -73,11 +97,11 @@ public class Movie implements Parcelable {
         this.userRating = userRating;
     }
 
-    public Date getReleaseDate() {
+    public String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
 
@@ -88,24 +112,23 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.title);
-        dest.writeString(this.posterURL);
-        dest.writeString(this.backdropURL);
-        dest.writeString(this.plotSynopsis);
-        dest.writeDouble(this.userRating);
-        dest.writeLong(releaseDate.getTime());
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeString(posterURL);
+        dest.writeString(backdropURL);
+        dest.writeString(plotSynopsis);
+        dest.writeDouble(userRating);
+        dest.writeString(releaseDate);
     }
 
     protected Movie(Parcel in) {
-        id = in.readString();
+        id = in.readInt();
         title = in.readString();
         posterURL = in.readString();
         backdropURL = in.readString();
         plotSynopsis = in.readString();
         userRating = in.readDouble();
-        long tmpReleaseDate = in.readLong();
-        releaseDate =  new Date(tmpReleaseDate);
+        releaseDate = in.readString();
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {

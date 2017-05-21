@@ -19,14 +19,15 @@ public class PopularMoviesDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        final String SQL_CREATE_WAITLIST_TABLE = "CREATE TABLE " + FavoritesEntry.TABLE_NAME + " (" +
-                FavoritesEntry.COLUMN_NAME_MOVIE_ID + " INTEGER PRIMARY KEY," +
-                FavoritesEntry.COLUMN_NAME_NAME + " TEXT NOT NULL, " +
-                FavoritesEntry.COLUMN_NAME_SYNOPSIS + " TEXT NOT NULL, " +
-                FavoritesEntry.COLUMN_NAME_RATING + " TEXT NOT NULL" +
-                FavoritesEntry.COLUMN_NAME_RELEASE_DATE + " TEXT NOT NULL" +
-                "); ";
-        db.execSQL(SQL_CREATE_WAITLIST_TABLE);
+        final String SQL_CREATE_FAVORITES_TABLE = "CREATE TABLE " + FavoritesEntry.TABLE_NAME + " (" +
+                FavoritesEntry.COLUMN_MOVIE_ID + " INTEGER PRIMARY KEY, " +
+                FavoritesEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
+                FavoritesEntry.COLUMN_POSTER_URL + " TEXT NOT NULL, " +
+                FavoritesEntry.COLUMN_BACKDROP_URL + " REAL NOT NULL, " +
+                FavoritesEntry.COLUMN_SYNOPSIS + " TEXT NOT NULL, "+
+                FavoritesEntry.COLUMN_RATING+ " REAL NOT NULL, "+
+                FavoritesEntry.COLUMN_RELEASE_DATE+" TEXT NOT NULL );";
+        db.execSQL(SQL_CREATE_FAVORITES_TABLE);
     }
 
     @Override
