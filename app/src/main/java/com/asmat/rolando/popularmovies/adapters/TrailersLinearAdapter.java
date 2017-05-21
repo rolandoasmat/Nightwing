@@ -44,6 +44,10 @@ public class TrailersLinearAdapter
         notifyDataSetChanged();
     }
 
+    public Video[] getTrailers() {
+        return mTrailers;
+    }
+
     // ----------------------------- Overrides -----------------------------
     @Override
     public TrailersLinearAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

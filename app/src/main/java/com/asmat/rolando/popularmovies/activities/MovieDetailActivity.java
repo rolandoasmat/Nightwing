@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -58,7 +60,7 @@ public class MovieDetailActivity
     private LoaderManager.LoaderCallbacks<Video[]> videosCallbacks;
     private LoaderManager.LoaderCallbacks<Review[]> reviewsCallbacks;
 
-    private String movieID;
+    private Movie movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +71,7 @@ public class MovieDetailActivity
         Intent intentThatStartedThisActivity = getIntent();
         if(intentThatStartedThisActivity != null) {
             if(intentThatStartedThisActivity.hasExtra(INTENT_EXTRA_TAG)) {
-                Movie movie = intentThatStartedThisActivity.getParcelableExtra(INTENT_EXTRA_TAG);
-                movieID = movie.getId();
+                movie = intentThatStartedThisActivity.getParcelableExtra(INTENT_EXTRA_TAG);
                 populateViews(movie);
             }
         }
@@ -106,7 +107,24 @@ public class MovieDetailActivity
     @Override
     public void onClick(Video trailer) {
         String url = trailer.youtubeUrl();
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        if(intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
+    public void onShare(View view) {
+        String mimeType = "text/plain";
+        String title = "Share movie...";
+        String movieTitle = movie.getTitle();
+        String movieTrailerUrl = mTrailersLinearAdapter.getTrailers()[0].youtubeUrl();
+        String textToShare = "Check out the trailer for "+movieTitle+"!\n"+movieTrailerUrl;
+
+        Intent intent = ShareCompat.IntentBuilder.from(this)
+                .setChooserTitle(title)
+                .setType(mimeType)
+                .setText(textToShare).getIntent();
+        startActivity(intent);
     }
 
     private void setVideosLoaderCallback() {
@@ -124,7 +142,7 @@ public class MovieDetailActivity
                     @Override
                     public Video[] loadInBackground() {
                         try {
-                            return MovieApiManager.fetchMovieVideos(movieID, 1);
+                            return MovieApiManager.fetchMovieVideos(movie.getId(), 1);
                         } catch (Exception e) {
                             e.printStackTrace();
                             return null;
@@ -172,7 +190,7 @@ public class MovieDetailActivity
                     @Override
                     public Review[] loadInBackground() {
                         try {
-                            return MovieApiManager.fetchMovieReviews(movieID, 1);
+                            return MovieApiManager.fetchMovieReviews(movie.getId(), 1);
                         } catch (Exception e) {
                             e.printStackTrace();
                             return null;
