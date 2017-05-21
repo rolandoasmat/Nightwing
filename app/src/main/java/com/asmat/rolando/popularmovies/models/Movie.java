@@ -22,6 +22,7 @@ public class Movie implements Parcelable {
     private String releaseDate;
 
     private static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w342"; // "w92", "w154", "w185", "w342", "w500", "w780"
+    final private String DATE_FORMAT = "MMMM dd, yyyy";
 
     public Movie(int id, String title, String posterURL, String backdropURL,
                  String plotSynopsis, double userRating, String releaseDate) {
@@ -38,10 +39,11 @@ public class Movie implements Parcelable {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date date = sdf.parse(releaseDate);
+            sdf = new SimpleDateFormat(DATE_FORMAT);
             return sdf.format(date);
         } catch (ParseException e) {
             e.printStackTrace();
-            return "Unknown date.";
+            return "Unable to parse date.";
         }
     }
 
