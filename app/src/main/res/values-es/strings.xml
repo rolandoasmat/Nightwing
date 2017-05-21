@@ -21,6 +21,7 @@
     <string name="synopsis">Sinopsis</string>
     <string name="favorite">Favorito</string>
     <string name="share">Compartir</string>
+    <string name="trailers">Videos</string>
     <string name="reviews">Comentarios</string>
 
     <!--Error Messages-->
