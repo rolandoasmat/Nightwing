@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asmat.rolando.popularmovies.R;
+import com.asmat.rolando.popularmovies.adapters.ReviewsLinearAdapter;
 import com.asmat.rolando.popularmovies.adapters.TrailersLinearAdapter;
 import com.asmat.rolando.popularmovies.managers.MovieApiManager;
 import com.asmat.rolando.popularmovies.models.Movie;
@@ -43,6 +44,10 @@ public class MovieDetailActivity
     private LinearLayoutManager mTrailersLayoutManager;
     private TrailersLinearAdapter mTrailersLinearAdapter;
 
+    @BindView(R.id.rv_reviews) RecyclerView mReviews;
+    private LinearLayoutManager mReviewsLinearLayoutManager;
+    private ReviewsLinearAdapter mReviewsLinearAdapter;
+
     final static String INTENT_EXTRA_TAG = "MOVIE_DATA";
     final private String DATE_FORMAT = "MMMM dd, yyyy";
 
@@ -72,14 +77,29 @@ public class MovieDetailActivity
         setVideosLoaderCallback();
         setReviewsLoaderCallback();
 
-        mTrailers.setHasFixedSize(true);
-        mTrailersLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-        mTrailers.setLayoutManager(mTrailersLayoutManager);
-        mTrailersLinearAdapter = new TrailersLinearAdapter(this);
-        mTrailers.setAdapter(mTrailersLinearAdapter);
+        setupTrailersRecyclerView();
+        setupReviewsRecyclerView();
 
         getSupportLoaderManager().initLoader(VIDEOS_LOADER, null, videosCallbacks);
         getSupportLoaderManager().initLoader(REVIEWS_LOADER, null, reviewsCallbacks);
+    }
+
+    private void setupTrailersRecyclerView() {
+        mTrailers.setHasFixedSize(true);
+        mTrailersLayoutManager =
+                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mTrailers.setLayoutManager(mTrailersLayoutManager);
+        mTrailersLinearAdapter = new TrailersLinearAdapter(this);
+        mTrailers.setAdapter(mTrailersLinearAdapter);
+    }
+
+    private void setupReviewsRecyclerView() {
+        mReviews.setHasFixedSize(true);
+        mReviewsLinearLayoutManager =
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mReviews.setLayoutManager(mReviewsLinearLayoutManager);
+        mReviewsLinearAdapter = new ReviewsLinearAdapter();
+        mReviews.setAdapter(mReviewsLinearAdapter);
     }
 
     @Override
@@ -169,6 +189,7 @@ public class MovieDetailActivity
                     // TODO show error message
                 } else {
                     System.out.print("GOT REVIEWS");
+                    mReviewsLinearAdapter.setReviews(data);
                 }
             }
 

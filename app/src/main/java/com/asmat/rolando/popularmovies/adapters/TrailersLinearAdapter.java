@@ -80,7 +80,6 @@ public class TrailersLinearAdapter
     // ----------------------------- ViewHolder -----------------------------
     class TrailersLinearAdapterViewHolder
             extends RecyclerView.ViewHolder implements View.OnClickListener {
-        // TODO make UI elements into fields
         public final ImageView mTrailerThumbnail;
         public final TextView mCaption;
 
