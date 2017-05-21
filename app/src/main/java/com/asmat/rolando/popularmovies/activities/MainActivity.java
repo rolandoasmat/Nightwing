@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.asmat.rolando.popularmovies.adapters.MoviesGridAdapter;
 import com.asmat.rolando.popularmovies.R;
+import com.asmat.rolando.popularmovies.data.PopularMoviesContract;
 import com.asmat.rolando.popularmovies.managers.MovieApiManager;
 import com.asmat.rolando.popularmovies.models.Movie;
 import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
@@ -104,7 +105,7 @@ public class MainActivity
 
     private void fetchFavoriteMovies() {
         ContentResolver resolver = getContentResolver();
-        Cursor cursor = resolver.query(PopularMoviesContract.CONTENT_URI,null,null,null,null);
+        Cursor cursor = resolver.query(PopularMoviesContract.FavoritesEntry.CONTENT_URI,null,null,null,null);
     }
 
     private void sortByTopRated() {
