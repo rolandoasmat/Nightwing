@@ -29,6 +29,8 @@ import com.asmat.rolando.popularmovies.models.Request;
 import com.asmat.rolando.popularmovies.models.RequestType;
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
                 return true;
             case R.id.show_favorites:
                 Log.v(TAG, "Show favorites");
-                // showFavorites(); TODO create this method to show faves using ContentProvider
+                showFavorites();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -98,9 +100,26 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         mMoviesGrid.setAdapter(mMoviesGridAdapter);
     }
 
-    private void fetchFavoriteMovies() {
+    private void showFavorites() {
         ContentResolver resolver = getContentResolver();
         Cursor cursor = resolver.query(PopularMoviesContract.FavoritesEntry.CONTENT_URI,null,null,null,null);
+        ArrayList<Movie> favoriteMovies = new ArrayList<>();
+        while(cursor.moveToNext()) {
+            favoriteMovies.add(getMovieFromCursorEntry(cursor));
+        }
+        Movie[] movies = favoriteMovies.toArray(new Movie[0]);
+        mMoviesGridAdapter.setMovies(movies);
+    }
+
+    private Movie getMovieFromCursorEntry(Cursor cursor) {
+        int id = cursor.getInt(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_MOVIE_ID));
+        String title = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_TITLE));
+        String posterUrl = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_POSTER_URL));
+        String backdropUrl = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_BACKDROP_URL));
+        String synopsis = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_SYNOPSIS));
+        double rating = cursor.getDouble(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_RATING));
+        String releaseDate = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_RELEASE_DATE));
+        return new Movie(id, title, posterUrl, backdropUrl, synopsis, rating, releaseDate);
     }
 
     private void sortByTopRated() {
