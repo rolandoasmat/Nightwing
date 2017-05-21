@@ -14,7 +14,7 @@ import android.support.annotation.Nullable;
 public class PopularMoviesProvider extends ContentProvider{
     @Override
     public boolean onCreate() {
-
+        return true;
     }
 
     @Nullable
