@@ -141,28 +141,34 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     }
 
     public void onStar(View view) {
-        fillStar();
         int movieID = movie.getId();
-        String movieTitle = movie.getTitle();
-        String posterUrl = movie.getPosterURL();
-        String backdropurl = movie.getbackdropURL();
-        String movieSynopsis = movie.getPlotSynopsis();
-        double movieRating = movie.getUserRating();
-        String releaseDate = movie.getReleaseDate();
+        if(isMovieFavorited()) {
+            getContentResolver().delete(PopularMoviesContract.FavoritesEntry.CONTENT_URI,
+                    PopularMoviesContract.FavoritesEntry.COLUMN_MOVIE_ID+" = "+ movieID,
+                    null);
+        } else {
+            String movieTitle = movie.getTitle();
+            String posterUrl = movie.getPosterURL();
+            String backdropurl = movie.getbackdropURL();
+            String movieSynopsis = movie.getPlotSynopsis();
+            double movieRating = movie.getUserRating();
+            String releaseDate = movie.getReleaseDate();
 
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_MOVIE_ID, movieID);
-        contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_TITLE, movieTitle);
-        contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_POSTER_URL, posterUrl);
-        contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_BACKDROP_URL, backdropurl );
-        contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_SYNOPSIS, movieSynopsis);
-        contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_RATING, movieRating);
-        contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_RELEASE_DATE, releaseDate);
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_MOVIE_ID, movieID);
+            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_TITLE, movieTitle);
+            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_POSTER_URL, posterUrl);
+            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_BACKDROP_URL, backdropurl );
+            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_SYNOPSIS, movieSynopsis);
+            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_RATING, movieRating);
+            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_RELEASE_DATE, releaseDate);
 
-        Uri uri = getContentResolver().insert(PopularMoviesContract.FavoritesEntry.CONTENT_URI, contentValues);
-        if(uri != null) {
-            Toast.makeText(this,uri.toString(),Toast.LENGTH_LONG).show();
+            Uri uri = getContentResolver().insert(PopularMoviesContract.FavoritesEntry.CONTENT_URI, contentValues);
+            if(uri != null) {
+                Toast.makeText(this,uri.toString(),Toast.LENGTH_LONG).show();
+            }
         }
+        setStarStatus();
     }
 
     private void setupTrailersRecyclerView() {
