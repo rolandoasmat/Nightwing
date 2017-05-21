@@ -32,18 +32,14 @@ import com.asmat.rolando.popularmovies.utilities.NetworkUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity
-        extends AppCompatActivity
-        implements MovieAdapterOnClickHandler{
+public class MainActivity extends AppCompatActivity implements MovieAdapterOnClickHandler{
 
-    private static String TAG = MainActivity.class.getSimpleName();
-
-    @BindView(R.id.rv_movie_grid) RecyclerView mMoviesGrid;
     @BindView(R.id.tv_error_message) TextView mErrorMessageTextView;
     @BindView(R.id.pb_loading_bar) ProgressBar mLoadingBar;
-
+    @BindView(R.id.rv_movie_grid) RecyclerView mMoviesGrid;
     private MoviesGridAdapter mMoviesGridAdapter;
     private GridLayoutManager mMoviesGridLayoutManager;
+    private static String TAG = MainActivity.class.getSimpleName();
     private Request mRequest;
     private boolean isLoading;
 
@@ -53,16 +49,8 @@ public class MainActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         updateActionBarTitle(R.string.most_popular);
-        mMoviesGrid.setHasFixedSize(true);
-        // LayoutManager
-        mMoviesGridLayoutManager = new GridLayoutManager(this, calculateNoOfColumns(this));
-        mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
-        // Set adapter
-        mMoviesGridAdapter = new MoviesGridAdapter(this);
-        mMoviesGrid.setAdapter(mMoviesGridAdapter);
-        // Load initial data
+        setupRecyclerView();
         loadData();
-        // Setup scroll listener
         setScrollListener();
     }
 
@@ -75,7 +63,6 @@ public class MainActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
             case R.id.sort_by_top_rated:
                 Log.v(TAG, "Sort by top rated");
@@ -101,6 +88,14 @@ public class MainActivity
         Intent intentToStartDetailActivity = new Intent(context, destinationClass);
         intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_TAG, movie);
         startActivity(intentToStartDetailActivity);
+    }
+
+    private void setupRecyclerView() {
+        mMoviesGrid.setHasFixedSize(true);
+        mMoviesGridLayoutManager = new GridLayoutManager(this, calculateNoOfColumns(this));
+        mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
+        mMoviesGridAdapter = new MoviesGridAdapter(this);
+        mMoviesGrid.setAdapter(mMoviesGridAdapter);
     }
 
     private void fetchFavoriteMovies() {
@@ -141,9 +136,7 @@ public class MainActivity
     }
 
     private void loadData(){
-        // Create request
         mRequest = new Request(RequestType.POPULAR, 1);
-        // Execute
         executeRequest();
     }
 
@@ -166,7 +159,6 @@ public class MainActivity
     private void lastItemReached() {
         Log.v(TAG, "Reached last item of list.");
         mRequest.nextPage();
-        // Fetch more movies
         new FetchMoviesTask().execute(mRequest);
     }
 
