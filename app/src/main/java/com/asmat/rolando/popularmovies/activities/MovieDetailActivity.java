@@ -52,7 +52,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     private LinearLayoutManager mReviewsLinearLayoutManager;
     private ReviewsLinearAdapter mReviewsLinearAdapter;
     final static String INTENT_EXTRA_TAG = "MOVIE_DATA";
-    final private String DATE_FORMAT = "MMMM dd, yyyy";
     private static final int VIDEOS_LOADER = 3948;
     private static final int REVIEWS_LOADER = 2938;
     private LoaderManager.LoaderCallbacks<Video[]> videosCallbacks;
@@ -126,7 +125,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
         Uri uri = getContentResolver().insert(PopularMoviesContract.FavoritesEntry.CONTENT_URI, contentValues);
         if(uri != null) {
-            Toast.makeText(this,uri.toString(),Toast.LENGTH_LONG);
+            Toast.makeText(this,uri.toString(),Toast.LENGTH_LONG).show();
         }
     }
 
@@ -239,7 +238,8 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         Picasso.with(this).load(movie.getBackdropUrlComplete()).into(mMovieBackdrop);
         Picasso.with(this).load(movie.getPosterUrlComplete()).into(mMoviePoster);
         mMovieTitle.setText(movie.getTitle());
-        mReleaseDate.setText(movie.getReleaseDateFormatted());
+        String formatted = movie.getReleaseDateFormatted();
+        mReleaseDate.setText(formatted);
         String rating = movie.getUserRating()+getString(R.string.out_of_ten);
         mMovieRating.setText(rating);
         mMovieSynopsis.setText(movie.getPlotSynopsis());
