@@ -113,7 +113,6 @@ public class MovieDetailActivity
         }
     }
 
-    // Share first trailer of movie
     public void onShare(View view) {
         String mimeType = "text/plain";
         String title = "Share movie...";
