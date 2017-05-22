@@ -197,7 +197,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         isLoading = true;
         mErrorMessageTextView.setVisibility(View.INVISIBLE);
         mLoadingBar.setVisibility(View.VISIBLE);
-        //Snackbar.make(mMoviesGrid, "Loading", Snackbar.LENGTH_SHORT).show();
     }
 
     private void showGrid() {
