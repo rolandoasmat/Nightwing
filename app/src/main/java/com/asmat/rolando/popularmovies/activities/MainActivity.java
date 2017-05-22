@@ -1,8 +1,10 @@
 package com.asmat.rolando.popularmovies.activities;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -97,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
 
     private void setupRecyclerView() {
         mMoviesGrid.setHasFixedSize(true);
-        mMoviesGridLayoutManager = new GridLayoutManager(this, calculateNoOfColumns(this));
+        mMoviesGridLayoutManager = new GridLayoutManager(this, calculateNoOfColumns());
         mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
         mMoviesGridAdapter = new MoviesGridAdapter(this);
         mMoviesGrid.setAdapter(mMoviesGridAdapter);
@@ -161,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             if(dy > 0 && !isLoading) { // User is scrolling down
                 int positionOfLastItem = mMoviesGridLayoutManager.getItemCount()-1;
-                int currentPositionOfLastVisibleItem = mMoviesGridLayoutManager.findLastCompletelyVisibleItemPosition();
+                int currentPositionOfLastVisibleItem = mMoviesGridLayoutManager.findLastVisibleItemPosition();
                 if(positionOfLastItem == currentPositionOfLastVisibleItem){
                     lastItemReached();
                 }
@@ -170,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     };
 
     private void setScrollListener() {
+        mMoviesGrid.clearOnScrollListeners();
         mMoviesGrid.addOnScrollListener(mOnScrollListener);
     }
 
@@ -194,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         isLoading = true;
         mErrorMessageTextView.setVisibility(View.INVISIBLE);
         mLoadingBar.setVisibility(View.VISIBLE);
-        Snackbar.make(mMoviesGrid, "Loading", Snackbar.LENGTH_SHORT).show();
+        //Snackbar.make(mMoviesGrid, "Loading", Snackbar.LENGTH_SHORT).show();
     }
 
     private void showGrid() {
@@ -204,10 +207,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         mLoadingBar.setVisibility(View.INVISIBLE);
     }
 
-    private int calculateNoOfColumns(Context context) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        return (int) (dpWidth / 180);
+    private int calculateNoOfColumns() {
+        int orientation = getResources().getConfiguration().orientation;
+        if(orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            return 3;
+        } else {
+            return 2;
+        }
     }
 
     // ----------------------------- AsyncTask -----------------------------
