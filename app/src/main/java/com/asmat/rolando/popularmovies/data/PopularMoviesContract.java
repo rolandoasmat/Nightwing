@@ -24,11 +24,13 @@ public class PopularMoviesContract {
 
         public static final String TABLE_NAME = "favorites";
 
-        public static final String COLUMN_NAME_MOVIE_ID = "movie_id";
-        public static final String COLUMN_NAME_NAME = "name";
-        public static final String COLUMN_NAME_SYNOPSIS = "synopsis";
-        public static final String COLUMN_NAME_RATING = "rating";
-        public static final String COLUMN_NAME_RELEASE_DATE = "release_date";
+        public static final String COLUMN_MOVIE_ID = "movie_id";
+        public static final String COLUMN_TITLE = "title";
+        public static final String COLUMN_POSTER_URL = "poster_url";
+        public static final String COLUMN_BACKDROP_URL = "backdrop_url";
+        public static final String COLUMN_SYNOPSIS = "synopsis";
+        public static final String COLUMN_RATING = "rating";
+        public static final String COLUMN_RELEASE_DATE = "release_date";
 
     }
 }

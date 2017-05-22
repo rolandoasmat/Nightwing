@@ -29,41 +29,34 @@ import com.asmat.rolando.popularmovies.models.Request;
 import com.asmat.rolando.popularmovies.models.RequestType;
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity
-        extends AppCompatActivity
-        implements MovieAdapterOnClickHandler{
+public class MainActivity extends AppCompatActivity implements MovieAdapterOnClickHandler{
 
-    private static String TAG = MainActivity.class.getSimpleName();
-
-    @BindView(R.id.rv_movie_grid) RecyclerView mMoviesGrid;
     @BindView(R.id.tv_error_message) TextView mErrorMessageTextView;
     @BindView(R.id.pb_loading_bar) ProgressBar mLoadingBar;
-
+    @BindView(R.id.rv_movie_grid) RecyclerView mMoviesGrid;
     private MoviesGridAdapter mMoviesGridAdapter;
     private GridLayoutManager mMoviesGridLayoutManager;
+    private static String TAG = MainActivity.class.getSimpleName();
     private Request mRequest;
     private boolean isLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // TODO save state of current filter in between app rotations
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         updateActionBarTitle(R.string.most_popular);
-        mMoviesGrid.setHasFixedSize(true);
-        // LayoutManager
-        mMoviesGridLayoutManager = new GridLayoutManager(this, calculateNoOfColumns(this));
-        mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
-        // Set adapter
-        mMoviesGridAdapter = new MoviesGridAdapter(this);
-        mMoviesGrid.setAdapter(mMoviesGridAdapter);
-        // Load initial data
+        setupRecyclerView();
         loadData();
-        // Setup scroll listener
-        setScrollListener();
+        if(mRequest.getRequestType() != RequestType.FAVORITES) {
+            setScrollListener();
+        }
     }
 
     @Override
@@ -75,7 +68,6 @@ public class MainActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
             case R.id.sort_by_top_rated:
                 Log.v(TAG, "Sort by top rated");
@@ -87,7 +79,7 @@ public class MainActivity
                 return true;
             case R.id.show_favorites:
                 Log.v(TAG, "Show favorites");
-                // showFavorites(); TODO create this method to show faves using ContentProvider
+                showFavorites();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -103,12 +95,30 @@ public class MainActivity
         startActivity(intentToStartDetailActivity);
     }
 
-    private void fetchFavoriteMovies() {
+    private void setupRecyclerView() {
+        mMoviesGrid.setHasFixedSize(true);
+        mMoviesGridLayoutManager = new GridLayoutManager(this, calculateNoOfColumns(this));
+        mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
+        mMoviesGridAdapter = new MoviesGridAdapter(this);
+        mMoviesGrid.setAdapter(mMoviesGridAdapter);
+    }
+
+    private void showFavorites() {
+        mRequest.setRequestType(RequestType.FAVORITES);
+        updateActionBarTitle(R.string.favorites);
         ContentResolver resolver = getContentResolver();
         Cursor cursor = resolver.query(PopularMoviesContract.FavoritesEntry.CONTENT_URI,null,null,null,null);
+        ArrayList<Movie> favoriteMovies = new ArrayList<>();
+        while(cursor.moveToNext()) {
+            favoriteMovies.add(Movie.getMovieFromCursorEntry(cursor));
+        }
+        Movie[] movies = favoriteMovies.toArray(new Movie[0]);
+        mMoviesGridAdapter.setMovies(movies);
+        removeScrollListener();
     }
 
     private void sortByTopRated() {
+        setScrollListener();
         if(mRequest.getRequestType() != RequestType.TOP_RATED) {
             // Only sort if not already sorted by top rated
             mRequest.resetPage();
@@ -119,6 +129,7 @@ public class MainActivity
     }
 
     private void sortByMostPopular() {
+        setScrollListener();
         if(mRequest.getRequestType() != RequestType.POPULAR) {
             // Only sort if not already sorted by most popular
             mRequest.resetPage();
@@ -141,32 +152,34 @@ public class MainActivity
     }
 
     private void loadData(){
-        // Create request
         mRequest = new Request(RequestType.POPULAR, 1);
-        // Execute
         executeRequest();
     }
 
-    private void setScrollListener() {
-        mMoviesGrid.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if(dy > 0 && !isLoading) { // User is scrolling down
-                    int positionOfLastItem = mMoviesGridLayoutManager.getItemCount()-1;
-                    int currentPositionOfLastVisibleItem = mMoviesGridLayoutManager.findLastCompletelyVisibleItemPosition();
-                    if(positionOfLastItem == currentPositionOfLastVisibleItem){
-                        lastItemReached();
-                    }
+    private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            if(dy > 0 && !isLoading) { // User is scrolling down
+                int positionOfLastItem = mMoviesGridLayoutManager.getItemCount()-1;
+                int currentPositionOfLastVisibleItem = mMoviesGridLayoutManager.findLastCompletelyVisibleItemPosition();
+                if(positionOfLastItem == currentPositionOfLastVisibleItem){
+                    lastItemReached();
                 }
             }
         }
-        );
+    };
+
+    private void setScrollListener() {
+        mMoviesGrid.addOnScrollListener(mOnScrollListener);
+    }
+
+    private void removeScrollListener() {
+        mMoviesGrid.clearOnScrollListeners();
     }
 
     private void lastItemReached() {
         Log.v(TAG, "Reached last item of list.");
         mRequest.nextPage();
-        // Fetch more movies
         new FetchMoviesTask().execute(mRequest);
     }
 

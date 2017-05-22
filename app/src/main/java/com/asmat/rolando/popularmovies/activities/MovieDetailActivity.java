@@ -1,8 +1,13 @@
 package com.asmat.rolando.popularmovies.activities;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.AsyncTaskLoader;
@@ -14,10 +19,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.adapters.ReviewsLinearAdapter;
 import com.asmat.rolando.popularmovies.adapters.TrailersLinearAdapter;
+import com.asmat.rolando.popularmovies.data.PopularMoviesContract;
+import com.asmat.rolando.popularmovies.data.PopularMoviesDBHelper;
 import com.asmat.rolando.popularmovies.managers.MovieApiManager;
 import com.asmat.rolando.popularmovies.models.Movie;
 import com.asmat.rolando.popularmovies.models.Review;
@@ -32,9 +40,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MovieDetailActivity
-        extends AppCompatActivity
-        implements TrailerAdapterOnClickHandler {
+public class MovieDetailActivity extends AppCompatActivity implements TrailerAdapterOnClickHandler {
 
     @BindView(R.id.iv_movie_backdrop) ImageView mMovieBackdrop;
     @BindView(R.id.iv_poster_thumbnail) ImageView mMoviePoster;
@@ -42,24 +48,18 @@ public class MovieDetailActivity
     @BindView(R.id.tv_release_date) TextView mReleaseDate;
     @BindView(R.id.tv_movie_rating) TextView mMovieRating;
     @BindView(R.id.tv_synopsis_content) TextView mMovieSynopsis;
-
     @BindView(R.id.rv_trailers) RecyclerView mTrailers;
     private LinearLayoutManager mTrailersLayoutManager;
     private TrailersLinearAdapter mTrailersLinearAdapter;
-
     @BindView(R.id.rv_reviews) RecyclerView mReviews;
     private LinearLayoutManager mReviewsLinearLayoutManager;
     private ReviewsLinearAdapter mReviewsLinearAdapter;
-
+    @BindView(R.id.star) ImageView star;
     final static String INTENT_EXTRA_TAG = "MOVIE_DATA";
-    final private String DATE_FORMAT = "MMMM dd, yyyy";
-
     private static final int VIDEOS_LOADER = 3948;
     private static final int REVIEWS_LOADER = 2938;
-
     private LoaderManager.LoaderCallbacks<Video[]> videosCallbacks;
     private LoaderManager.LoaderCallbacks<Review[]> reviewsCallbacks;
-
     private Movie movie;
 
     @Override
@@ -84,6 +84,93 @@ public class MovieDetailActivity
 
         getSupportLoaderManager().initLoader(VIDEOS_LOADER, null, videosCallbacks);
         getSupportLoaderManager().initLoader(REVIEWS_LOADER, null, reviewsCallbacks);
+
+        setStarStatus();
+    }
+
+    @Override
+    public void onClick(Video trailer) {
+        String url = trailer.youtubeUrl();
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        if(intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
+    private void setStarStatus() {
+        if(isMovieFavorited()) {
+            fillStar();
+        } else {
+            unfillStar();
+        }
+    }
+
+
+    // TODO user a new query instead
+    private boolean isMovieFavorited() {
+        int id = movie.getId();
+        ContentResolver resolver = getContentResolver();
+        Cursor cursor = resolver.query(PopularMoviesContract.FavoritesEntry.CONTENT_URI,null,null,null,null);
+        while(cursor.moveToNext()) {
+            if(Movie.getMovieFromCursorEntry(cursor).getId() == id) {
+                return true;
+            }
+        }
+        cursor.close();
+        return false;
+    }
+
+    private void fillStar() {
+        star.setImageResource(R.drawable.ic_star_yellow_24dp);
+    }
+
+    private void unfillStar() {
+        star.setImageResource(R.drawable.ic_star_gray_24dp);
+    }
+
+    public void onShare(View view) {
+        String mimeType = "text/plain";
+        String title = "Share movie...";
+        String movieTitle = movie.getTitle();
+        String movieTrailerUrl = mTrailersLinearAdapter.getTrailers()[0].youtubeUrl();
+        String textToShare = "Check out the trailer for "+movieTitle+"!\n"+movieTrailerUrl;
+
+        Intent intent = ShareCompat.IntentBuilder.from(this)
+                .setChooserTitle(title)
+                .setType(mimeType)
+                .setText(textToShare).getIntent();
+        startActivity(intent);
+    }
+
+    public void onStar(View view) {
+        int movieID = movie.getId();
+        if(isMovieFavorited()) {
+            getContentResolver().delete(PopularMoviesContract.FavoritesEntry.CONTENT_URI,
+                    PopularMoviesContract.FavoritesEntry.COLUMN_MOVIE_ID+" = "+ movieID,
+                    null);
+        } else {
+            String movieTitle = movie.getTitle();
+            String posterUrl = movie.getPosterURL();
+            String backdropurl = movie.getbackdropURL();
+            String movieSynopsis = movie.getPlotSynopsis();
+            double movieRating = movie.getUserRating();
+            String releaseDate = movie.getReleaseDate();
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_MOVIE_ID, movieID);
+            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_TITLE, movieTitle);
+            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_POSTER_URL, posterUrl);
+            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_BACKDROP_URL, backdropurl );
+            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_SYNOPSIS, movieSynopsis);
+            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_RATING, movieRating);
+            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_RELEASE_DATE, releaseDate);
+
+            Uri uri = getContentResolver().insert(PopularMoviesContract.FavoritesEntry.CONTENT_URI, contentValues);
+            if(uri != null) {
+                Toast.makeText(this,uri.toString(),Toast.LENGTH_LONG).show();
+            }
+        }
+        setStarStatus();
     }
 
     private void setupTrailersRecyclerView() {
@@ -102,29 +189,6 @@ public class MovieDetailActivity
         mReviews.setLayoutManager(mReviewsLinearLayoutManager);
         mReviewsLinearAdapter = new ReviewsLinearAdapter();
         mReviews.setAdapter(mReviewsLinearAdapter);
-    }
-
-    @Override
-    public void onClick(Video trailer) {
-        String url = trailer.youtubeUrl();
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        if(intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        }
-    }
-
-    public void onShare(View view) {
-        String mimeType = "text/plain";
-        String title = "Share movie...";
-        String movieTitle = movie.getTitle();
-        String movieTrailerUrl = mTrailersLinearAdapter.getTrailers()[0].youtubeUrl();
-        String textToShare = "Check out the trailer for "+movieTitle+"!\n"+movieTrailerUrl;
-
-        Intent intent = ShareCompat.IntentBuilder.from(this)
-                .setChooserTitle(title)
-                .setType(mimeType)
-                .setText(textToShare).getIntent();
-        startActivity(intent);
     }
 
     private void setVideosLoaderCallback() {
@@ -205,7 +269,7 @@ public class MovieDetailActivity
                 if(data == null) {
                     // TODO show error message
                 } else {
-                    System.out.print("GOT REVIEWS");
+                    // TODO no reviews state
                     mReviewsLinearAdapter.setReviews(data);
                 }
             }
@@ -216,34 +280,14 @@ public class MovieDetailActivity
     }
 
     private void populateViews(Movie movie){
-        Picasso.with(this).load(movie.getbackdropURL()).into(mMovieBackdrop);
-        Picasso.with(this).load(movie.getPosterURL()).into(mMoviePoster);
+        Picasso.with(this).load(movie.getBackdropUrlComplete()).into(mMovieBackdrop);
+        Picasso.with(this).load(movie.getPosterUrlComplete()).into(mMoviePoster);
         mMovieTitle.setText(movie.getTitle());
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-        String dateString = sdf.format(movie.getReleaseDate());
-        mReleaseDate.setText(dateString);
+        String formatted = movie.getReleaseDateFormatted();
+        mReleaseDate.setText(formatted);
         String rating = movie.getUserRating()+getString(R.string.out_of_ten);
         mMovieRating.setText(rating);
         mMovieSynopsis.setText(movie.getPlotSynopsis());
-        // Get Videos and Reviews
-        fetchVideos(movie.getId());
-        fetchReviews(movie.getId());
-    }
-
-    private void fetchVideos(String movieID) {
-        try {
-            Video[] vides = MovieApiManager.fetchMovieVideos(movieID,1);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private void fetchReviews(String movieID) {
-        try {
-            Review[] reviews = MovieApiManager.fetchMovieReviews(movieID,1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void updateActionBarTitle(String title){
