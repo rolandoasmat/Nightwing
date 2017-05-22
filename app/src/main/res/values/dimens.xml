@@ -17,5 +17,9 @@
     <dimen name="icon_size">32dp</dimen>
     <dimen name="icon_label_size">16sp</dimen>
 
-    <!--movie_grid_item-->
+    <!--tablet dimens-->
+    <dimen name="large_margin">48dp</dimen>
+    <dimen name="poster_width_wide">120dp</dimen>
+    <dimen name="star_and_share_wide_width">240dp</dimen>
+
 </resources>
