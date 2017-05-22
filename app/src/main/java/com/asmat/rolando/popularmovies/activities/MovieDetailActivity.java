@@ -105,6 +105,8 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         }
     }
 
+
+    // TODO user a new query instead
     private boolean isMovieFavorited() {
         int id = movie.getId();
         ContentResolver resolver = getContentResolver();
@@ -267,6 +269,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                 if(data == null) {
                     // TODO show error message
                 } else {
+                    // TODO no reviews state
                     mReviewsLinearAdapter.setReviews(data);
                 }
             }
