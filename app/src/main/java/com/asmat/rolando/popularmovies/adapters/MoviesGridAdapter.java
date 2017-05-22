@@ -48,7 +48,7 @@ public class MoviesGridAdapter
     /**
      * Add any newly fetched movies from API
      */
-    public void addMovies(Movie[] movies) {
+    public Movie[] addMovies(Movie[] movies) {
         int firstArrayLength = mMovies.length;
         int secondArrayLength = movies.length;
         int newSize = firstArrayLength + secondArrayLength;
@@ -61,6 +61,7 @@ public class MoviesGridAdapter
         }
         mMovies = combined;
         notifyItemRangeInserted(firstArrayLength,secondArrayLength);
+        return  mMovies;
     }
     // ----------------------------------------------------------
 

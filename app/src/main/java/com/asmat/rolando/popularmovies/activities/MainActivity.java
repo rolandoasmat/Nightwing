@@ -1,6 +1,5 @@
 package com.asmat.rolando.popularmovies.activities;
 
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +11,6 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.Snackbar;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.asmat.rolando.popularmovies.adapters.MoviesGridAdapter;
 import com.asmat.rolando.popularmovies.R;
@@ -44,21 +43,59 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     private MoviesGridAdapter mMoviesGridAdapter;
     private GridLayoutManager mMoviesGridLayoutManager;
     private static String TAG = MainActivity.class.getSimpleName();
-    private Request mRequest;
+
+    // Screen state
+    private Request mRequest; // Request to execute
+    private Movie[] mPopularMovies;
+    private int popularMoviesPagesLoaded;
+    private Movie[] mTopRatedMovies;
+    private int topRatedMoviesPagesLoaded;
     private boolean isLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO save state of current filter in between app rotations
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        updateActionBarTitle(R.string.most_popular);
         setupRecyclerView();
-        loadData();
-        if(mRequest.getRequestType() != RequestType.FAVORITES) {
+        if(savedInstanceState != null) {
+            int requestType = savedInstanceState.getInt("request_type");
+            int requestPage = savedInstanceState.getInt("request_page");
+            mRequest = new Request(requestType,requestPage);
+            mPopularMovies = (Movie[]) savedInstanceState.getParcelableArray("popular_movies");
+            mTopRatedMovies = (Movie[]) savedInstanceState.getParcelableArray("top_rated_movies");
+            switch(requestType) {
+                case RequestType.POPULAR:
+                    mMoviesGridAdapter.setMovies(mPopularMovies);
+                    updateActionBarTitle(R.string.most_popular);
+                    break;
+                case RequestType.TOP_RATED:
+                    mMoviesGridAdapter.setMovies(mTopRatedMovies);
+                    updateActionBarTitle(R.string.top_rated);
+                    break;
+                case RequestType.FAVORITES:
+                    showFavorites();
+                    break;
+            }
+        } else {
+            mRequest = new Request(RequestType.POPULAR, 1);
+            mPopularMovies = new Movie[0];
+            popularMoviesPagesLoaded = 0;
+            mTopRatedMovies = new Movie[0];
+            topRatedMoviesPagesLoaded = 0;
+            updateActionBarTitle(R.string.most_popular);
             setScrollListener();
+            executeRequest();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("request_type", mRequest.getRequestType());
+        outState.putInt("request_page", mRequest.getPage());
+        outState.putParcelableArray("popular_movies", mPopularMovies);
+        outState.putParcelableArray("top_rated_movies", mTopRatedMovies);
     }
 
     @Override
@@ -106,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     }
 
     private void showFavorites() {
+        removeScrollListener();
         mRequest.setRequestType(RequestType.FAVORITES);
         updateActionBarTitle(R.string.favorites);
         ContentResolver resolver = getContentResolver();
@@ -114,30 +152,42 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         while(cursor.moveToNext()) {
             favoriteMovies.add(Movie.getMovieFromCursorEntry(cursor));
         }
+        cursor.close();
         Movie[] movies = favoriteMovies.toArray(new Movie[0]);
         mMoviesGridAdapter.setMovies(movies);
-        removeScrollListener();
     }
 
     private void sortByTopRated() {
         setScrollListener();
         if(mRequest.getRequestType() != RequestType.TOP_RATED) {
             // Only sort if not already sorted by top rated
-            mRequest.resetPage();
-            mRequest.setRequestType(RequestType.TOP_RATED);
-            executeRequest();
             updateActionBarTitle(R.string.top_rated);
+            mRequest.setRequestType(RequestType.TOP_RATED);
+            if(mTopRatedMovies.length == 0) {
+                mRequest.setPage(1);
+                topRatedMoviesPagesLoaded = 0;
+                executeRequest();
+            } else {
+                mRequest.setPage(topRatedMoviesPagesLoaded+1);
+                mMoviesGridAdapter.setMovies(mTopRatedMovies);
+            }
         }
     }
 
     private void sortByMostPopular() {
         setScrollListener();
         if(mRequest.getRequestType() != RequestType.POPULAR) {
-            // Only sort if not already sorted by most popular
-            mRequest.resetPage();
-            mRequest.setRequestType(RequestType.POPULAR);
-            executeRequest();
+            // Only sort if not already sorted by top rated
             updateActionBarTitle(R.string.most_popular);
+            mRequest.setRequestType(RequestType.POPULAR);
+            if(mPopularMovies.length == 0) {
+                mRequest.setPage(1);
+                popularMoviesPagesLoaded = 0;
+                executeRequest();
+            } else {
+                mRequest.setPage(popularMoviesPagesLoaded+1);
+                mMoviesGridAdapter.setMovies(mPopularMovies);
+            }
         }
     }
 
@@ -151,11 +201,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
 
     private void executeRequest(){
         new FetchMoviesTask().execute(this.mRequest);
-    }
-
-    private void loadData(){
-        mRequest = new Request(RequestType.POPULAR, 1);
-        executeRequest();
     }
 
     private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
@@ -182,7 +227,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
 
     private void lastItemReached() {
         Log.v(TAG, "Reached last item of list.");
-        mRequest.nextPage();
         new FetchMoviesTask().execute(mRequest);
     }
 
@@ -259,15 +303,32 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         @Override
         protected void onPostExecute(Movie[] movieData) {
             if (movieData != null && movieData.length > 0) {
-                if(mRequest.getPage() == 1) {
+                Toast.makeText(getBaseContext(),"Fetched new movies...",Toast.LENGTH_SHORT).show();
+                int requestType = mRequest.getRequestType();
+                int page = mRequest.getPage();
+                if(page == 1) {
                     Log.v(TAG, "Fetch complete! SETTING data set");
                     mMoviesGridAdapter.setMovies(movieData);
-                    showGrid();
+                    if(requestType == RequestType.POPULAR) {
+                        mPopularMovies = movieData;
+                        popularMoviesPagesLoaded = 1;
+                    } else if (mRequest.getRequestType() == RequestType.TOP_RATED){
+                        mTopRatedMovies = movieData;
+                        topRatedMoviesPagesLoaded = 1;
+                    }
                 } else {
                     Log.v(TAG, "Fetch complete! ADDING to data set");
-                    mMoviesGridAdapter.addMovies(movieData);
-                    showGrid();
+                    Movie[] combined = mMoviesGridAdapter.addMovies(movieData);
+                    if(requestType == RequestType.POPULAR) {
+                        mPopularMovies = combined;
+                        popularMoviesPagesLoaded++;
+                    } else if (mRequest.getRequestType() == RequestType.TOP_RATED){
+                        mTopRatedMovies = combined;
+                        topRatedMoviesPagesLoaded++;
+                    }
                 }
+                mRequest.nextPage();
+                showGrid();
             } else {
                 Log.e(TAG, "Showing error state");
                 // Something went wrong fetching the data
