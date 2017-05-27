@@ -176,10 +176,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
             contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_RATING, movieRating);
             contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_RELEASE_DATE, releaseDate);
 
-            Uri uri = getContentResolver().insert(PopularMoviesContract.FavoritesEntry.CONTENT_URI, contentValues);
-            if(uri != null) {
-                Toast.makeText(this,uri.toString(),Toast.LENGTH_LONG).show();
-            }
+            getContentResolver().insert(PopularMoviesContract.FavoritesEntry.CONTENT_URI, contentValues);
         }
         setStarStatus();
     }
