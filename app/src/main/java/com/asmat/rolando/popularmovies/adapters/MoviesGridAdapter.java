@@ -97,8 +97,6 @@ public class MoviesGridAdapter
         ImageView imageView = holder.mMoviePoster;
         Picasso.with(imageView.getContext())
                 .load(posterURL)
-                .placeholder(R.drawable.downloading_icon)
-                .error(R.drawable.error_icon)
                 .into(imageView);
     }
 

@@ -67,8 +67,6 @@ public class TrailersLinearAdapter
         ImageView imageView = holder.mTrailerThumbnail;
         Picasso.with(imageView.getContext())
                 .load(thumbnail)
-                .placeholder(R.drawable.downloading_icon)
-                .error(R.drawable.error_icon)
                 .into(imageView);
     }
 
