@@ -5,7 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -35,7 +39,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements MovieAdapterOnClickHandler{
+public class MainActivity extends AppCompatActivity
+        implements MovieAdapterOnClickHandler, LoaderManager.LoaderCallbacks<Cursor>{
 
     @BindView(R.id.tv_error_message) TextView mErrorMessageTextView;
     @BindView(R.id.pb_loading_bar) ProgressBar mLoadingBar;
@@ -52,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
 
     final String POPULAR_MOVIES_PARCEL_KEY = "popular_movies";
     final String TOP_RATED_MOVIES_PARCEL_KEY = "top_rated_movies";
+    final int LOADER_ID = 9324;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,21 +143,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
         mMoviesGridAdapter = new MoviesGridAdapter(this);
         mMoviesGrid.setAdapter(mMoviesGridAdapter);
-    }
-
-    private void showFavorites() {
-        removeScrollListener();
-        mRequest.setRequestType(RequestType.FAVORITES);
-        updateActionBarTitle(R.string.favorites);
-        ContentResolver resolver = getContentResolver();
-        Cursor cursor = resolver.query(PopularMoviesContract.FavoritesEntry.CONTENT_URI,null,null,null,null);
-        ArrayList<Movie> favoriteMovies = new ArrayList<>();
-        while(cursor.moveToNext()) {
-            favoriteMovies.add(Movie.getMovieFromCursorEntry(cursor));
-        }
-        cursor.close();
-        Movie[] movies = favoriteMovies.toArray(new Movie[0]);
-        mMoviesGridAdapter.setMovies(movies);
     }
 
     private void sortByTopRated() {
@@ -251,6 +242,33 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
             return 2;
         }
     }
+
+    private void showFavorites() {
+        removeScrollListener();
+        mRequest.setRequestType(RequestType.FAVORITES);
+        updateActionBarTitle(R.string.favorites);
+        getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        Uri uri = PopularMoviesContract.FavoritesEntry.CONTENT_URI;
+        return new CursorLoader(this, uri, null, null, null, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        ArrayList<Movie> favoriteMovies = new ArrayList<>();
+        while(data.moveToNext()) {
+            favoriteMovies.add(Movie.getMovieFromCursorEntry(data));
+        }
+        data.close();
+        Movie[] movies = favoriteMovies.toArray(new Movie[0]);
+        mMoviesGridAdapter.setMovies(movies);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) { }
 
     // ----------------------------- AsyncTask -----------------------------
     private class FetchMoviesTask extends AsyncTask<Request, Void, Movie[]> {
