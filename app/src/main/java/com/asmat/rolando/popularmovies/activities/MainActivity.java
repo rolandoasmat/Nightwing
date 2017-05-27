@@ -94,6 +94,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if(mRequest.getRequestType() == RequestType.FAVORITES) {
+            showFavorites();
+        }
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable("request", mRequest);
@@ -316,6 +324,7 @@ public class MainActivity extends AppCompatActivity
             if (movieData != null && movieData.length > 0) {
                 int requestType = mRequest.getRequestType();
                 int page = mRequest.getPage();
+                Toast.makeText(getBaseContext(), "Movies fetched.", Toast.LENGTH_SHORT).show();
                 if(page == 1) {
                     // This is the first fetch, set
                     Log.v(TAG, "Fetch complete! SETTING data set");
