@@ -47,10 +47,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     // Screen state
     private Request mRequest; // Request to execute
     private Movie[] mPopularMovies;
-    private int popularMoviesPagesLoaded;
     private Movie[] mTopRatedMovies;
-    private int topRatedMoviesPagesLoaded;
     private boolean isLoading;
+
+    final String POPULAR_MOVIES_PARCEL_KEY = "popular_movies";
+    final String TOP_RATED_MOVIES_PARCEL_KEY = "top_rated_movies";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +59,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setupRecyclerView();
+
         if(savedInstanceState != null) {
-            int requestType = savedInstanceState.getInt("request_type");
-            int requestPage = savedInstanceState.getInt("request_page");
-            mRequest = new Request(requestType,requestPage);
-            mPopularMovies = (Movie[]) savedInstanceState.getParcelableArray("popular_movies");
-            mTopRatedMovies = (Movie[]) savedInstanceState.getParcelableArray("top_rated_movies");
-            switch(requestType) {
+            mRequest = savedInstanceState.getParcelable(Request.PARCEL_KEY);
+            mPopularMovies = (Movie[]) savedInstanceState.getParcelableArray(POPULAR_MOVIES_PARCEL_KEY);
+            mTopRatedMovies = (Movie[]) savedInstanceState.getParcelableArray(TOP_RATED_MOVIES_PARCEL_KEY);
+            switch(mRequest.getRequestType()) {
                 case RequestType.POPULAR:
                     mMoviesGridAdapter.setMovies(mPopularMovies);
                     updateActionBarTitle(R.string.most_popular);
@@ -78,11 +78,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
                     break;
             }
         } else {
-            mRequest = new Request(RequestType.POPULAR, 1);
+            mRequest = new Request(RequestType.POPULAR, 1, 0, 0);
             mPopularMovies = new Movie[0];
-            popularMoviesPagesLoaded = 0;
             mTopRatedMovies = new Movie[0];
-            topRatedMoviesPagesLoaded = 0;
             updateActionBarTitle(R.string.most_popular);
             setScrollListener();
             executeRequest();
@@ -92,8 +90,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("request_type", mRequest.getRequestType());
-        outState.putInt("request_page", mRequest.getPage());
+        outState.putParcelable("request", mRequest);
         outState.putParcelableArray("popular_movies", mPopularMovies);
         outState.putParcelableArray("top_rated_movies", mTopRatedMovies);
     }
@@ -164,11 +161,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
             updateActionBarTitle(R.string.top_rated);
             mRequest.setRequestType(RequestType.TOP_RATED);
             if(mTopRatedMovies.length == 0) {
-                mRequest.setPage(1);
-                topRatedMoviesPagesLoaded = 0;
+                mRequest.setTopRatedMoviesPage(0);
                 executeRequest();
             } else {
-                mRequest.setPage(topRatedMoviesPagesLoaded+1);
                 mMoviesGridAdapter.setMovies(mTopRatedMovies);
             }
         }
@@ -181,11 +176,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
             updateActionBarTitle(R.string.most_popular);
             mRequest.setRequestType(RequestType.POPULAR);
             if(mPopularMovies.length == 0) {
-                mRequest.setPage(1);
-                popularMoviesPagesLoaded = 0;
+                mRequest.setPopularMoviesPage(0);
                 executeRequest();
             } else {
-                mRequest.setPage(popularMoviesPagesLoaded+1);
                 mMoviesGridAdapter.setMovies(mPopularMovies);
             }
         }
@@ -303,28 +296,29 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         @Override
         protected void onPostExecute(Movie[] movieData) {
             if (movieData != null && movieData.length > 0) {
-                Toast.makeText(getBaseContext(),"Fetched new movies...",Toast.LENGTH_SHORT).show();
                 int requestType = mRequest.getRequestType();
                 int page = mRequest.getPage();
                 if(page == 1) {
+                    // This is the first fetch, set
                     Log.v(TAG, "Fetch complete! SETTING data set");
                     mMoviesGridAdapter.setMovies(movieData);
                     if(requestType == RequestType.POPULAR) {
                         mPopularMovies = movieData;
-                        popularMoviesPagesLoaded = 1;
+                        mRequest.setPopularMoviesPage(1);
                     } else if (mRequest.getRequestType() == RequestType.TOP_RATED){
                         mTopRatedMovies = movieData;
-                        topRatedMoviesPagesLoaded = 1;
+                        mRequest.setTopRatedMoviesPage(1);
                     }
                 } else {
+                    // These are new fetches, append
                     Log.v(TAG, "Fetch complete! ADDING to data set");
                     Movie[] combined = mMoviesGridAdapter.addMovies(movieData);
                     if(requestType == RequestType.POPULAR) {
                         mPopularMovies = combined;
-                        popularMoviesPagesLoaded++;
+                        mRequest.nextPopularMoviesPage();
                     } else if (mRequest.getRequestType() == RequestType.TOP_RATED){
                         mTopRatedMovies = combined;
-                        topRatedMoviesPagesLoaded++;
+                        mRequest.nextTopRatedMoviesPage();
                     }
                 }
                 mRequest.nextPage();
