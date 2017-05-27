@@ -7,8 +7,10 @@ import android.provider.BaseColumns;
  * Created by rolandoasmat on 5/21/17.
  */
 
-public class PopularMoviesContract {
-    private PopularMoviesContract() {}
+final public class PopularMoviesContract {
+    private PopularMoviesContract() {
+        throw new AssertionError("No instances!");
+    }
 
     public static final String CONTENT_AUTHORITY = "com.asmat.rolando.popularmovies";
 
