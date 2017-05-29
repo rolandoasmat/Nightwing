@@ -35,7 +35,7 @@ public class Request implements Parcelable {
     }
 
     public void nextTopRatedMoviesPage() {
-        this.popularMoviesPage++;
+        this.topRatedMoviesPage++;
     }
 
     public int getRequestType() {

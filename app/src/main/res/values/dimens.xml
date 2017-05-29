@@ -22,4 +22,6 @@
     <dimen name="poster_width_wide">120dp</dimen>
     <dimen name="star_and_share_wide_width">240dp</dimen>
 
+    <dimen name="appbar_padding_top">8dp</dimen>
+
 </resources>
