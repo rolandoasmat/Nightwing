@@ -34,6 +34,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     private LoaderManager.LoaderCallbacks<Movie[]> fetchMoviesCallbacks;
     private int typeOfMovies;
     private int page;
+    private final String PAGE_KEY = "page_key";
 
     public MovieGridFragment() {
         page = 1;
@@ -43,26 +44,46 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
         this.typeOfMovies = typeOfMovies;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        context = getActivity().getBaseContext();
+    }
+
+    // TODO savedInstanceState is ALWAYS NULL :(. Using Arguments instead to save state
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        int t = this.typeOfMovies;
-        context = getActivity().getBaseContext();
         View rootView = inflater.inflate(R.layout.fragment_movie_grid, container, false);
         mMoviesGrid = (RecyclerView) rootView.findViewById(R.id.rv_movie_grid);
-        setupRecyclerView();
-        setFetchMoviesLoaderCallback();
-        getActivity().getSupportLoaderManager().initLoader(typeOfMovies, null, fetchMoviesCallbacks);
+        //Bundle args = get
+        if(page == 1) {
+            mMoviesGridLayoutManager = new GridLayoutManager(context, ViewUtils.calculateNumberOfColumns(context));
+            mMoviesGridAdapter = new MoviesGridAdapter(this);
+            mMoviesGrid.setHasFixedSize(true);
+            mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
+            mMoviesGrid.setAdapter(mMoviesGridAdapter);
+            setFetchMoviesLoaderCallback();
+            getActivity().getSupportLoaderManager().initLoader(typeOfMovies, null, fetchMoviesCallbacks);
+        } else {
+            mMoviesGridLayoutManager = new GridLayoutManager(context, ViewUtils.calculateNumberOfColumns(context));
+            mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
+            mMoviesGrid.setAdapter(mMoviesGridAdapter);
+        }
         return rootView;
     }
 
-    private void setupRecyclerView() {
-        mMoviesGridLayoutManager = new GridLayoutManager(context, ViewUtils.calculateNumberOfColumns(context));
-        mMoviesGridAdapter = new MoviesGridAdapter(this);
-        mMoviesGrid.setHasFixedSize(true);
-        mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
-        mMoviesGrid.setAdapter(mMoviesGridAdapter);
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Bundle bundle = new Bundle();
+        onSaveInstanceState(bundle);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(PAGE_KEY, page);
     }
 
     @Override
