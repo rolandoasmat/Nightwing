@@ -2,6 +2,7 @@ package com.asmat.rolando.popularmovies.managers;
 
 import com.asmat.rolando.popularmovies.BuildConfig;
 import com.asmat.rolando.popularmovies.models.Movie;
+import com.asmat.rolando.popularmovies.models.RequestType;
 import com.asmat.rolando.popularmovies.models.Review;
 import com.asmat.rolando.popularmovies.models.Video;
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils;
@@ -12,6 +13,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.InvalidParameterException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -59,6 +61,17 @@ public final class MovieApiManager {
      *  ---------------------------- API ----------------------------
      */
 
+    public static Movie[] fetchMoviesOfType(int type, int page) throws IOException, JSONException, ParseException {
+        switch(type) {
+            case RequestType.MOST_POPULAR:
+                return fetchMostPopularMovies(page);
+            case RequestType.TOP_RATED:
+                return fetchTopRatedMovies(page);
+            default:
+                throw new InvalidParameterException();
+        }
+    }
+
     /**
      * Fetch all the popular movies from movie API.
      *
@@ -70,7 +83,7 @@ public final class MovieApiManager {
      * @throws JSONException
      * @throws ParseException
      */
-    public static Movie[] fetchPopularMovies(int page) throws IOException, JSONException, ParseException {
+    public static Movie[] fetchMostPopularMovies(int page) throws IOException, JSONException, ParseException {
         return fetchMovies(BASE_URL, MOVIES, GET_POPULAR, page);
     }
 

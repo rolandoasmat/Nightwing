@@ -56,7 +56,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     private LinearLayoutManager mReviewsLinearLayoutManager;
     private ReviewsLinearAdapter mReviewsLinearAdapter;
     @BindView(R.id.star) ImageView star;
-    final static String INTENT_EXTRA_TAG = "MOVIE_DATA";
+    public final static String INTENT_EXTRA_TAG = "MOVIE_DATA";
     private static final int VIDEOS_LOADER = 3948;
     private static final int REVIEWS_LOADER = 2938;
     private LoaderManager.LoaderCallbacks<Video[]> videosCallbacks;

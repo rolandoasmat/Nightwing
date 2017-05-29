@@ -48,7 +48,7 @@ public class Request implements Parcelable {
 
     public int getPage() {
         switch (requestType) {
-            case RequestType.POPULAR:
+            case RequestType.MOST_POPULAR:
                 return popularMoviesPage + 1;
             case RequestType.TOP_RATED:
                 return topRatedMoviesPage + 1;

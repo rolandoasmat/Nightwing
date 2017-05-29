@@ -4,8 +4,8 @@
 
     <!-- Main Activity -->
     <string name="error_message">Error obteniendo data!</string>
-    <string name="most_popular">Películas Más Populares</string>
-    <string name="top_rated">Películas Más Votadas</string>
+    <string name="most_popular">Más Populares</string>
+    <string name="top_rated">Más Votadas</string>
     <string name="favorites">Favoritos</string>
     <!--Menu-->
     <string name="sort_menu_title">Ordenar</string>
