@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
+    android:id="@+id/fl_main_activity"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,10 +15,9 @@
 
     <TextView
         android:id="@+id/tv_error_message"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin_small"
-        android:layout_marginTop="@dimen/activity_vertical_margin_small"
+        android:layout_margin="@dimen/activity_margin_general"
         tools:text="@string/error_message"
         android:textSize="@dimen/error_text_size"
         android:visibility="invisible"/>

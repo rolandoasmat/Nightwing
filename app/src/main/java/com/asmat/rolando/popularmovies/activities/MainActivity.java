@@ -224,9 +224,10 @@ public class MainActivity extends AppCompatActivity
 
     private void showErrorState(String message) {
         mMoviesGrid.setVisibility(View.INVISIBLE);
+        mErrorMessageTextView.setText(message);
         mErrorMessageTextView.setVisibility(View.VISIBLE);
         mLoadingBar.setVisibility(View.INVISIBLE);
-        Snackbar.make(mMoviesGrid, message, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(findViewById(R.id.fl_main_activity), message, Snackbar.LENGTH_LONG).show();
     }
 
     private void showLoadingState() {
