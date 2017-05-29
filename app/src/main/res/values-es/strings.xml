@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Películas Populares</string>
+
+    <!-- Main Activity -->
+    <string name="error_message">Error obteniendo data!</string>
+    <string name="most_popular">Películas Más Populares</string>
+    <string name="top_rated">Películas Más Votadas</string>
+    <string name="favorites">Favoritos</string>
+    <!--Menu-->
+    <string name="sort_menu_title">Ordenar</string>
+    <string name="sort_most_popular">Ordena por Más Popular</string>
+    <string name="sort_top_rated">Ordena por Más Votados</string>
+    <string name="show_favorites">Mostrar Favoritos</string>
+
+    <!--Activity Movie Detail -->
+    <string name="movie_detail_activity_title">Detalles de Película</string>
+    <string name="movie_title">Titulo de pelicula</string>
+    <string name="release_date">Fecha de lanzamiento</string>
+    <string name="movie_rating">Valuación</string>
+    <string name="synopsis">Sinopsis</string>
+    <string name="favorite">Favorito</string>
+    <string name="share">Compartir</string>
+    <string name="trailers">Videos</string>
+    <string name="reviews">Comentarios</string>
+
+    <!--Error Messages-->
+    <string name="generic_error">"Oops! Algo salió horriblemente mal:'("</string>
+    <string name="no_internet">"EL INTERNET ESTÁ ABAJO >:O"</string>
+</resources>
