@@ -1,6 +1,5 @@
 package com.asmat.rolando.popularmovies.activities;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -10,6 +9,7 @@ import android.os.AsyncTask;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -40,7 +40,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
-        implements MovieAdapterOnClickHandler, LoaderManager.LoaderCallbacks<Cursor>{
+        implements MovieAdapterOnClickHandler, LoaderManager.LoaderCallbacks<Cursor> {
 
     @BindView(R.id.tv_error_message) TextView mErrorMessageTextView;
     @BindView(R.id.pb_loading_bar) ProgressBar mLoadingBar;
@@ -184,7 +184,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateActionBarTitle(String title){
-        getSupportActionBar().setTitle(title);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setTitle(title);
+        }
     }
 
     private void updateActionBarTitle(int stringID){
@@ -358,8 +361,4 @@ public class MainActivity extends AppCompatActivity
             }
         }
     }
-    // ----------------------------------------------------------
-
 }
-
-
