@@ -51,6 +51,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     }
 
     // TODO savedInstanceState is ALWAYS NULL :(. Using Arguments instead to save state
+    // TODO save state upon a rotation
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -65,14 +66,39 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
             mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
             mMoviesGrid.setAdapter(mMoviesGridAdapter);
             setFetchMoviesLoaderCallback();
-            getActivity().getSupportLoaderManager().initLoader(typeOfMovies, null, fetchMoviesCallbacks);
+            fetchMovies();
         } else {
             mMoviesGridLayoutManager = new GridLayoutManager(context, ViewUtils.calculateNumberOfColumns(context));
             mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
             mMoviesGrid.setAdapter(mMoviesGridAdapter);
         }
+        mMoviesGrid.addOnScrollListener(mOnScrollListener);
         return rootView;
     }
+    private boolean fetchingMovies = false;
+    private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            if(dy > 0 && !fetchingMovies) { // User is scrolling down
+                int positionOfLastItem = mMoviesGridLayoutManager.getItemCount()-1;
+                int currentPositionOfLastVisibleItem = mMoviesGridLayoutManager.findLastVisibleItemPosition();
+                if(currentPositionOfLastVisibleItem == positionOfLastItem - 2){
+                    fetchMovies();
+                }
+            }
+        }
+    };
+
+    private void fetchMovies() {
+        fetchingMovies = true;
+        LoaderManager loaderManager = getActivity().getSupportLoaderManager();
+        if(page == 1) {
+            loaderManager.initLoader(typeOfMovies, null, fetchMoviesCallbacks);
+        } else {
+            loaderManager.restartLoader(typeOfMovies, null, fetchMoviesCallbacks);
+        }
+    }
+
 
     @Override
     public void onDestroyView() {
@@ -132,6 +158,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
                         mMoviesGridAdapter.addMovies(data);
                     }
                     page++;
+                    fetchingMovies = false;
                 }
             }
 
