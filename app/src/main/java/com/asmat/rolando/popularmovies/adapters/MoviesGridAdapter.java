@@ -12,6 +12,8 @@ import com.asmat.rolando.popularmovies.models.Movie;
 import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 /**
  * Created by rolandoasmat on 2/9/17.
  */
@@ -19,61 +21,29 @@ import com.squareup.picasso.Picasso;
 public class MoviesGridAdapter
         extends RecyclerView.Adapter<MoviesGridAdapter.MoviesGridAdapterViewHolder> {
 
-    /**
-     * Data set of Movie objects
-     */
-    private Movie[] mMovies;
-
-    /**
-     * OnClick listener
-     */
+    private ArrayList<Movie> mMovies;
     private final MovieAdapterOnClickHandler mClickHandler;
 
-    // ----------------------------- API -----------------------------
     /**
-     * Default constructor
+     * ----------------------------- API -----------------------------
      */
     public MoviesGridAdapter(MovieAdapterOnClickHandler handler) {
         this.mClickHandler = handler;
     }
 
-    /**
-     * Set list of movies
-     */
-    public void setMovies(Movie[] movies) {
-        mMovies  = movies;
+    public void setMovies(ArrayList<Movie> movies) {
+        this.mMovies  = movies;
         notifyDataSetChanged();
     }
 
-    /**
-     * Add any newly fetched movies from API
-     */
-    public Movie[] addMovies(Movie[] movies) {
-        int firstArrayLength = mMovies.length;
-        int secondArrayLength = movies.length;
-        int newSize = firstArrayLength + secondArrayLength;
-        Movie[] combined = new Movie[newSize];
-        for(int i = 0; i < firstArrayLength; i++){
-            combined[i] = mMovies[i];
-        }
-        for(int i = 0; i < secondArrayLength; i++){
-            combined[firstArrayLength+i] = movies[i];
-        }
-        mMovies = combined;
-        notifyItemRangeInserted(firstArrayLength,secondArrayLength);
-        return  mMovies;
+    public void addMovies(ArrayList<Movie> movies) {
+        int indexOfFirstNewItem = this.mMovies.size();
+        mMovies.addAll(movies);
+        notifyItemRangeInserted(indexOfFirstNewItem,indexOfFirstNewItem+movies.size());
     }
-    // ----------------------------------------------------------
 
-    // ----------------------------- Overrides -----------------------------
     /**
-     * Called whenever a ViewHolder is needed. Happens when the RecyclerView is layed out
-     * Enough are created to fill the screen.
-     *
-     * @param parent ViewGroup where ViewHolders will be contained in.
-     * @param viewType Used if different types of ViewHolders, not the case here.
-     *
-     * @return ViewHolder
+     * ----------------------------- Overrides -----------------------------
      */
     @Override
     public MoviesGridAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -84,15 +54,9 @@ public class MoviesGridAdapter
         return new MoviesGridAdapterViewHolder(view);
     }
 
-    /**
-     * Called by RecyclerView to specify how to display data on the passed in position.
-     *
-     * @param holder ViewHolder to update with correct data, using given position.
-     * @param position The position of the item within the adapter's data set.
-     */
     @Override
     public void onBindViewHolder(MoviesGridAdapterViewHolder holder, int position) {
-        Movie movie = mMovies[position];
+        Movie movie = mMovies.get(position);
         String posterURL = movie.getPosterUrlComplete();
         ImageView imageView = holder.mMoviePoster;
         Picasso.with(imageView.getContext())
@@ -105,45 +69,31 @@ public class MoviesGridAdapter
         if(mMovies == null){
             return 0;
         } else {
-            return mMovies.length;
+            return mMovies.size();
         }
     }
 
-    // ----------------------------------------------------------
-
-
-    // ----------------------------- ViewHolder -----------------------------
     /**
-     * Cache of the children views for a forecast list item.
+     * ----------------------------- View Holder -----------------------------
      */
     class MoviesGridAdapterViewHolder
             extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public final ImageView mMoviePoster;
 
-        /**
-         * Creates cache of view holder
-         *
-         * @param itemView Layout of view holder
-         */
         public MoviesGridAdapterViewHolder(View itemView) {
             super(itemView);
             mMoviePoster = (ImageView) itemView.findViewById(R.id.iv_movie_grid_item);
             itemView.setOnClickListener(this);
         }
 
-        /**
-         * This gets called by the child views during a click.
-         *
-         * @param v The View that was clicked
-         */
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            Movie movie = mMovies[position];
+            Movie movie = mMovies.get(position);
             mClickHandler.onClick(movie);
         }
     }
-    // ----------------------------------------------------------
+
 }
 
