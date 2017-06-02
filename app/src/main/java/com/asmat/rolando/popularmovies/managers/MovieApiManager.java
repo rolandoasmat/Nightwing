@@ -16,6 +16,7 @@ import java.net.URL;
 import java.security.InvalidParameterException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Locale;
@@ -61,7 +62,7 @@ public final class MovieApiManager {
      *  ---------------------------- API ----------------------------
      */
 
-    public static Movie[] fetchMoviesOfType(int type, int page) throws IOException, JSONException, ParseException {
+    public static ArrayList<Movie> fetchMoviesOfType(int type, int page) throws IOException, JSONException, ParseException {
         switch(type) {
             case RequestType.MOST_POPULAR:
                 return fetchMostPopularMovies(page);
@@ -83,7 +84,7 @@ public final class MovieApiManager {
      * @throws JSONException
      * @throws ParseException
      */
-    public static Movie[] fetchMostPopularMovies(int page) throws IOException, JSONException, ParseException {
+    public static ArrayList<Movie> fetchMostPopularMovies(int page) throws IOException, JSONException, ParseException {
         return fetchMovies(BASE_URL, MOVIES, GET_POPULAR, page);
     }
 
@@ -98,7 +99,7 @@ public final class MovieApiManager {
      * @throws JSONException
      * @throws ParseException
      */
-    public static Movie[] fetchTopRatedMovies(int page) throws IOException, JSONException, ParseException {
+    public static ArrayList<Movie> fetchTopRatedMovies(int page) throws IOException, JSONException, ParseException {
         return fetchMovies(BASE_URL, MOVIES, GET_TOP_RATED, page);
     }
 
@@ -140,14 +141,14 @@ public final class MovieApiManager {
      * ---------------------------- Private Methods ----------------------------
      */
 
-    private static Movie[] fetchMovies(String baseURL,
+    private static ArrayList<Movie> fetchMovies(String baseURL,
                                        String subComponent,
                                        String endpoint,
                                        int page) throws IOException, JSONException, ParseException {
         // Make request
         String jsonResponse =  httpRequest(baseURL, subComponent, endpoint, page);
         // Map to Movie objects
-        Movie[] movies = mapMovies(jsonResponse);
+        ArrayList<Movie> movies = mapMovies(jsonResponse);
         return movies;
     }
 
@@ -196,13 +197,13 @@ public final class MovieApiManager {
      * ---------------------------- Mappings ----------------------------
      */
 
-    private static Movie[] mapMovies(String jsonStr) throws JSONException, ParseException {
+    private static ArrayList<Movie> mapMovies(String jsonStr) throws JSONException, ParseException {
+        ArrayList<Movie> movies = new ArrayList<>();
         JSONObject forecastJson = new JSONObject(jsonStr);
         JSONArray results = forecastJson.getJSONArray("results");
-        Movie[] movies = new Movie[results.length()];
         for(int i = 0; i < results.length(); i++){
             JSONObject movieJson = results.getJSONObject(i);
-            movies[i] = mapMovie(movieJson);
+            movies.add(mapMovie(movieJson));
         }
         return movies;
     }

@@ -21,6 +21,8 @@ import com.asmat.rolando.popularmovies.models.Movie;
 import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.utilities.ViewUtils;
 
+import java.util.ArrayList;
+
 /**
  * Created by rolandoasmat on 5/29/17.
  */
@@ -31,7 +33,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     private MoviesGridAdapter mMoviesGridAdapter;
     private GridLayoutManager mMoviesGridLayoutManager;
     private Context context;
-    private LoaderManager.LoaderCallbacks<Movie[]> fetchMoviesCallbacks;
+    private LoaderManager.LoaderCallbacks<ArrayList<Movie>> fetchMoviesCallbacks;
     private int typeOfMovies;
     private int page;
     private final String PAGE_KEY = "page_key";
@@ -122,11 +124,11 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
 
     private void setFetchMoviesLoaderCallback() {
 
-        fetchMoviesCallbacks = new LoaderManager.LoaderCallbacks<Movie[]>() {
+        fetchMoviesCallbacks = new LoaderManager.LoaderCallbacks<ArrayList<Movie>>() {
 
             @Override
-            public Loader<Movie[]> onCreateLoader(int id, Bundle args) {
-                return new AsyncTaskLoader<Movie[]>(context) {
+            public Loader<ArrayList<Movie>> onCreateLoader(int id, Bundle args) {
+                return new AsyncTaskLoader<ArrayList<Movie>>(context) {
 
                     @Override
                     protected void onStartLoading() {
@@ -134,7 +136,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
                     }
 
                     @Override
-                    public Movie[] loadInBackground() {
+                    public ArrayList<Movie> loadInBackground() {
                         try {
                             return MovieApiManager.fetchMoviesOfType(typeOfMovies, page);
                         } catch (Exception e) {
@@ -146,7 +148,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
             }
 
             @Override
-            public void onLoadFinished(Loader<Movie[]> loader, Movie[] data) {
+            public void onLoadFinished(Loader<ArrayList<Movie>> loader, ArrayList<Movie> data) {
                 // TODO hide loader
                 if(data == null) {
                     // TODO show error message
@@ -163,7 +165,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
             }
 
             @Override
-            public void onLoaderReset(Loader<Movie[]> loader) {
+            public void onLoaderReset(Loader<ArrayList<Movie>> loader) {
 
             }
         };

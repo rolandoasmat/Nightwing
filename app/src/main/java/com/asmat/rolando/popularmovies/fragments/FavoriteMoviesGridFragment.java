@@ -84,8 +84,7 @@ public class FavoriteMoviesGridFragment extends Fragment
             favoriteMovies.add(Movie.getMovieFromCursorEntry(data));
         }
         data.close();
-        Movie[] movies = favoriteMovies.toArray(new Movie[0]);
-        mMoviesGridAdapter.setMovies(movies);
+        mMoviesGridAdapter.setMovies(favoriteMovies);
     }
 
     @Override
