@@ -75,6 +75,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
             mMoviesGrid.setAdapter(mMoviesGridAdapter);
         }
         mMoviesGrid.addOnScrollListener(mOnScrollListener);
+        mMoviesGrid.setNestedScrollingEnabled(false);
         return rootView;
     }
     private boolean fetchingMovies = false;

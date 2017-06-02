@@ -188,8 +188,12 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         mReviewsLinearLayoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mReviews.setLayoutManager(mReviewsLinearLayoutManager);
+        mReviewsLinearLayoutManager.setSmoothScrollbarEnabled(true);
+
         mReviewsLinearAdapter = new ReviewsLinearAdapter();
+
         mReviews.setAdapter(mReviewsLinearAdapter);
+        mReviews.setNestedScrollingEnabled(false);
     }
 
     private void setVideosLoaderCallback() {
