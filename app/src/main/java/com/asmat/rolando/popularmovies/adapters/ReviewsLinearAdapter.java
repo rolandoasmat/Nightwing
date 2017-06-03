@@ -20,6 +20,7 @@ public class ReviewsLinearAdapter extends RecyclerView.Adapter<ReviewsViewHolder
 
     public void setReviews(Review[] reviews) {
         this.mReviews = reviews;
+        this.notifyDataSetChanged();
     }
 
 
