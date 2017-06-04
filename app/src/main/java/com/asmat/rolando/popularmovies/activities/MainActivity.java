@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.adapters.SectionsPagerAdapter;
+import com.asmat.rolando.popularmovies.fragments.FavoriteMoviesGridFragment;
+import com.asmat.rolando.popularmovies.fragments.MovieGridFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -14,8 +16,6 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    //@BindView(R.id.container)
-    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +24,9 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this);
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter.setContext(this);
+        ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        //super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -69,5 +70,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        this.mSectionsPagerAdapter = null;
+
     }
 }

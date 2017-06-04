@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.fragments.FavoriteMoviesGridFragment;
@@ -19,8 +20,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private final int NUM_OF_PAGES = 3;
     private Context context;
 
-    public SectionsPagerAdapter(FragmentManager fm, Context context) {
+    public SectionsPagerAdapter(FragmentManager fm) {
         super(fm);
+    }
+
+    public void setContext(Context context) {
         this.context = context;
     }
 
@@ -59,5 +63,13 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         return null;
     }
 
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        return super.instantiateItem(container, position);
+    }
 
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        super.destroyItem(container, position, object);
+    }
 }

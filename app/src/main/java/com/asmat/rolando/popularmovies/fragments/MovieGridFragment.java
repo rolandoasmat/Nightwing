@@ -29,21 +29,17 @@ import java.util.ArrayList;
 
 public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHandler {
 
-    private RecyclerView mMoviesGrid;
     private MoviesGridAdapter mMoviesGridAdapter;
-    private GridLayoutManager mMoviesGridLayoutManager;
     private Context context;
     private LoaderManager.LoaderCallbacks<ArrayList<Movie>> fetchMoviesCallbacks;
     private int typeOfMovies;
     private int page;
     private final String PAGE_KEY = "page_key";
+    private boolean fetchingMovies = false;
 
-    public MovieGridFragment() {
-        page = 1;
-    }
-
-    public void setTypeOfMovies(int typeOfMovies) {
-        this.typeOfMovies = typeOfMovies;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
     }
 
     @Override
@@ -59,7 +55,8 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_movie_grid, container, false);
-        mMoviesGrid = (RecyclerView) rootView.findViewById(R.id.rv_movie_grid);
+        RecyclerView mMoviesGrid = (RecyclerView) rootView.findViewById(R.id.rv_movie_grid);
+        GridLayoutManager mMoviesGridLayoutManager;
         //Bundle args = get
         if(page == 1) {
             int numOfCol = ViewUtils.calculateNumberOfColumns(context);
@@ -75,23 +72,77 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
             mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
             mMoviesGrid.setAdapter(mMoviesGridAdapter);
         }
-        mMoviesGrid.addOnScrollListener(mOnScrollListener);
+        mMoviesGrid.addOnScrollListener(createScrollListener(mMoviesGridLayoutManager));
         mMoviesGrid.setNestedScrollingEnabled(false);
         return rootView;
     }
-    private boolean fetchingMovies = false;
-    private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            if(dy > 0 && !fetchingMovies) { // User is scrolling down
-                int positionOfLastItem = mMoviesGridLayoutManager.getItemCount()-1;
-                int currentPositionOfLastVisibleItem = mMoviesGridLayoutManager.findLastVisibleItemPosition();
-                if(currentPositionOfLastVisibleItem == positionOfLastItem - 2){
-                    fetchMovies();
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Bundle bundle = new Bundle();
+        onSaveInstanceState(bundle);
+    }
+
+    // Doesn't get called as user swipes right/left on view pager
+    // DOES get called on screen rotation
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    public MovieGridFragment() {
+        page = 1;
+    }
+
+    public void setTypeOfMovies(int typeOfMovies) {
+        this.typeOfMovies = typeOfMovies;
+    }
+
+    private RecyclerView.OnScrollListener createScrollListener(final GridLayoutManager layoutManager) {
+        return new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if(dy > 0 && !fetchingMovies) { // User is scrolling down
+                    int positionOfLastItem = layoutManager.getItemCount()-1;
+                    int currentPositionOfLastVisibleItem = layoutManager.findLastVisibleItemPosition();
+                    if(currentPositionOfLastVisibleItem == positionOfLastItem - 2){
+                        fetchMovies();
+                    }
                 }
             }
-        }
-    };
+        };
+    }
 
     private void fetchMovies() {
         fetchingMovies = true;
@@ -104,17 +155,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     }
 
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Bundle bundle = new Bundle();
-        onSaveInstanceState(bundle);
-    }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
