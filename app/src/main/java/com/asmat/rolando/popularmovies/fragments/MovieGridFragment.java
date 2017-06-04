@@ -62,7 +62,8 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
         mMoviesGrid = (RecyclerView) rootView.findViewById(R.id.rv_movie_grid);
         //Bundle args = get
         if(page == 1) {
-            mMoviesGridLayoutManager = new GridLayoutManager(context, ViewUtils.calculateNumberOfColumns(context));
+            int numOfCol = ViewUtils.calculateNumberOfColumns(context);
+            mMoviesGridLayoutManager = new GridLayoutManager(context, numOfCol);
             mMoviesGridAdapter = new MoviesGridAdapter(this);
             mMoviesGrid.setHasFixedSize(true);
             mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
@@ -108,6 +109,11 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
         super.onDestroyView();
         Bundle bundle = new Bundle();
         onSaveInstanceState(bundle);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -163,10 +169,12 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
                     page++;
                     fetchingMovies = false;
                 }
+                getLoaderManager().destroyLoader(typeOfMovies);
             }
 
             @Override
             public void onLoaderReset(Loader<ArrayList<Movie>> loader) {
+
 
             }
         };

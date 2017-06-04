@@ -33,9 +33,7 @@ import java.util.ArrayList;
 public class FavoriteMoviesGridFragment extends Fragment
         implements MovieAdapterOnClickHandler, LoaderManager.LoaderCallbacks<Cursor> {
 
-    private RecyclerView mMoviesGrid;
     private MoviesGridAdapter mMoviesGridAdapter;
-    private GridLayoutManager mMoviesGridLayoutManager;
     private Context context;
 
     private final int LOADER_ID = 20349;
@@ -51,10 +49,16 @@ public class FavoriteMoviesGridFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        GridLayoutManager mMoviesGridLayoutManager = null;
+        RecyclerView mMoviesGrid;
         View rootView = inflater.inflate(R.layout.fragment_movie_grid,container, false);
         mMoviesGrid = (RecyclerView) rootView.findViewById(R.id.rv_movie_grid);
-        mMoviesGridLayoutManager = new GridLayoutManager(context, ViewUtils.calculateNumberOfColumns(context));
-        mMoviesGridAdapter = new MoviesGridAdapter(this);
+        if(mMoviesGridLayoutManager == null) {
+            mMoviesGridLayoutManager = new GridLayoutManager(context, ViewUtils.calculateNumberOfColumns(context));
+        }
+        if(mMoviesGridAdapter == null) {
+            mMoviesGridAdapter = new MoviesGridAdapter(this);
+        }
         mMoviesGrid.setHasFixedSize(true);
         mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
         mMoviesGrid.setAdapter(mMoviesGridAdapter);
@@ -65,6 +69,11 @@ public class FavoriteMoviesGridFragment extends Fragment
     public void onResume() {
         super.onResume();
         fetchMovies();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
     private void fetchMovies() {
