@@ -146,7 +146,10 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
                 if(dy > 0 && !fetchingMovies) { // User is scrolling down
                     int positionOfLastItem = layoutManager.getItemCount()-1;
                     int currentPositionOfLastVisibleItem = layoutManager.findLastVisibleItemPosition();
-                    if(currentPositionOfLastVisibleItem == positionOfLastItem - 2){
+                    Log.v(tag(), "onScrolled");
+                    Log.v(tag(), "positionOfLastItem: "+positionOfLastItem);
+                    Log.v(tag(), "currentPositionOfLastVisibleItem: "+currentPositionOfLastVisibleItem);
+                    if(currentPositionOfLastVisibleItem >= positionOfLastItem - 5){
                         fetchMovies();
                     }
                 }
@@ -158,11 +161,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
         Log.v(tag(), "fetchMovies");
         fetchingMovies = true;
         LoaderManager loaderManager = getActivity().getSupportLoaderManager();
-        if(page == 1) {
-            loaderManager.initLoader(typeOfMovies, null, fetchMoviesCallbacks);
-        } else {
-            loaderManager.restartLoader(typeOfMovies, null, fetchMoviesCallbacks);
-        }
+        loaderManager.restartLoader(typeOfMovies, null, fetchMoviesCallbacks);
     }
 
     @Override
