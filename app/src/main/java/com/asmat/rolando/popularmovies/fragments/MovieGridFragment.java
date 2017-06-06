@@ -10,6 +10,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,37 +31,37 @@ import java.util.ArrayList;
 public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHandler {
 
     private MoviesGridAdapter mMoviesGridAdapter;
-    private Context context;
+    private Context mContext;
     private LoaderManager.LoaderCallbacks<ArrayList<Movie>> fetchMoviesCallbacks;
     private int typeOfMovies;
     private int page;
-    private final String PAGE_KEY = "page_key";
     private boolean fetchingMovies = false;
+    private final String TAG = "RA:MovieGridFragment:"+page;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        Log.v(TAG, "onAttach");
+        mContext = context;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = getActivity().getBaseContext();
+        Log.v(TAG, "onCreate");
     }
 
-    // TODO savedInstanceState is ALWAYS NULL :(. Using Arguments instead to save state
-    // TODO save state upon a rotation
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        Log.v(TAG, "onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_movie_grid, container, false);
         RecyclerView mMoviesGrid = (RecyclerView) rootView.findViewById(R.id.rv_movie_grid);
         GridLayoutManager mMoviesGridLayoutManager;
-        //Bundle args = get
         if(page == 1) {
-            int numOfCol = ViewUtils.calculateNumberOfColumns(context);
-            mMoviesGridLayoutManager = new GridLayoutManager(context, numOfCol);
+            int numOfCol = ViewUtils.calculateNumberOfColumns(mContext);
+            mMoviesGridLayoutManager = new GridLayoutManager(mContext, numOfCol);
             mMoviesGridAdapter = new MoviesGridAdapter(this);
             mMoviesGrid.setHasFixedSize(true);
             mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
@@ -68,7 +69,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
             setFetchMoviesLoaderCallback();
             fetchMovies();
         } else {
-            mMoviesGridLayoutManager = new GridLayoutManager(context, ViewUtils.calculateNumberOfColumns(context));
+            mMoviesGridLayoutManager = new GridLayoutManager(mContext, ViewUtils.calculateNumberOfColumns(mContext));
             mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
             mMoviesGrid.setAdapter(mMoviesGridAdapter);
         }
@@ -80,53 +81,62 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Log.v(TAG, "onActivityCreated");
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        Log.v(TAG, "onStart");
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        Log.v(TAG, "onResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        Log.v(TAG, "onPause");
     }
 
     @Override
     public void onStop() {
         super.onStop();
+        Log.v(TAG, "onStop");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Bundle bundle = new Bundle();
-        onSaveInstanceState(bundle);
+        Log.v(TAG, "onDestroyView");
     }
 
-    // Doesn't get called as user swipes right/left on view pager
+    // DOES NOT get called as user swipes right/left on view pager
     // DOES get called on screen rotation
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.v(TAG, "onDestroy");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        Log.v(TAG, "onDetach");
     }
 
     public MovieGridFragment() {
         page = 1;
+        Log.v(TAG, "MovieGridFragment constructor.");
     }
 
     public void setTypeOfMovies(int typeOfMovies) {
         this.typeOfMovies = typeOfMovies;
+        Log.v(TAG, "setTypeOfMovies");
+        Log.v(TAG, "typeOfMovies: "+typeOfMovies);
     }
 
     private RecyclerView.OnScrollListener createScrollListener(final GridLayoutManager layoutManager) {
@@ -145,6 +155,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     }
 
     private void fetchMovies() {
+        Log.v(TAG, "fetchMovies");
         fetchingMovies = true;
         LoaderManager loaderManager = getActivity().getSupportLoaderManager();
         if(page == 1) {
@@ -154,38 +165,41 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
         }
     }
 
-
-
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putInt(PAGE_KEY, page);
+        Log.v(TAG, "onSaveInstanceState");
     }
 
     @Override
     public void onClick(Movie movie) {
+        Log.v(TAG, "onClick");
         Class destinationClass = MovieDetailActivity.class;
-        Intent intentToStartDetailActivity = new Intent(context, destinationClass);
+        Intent intentToStartDetailActivity = new Intent(mContext, destinationClass);
         intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_TAG, movie);
         startActivity(intentToStartDetailActivity);
     }
 
     private void setFetchMoviesLoaderCallback() {
+        Log.v(TAG, "setFetchMoviesLoaderCallback");
 
         fetchMoviesCallbacks = new LoaderManager.LoaderCallbacks<ArrayList<Movie>>() {
 
             @Override
             public Loader<ArrayList<Movie>> onCreateLoader(int id, Bundle args) {
-                return new AsyncTaskLoader<ArrayList<Movie>>(context) {
+                return new AsyncTaskLoader<ArrayList<Movie>>(mContext) {
 
                     @Override
                     protected void onStartLoading() {
+                        Log.v(TAG, "onStartLoading");
                         forceLoad();
                     }
 
                     @Override
                     public ArrayList<Movie> loadInBackground() {
+                        Log.v(TAG, "loadInBackground");
                         try {
+                            Log.v(TAG, "typeOfMovies: "+typeOfMovies);
+                            Log.v(TAG, "page: "+page);
                             return MovieApiManager.fetchMoviesOfType(typeOfMovies, page);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -197,16 +211,19 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
 
             @Override
             public void onLoadFinished(Loader<ArrayList<Movie>> loader, ArrayList<Movie> data) {
+                Log.v(TAG, "onLoadFinished");
                 // TODO hide loader
                 if(data == null) {
                     // TODO show error message
                 } else {
-                    System.out.print("Movies fetched.");
                     if(page == 1) {
+                        Log.v(TAG, "setting movies");
                         mMoviesGridAdapter.setMovies(data);
                     } else {
+                        Log.v(TAG, "adding movies");
                         mMoviesGridAdapter.addMovies(data);
                     }
+                    Log.v(TAG, "data: "+data.toString());
                     page++;
                     fetchingMovies = false;
                 }
@@ -215,8 +232,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
 
             @Override
             public void onLoaderReset(Loader<ArrayList<Movie>> loader) {
-
-
+                Log.v(TAG, "onLoaderReset");
             }
         };
 
