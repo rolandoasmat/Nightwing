@@ -238,6 +238,6 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     }
 
     private String tag() {
-        return TAG+page;
+        return TAG+typeOfMovies;
     }
 }
