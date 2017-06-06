@@ -36,26 +36,26 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     private int typeOfMovies;
     private int page;
     private boolean fetchingMovies = false;
-    private final String TAG = "RA:MovieGridFragment:"+page;
+    private final String TAG = "RA:MovieGridFragment:";
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Log.v(TAG, "onAttach");
+        Log.v(tag(), "onAttach");
         mContext = context;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.v(TAG, "onCreate");
+        Log.v(tag(), "onCreate");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Log.v(TAG, "onCreateView");
+        Log.v(tag(), "onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_movie_grid, container, false);
         RecyclerView mMoviesGrid = (RecyclerView) rootView.findViewById(R.id.rv_movie_grid);
         GridLayoutManager mMoviesGridLayoutManager;
@@ -81,37 +81,37 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.v(TAG, "onActivityCreated");
+        Log.v(tag(), "onActivityCreated");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.v(TAG, "onStart");
+        Log.v(tag(), "onStart");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.v(TAG, "onResume");
+        Log.v(tag(), "onResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.v(TAG, "onPause");
+        Log.v(tag(), "onPause");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.v(TAG, "onStop");
+        Log.v(tag(), "onStop");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.v(TAG, "onDestroyView");
+        Log.v(tag(), "onDestroyView");
     }
 
     // DOES NOT get called as user swipes right/left on view pager
@@ -119,24 +119,24 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.v(TAG, "onDestroy");
+        Log.v(tag(), "onDestroy");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.v(TAG, "onDetach");
+        Log.v(tag(), "onDetach");
     }
 
     public MovieGridFragment() {
         page = 1;
-        Log.v(TAG, "MovieGridFragment constructor.");
+        Log.v(tag(), "MovieGridFragment constructor.");
     }
 
     public void setTypeOfMovies(int typeOfMovies) {
         this.typeOfMovies = typeOfMovies;
-        Log.v(TAG, "setTypeOfMovies");
-        Log.v(TAG, "typeOfMovies: "+typeOfMovies);
+        Log.v(tag(), "setTypeOfMovies");
+        Log.v(tag(), "typeOfMovies: "+typeOfMovies);
     }
 
     private RecyclerView.OnScrollListener createScrollListener(final GridLayoutManager layoutManager) {
@@ -155,7 +155,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     }
 
     private void fetchMovies() {
-        Log.v(TAG, "fetchMovies");
+        Log.v(tag(), "fetchMovies");
         fetchingMovies = true;
         LoaderManager loaderManager = getActivity().getSupportLoaderManager();
         if(page == 1) {
@@ -167,12 +167,12 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        Log.v(TAG, "onSaveInstanceState");
+        Log.v(tag(), "onSaveInstanceState");
     }
 
     @Override
     public void onClick(Movie movie) {
-        Log.v(TAG, "onClick");
+        Log.v(tag(), "onClick");
         Class destinationClass = MovieDetailActivity.class;
         Intent intentToStartDetailActivity = new Intent(mContext, destinationClass);
         intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_TAG, movie);
@@ -180,7 +180,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     }
 
     private void setFetchMoviesLoaderCallback() {
-        Log.v(TAG, "setFetchMoviesLoaderCallback");
+        Log.v(tag(), "setFetchMoviesLoaderCallback");
 
         fetchMoviesCallbacks = new LoaderManager.LoaderCallbacks<ArrayList<Movie>>() {
 
@@ -190,16 +190,16 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
 
                     @Override
                     protected void onStartLoading() {
-                        Log.v(TAG, "onStartLoading");
+                        Log.v(tag(), "onStartLoading");
                         forceLoad();
                     }
 
                     @Override
                     public ArrayList<Movie> loadInBackground() {
-                        Log.v(TAG, "loadInBackground");
+                        Log.v(tag(), "loadInBackground");
                         try {
-                            Log.v(TAG, "typeOfMovies: "+typeOfMovies);
-                            Log.v(TAG, "page: "+page);
+                            Log.v(tag(), "typeOfMovies: "+typeOfMovies);
+                            Log.v(tag(), "page: "+page);
                             return MovieApiManager.fetchMoviesOfType(typeOfMovies, page);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -211,19 +211,19 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
 
             @Override
             public void onLoadFinished(Loader<ArrayList<Movie>> loader, ArrayList<Movie> data) {
-                Log.v(TAG, "onLoadFinished");
+                Log.v(tag(), "onLoadFinished");
                 // TODO hide loader
                 if(data == null) {
                     // TODO show error message
                 } else {
                     if(page == 1) {
-                        Log.v(TAG, "setting movies");
+                        Log.v(tag(), "setting movies");
                         mMoviesGridAdapter.setMovies(data);
                     } else {
-                        Log.v(TAG, "adding movies");
+                        Log.v(tag(), "adding movies");
                         mMoviesGridAdapter.addMovies(data);
                     }
-                    Log.v(TAG, "data: "+data.toString());
+                    Log.v(tag(), "data: "+data.toString());
                     page++;
                     fetchingMovies = false;
                 }
@@ -232,9 +232,12 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
 
             @Override
             public void onLoaderReset(Loader<ArrayList<Movie>> loader) {
-                Log.v(TAG, "onLoaderReset");
+                Log.v(tag(), "onLoaderReset");
             }
         };
+    }
 
+    private String tag() {
+        return TAG+page;
     }
 }
