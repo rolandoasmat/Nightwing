@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.asmat.rolando.popularmovies.R;
@@ -43,9 +44,15 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     @BindView(R.id.tv_movie_rating) TextView mMovieRating;
     @BindView(R.id.tv_synopsis_content) TextView mMovieSynopsis;
     @BindView(R.id.rv_trailers) RecyclerView mTrailers;
+    @BindView(R.id.pb_trailers_loading_bar) ProgressBar mTrailersLoading;
+    @BindView(R.id.tv_no_trailers) TextView mNoTrailersLabel;
+    @BindView(R.id.tv_error_trailers) TextView mTrailersErrorLabel;
     private LinearLayoutManager mTrailersLayoutManager;
     private TrailersLinearAdapter mTrailersLinearAdapter;
     @BindView(R.id.rv_reviews) RecyclerView mReviews;
+    @BindView(R.id.pb_reviews_loading_bar) ProgressBar mReviewsLoading;
+    @BindView(R.id.tv_no_reviews) TextView mNoReviewsLabel;
+    @BindView(R.id.tv_error_reviews) TextView mReviewsErrorLabel;
     private LinearLayoutManager mReviewsLinearLayoutManager;
     private ReviewsLinearAdapter mReviewsLinearAdapter;
     @BindView(R.id.star) ImageView star;
@@ -108,7 +115,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
             unfillStar();
         }
     }
-
 
     // TODO user a new query instead
     private boolean isMovieFavorited() {
@@ -201,10 +207,8 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
             @Override
             public Loader<Video[]> onCreateLoader(int id, Bundle args) {
                 return new AsyncTaskLoader<Video[]>(getBaseContext()) {
-
                     @Override
                     protected void onStartLoading() {
-                        // TODO show loader
                         forceLoad();
                     }
 
@@ -222,20 +226,27 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
             @Override
             public void onLoadFinished(Loader<Video[]> loader, Video[] data) {
-                // TODO hide loader
+                mTrailersLoading.setVisibility(View.GONE);
                 if(data == null) {
-                    // TODO show error message
+                    mTrailersErrorLabel.setVisibility(View.VISIBLE);
                 } else {
-                    System.out.print("Videos fetched.");
-                    ArrayList<Video> trailers = new ArrayList<>();
-                    for(Video video: data) {
-                        if(video.getType().equals("Trailer")){
-                            trailers.add(video);
+                    if(data.length == 0) {
+                        mNoTrailersLabel.setVisibility(View.VISIBLE);
+                    } else {
+                        ArrayList<Video> trailers = new ArrayList<>();
+                        for(Video video: data) {
+                            if(video.getType().equals("Trailer")){
+                                trailers.add(video);
+                            }
+                        }
+                        if(trailers.size() == 0) {
+                            mNoTrailersLabel.setVisibility(View.VISIBLE);
+                        } else {
+                            Video[] array = trailers.toArray(new Video[0]);
+                            mTrailersLinearAdapter.setTrailers(array);
+                            mTrailers.setVisibility(View.VISIBLE);
                         }
                     }
-                    System.out.print("Filter Trailers.");
-                    Video[] array = trailers.toArray(new Video[0]);
-                    mTrailersLinearAdapter.setTrailers(array);
                 }
             }
 
@@ -249,10 +260,8 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
             @Override
             public Loader<Review[]> onCreateLoader(int id, Bundle args) {
                 return new AsyncTaskLoader<Review[]>(getBaseContext()) {
-
                     @Override
                     protected void onStartLoading() {
-                        // TODO show loader
                         forceLoad();
                     }
 
@@ -270,12 +279,16 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
             @Override
             public void onLoadFinished(Loader<Review[]> loader, Review[] data) {
-                // TODO hide loader
+                mReviewsLoading.setVisibility(View.GONE);
                 if(data == null) {
-                    // TODO show error message
+                    mReviewsErrorLabel.setVisibility(View.VISIBLE);
                 } else {
-                    // TODO no reviews state
-                    mReviewsLinearAdapter.setReviews(data);
+                    if(data.length == 0) {
+                        mNoReviewsLabel.setVisibility(View.VISIBLE);
+                    } else {
+                        mReviews.setVisibility(View.VISIBLE);
+                        mReviewsLinearAdapter.setReviews(data);
+                    }
                 }
             }
 
@@ -302,5 +315,4 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     private void updateActionBarTitle(int stringID){
         updateActionBarTitle(getString(stringID));
     }
-
 }
