@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             layout="@layout/star_and_share"/>
-
+<!--Trailers-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,12 +33,36 @@
             android:text="@string/trailers"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
 
+        <ProgressBar
+            android:id="@+id/pb_trailers_loading_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_trailers"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
         </android.support.v7.widget.RecyclerView>
 
+        <TextView
+            android:id="@+id/tv_no_trailers"
+            android:text="@string/no_trailers"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
+
+        <TextView
+            android:id="@+id/tv_error_trailers"
+            android:text="@string/error_reviews"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
+<!--Reviews-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,9 +100,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
-
     </LinearLayout>
 
 </ScrollView>
-
-
