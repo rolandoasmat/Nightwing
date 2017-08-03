@@ -9,6 +9,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.asmat.rolando.popularmovies.R;
@@ -46,6 +48,9 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     private LinearLayoutManager mTrailersLayoutManager;
     private TrailersLinearAdapter mTrailersLinearAdapter;
     @BindView(R.id.rv_reviews) RecyclerView mReviews;
+    @BindView(R.id.pb_reviews_loading_bar) ProgressBar mReviewsLoading;
+    @BindView(R.id.tv_no_reviews) TextView mNoReviewsLabel;
+    @BindView(R.id.tv_error_reviews) TextView mReviewsErrorLabel;
     private LinearLayoutManager mReviewsLinearLayoutManager;
     private ReviewsLinearAdapter mReviewsLinearAdapter;
     @BindView(R.id.star) ImageView star;
@@ -252,7 +257,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
                     @Override
                     protected void onStartLoading() {
-                        // TODO show loader
                         forceLoad();
                     }
 
@@ -270,12 +274,18 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
             @Override
             public void onLoadFinished(Loader<Review[]> loader, Review[] data) {
-                // TODO hide loader
+                mReviewsLoading.setVisibility(View.GONE);
                 if(data == null) {
-                    // TODO show error message
+                    mReviews.setVisibility(View.GONE);
+                    mReviewsErrorLabel.setVisibility(View.VISIBLE);
                 } else {
-                    // TODO no reviews state
-                    mReviewsLinearAdapter.setReviews(data);
+                    if(data.length == 0) {
+                        mReviews.setVisibility(View.GONE);
+                        mNoReviewsLabel.setVisibility(View.VISIBLE);
+                    } else {
+                        mReviews.setVisibility(View.VISIBLE);
+                        mReviewsLinearAdapter.setReviews(data);
+                    }
                 }
             }
 

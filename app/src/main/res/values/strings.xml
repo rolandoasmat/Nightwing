@@ -26,6 +26,11 @@
     <string name="out_of_ten" translatable="false">/10.0</string>
 
     <!--Error Messages-->
-    <string name="generic_error">"Oops! something went horribly wrong :'("</string>
+    <string name="generic_error">"Oops! something went horribly wrong :("</string>
     <string name="no_internet">"THE INTERNET IS DOWN >:O"</string>
+    <string name="error_reviews">Error fetching reviews.</string>
+
+    <!--Empty States-->
+    <string name="no_trailers">No Trailers available.</string>
+    <string name="no_reviews">No Reviews available.</string>
 </resources>
