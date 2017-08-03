@@ -239,9 +239,13 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                                 trailers.add(video);
                             }
                         }
-                        Video[] array = trailers.toArray(new Video[0]);
-                        mTrailersLinearAdapter.setTrailers(array);
-                        mTrailers.setVisibility(View.VISIBLE);
+                        if(trailers.size() == 0) {
+                            mNoTrailersLabel.setVisibility(View.VISIBLE);
+                        } else {
+                            Video[] array = trailers.toArray(new Video[0]);
+                            mTrailersLinearAdapter.setTrailers(array);
+                            mTrailers.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
             }
