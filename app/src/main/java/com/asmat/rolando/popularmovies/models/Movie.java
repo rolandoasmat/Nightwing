@@ -43,7 +43,9 @@ public class Movie implements Parcelable {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date date = sdf.parse(releaseDate);
             sdf = new SimpleDateFormat(DATE_FORMAT);
-            return sdf.format(date);
+            String formatted = sdf.format(date);
+            String uppercased = formatted.substring(0, 1).toUpperCase() + formatted.substring(1);
+            return uppercased;
         } catch (ParseException e) {
             e.printStackTrace();
             return "Unable to parse date.";
