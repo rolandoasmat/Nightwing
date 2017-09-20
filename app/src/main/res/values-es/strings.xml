@@ -24,7 +24,18 @@
     <string name="trailers">Videos</string>
     <string name="reviews">Comentarios</string>
 
+
     <!--Error Messages-->
     <string name="generic_error">"Oops! Algo salió horriblemente mal:'("</string>
     <string name="no_internet">"EL INTERNET ESTÁ ABAJO >:O"</string>
+    <string name="error_reviews">Error bajando comentarios.</string>
+    <string name="error_trailers">Error bajando videos.</string>
+
+    <!--Empty States-->
+    <string name="no_trailers">No hay videos disponibles.</string>
+    <string name="no_reviews">No hay comentarios disponibles.</string>
+
+    <!--Share-->
+    <string name="share_movie">Compartir pelicula</string>
+    <string name="check_out_movie">Chequea esta pelicula!</string>
 </resources>

@@ -140,16 +140,20 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
     public void onShare(View view) {
         String mimeType = "text/plain";
-        String title = "Share movie...";
+        String title = getResources().getString(R.string.share_movie);
         String movieTitle = movie.getTitle();
-        String movieTrailerUrl = mTrailersLinearAdapter.getTrailers()[0].youtubeUrl();
-        String textToShare = "Check out the trailer for "+movieTitle+"!\n"+movieTrailerUrl;
+        String textToShare = getResources().getString(R.string.check_out_movie)+
+                " \""+movieTitle+"\"";
+        Video[] videos = mTrailersLinearAdapter.getTrailers();
+        if(videos != null && videos.length > 0) {
+            textToShare += "\n" + videos[0].youtubeUrl();
+        }
 
         Intent intent = ShareCompat.IntentBuilder.from(this)
                 .setChooserTitle(title)
                 .setType(mimeType)
                 .setText(textToShare).getIntent();
-        startActivity(intent);
+        startActivity(Intent.createChooser(intent, title));
     }
 
     public void onStar(View view) {

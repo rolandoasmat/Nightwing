@@ -32,6 +32,10 @@
     <string name="error_trailers">Error fetching trailers.</string>
 
     <!--Empty States-->
-    <string name="no_trailers">No Trailers available.</string>
-    <string name="no_reviews">No Reviews available.</string>
+    <string name="no_trailers">No trailers available.</string>
+    <string name="no_reviews">No reviews available.</string>
+
+    <!--Share-->
+    <string name="share_movie">Share movie</string>
+    <string name="check_out_movie">Check out this movie!</string>
 </resources>
