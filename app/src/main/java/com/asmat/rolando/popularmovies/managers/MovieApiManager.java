@@ -235,7 +235,7 @@ public final class MovieApiManager {
         String plotSynopsis = json.getString("overview");
         String releaseDate  = json.getString("release_date");
         int id              = json.getInt("id");
-        String title        = json.getString("original_title");
+        String title        = json.getString("title");
         String backdropURL  = json.getString("backdrop_path");
         double userRating   = json.getDouble("vote_average");
         return new Movie(id, title, posterURL, backdropURL, plotSynopsis, userRating, releaseDate);
