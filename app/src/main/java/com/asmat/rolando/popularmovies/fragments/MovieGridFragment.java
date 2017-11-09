@@ -254,4 +254,8 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     private String tag() {
         return TAG+typeOfMovies;
     }
+
+    public void retry(View view) {
+        Log.v(TAG, "retry pressed");
+    }
 }
