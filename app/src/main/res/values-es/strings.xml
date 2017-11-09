@@ -27,7 +27,8 @@
 
     <!--Error Messages-->
     <string name="generic_error">"Oops! Algo salió horriblemente mal:'("</string>
-    <string name="no_internet">"EL INTERNET ESTÁ ABAJO >:O"</string>
+    <string name="no_internet">"No coneccion a la ret."</string>
+    <string name="retry">Tratar otra vez</string>
     <string name="error_reviews">Error bajando comentarios.</string>
     <string name="error_trailers">Error bajando videos.</string>
 

@@ -14,12 +14,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.activities.MovieDetailActivity;
 import com.asmat.rolando.popularmovies.adapters.MoviesGridAdapter;
 import com.asmat.rolando.popularmovies.managers.MovieApiManager;
 import com.asmat.rolando.popularmovies.models.Movie;
 import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
+import com.asmat.rolando.popularmovies.utilities.NetworkUtils;
 import com.asmat.rolando.popularmovies.utilities.ViewUtils;
 
 import java.util.ArrayList;
@@ -35,6 +38,8 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     private LoaderManager.LoaderCallbacks<ArrayList<Movie>> fetchMoviesCallbacks;
     private int typeOfMovies;
     private int page;
+    private RecyclerView mMoviesGrid;
+    private LinearLayout mNoInternetView;
     private boolean fetchingMovies = false;
     private final String TAG = "RA:MovieGridFragment:";
 
@@ -57,7 +62,8 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
                              @Nullable Bundle savedInstanceState) {
         Log.v(tag(), "onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_movie_grid, container, false);
-        RecyclerView mMoviesGrid = (RecyclerView) rootView.findViewById(R.id.rv_movie_grid);
+        mMoviesGrid = (RecyclerView) rootView.findViewById(R.id.rv_movie_grid);
+        mNoInternetView = (LinearLayout) rootView.findViewById(R.id.no_internet_layout);
         GridLayoutManager mMoviesGridLayoutManager;
         if(page == 1) {
             int numOfCol = ViewUtils.calculateNumberOfColumns(mContext);
@@ -94,6 +100,15 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     public void onResume() {
         super.onResume();
         Log.v(tag(), "onResume");
+        if(!NetworkUtils.isOnline(getContext())) {
+            // User has no internet
+            mMoviesGrid.setVisibility(View.GONE);
+            mNoInternetView.setVisibility(View.VISIBLE);
+        } else {
+            // Internet connection established
+            mMoviesGrid.setVisibility(View.VISIBLE);
+            mNoInternetView.setVisibility(View.GONE);
+        }
     }
 
     @Override

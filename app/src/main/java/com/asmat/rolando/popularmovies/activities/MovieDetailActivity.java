@@ -314,6 +314,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
     private void updateActionBarTitle(String title){
         getSupportActionBar().setTitle(title);
+        getSupportActionBar().setShowHideAnimationEnabled(true);
     }
 
     private void updateActionBarTitle(int stringID){

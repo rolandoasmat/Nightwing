@@ -27,7 +27,8 @@
 
     <!--Error Messages-->
     <string name="generic_error">"Oops! something went horribly wrong :("</string>
-    <string name="no_internet">"THE INTERNET IS DOWN >:O"</string>
+    <string name="no_internet">"Lost internet connection."</string>
+    <string name="retry">Retry</string>
     <string name="error_reviews">Error fetching reviews.</string>
     <string name="error_trailers">Error fetching trailers.</string>
 
