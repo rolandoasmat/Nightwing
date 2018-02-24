@@ -35,3 +35,5 @@ project.properties
 # Gradle-based build
 .gradle
 build/
+
+app/
