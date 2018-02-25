@@ -61,6 +61,7 @@ public class MoviesGridAdapter
         ImageView imageView = holder.mMoviePoster;
         Picasso.with(imageView.getContext())
                 .load(posterURL)
+                .resize(342, 485)
                 .into(imageView);
     }
 
