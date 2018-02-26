@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -76,7 +77,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                 populateViews(movie);
             }
         }
-//        updateActionBarTitle(R.string.movie_detail_activity_title);
+
         setVideosLoaderCallback();
         setReviewsLoaderCallback();
 
@@ -87,6 +88,18 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         getSupportLoaderManager().initLoader(REVIEWS_LOADER, null, reviewsCallbacks);
 
         setStarStatus();
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+//        toolbar.setNavigationIcon(android.support.v7.appcompat.R.drawable.abc_ic_ab_back_material);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                onBackPressed();
+//            }
+//        });
     }
 
     @Override
@@ -313,12 +326,10 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         mMovieSynopsis.setText(movie.getPlotSynopsis());
     }
 
-    private void updateActionBarTitle(String title){
-        getSupportActionBar().setTitle(title);
-        getSupportActionBar().setShowHideAnimationEnabled(true);
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
-    private void updateActionBarTitle(int stringID){
-        updateActionBarTitle(getString(stringID));
-    }
 }
