@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.AsyncTaskLoader;
@@ -37,9 +38,8 @@ import butterknife.ButterKnife;
 
 public class MovieDetailActivity extends AppCompatActivity implements TrailerAdapterOnClickHandler {
 
-    @BindView(R.id.iv_movie_backdrop) ImageView mMovieBackdrop;
+    @BindView(R.id.toolbarImage) ImageView mMovieBackdrop;
     @BindView(R.id.iv_poster_thumbnail) ImageView mMoviePoster;
-    @BindView(R.id.tv_movie_title) TextView mMovieTitle;
     @BindView(R.id.tv_release_date) TextView mReleaseDate;
     @BindView(R.id.tv_movie_rating) TextView mMovieRating;
     @BindView(R.id.tv_synopsis_content) TextView mMovieSynopsis;
@@ -76,7 +76,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                 populateViews(movie);
             }
         }
-        updateActionBarTitle(R.string.movie_detail_activity_title);
+//        updateActionBarTitle(R.string.movie_detail_activity_title);
         setVideosLoaderCallback();
         setReviewsLoaderCallback();
 
@@ -304,7 +304,8 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     private void populateViews(Movie movie){
         Picasso.with(this).load(movie.getBackdropUrlComplete()).into(mMovieBackdrop);
         Picasso.with(this).load(movie.getPosterUrlComplete()).into(mMoviePoster);
-        mMovieTitle.setText(movie.getTitle());
+        CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsingToolbar);
+        collapsingToolbarLayout.setTitle(movie.getTitle());
         String formatted = movie.getReleaseDateFormatted();
         mReleaseDate.setText(formatted);
         String rating = movie.getUserRating()+getString(R.string.out_of_ten);
