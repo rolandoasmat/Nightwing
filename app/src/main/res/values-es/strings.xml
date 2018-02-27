@@ -39,4 +39,7 @@
     <!--Share-->
     <string name="share_movie">Compartir pelicula</string>
     <string name="check_out_movie">Chequea esta pelicula!</string>
+
+    <!--Search-->
+    <string name="search_hint">Buscar peliculas</string>
 </resources>

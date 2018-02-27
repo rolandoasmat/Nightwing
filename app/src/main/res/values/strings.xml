@@ -39,4 +39,7 @@
     <!--Share-->
     <string name="share_movie">Share movie</string>
     <string name="check_out_movie">Check out this movie!</string>
+
+    <!--Search-->
+    <string name="search_hint">Search movies</string>
 </resources>
