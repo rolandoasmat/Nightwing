@@ -5,22 +5,10 @@
     tools:context=".MainActivity">
 
     <item
-        android:id="@+id/sort_menu_item"
-        android:icon="@drawable/ic_sort_white_36dp"
-        android:title="@string/sort_menu_title"
-        android:orderInCategory="1"
-        app:showAsAction="ifRoom">
-
-        <menu>
-            <item android:id="@+id/sort_by_most_popular"
-                android:title="@string/sort_most_popular" />
-            <item android:id="@+id/sort_by_top_rated"
-                android:title="@string/sort_top_rated" />
-            <item android:id="@+id/show_favorites"
-                android:title="@string/show_favorites" />
-        </menu>
-
-    </item>
-
+        android:id="@+id/search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:title="temp search title"/>
 
 </menu>

@@ -42,4 +42,6 @@
 
     <!--Search-->
     <string name="search_hint">Search movies</string>
+    <string name="title_activity_search_results">SearchResultsActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>
