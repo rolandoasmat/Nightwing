@@ -3,6 +3,4 @@
 if [ ${TRAVIS_SECURE_ENV_VARS} == true ]
 then
     echo "API_KEY=\"${API_KEY}\"" > 'gradle.properties'
-    echo "Contents of gradle.properties:"
-    cat gradle.properties
 fi
