@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -21,16 +22,34 @@ public class SearchResultsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
+        setupToolbar();
+        setupFragment();
+        handleIntent(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        setIntent(intent);
+        handleIntent(intent);
+    }
+
+    // Enable Back arrow
+    private void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
 
+    private void setupFragment() {
         // TODO need to rething the grid fragment
         mResultsGrid = (MovieGridFragment) getSupportFragmentManager().findFragmentById(R.id.results_grid);
+    }
 
-
-        // Get the intent, verify the action and get the query
-        Intent intent = getIntent();
+    // Handle the search query
+    private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             Toast.makeText(this, query, Toast.LENGTH_SHORT).show();
@@ -42,7 +61,6 @@ public class SearchResultsActivity extends AppCompatActivity {
         // Inflate the options menu from XML
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search_results, menu);
-
         // Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
@@ -50,7 +68,6 @@ public class SearchResultsActivity extends AppCompatActivity {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
         searchView.setSubmitButtonEnabled(true);
-
         return true;
     }
 }
