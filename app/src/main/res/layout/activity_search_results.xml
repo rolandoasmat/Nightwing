@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/results_grid"
-        android:name="com.asmat.rolando.popularmovies.fragments.MovieGridFragment"
+        android:name="com.asmat.rolando.popularmovies.fragments.SearchResultsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

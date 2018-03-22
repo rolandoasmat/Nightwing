@@ -13,10 +13,11 @@ import android.view.MenuInflater;
 import android.widget.Toast;
 
 import com.asmat.rolando.popularmovies.R;
-import com.asmat.rolando.popularmovies.fragments.MovieGridFragment;
+import com.asmat.rolando.popularmovies.fragments.SearchResultsFragment;
+
 
 public class SearchResultsActivity extends AppCompatActivity {
-    MovieGridFragment mResultsGrid;
+    SearchResultsFragment mResultsGrid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     private void setupFragment() {
         // TODO need to rething the grid fragment
-        mResultsGrid = (MovieGridFragment) getSupportFragmentManager().findFragmentById(R.id.results_grid);
+        mResultsGrid = (SearchResultsFragment) getSupportFragmentManager().findFragmentById(R.id.results_grid);
     }
 
     // Handle the search query
