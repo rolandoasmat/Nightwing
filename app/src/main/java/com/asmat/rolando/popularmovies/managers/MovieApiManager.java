@@ -15,9 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.security.InvalidParameterException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Hashtable;
 import java.util.Locale;
 
@@ -40,14 +38,17 @@ public final class MovieApiManager {
      * API sub-component
      */
     private static final String MOVIES = "movie";
+    private static final String SEARCH = "search";
 
     /**
      * Endpoints
      */
-    private static final String GET_POPULAR     = "popular"; // GET /movie/popular
-    private static final String GET_TOP_RATED   = "top_rated"; // GET/movie/top_rated
-    private static final String GET_VIDEOS      = "videos"; // GET /movie/{movie_id}/videos
-    private static final String GET_REVIEWS     = "reviews"; // GET /movie/{movie_id}/reviews
+    private static final String MOVIES_POPULAR = "popular";     // /movie/popular
+    private static final String MOVIES_TOP_RATED = "top_rated"; // /movie/top_rated
+    private static final String MOVIES_VIDEOS = "videos";       // /movie/{movie_id}/videos
+    private static final String MOVIES_REVIEWS = "reviews";     // /movie/{movie_id}/reviews
+
+    private static final String SEARCH_MOVIES     = "movie"; // /search/movie
 
     /**
      * Universal Query Parameters
@@ -57,6 +58,11 @@ public final class MovieApiManager {
     private static final String LANGUAGE_PARAM = "language";
     private static final String LANGUAGE_VALUE = Locale.getDefault().getLanguage();
     private static final String PAGE_PARAM     = "page";
+
+    /**
+     * OTHER Query Parameters
+     */
+    private static final String QUERY_PARAM = "query";
 
     /**
      *  ---------------------------- API ----------------------------
@@ -85,7 +91,7 @@ public final class MovieApiManager {
      * @throws ParseException
      */
     public static ArrayList<Movie> fetchMostPopularMovies(int page) throws IOException, JSONException, ParseException {
-        return fetchMovies(BASE_URL, MOVIES, GET_POPULAR, page);
+        return fetchMovies(BASE_URL, MOVIES, MOVIES_POPULAR, page);
     }
 
     /**
@@ -100,7 +106,7 @@ public final class MovieApiManager {
      * @throws ParseException
      */
     public static ArrayList<Movie> fetchTopRatedMovies(int page) throws IOException, JSONException, ParseException {
-        return fetchMovies(BASE_URL, MOVIES, GET_TOP_RATED, page);
+        return fetchMovies(BASE_URL, MOVIES, MOVIES_TOP_RATED, page);
     }
 
     /**
@@ -117,7 +123,7 @@ public final class MovieApiManager {
      * @throws ParseException
      */
     public static Review[] fetchMovieReviews(int id, int page) throws IOException, JSONException, ParseException {
-        return fetchReviews(id, BASE_URL, MOVIES, GET_REVIEWS, page);
+        return fetchReviews(id, BASE_URL, MOVIES, MOVIES_REVIEWS, page);
     }
 
     /**
@@ -134,7 +140,14 @@ public final class MovieApiManager {
      * @throws ParseException
      */
     public static Video[] fetchMovieVideos(int id, int page) throws IOException, JSONException, ParseException {
-        return fetchVideos(id, BASE_URL, MOVIES, GET_VIDEOS, page);
+        return fetchVideos(id, BASE_URL, MOVIES, MOVIES_VIDEOS, page);
+    }
+
+    public static ArrayList<Movie>  fetchSearchMovies(String query, int page) throws IOException, JSONException, ParseException {
+        Hashtable<String, String> queryParams = new Hashtable<>();
+        queryParams.put(QUERY_PARAM, query);
+        queryParams.put(PAGE_PARAM, String.valueOf(page));
+        return fetchMovies(BASE_URL, SEARCH, SEARCH_MOVIES, queryParams);
     }
 
     /**
@@ -147,6 +160,17 @@ public final class MovieApiManager {
                                        int page) throws IOException, JSONException, ParseException {
         // Make request
         String jsonResponse =  httpRequest(baseURL, subComponent, endpoint, page);
+        // Map to Movie objects
+        ArrayList<Movie> movies = mapMovies(jsonResponse);
+        return movies;
+    }
+
+    private static ArrayList<Movie> fetchMovies(String baseURL,
+                                                String subComponent,
+                                                String endpoint,
+                                                Hashtable<String, String> queryParams) throws IOException, JSONException, ParseException {
+        // Make request
+        String jsonResponse =  httpRequest(baseURL, subComponent, endpoint, queryParams);
         // Map to Movie objects
         ArrayList<Movie> movies = mapMovies(jsonResponse);
         return movies;
@@ -176,17 +200,28 @@ public final class MovieApiManager {
         return videos;
     }
 
+    // TODO refactor and delete this method
     private static String httpRequest(String baseURL,
                                       String subComponent,
                                       String endpoint,
                                       int page) throws IOException, JSONException, ParseException {
+        Hashtable<String,String> params = new Hashtable<>();
+        params.put(PAGE_PARAM, Integer.toString(page));
+        return  httpRequest(baseURL, subComponent, endpoint, params);
+    }
+
+    private static String httpRequest(String baseURL,
+                                      String subComponent,
+                                      String endpoint,
+                                      Hashtable<String,String> queryParams) throws IOException, JSONException, ParseException {
         // Concat url parts
         String completeUrl = baseURL+"/"+subComponent+"/"+endpoint;
         // Create params
         Hashtable<String, String> params = new Hashtable<>();
         params.put(API_KEY_PARAM, API_KEY_VALUE);
         params.put(LANGUAGE_PARAM, LANGUAGE_VALUE);
-        params.put(PAGE_PARAM, Integer.toString(page));
+        // Add queryParams
+        params.putAll(queryParams);
         // Transform String into URL
         URL url = NetworkUtils.buildUrl(completeUrl, params);
         // Make request

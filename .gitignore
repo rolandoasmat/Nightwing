@@ -36,4 +36,7 @@ project.properties
 .gradle
 build/
 
-app/
+.settings
+.classpath
+.project
+release

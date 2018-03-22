@@ -27,19 +27,20 @@ import com.asmat.rolando.popularmovies.utilities.ViewUtils;
 import java.util.ArrayList;
 
 /**
- * Created by rolandoasmat on 5/29/17.
+ * Created by rolandoasmat on 3/21/18.
  */
 
-public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHandler {
+public class SearchResultsFragment extends Fragment implements MovieAdapterOnClickHandler {
 
     private MoviesGridAdapter mMoviesGridAdapter;
     private Context mContext;
     private LoaderManager.LoaderCallbacks<ArrayList<Movie>> fetchMoviesCallbacks;
-    private int typeOfMovies;
+    private String searchQuery;
     private int page;
     private RecyclerView mMoviesGrid;
     private LinearLayout mNoInternetView;
     private boolean fetchingMovies = false;
+    private int loaderID = 3958293;
 
     @Override
     public void onAttach(Context context) {
@@ -55,7 +56,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
         mMoviesGrid = rootView.findViewById(R.id.rv_movie_grid);
         mNoInternetView = rootView.findViewById(R.id.no_internet_layout);
         GridLayoutManager mMoviesGridLayoutManager;
-        if(page == 1) {
+        if (page == 1) {
             int numOfCol = ViewUtils.calculateNumberOfColumns(mContext);
             mMoviesGridLayoutManager = new GridLayoutManager(mContext, numOfCol);
             mMoviesGridAdapter = new MoviesGridAdapter(this);
@@ -77,7 +78,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     @Override
     public void onResume() {
         super.onResume();
-        if(!NetworkUtils.isOnline(getContext())) {
+        if (!NetworkUtils.isOnline(getContext())) {
             // User has no internet
             mMoviesGrid.setVisibility(View.GONE);
             mNoInternetView.setVisibility(View.VISIBLE);
@@ -88,22 +89,25 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
         }
     }
 
-    public MovieGridFragment() {
+    public SearchResultsFragment() {
         page = 1;
     }
 
-    public void setTypeOfMovies(int typeOfMovies) {
-        this.typeOfMovies = typeOfMovies;
+    public void setSearchQuery(String searchQuery) {
+        this.searchQuery = searchQuery;
+        mMoviesGridAdapter.setMovies(new ArrayList<Movie>());
+        this.page = 1;
+        fetchMovies();
     }
 
     private RecyclerView.OnScrollListener createScrollListener(final GridLayoutManager layoutManager) {
         return new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if(dy > 0 && !fetchingMovies) { // User is scrolling down
-                    int positionOfLastItem = layoutManager.getItemCount()-1;
+                if (dy > 0 && !fetchingMovies) { // User is scrolling down
+                    int positionOfLastItem = layoutManager.getItemCount() - 1;
                     int currentPositionOfLastVisibleItem = layoutManager.findLastVisibleItemPosition();
-                    if(currentPositionOfLastVisibleItem >= positionOfLastItem - 5){
+                    if (currentPositionOfLastVisibleItem >= positionOfLastItem - 5) {
                         fetchMovies();
                     }
                 }
@@ -114,7 +118,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     private void fetchMovies() {
         fetchingMovies = true;
         LoaderManager loaderManager = getActivity().getSupportLoaderManager();
-        loaderManager.restartLoader(typeOfMovies, null, fetchMoviesCallbacks);
+        loaderManager.restartLoader(loaderID, null, fetchMoviesCallbacks);
     }
 
     @Override
@@ -140,7 +144,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
                     @Override
                     public ArrayList<Movie> loadInBackground() {
                         try {
-                            return MovieApiManager.fetchMoviesOfType(typeOfMovies, page);
+                            return MovieApiManager.fetchSearchMovies(searchQuery, page);
                         } catch (Exception e) {
                             e.printStackTrace();
                             return null;
@@ -152,10 +156,10 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
             @Override
             public void onLoadFinished(Loader<ArrayList<Movie>> loader, ArrayList<Movie> data) {
                 // TODO hide loader
-                if(data == null) {
+                if (data == null) {
                     // TODO show error message
                 } else {
-                    if(page == 1) {
+                    if (page == 1) {
                         mMoviesGridAdapter.setMovies(data);
                     } else {
                         mMoviesGridAdapter.addMovies(data);
@@ -163,7 +167,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
                     page++;
                     fetchingMovies = false;
                 }
-                getLoaderManager().destroyLoader(typeOfMovies);
+                getLoaderManager().destroyLoader(loaderID);
             }
 
             @Override
@@ -171,6 +175,4 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
             }
         };
     }
-
-
 }

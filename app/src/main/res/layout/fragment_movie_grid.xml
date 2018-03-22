@@ -15,5 +15,4 @@
         android:layout_height="wrap_content"
         layout="@layout/no_internet"/>
 
-
 </FrameLayout>
