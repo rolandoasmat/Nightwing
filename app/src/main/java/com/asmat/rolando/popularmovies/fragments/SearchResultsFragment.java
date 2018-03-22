@@ -95,6 +95,8 @@ public class SearchResultsFragment extends Fragment implements MovieAdapterOnCli
 
     public void setSearchQuery(String searchQuery) {
         this.searchQuery = searchQuery;
+        mMoviesGridAdapter.setMovies(new ArrayList<Movie>());
+        this.page = 1;
         fetchMovies();
     }
 
