@@ -18,6 +18,7 @@ import com.asmat.rolando.popularmovies.fragments.SearchResultsFragment;
 
 public class SearchResultsActivity extends AppCompatActivity {
     SearchResultsFragment mResultsGrid;
+    SearchView mSearchview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,6 @@ public class SearchResultsActivity extends AppCompatActivity {
     }
 
     private void setupFragment() {
-        // TODO need to rething the grid fragment
         mResultsGrid = (SearchResultsFragment) getSupportFragmentManager().findFragmentById(R.id.results_grid);
     }
 
@@ -53,7 +53,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            Toast.makeText(this, query, Toast.LENGTH_SHORT).show();
+            mSearchview.setQuery(query, false);
             mResultsGrid.setSearchQuery(query);
         }
     }
@@ -65,12 +65,12 @@ public class SearchResultsActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_search_results, menu);
         // Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        mSearchview = (SearchView) menu.findItem(R.id.search).getActionView();
         // Assumes current activity is the searchable activity
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconified(false);
-        searchView.setIconifiedByDefault(true);
-        searchView.setSubmitButtonEnabled(true);
+        mSearchview.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        mSearchview.setIconified(false);
+        mSearchview.setIconifiedByDefault(true);
+        mSearchview.setSubmitButtonEnabled(true);
         return true;
     }
 }
