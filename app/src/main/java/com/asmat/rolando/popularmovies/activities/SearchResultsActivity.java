@@ -54,6 +54,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             Toast.makeText(this, query, Toast.LENGTH_SHORT).show();
+            mResultsGrid.setSearchQuery(query);
         }
     }
 
