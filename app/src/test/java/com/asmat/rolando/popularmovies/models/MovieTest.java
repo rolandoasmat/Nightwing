@@ -14,11 +14,19 @@ public class MovieTest {
     }
 
     @Test
-    public void getBackdropUrlComplete() {
+    public void getBackdropURL() {
+        Movie movie = getMovieTestObject();
+        String actual = movie.getBackdropURL();
+        String expected = "http://image.tmdb.org/t/p/w780/q7fXcrDPJcf6t3rzutaNwTzuKP1.jpg";
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void getPosterUrlComplete() {
+    public void getPosterURL() {
+        Movie movie = getMovieTestObject();
+        String actual = movie.getPosterURL();
+        String expected = "http://image.tmdb.org/t/p/w342/pU1ULUq8D3iRxl1fdX2lZIzdHuI.jpg";
+        assertEquals(expected, actual);
     }
 
     // Helper method to generate a test object
@@ -30,7 +38,6 @@ public class MovieTest {
         String overview = "When the creator of a popular video game system dies, a virtual contest is created to compete for his fortune.";
         double voteAverage = 8.1;
         String releaseDate = "2018-03-28";
-        Movie movie = new Movie(id, title, posterPath, backdropPath, overview, voteAverage, releaseDate);
-        return movie;
+        return new Movie(id, title, posterPath, backdropPath, overview, voteAverage, releaseDate);
     }
 }
