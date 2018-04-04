@@ -14,6 +14,15 @@ public class MovieTest {
     }
 
     @Test
+    public void getReleaseDateFormattedInvalidDate() {
+        Movie movie = getMovieTestObject();
+        movie.setReleaseDate("not parcelable date string");
+        String actual = movie.getReleaseDateFormatted();
+        String expected = "Unable to parse date.";
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void getBackdropURL() {
         Movie movie = getMovieTestObject();
         String actual = movie.getBackdropURL();

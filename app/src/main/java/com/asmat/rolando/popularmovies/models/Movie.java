@@ -51,7 +51,6 @@ public class Movie implements Parcelable {
             String uppercased = formatted.substring(0, 1).toUpperCase() + formatted.substring(1);
             return uppercased;
         } catch (ParseException e) {
-            e.printStackTrace();
             return "Unable to parse date.";
         }
     }
