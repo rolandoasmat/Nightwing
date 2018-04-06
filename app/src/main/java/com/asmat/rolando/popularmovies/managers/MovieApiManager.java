@@ -68,7 +68,7 @@ public final class MovieApiManager {
      *  ---------------------------- API ----------------------------
      */
 
-    public static ArrayList<Movie> fetchMoviesOfType(int type, int page) throws IOException, JSONException, ParseException {
+    public static ArrayList<Movie> fetchMoviesOfType(@RequestType.Def int type, int page) throws IOException, JSONException, ParseException {
         switch(type) {
             case RequestType.MOST_POPULAR:
                 return fetchMostPopularMovies(page);

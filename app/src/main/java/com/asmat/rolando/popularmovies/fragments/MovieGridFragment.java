@@ -21,6 +21,7 @@ import com.asmat.rolando.popularmovies.adapters.MoviesGridAdapter;
 import com.asmat.rolando.popularmovies.managers.MovieApiManager;
 import com.asmat.rolando.popularmovies.models.Movie;
 import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
+import com.asmat.rolando.popularmovies.models.RequestType;
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils;
 import com.asmat.rolando.popularmovies.utilities.ViewUtils;
 
@@ -35,7 +36,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     private MoviesGridAdapter mMoviesGridAdapter;
     private Context mContext;
     private LoaderManager.LoaderCallbacks<ArrayList<Movie>> fetchMoviesCallbacks;
-    private int typeOfMovies;
+    private @RequestType.Def int typeOfMovies;
     private int page;
     private RecyclerView mMoviesGrid;
     private LinearLayout mNoInternetView;
@@ -92,7 +93,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
         page = 1;
     }
 
-    public void setTypeOfMovies(int typeOfMovies) {
+    public void setTypeOfMovies(@RequestType.Def int typeOfMovies) {
         this.typeOfMovies = typeOfMovies;
     }
 
