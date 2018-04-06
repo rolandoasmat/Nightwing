@@ -104,7 +104,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
     @Override
     public void onClick(Video trailer) {
-        String url = trailer.youtubeUrl();
+        String url = trailer.getYouTubeURL();
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         if(intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
@@ -159,7 +159,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                 " \""+movieTitle+"\"";
         Video[] videos = mTrailersLinearAdapter.getTrailers();
         if(videos != null && videos.length > 0) {
-            textToShare += "\n" + videos[0].youtubeUrl();
+            textToShare += "\n" + videos[0].getYouTubeURL();
         }
 
         Intent intent = ShareCompat.IntentBuilder.from(this)
