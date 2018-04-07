@@ -293,5 +293,4 @@ public final class MovieApiManager {
         // Create Movie object
         return new Review(author, content);
     }
-
 }

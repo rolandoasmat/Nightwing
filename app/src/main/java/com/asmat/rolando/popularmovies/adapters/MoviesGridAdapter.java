@@ -63,6 +63,7 @@ public class MoviesGridAdapter
                 .load(posterURL)
                 .resize(342, 485)
                 .into(imageView);
+        // TODO could we use the position to know whether we're close to the end and we need to load more data?
     }
 
     @Override
