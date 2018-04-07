@@ -68,7 +68,7 @@ public final class MovieApiManager {
      *  ---------------------------- API ----------------------------
      */
 
-    public static ArrayList<Movie> fetchMoviesOfType(int type, int page) throws IOException, JSONException, ParseException {
+    public static ArrayList<Movie> fetchMoviesOfType(@RequestType.Def int type, int page) throws IOException, JSONException, ParseException {
         switch(type) {
             case RequestType.MOST_POPULAR:
                 return fetchMostPopularMovies(page);
@@ -266,14 +266,14 @@ public final class MovieApiManager {
     }
 
     private static Movie mapMovie(JSONObject json) throws JSONException, ParseException {
-        String posterURL    = json.getString("poster_path");
-        String plotSynopsis = json.getString("overview");
-        String releaseDate  = json.getString("release_date");
-        int id              = json.getInt("id");
-        String title        = json.getString("title");
-        String backdropURL  = json.getString("backdrop_path");
-        double userRating   = json.getDouble("vote_average");
-        return new Movie(id, title, posterURL, backdropURL, plotSynopsis, userRating, releaseDate);
+        String posterPath    = json.getString("poster_path");
+        String overview      = json.getString("overview");
+        String releaseDate   = json.getString("release_date");
+        int id               = json.getInt("id");
+        String title         = json.getString("title");
+        String backdropPath  = json.getString("backdrop_path");
+        double userRating    = json.getDouble("vote_average");
+        return new Movie(id, title, posterPath, backdropPath, overview, userRating, releaseDate);
     }
 
     private static Video mapVideo(JSONObject json) throws JSONException, ParseException {
@@ -293,5 +293,4 @@ public final class MovieApiManager {
         // Create Movie object
         return new Review(author, content);
     }
-
 }

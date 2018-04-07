@@ -6,10 +6,14 @@ package com.asmat.rolando.popularmovies.models;
 
 public class Video {
 
+    private static final String YOUTUBE_URL = "https://www.youtube.com/watch?v=";
+    private static final String YOUTUBE_THUMBNAIL_PRE = "http://img.youtube.com/vi/";
+    private static final String YOUTUBE_THUMBNAIL_POST = "/0.jpg";
+
     private String name;
-    private String site;
+    private String site; // YouTube
     private String key;
-    private String type;
+    private String type; // Trailer, Teaser
 
     public Video(String name, String site, String key, String type) {
         this.name = name;
@@ -18,12 +22,12 @@ public class Video {
         this.type = type;
     }
 
-    public String youtubeUrl() {
-        return "https://www.youtube.com/watch?v="+key;
+    public String getYouTubeURL() {
+        return YOUTUBE_URL + key;
     }
 
-    public String youtubeThumbnail() {
-        return "http://img.youtube.com/vi/"+key+"/0.jpg";
+    public String getYouTubeThumbnailURL() {
+        return YOUTUBE_THUMBNAIL_PRE + key + YOUTUBE_THUMBNAIL_POST;
     }
 
     public String getName() {

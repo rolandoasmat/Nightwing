@@ -18,50 +18,57 @@ public class Movie implements Parcelable {
 
     private int id;
     private String title;
-    private String posterURL;
-    private String backdropURL;
-    private String plotSynopsis;
-    private double userRating;
+    private String posterPath;
+    private String backdropPath;
+    private String overview;
+    private double voteAverage;
     private String releaseDate;
 
-    private static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w342"; // "w92", "w154", "w185", "w342", "w500", "w780"
-    final private String DATE_FORMAT = "MMMM dd, yyyy";
+    // "w92", "w154", "w185", "w342", "w500", "w780"
+    private static final String IMAGE_BASE_URL_POSTER = "http://image.tmdb.org/t/p/w342";
+    private static final String IMAGE_BASE_URL_BACKDROP = "http://image.tmdb.org/t/p/w780";
 
-    public Movie(int id, String title, String posterURL, String backdropURL,
-                 String plotSynopsis, double userRating, String releaseDate) {
+    private static final String DATE_FORMAT_ORIGINAL = "yyyy-MM-dd";
+    private static final String DATE_FORMAT_DESIRED = "MMMM dd, yyyy";
+
+    public Movie(int id, String title, String posterPath, String backdropPath,
+                 String overview, double voteAverage, String releaseDate) {
         this.id = id;
         this.title = title;
-        this.posterURL = posterURL;
-        this.backdropURL = backdropURL;
-        this.plotSynopsis = plotSynopsis;
-        this.userRating = userRating;
+        this.posterPath = posterPath;
+        this.backdropPath = backdropPath;
+        this.overview = overview;
+        this.voteAverage = voteAverage;
         this.releaseDate = releaseDate;
     }
 
     public String getReleaseDateFormatted() {
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_ORIGINAL);
             Date date = sdf.parse(releaseDate);
-            sdf = new SimpleDateFormat(DATE_FORMAT);
+            sdf = new SimpleDateFormat(DATE_FORMAT_DESIRED);
             String formatted = sdf.format(date);
             String uppercased = formatted.substring(0, 1).toUpperCase() + formatted.substring(1);
             return uppercased;
         } catch (ParseException e) {
-            e.printStackTrace();
             return "Unable to parse date.";
         }
     }
 
-    public String getBackdropUrlComplete() {
-        return IMAGE_BASE_URL + backdropURL;
+    public String getBackdropURL() {
+        return IMAGE_BASE_URL_BACKDROP + this.backdropPath;
     }
 
-    public String getPosterUrlComplete() {
-        return IMAGE_BASE_URL + posterURL;
+    public String getPosterURL() {
+        return IMAGE_BASE_URL_POSTER + this.posterPath;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -72,36 +79,36 @@ public class Movie implements Parcelable {
         this.title = title;
     }
 
-    public String getPosterURL() {
-        return posterURL;
+    public String getPosterPath() {
+        return posterPath;
     }
 
-    public String getbackdropURL() {
-        return backdropURL;
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
     }
 
-    public void setPosterURL(String posterURL) {
-        this.posterURL = posterURL;
+    public String getBackdropPath() {
+        return backdropPath;
     }
 
-    public void setbackdropURL(String backdropURL) {
-        this.backdropURL = backdropURL;
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
     }
 
-    public String getPlotSynopsis() {
-        return plotSynopsis;
+    public String getOverview() {
+        return overview;
     }
 
-    public void setPlotSynopsis(String plotSynopsis) {
-        this.plotSynopsis = plotSynopsis;
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
-    public double getUserRating() {
-        return userRating;
+    public double getVoteAverage() {
+        return voteAverage;
     }
 
-    public void setUserRating(double userRating) {
-        this.userRating = userRating;
+    public void setVoteAverage(double voteAverage) {
+        this.voteAverage = voteAverage;
     }
 
     public String getReleaseDate() {
@@ -121,20 +128,24 @@ public class Movie implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeString(title);
-        dest.writeString(posterURL);
-        dest.writeString(backdropURL);
-        dest.writeString(plotSynopsis);
-        dest.writeDouble(userRating);
+        dest.writeString(posterPath);
+        dest.writeString(backdropPath);
+        dest.writeString(overview);
+        dest.writeDouble(voteAverage);
         dest.writeString(releaseDate);
     }
+
+    /**
+     * PARCELABLE
+     */
 
     protected Movie(Parcel in) {
         id = in.readInt();
         title = in.readString();
-        posterURL = in.readString();
-        backdropURL = in.readString();
-        plotSynopsis = in.readString();
-        userRating = in.readDouble();
+        posterPath = in.readString();
+        backdropPath = in.readString();
+        overview = in.readString();
+        voteAverage = in.readDouble();
         releaseDate = in.readString();
     }
 
@@ -149,6 +160,10 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
+
+    /**
+     * Cursor
+     */
 
     public static Movie getMovieFromCursorEntry(Cursor cursor) {
         int id = cursor.getInt(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_MOVIE_ID));

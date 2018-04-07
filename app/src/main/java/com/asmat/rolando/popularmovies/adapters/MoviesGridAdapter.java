@@ -57,12 +57,13 @@ public class MoviesGridAdapter
     @Override
     public void onBindViewHolder(MoviesGridAdapterViewHolder holder, int position) {
         Movie movie = mMovies.get(position);
-        String posterURL = movie.getPosterUrlComplete();
+        String posterURL = movie.getPosterURL();
         ImageView imageView = holder.mMoviePoster;
         Picasso.with(imageView.getContext())
                 .load(posterURL)
                 .resize(342, 485)
                 .into(imageView);
+        // TODO could we use the position to know whether we're close to the end and we need to load more data?
     }
 
     @Override

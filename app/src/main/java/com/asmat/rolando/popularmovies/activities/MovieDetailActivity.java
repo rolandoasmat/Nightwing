@@ -104,7 +104,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
     @Override
     public void onClick(Video trailer) {
-        String url = trailer.youtubeUrl();
+        String url = trailer.getYouTubeURL();
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         if(intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
@@ -159,7 +159,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                 " \""+movieTitle+"\"";
         Video[] videos = mTrailersLinearAdapter.getTrailers();
         if(videos != null && videos.length > 0) {
-            textToShare += "\n" + videos[0].youtubeUrl();
+            textToShare += "\n" + videos[0].getYouTubeURL();
         }
 
         Intent intent = ShareCompat.IntentBuilder.from(this)
@@ -178,9 +178,9 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         } else {
             String movieTitle = movie.getTitle();
             String posterUrl = movie.getPosterURL();
-            String backdropurl = movie.getbackdropURL();
-            String movieSynopsis = movie.getPlotSynopsis();
-            double movieRating = movie.getUserRating();
+            String backdropurl = movie.getBackdropPath();
+            String movieSynopsis = movie.getOverview();
+            double movieRating = movie.getVoteAverage();
             String releaseDate = movie.getReleaseDate();
 
             ContentValues contentValues = new ContentValues();
@@ -315,15 +315,15 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     }
 
     private void populateViews(Movie movie){
-        Picasso.with(this).load(movie.getBackdropUrlComplete()).into(mMovieBackdrop);
-        Picasso.with(this).load(movie.getPosterUrlComplete()).into(mMoviePoster);
+        Picasso.with(this).load(movie.getBackdropURL()).into(mMovieBackdrop);
+        Picasso.with(this).load(movie.getPosterURL()).into(mMoviePoster);
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsingToolbar);
         collapsingToolbarLayout.setTitle(movie.getTitle());
         String formatted = movie.getReleaseDateFormatted();
         mReleaseDate.setText(formatted);
-        String rating = movie.getUserRating()+getString(R.string.out_of_ten);
+        String rating = movie.getVoteAverage()+getString(R.string.out_of_ten);
         mMovieRating.setText(rating);
-        mMovieSynopsis.setText(movie.getPlotSynopsis());
+        mMovieSynopsis.setText(movie.getOverview());
     }
 
     @Override

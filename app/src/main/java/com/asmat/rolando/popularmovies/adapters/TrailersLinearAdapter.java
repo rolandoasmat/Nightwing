@@ -63,7 +63,7 @@ public class TrailersLinearAdapter
         Video video = mTrailers[position];
         String caption = video.getName();
         holder.mCaption.setText(caption);
-        String thumbnail = video.youtubeThumbnail();
+        String thumbnail = video.getYouTubeThumbnailURL();
         ImageView imageView = holder.mTrailerThumbnail;
         Picasso.with(imageView.getContext())
                 .load(thumbnail)
