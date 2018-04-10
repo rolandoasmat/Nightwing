@@ -19,7 +19,7 @@ import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.activities.MovieDetailActivity;
 import com.asmat.rolando.popularmovies.adapters.MoviesGridAdapter;
 import com.asmat.rolando.popularmovies.managers.MovieApiManager;
-import com.asmat.rolando.popularmovies.models.Movie;
+import com.asmat.rolando.popularmovies.database.Movie;
 import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.models.RequestType;
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils;

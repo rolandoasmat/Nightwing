@@ -19,8 +19,8 @@ import android.view.ViewGroup;
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.activities.MovieDetailActivity;
 import com.asmat.rolando.popularmovies.adapters.MoviesGridAdapter;
-import com.asmat.rolando.popularmovies.data.PopularMoviesContract;
-import com.asmat.rolando.popularmovies.models.Movie;
+import com.asmat.rolando.popularmovies.database.PopularMoviesContract;
+import com.asmat.rolando.popularmovies.database.Movie;
 import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.utilities.ViewUtils;
 

@@ -1,10 +1,9 @@
-package com.asmat.rolando.popularmovies.models;
+package com.asmat.rolando.popularmovies.database;
 
+import android.arch.persistence.room.*;
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.asmat.rolando.popularmovies.data.PopularMoviesContract;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,15 +12,25 @@ import java.util.Date;
 /**
  * Created by rolandoasmat on 2/9/17.
  */
-
+@Entity(tableName = "movies", indices = {@Index("id")})
 public class Movie implements Parcelable {
 
+    @PrimaryKey
     private int id;
     private String title;
+
+    @ColumnInfo(name = "poster_path")
     private String posterPath;
+
+    @ColumnInfo(name = "backdrop_path")
     private String backdropPath;
+
     private String overview;
+
+    @ColumnInfo(name = "vote_average")
     private double voteAverage;
+
+    @ColumnInfo(name = "release_date")
     private String releaseDate;
 
     // "w92", "w154", "w185", "w342", "w500", "w780"

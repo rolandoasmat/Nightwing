@@ -1,7 +1,7 @@
 package com.asmat.rolando.popularmovies.managers;
 
 import com.asmat.rolando.popularmovies.BuildConfig;
-import com.asmat.rolando.popularmovies.models.Movie;
+import com.asmat.rolando.popularmovies.database.Movie;
 import com.asmat.rolando.popularmovies.models.RequestType;
 import com.asmat.rolando.popularmovies.models.Review;
 import com.asmat.rolando.popularmovies.models.Video;

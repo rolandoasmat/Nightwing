@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.data;
+package com.asmat.rolando.popularmovies.database;
 
 import android.net.Uri;
 import android.provider.BaseColumns;

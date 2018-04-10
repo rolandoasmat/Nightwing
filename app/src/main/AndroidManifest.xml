@@ -58,7 +58,7 @@
 
         <!--Provider-->
         <provider
-            android:name=".data.PopularMoviesContentProvider"
+            android:name=".database.PopularMoviesContentProvider"
             android:authorities="com.asmat.rolando.popularmovies"
             android:exported="false" />
 

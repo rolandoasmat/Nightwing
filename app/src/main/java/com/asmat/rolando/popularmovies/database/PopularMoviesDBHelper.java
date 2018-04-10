@@ -1,9 +1,9 @@
-package com.asmat.rolando.popularmovies.data;
+package com.asmat.rolando.popularmovies.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.asmat.rolando.popularmovies.data.PopularMoviesContract.*;
+import com.asmat.rolando.popularmovies.database.PopularMoviesContract.*;
 /**
  * Created by rolandoasmat on 5/21/17.
  */
