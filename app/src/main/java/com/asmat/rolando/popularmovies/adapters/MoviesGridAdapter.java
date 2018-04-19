@@ -31,6 +31,14 @@ public class MoviesGridAdapter
         this.mClickHandler = handler;
     }
 
+    public void setMovies(Movie[] movies) {
+        ArrayList<Movie> list = new ArrayList<>();
+        for(Movie movie : movies) {
+            list.add(movie);
+        }
+        this.setMovies(list);
+    }
+
     public void setMovies(ArrayList<Movie> movies) {
         this.mMovies  = movies;
         notifyDataSetChanged();

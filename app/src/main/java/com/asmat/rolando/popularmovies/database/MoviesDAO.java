@@ -16,4 +16,7 @@ public interface MoviesDAO {
 
     @Query("SELECT * FROM movies NATURAL JOIN favorite_movies")
     public Movie[] loadAllFavoriteMovies();
+
+    @Query("SELECT * FROM favorite_movies WHERE id LIKE :id")
+    public FavoriteMovie findFavoriteMovie(int id);
 }

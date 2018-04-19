@@ -1,9 +1,6 @@
 package com.asmat.rolando.popularmovies.activities;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
@@ -24,7 +21,7 @@ import android.widget.TextView;
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.adapters.ReviewsLinearAdapter;
 import com.asmat.rolando.popularmovies.adapters.TrailersLinearAdapter;
-import com.asmat.rolando.popularmovies.database.PopularMoviesContract;
+import com.asmat.rolando.popularmovies.database.DatabaseManager;
 import com.asmat.rolando.popularmovies.managers.MovieApiManager;
 import com.asmat.rolando.popularmovies.database.Movie;
 import com.asmat.rolando.popularmovies.models.Review;
@@ -87,7 +84,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         getSupportLoaderManager().initLoader(VIDEOS_LOADER, null, videosCallbacks);
         getSupportLoaderManager().initLoader(REVIEWS_LOADER, null, reviewsCallbacks);
 
-        setStarStatus();
+        resetStar();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -121,7 +118,10 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         return super.onOptionsItemSelected(item);
     }
 
-    private void setStarStatus() {
+    /**
+     * Color in the star if this is a favorite movie, un-color otherwise.
+     */
+    private void resetStar() {
         if(isMovieFavorited()) {
             fillStar();
         } else {
@@ -132,15 +132,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     // TODO user a new query instead
     private boolean isMovieFavorited() {
         int id = movie.getId();
-        ContentResolver resolver = getContentResolver();
-        Cursor cursor = resolver.query(PopularMoviesContract.FavoritesEntry.CONTENT_URI,null,null,null,null);
-        while(cursor.moveToNext()) {
-            if(Movie.getMovieFromCursorEntry(cursor).getId() == id) {
-                return true;
-            }
-        }
-        cursor.close();
-        return false;
+        return DatabaseManager.INSTANCE.isFavoriteMovie(id);
     }
 
     private void fillStar() {
@@ -169,32 +161,20 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         startActivity(Intent.createChooser(intent, title));
     }
 
+    /**
+     * User tapped on star icon.
+     * @param view Star icon.
+     */
     public void onStar(View view) {
-        int movieID = movie.getId();
-        if(isMovieFavorited()) {
-            getContentResolver().delete(PopularMoviesContract.FavoritesEntry.CONTENT_URI,
-                    PopularMoviesContract.FavoritesEntry.COLUMN_MOVIE_ID+" = "+ movieID,
-                    null);
+        final boolean isAFavoriteMovie = isMovieFavorited();
+        if (isAFavoriteMovie) {
+            // Un-Favorite
+            DatabaseManager.INSTANCE.removeFavoriteMovie(this.movie);
         } else {
-            String movieTitle = movie.getTitle();
-            String posterUrl = movie.getPosterURL();
-            String backdropurl = movie.getBackdropPath();
-            String movieSynopsis = movie.getOverview();
-            double movieRating = movie.getVoteAverage();
-            String releaseDate = movie.getReleaseDate();
-
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_MOVIE_ID, movieID);
-            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_TITLE, movieTitle);
-            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_POSTER_URL, posterUrl);
-            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_BACKDROP_URL, backdropurl );
-            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_SYNOPSIS, movieSynopsis);
-            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_RATING, movieRating);
-            contentValues.put(PopularMoviesContract.FavoritesEntry.COLUMN_RELEASE_DATE, releaseDate);
-
-            getContentResolver().insert(PopularMoviesContract.FavoritesEntry.CONTENT_URI, contentValues);
+            // Favorite
+            DatabaseManager.INSTANCE.addFavoriteMovie(this.movie);
         }
-        setStarStatus();
+        resetStar();
     }
 
     private void setupTrailersRecyclerView() {

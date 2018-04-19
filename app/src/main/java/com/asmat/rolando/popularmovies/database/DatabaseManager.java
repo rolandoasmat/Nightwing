@@ -19,4 +19,28 @@ public enum DatabaseManager {
                 AppDatabase.class, DATABASE_NAME).build();
         this.db = db;
     }
+
+    public boolean isFavoriteMovie(int id) {
+        MoviesDAO dao = db.moviesDAO();
+        FavoriteMovie favoriteMovie = dao.findFavoriteMovie(id);
+        return favoriteMovie != null;
+    }
+
+    public void addFavoriteMovie(Movie movie) {
+        MoviesDAO dao = db.moviesDAO();
+        dao.insertMovie(movie);
+        FavoriteMovie favoriteMovie = new FavoriteMovie();
+        favoriteMovie.id = movie.getId();
+        dao.insertFavoriteMovie(favoriteMovie);
+    }
+
+    public void removeFavoriteMovie(Movie movie) {
+        MoviesDAO dao = db.moviesDAO();
+        dao.deleteMovie(movie);
+    }
+
+    public Movie[] getFavoriteMovies() {
+        MoviesDAO dao = db.moviesDAO();
+        return dao.loadAllFavoriteMovies();
+    }
 }

@@ -1,7 +1,6 @@
 package com.asmat.rolando.popularmovies.database;
 
 import android.arch.persistence.room.*;
-import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -128,6 +127,10 @@ public class Movie implements Parcelable {
         this.releaseDate = releaseDate;
     }
 
+    /**
+     * PARCELABLE
+     */
+
     @Override
     public int describeContents() {
         return 0;
@@ -143,10 +146,6 @@ public class Movie implements Parcelable {
         dest.writeDouble(voteAverage);
         dest.writeString(releaseDate);
     }
-
-    /**
-     * PARCELABLE
-     */
 
     protected Movie(Parcel in) {
         id = in.readInt();
@@ -169,19 +168,4 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
-
-    /**
-     * Cursor
-     */
-
-    public static Movie getMovieFromCursorEntry(Cursor cursor) {
-        int id = cursor.getInt(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_MOVIE_ID));
-        String title = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_TITLE));
-        String posterUrl = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_POSTER_URL));
-        String backdropUrl = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_BACKDROP_URL));
-        String synopsis = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_SYNOPSIS));
-        double rating = cursor.getDouble(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_RATING));
-        String releaseDate = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.FavoritesEntry.COLUMN_RELEASE_DATE));
-        return new Movie(id, title, posterUrl, backdropUrl, synopsis, rating, releaseDate);
-    }
 }
