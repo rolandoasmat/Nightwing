@@ -1,7 +1,9 @@
 package com.asmat.rolando.popularmovies.database;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.os.AsyncTask;
 
 public enum DatabaseManager {
 
@@ -20,26 +22,38 @@ public enum DatabaseManager {
         this.db = db;
     }
 
-    public boolean isFavoriteMovie(int id) {
+    public LiveData<FavoriteMovie> getFavoriteMovie(int id) {
         MoviesDAO dao = db.moviesDAO();
-        FavoriteMovie favoriteMovie = dao.findFavoriteMovie(id);
-        return favoriteMovie != null;
+        LiveData<FavoriteMovie> favoriteMovie = dao.findFavoriteMovie(id);
+        return favoriteMovie;
     }
 
-    public void addFavoriteMovie(Movie movie) {
-        MoviesDAO dao = db.moviesDAO();
-        dao.insertMovie(movie);
-        FavoriteMovie favoriteMovie = new FavoriteMovie();
-        favoriteMovie.id = movie.getId();
-        dao.insertFavoriteMovie(favoriteMovie);
+    public void addFavoriteMovie(final Movie movie) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                MoviesDAO dao = db.moviesDAO();
+                dao.insertMovie(movie);
+                FavoriteMovie favoriteMovie = new FavoriteMovie();
+                favoriteMovie.id = movie.getId();
+                dao.insertFavoriteMovie(favoriteMovie);
+                return null;
+            }
+        }.execute();
     }
 
-    public void removeFavoriteMovie(Movie movie) {
-        MoviesDAO dao = db.moviesDAO();
-        dao.deleteMovie(movie);
+    public void removeFavoriteMovie(final Movie movie) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                MoviesDAO dao = db.moviesDAO();
+                dao.deleteMovie(movie);
+                return null;
+            }
+        }.execute();
     }
 
-    public Movie[] getFavoriteMovies() {
+    public LiveData<Movie[]> getFavoriteMovies() {
         MoviesDAO dao = db.moviesDAO();
         return dao.loadAllFavoriteMovies();
     }

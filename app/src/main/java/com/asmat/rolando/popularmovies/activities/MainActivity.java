@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.adapters.SectionsPagerAdapter;
+import com.asmat.rolando.popularmovies.database.DatabaseManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DatabaseManager.INSTANCE.setInstance(this);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,5 +65,10 @@ public class MainActivity extends AppCompatActivity {
 
         int selectedTab = mTabLayout.getSelectedTabPosition();
         outState.putInt(CURRENT_TAB, selectedTab);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

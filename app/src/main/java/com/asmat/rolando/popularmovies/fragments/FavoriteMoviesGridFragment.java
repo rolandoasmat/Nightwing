@@ -1,5 +1,7 @@
 package com.asmat.rolando.popularmovies.fragments;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -69,8 +71,13 @@ public class FavoriteMoviesGridFragment extends Fragment
     }
 
     private void fetchMovies() {
-        Movie[] favoriteMovies = DatabaseManager.INSTANCE.getFavoriteMovies();
-        mMoviesGridAdapter.setMovies(favoriteMovies);
+        LiveData<Movie[]> liveData = DatabaseManager.INSTANCE.getFavoriteMovies();
+        liveData.observe(this, new Observer<Movie[]>() {
+            @Override
+            public void onChanged(@Nullable Movie[] movies) {
+                mMoviesGridAdapter.setMovies(movies);
+            }
+        });
     }
 
 

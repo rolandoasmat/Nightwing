@@ -1,7 +1,10 @@
 package com.asmat.rolando.popularmovies.activities;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
@@ -22,6 +25,7 @@ import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.adapters.ReviewsLinearAdapter;
 import com.asmat.rolando.popularmovies.adapters.TrailersLinearAdapter;
 import com.asmat.rolando.popularmovies.database.DatabaseManager;
+import com.asmat.rolando.popularmovies.database.FavoriteMovie;
 import com.asmat.rolando.popularmovies.managers.MovieApiManager;
 import com.asmat.rolando.popularmovies.database.Movie;
 import com.asmat.rolando.popularmovies.models.Review;
@@ -60,6 +64,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     private LoaderManager.LoaderCallbacks<Video[]> videosCallbacks;
     private LoaderManager.LoaderCallbacks<Review[]> reviewsCallbacks;
     private Movie movie;
+    private FavoriteMovie favoriteMovie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +89,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         getSupportLoaderManager().initLoader(VIDEOS_LOADER, null, videosCallbacks);
         getSupportLoaderManager().initLoader(REVIEWS_LOADER, null, reviewsCallbacks);
 
-        resetStar();
+        observeMovieFavorited();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -118,21 +123,20 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Color in the star if this is a favorite movie, un-color otherwise.
-     */
-    private void resetStar() {
-        if(isMovieFavorited()) {
-            fillStar();
-        } else {
-            unfillStar();
-        }
-    }
-
-    // TODO user a new query instead
-    private boolean isMovieFavorited() {
+    private void observeMovieFavorited() {
         int id = movie.getId();
-        return DatabaseManager.INSTANCE.isFavoriteMovie(id);
+        LiveData<FavoriteMovie> liveData = DatabaseManager.INSTANCE.getFavoriteMovie(id);
+        liveData.observe(this, new Observer<FavoriteMovie>() {
+            @Override
+            public void onChanged(@Nullable FavoriteMovie favoriteMovie) {
+                MovieDetailActivity.this.favoriteMovie = favoriteMovie;
+                if (favoriteMovie == null) {
+                    unfillStar();
+                } else {
+                    fillStar();
+                }
+            }
+        });
     }
 
     private void fillStar() {
@@ -166,15 +170,11 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
      * @param view Star icon.
      */
     public void onStar(View view) {
-        final boolean isAFavoriteMovie = isMovieFavorited();
-        if (isAFavoriteMovie) {
-            // Un-Favorite
-            DatabaseManager.INSTANCE.removeFavoriteMovie(this.movie);
+        if (this.favoriteMovie == null) {
+            DatabaseManager.INSTANCE.addFavoriteMovie(MovieDetailActivity.this.movie);
         } else {
-            // Favorite
-            DatabaseManager.INSTANCE.addFavoriteMovie(this.movie);
+            DatabaseManager.INSTANCE.removeFavoriteMovie(MovieDetailActivity.this.movie);
         }
-        resetStar();
     }
 
     private void setupTrailersRecyclerView() {
