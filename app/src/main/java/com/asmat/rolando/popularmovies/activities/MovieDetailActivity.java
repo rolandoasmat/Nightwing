@@ -2,6 +2,7 @@ package com.asmat.rolando.popularmovies.activities;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.Nullable;
@@ -31,6 +32,7 @@ import com.asmat.rolando.popularmovies.database.Movie;
 import com.asmat.rolando.popularmovies.models.Review;
 import com.asmat.rolando.popularmovies.models.TrailerAdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.models.Video;
+import com.asmat.rolando.popularmovies.viewmodels.MovieDetailsViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -39,32 +41,52 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MovieDetailActivity extends AppCompatActivity implements TrailerAdapterOnClickHandler {
-
-    @BindView(R.id.toolbarImage) ImageView mMovieBackdrop;
-    @BindView(R.id.iv_poster_thumbnail) ImageView mMoviePoster;
-    @BindView(R.id.tv_release_date) TextView mReleaseDate;
-    @BindView(R.id.tv_movie_rating) TextView mMovieRating;
-    @BindView(R.id.tv_synopsis_content) TextView mMovieSynopsis;
-    @BindView(R.id.rv_trailers) RecyclerView mTrailers;
-    @BindView(R.id.pb_trailers_loading_bar) ProgressBar mTrailersLoading;
-    @BindView(R.id.tv_no_trailers) TextView mNoTrailersLabel;
-    @BindView(R.id.tv_error_trailers) TextView mTrailersErrorLabel;
+    // Movie details
+    @BindView(R.id.toolbarImage)
+    ImageView mMovieBackdrop;
+    @BindView(R.id.iv_poster_thumbnail)
+    ImageView mMoviePoster;
+    @BindView(R.id.tv_release_date)
+    TextView mReleaseDate;
+    @BindView(R.id.tv_movie_rating)
+    TextView mMovieRating;
+    @BindView(R.id.tv_synopsis_content)
+    TextView mMovieSynopsis;
+    // Trailers
+    @BindView(R.id.rv_trailers)
+    RecyclerView mTrailers;
+    @BindView(R.id.pb_trailers_loading_bar)
+    ProgressBar mTrailersLoading;
+    @BindView(R.id.tv_no_trailers)
+    TextView mNoTrailersLabel;
+    @BindView(R.id.tv_error_trailers)
+    TextView mTrailersErrorLabel;
     private LinearLayoutManager mTrailersLayoutManager;
     private TrailersLinearAdapter mTrailersLinearAdapter;
-    @BindView(R.id.rv_reviews) RecyclerView mReviews;
-    @BindView(R.id.pb_reviews_loading_bar) ProgressBar mReviewsLoading;
-    @BindView(R.id.tv_no_reviews) TextView mNoReviewsLabel;
-    @BindView(R.id.tv_error_reviews) TextView mReviewsErrorLabel;
-    private LinearLayoutManager mReviewsLinearLayoutManager;
+    // Reviews
+    @BindView(R.id.rv_reviews)
+    RecyclerView mReviews;
+    @BindView(R.id.pb_reviews_loading_bar)
+    ProgressBar mReviewsLoading;
+    @BindView(R.id.tv_no_reviews)
+    TextView mNoReviewsLabel;
+    @BindView(R.id.tv_error_reviews)
+    TextView mReviewsErrorLabel;
+    private LinearLayoutManager mReviewsLayoutManager;
     private ReviewsLinearAdapter mReviewsLinearAdapter;
-    @BindView(R.id.star) ImageView star;
-    public final static String INTENT_EXTRA_TAG = "MOVIE_DATA";
+    // Star
+    @BindView(R.id.star)
+    ImageView star;
+
+    public final static String INTENT_EXTRA_MOVIE_ID = "MOVIE_ID";
+    // Loaders
     private static final int VIDEOS_LOADER = 3948;
     private static final int REVIEWS_LOADER = 2938;
     private LoaderManager.LoaderCallbacks<Video[]> videosCallbacks;
     private LoaderManager.LoaderCallbacks<Review[]> reviewsCallbacks;
-    private Movie movie;
-    private FavoriteMovie favoriteMovie;
+
+    // ViewModel
+    private MovieDetailsViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,36 +94,50 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         setContentView(R.layout.activity_movie_detail);
         ButterKnife.bind(this);
 
-        Intent intentThatStartedThisActivity = getIntent();
-        if(intentThatStartedThisActivity != null) {
-            if(intentThatStartedThisActivity.hasExtra(INTENT_EXTRA_TAG)) {
-                movie = intentThatStartedThisActivity.getParcelableExtra(INTENT_EXTRA_TAG);
-                populateViews(movie);
-            }
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra(INTENT_EXTRA_MOVIE_ID)) {
+            String movieID = intent.getStringExtra(INTENT_EXTRA_MOVIE_ID);
+            viewModel = ViewModelProviders.of(this).get(MovieDetailsViewModel.class);
+            viewModel.init(movieID);
         }
+        viewModel.getMovie().observe(this, new Observer<Movie>() {
+            @Override
+            public void onChanged(@Nullable Movie movie) {
+                MovieDetailActivity.this.updateMovieDetails(movie);
+            }
+        });
+        viewModel.getFavoriteMovie().observe(this, new Observer<FavoriteMovie>() {
+            @Override
+            public void onChanged(@Nullable FavoriteMovie favoriteMovie) {
+                MovieDetailActivity.this.updateStarIcon(favoriteMovie);
+            }
+        });
+        viewModel.getVideos().observe(this, new Observer<Video[]>() {
+            @Override
+            public void onChanged(@Nullable Video[] videos) {
+                MovieDetailActivity.this.updateTrailers(videos);
+            }
+        });
+        viewModel.getReviews().observe(this, new Observer<Review[]>() {
+            @Override
+            public void onChanged(@Nullable Review[] reviews) {
+                MovieDetailActivity.this.updateReviews(reviews);
+            }
+        });
 
-        setVideosLoaderCallback();
-        setReviewsLoaderCallback();
+//        setVideosLoaderCallback();
+//        setReviewsLoaderCallback();
+//
+//        setupTrailersRecyclerView();
+//        setupReviewsRecyclerView();
+//
+//        getSupportLoaderManager().initLoader(VIDEOS_LOADER, null, videosCallbacks);
+//        getSupportLoaderManager().initLoader(REVIEWS_LOADER, null, reviewsCallbacks);
 
-        setupTrailersRecyclerView();
-        setupReviewsRecyclerView();
-
-        getSupportLoaderManager().initLoader(VIDEOS_LOADER, null, videosCallbacks);
-        getSupportLoaderManager().initLoader(REVIEWS_LOADER, null, reviewsCallbacks);
-
-        observeMovieFavorited();
+//        observeMovieFavorited();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-//        toolbar.setNavigationIcon(android.support.v7.appcompat.R.drawable.abc_ic_ab_back_material);
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                onBackPressed();
-//            }
-//        });
     }
 
     @Override
@@ -123,20 +159,10 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         return super.onOptionsItemSelected(item);
     }
 
-    private void observeMovieFavorited() {
-        int id = movie.getId();
-        LiveData<FavoriteMovie> liveData = DatabaseManager.INSTANCE.getFavoriteMovie(id);
-        liveData.observe(this, new Observer<FavoriteMovie>() {
-            @Override
-            public void onChanged(@Nullable FavoriteMovie favoriteMovie) {
-                MovieDetailActivity.this.favoriteMovie = favoriteMovie;
-                if (favoriteMovie == null) {
-                    unfillStar();
-                } else {
-                    fillStar();
-                }
-            }
-        });
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     private void fillStar() {
@@ -150,6 +176,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     public void onShare(View view) {
         String mimeType = "text/plain";
         String title = getResources().getString(R.string.share_movie);
+        Movie movie = viewModel.getMovie().getValue();
         String movieTitle = movie.getTitle();
         String textToShare = getResources().getString(R.string.check_out_movie)+
                 " \""+movieTitle+"\"";
@@ -170,7 +197,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
      * @param view Star icon.
      */
     public void onStar(View view) {
-        if (this.favoriteMovie == null) {
+        if (this.viewModel.getFavoriteMovie().getValue() == null) {
             DatabaseManager.INSTANCE.addFavoriteMovie(MovieDetailActivity.this.movie);
         } else {
             DatabaseManager.INSTANCE.removeFavoriteMovie(MovieDetailActivity.this.movie);
@@ -294,7 +321,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         };
     }
 
-    private void populateViews(Movie movie){
+    private void updateMovieDetails(Movie movie) {
         Picasso.with(this).load(movie.getBackdropURL()).into(mMovieBackdrop);
         Picasso.with(this).load(movie.getPosterURL()).into(mMoviePoster);
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsingToolbar);
@@ -306,10 +333,50 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         mMovieSynopsis.setText(movie.getOverview());
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
+    private void updateStarIcon(FavoriteMovie favoriteMovie) {
+        if (favoriteMovie == null) {
+            unfillStar();
+        } else {
+            fillStar();
+        }
     }
 
+    private void updateTrailers(Video[] videos) {
+        mTrailersLoading.setVisibility(View.GONE);
+        if (videos == null) {
+            mTrailersErrorLabel.setVisibility(View.VISIBLE);
+        } else {
+            if(videos.length == 0) {
+                mNoTrailersLabel.setVisibility(View.VISIBLE);
+            } else {
+                ArrayList<Video> trailers = new ArrayList<>();
+                for(Video video: videos) {
+                    if(video.getType().equals("Trailer")){
+                        trailers.add(video);
+                    }
+                }
+                if(trailers.size() == 0) {
+                    mNoTrailersLabel.setVisibility(View.VISIBLE);
+                } else {
+                    Video[] array = trailers.toArray(new Video[0]);
+                    mTrailersLinearAdapter.setTrailers(array);
+                    mTrailers.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    }
+
+    private void updateReviews(Review[] reviews) {
+        mReviewsLoading.setVisibility(View.GONE);
+        if(reviews == null) {
+            mReviewsErrorLabel.setVisibility(View.VISIBLE);
+        } else {
+            if(reviews.length == 0) {
+                mNoReviewsLabel.setVisibility(View.VISIBLE);
+            } else {
+                mReviews.setVisibility(View.VISIBLE);
+                mReviewsLinearAdapter.setReviews(reviews);
+            }
+        }
+    }
 }
