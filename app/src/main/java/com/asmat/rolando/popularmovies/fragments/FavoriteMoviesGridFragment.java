@@ -85,7 +85,7 @@ public class FavoriteMoviesGridFragment extends Fragment
     public void onClick(Movie movie) {
         Class destinationClass = MovieDetailActivity.class;
         Intent intentToStartDetailActivity = new Intent(context, destinationClass);
-        intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_TAG, movie);
+        intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_MOVIE_ID, movie.getId());
         startActivity(intentToStartDetailActivity);
     }
 

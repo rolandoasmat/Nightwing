@@ -1,16 +1,12 @@
 package com.asmat.rolando.popularmovies.activities;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +23,6 @@ import com.asmat.rolando.popularmovies.adapters.ReviewsLinearAdapter;
 import com.asmat.rolando.popularmovies.adapters.TrailersLinearAdapter;
 import com.asmat.rolando.popularmovies.database.DatabaseManager;
 import com.asmat.rolando.popularmovies.database.FavoriteMovie;
-import com.asmat.rolando.popularmovies.managers.MovieApiManager;
 import com.asmat.rolando.popularmovies.database.Movie;
 import com.asmat.rolando.popularmovies.models.Review;
 import com.asmat.rolando.popularmovies.models.TrailerAdapterOnClickHandler;
@@ -79,11 +74,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     ImageView star;
 
     public final static String INTENT_EXTRA_MOVIE_ID = "MOVIE_ID";
-    // Loaders
-    private static final int VIDEOS_LOADER = 3948;
-    private static final int REVIEWS_LOADER = 2938;
-    private LoaderManager.LoaderCallbacks<Video[]> videosCallbacks;
-    private LoaderManager.LoaderCallbacks<Review[]> reviewsCallbacks;
 
     // ViewModel
     private MovieDetailsViewModel viewModel;
@@ -96,7 +86,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(INTENT_EXTRA_MOVIE_ID)) {
-            String movieID = intent.getStringExtra(INTENT_EXTRA_MOVIE_ID);
+            int movieID = intent.getIntExtra(INTENT_EXTRA_MOVIE_ID, 0);
             viewModel = ViewModelProviders.of(this).get(MovieDetailsViewModel.class);
             viewModel.init(movieID);
         }
@@ -125,16 +115,12 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
             }
         });
 
-//        setVideosLoaderCallback();
-//        setReviewsLoaderCallback();
-//
-//        setupTrailersRecyclerView();
-//        setupReviewsRecyclerView();
-//
-//        getSupportLoaderManager().initLoader(VIDEOS_LOADER, null, videosCallbacks);
-//        getSupportLoaderManager().initLoader(REVIEWS_LOADER, null, reviewsCallbacks);
+        setupToolbar();
+        setupTrailersRecyclerView();
+        setupReviewsRecyclerView();
+    }
 
-//        observeMovieFavorited();
+    private void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -165,6 +151,19 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         return true;
     }
 
+    /**
+     * User tapped on star icon.
+     * @param view Star icon.
+     */
+    public void onStar(View view) {
+        Movie movie = MovieDetailActivity.this.viewModel.getMovie().getValue();
+        if (this.viewModel.getFavoriteMovie().getValue() == null) {
+            DatabaseManager.INSTANCE.addFavoriteMovie(movie);
+        } else {
+            DatabaseManager.INSTANCE.removeFavoriteMovie(movie);
+        }
+    }
+
     private void fillStar() {
         star.setImageResource(R.drawable.ic_star_yellow_24dp);
     }
@@ -192,22 +191,9 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         startActivity(Intent.createChooser(intent, title));
     }
 
-    /**
-     * User tapped on star icon.
-     * @param view Star icon.
-     */
-    public void onStar(View view) {
-        if (this.viewModel.getFavoriteMovie().getValue() == null) {
-            DatabaseManager.INSTANCE.addFavoriteMovie(MovieDetailActivity.this.movie);
-        } else {
-            DatabaseManager.INSTANCE.removeFavoriteMovie(MovieDetailActivity.this.movie);
-        }
-    }
-
     private void setupTrailersRecyclerView() {
         mTrailers.setHasFixedSize(true);
-        mTrailersLayoutManager =
-                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mTrailersLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mTrailers.setLayoutManager(mTrailersLayoutManager);
         mTrailersLinearAdapter = new TrailersLinearAdapter(this);
         mTrailers.setAdapter(mTrailersLinearAdapter);
@@ -215,122 +201,26 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
     private void setupReviewsRecyclerView() {
         mReviews.setHasFixedSize(true);
-        mReviewsLinearLayoutManager =
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mReviews.setLayoutManager(mReviewsLinearLayoutManager);
-        mReviewsLinearLayoutManager.setSmoothScrollbarEnabled(true);
-
+        mReviewsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mReviews.setLayoutManager(mReviewsLayoutManager);
+        mReviewsLayoutManager.setSmoothScrollbarEnabled(true);
         mReviewsLinearAdapter = new ReviewsLinearAdapter();
-
         mReviews.setAdapter(mReviewsLinearAdapter);
         mReviews.setNestedScrollingEnabled(false);
     }
 
-    private void setVideosLoaderCallback() {
-        videosCallbacks = new LoaderManager.LoaderCallbacks<Video[]>() {
-            @Override
-            public Loader<Video[]> onCreateLoader(int id, Bundle args) {
-                return new AsyncTaskLoader<Video[]>(getBaseContext()) {
-                    @Override
-                    protected void onStartLoading() {
-                        forceLoad();
-                    }
-
-                    @Override
-                    public Video[] loadInBackground() {
-                        try {
-                            return MovieApiManager.fetchMovieVideos(movie.getId(), 1);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            return null;
-                        }
-                    }
-                };
-            }
-
-            @Override
-            public void onLoadFinished(Loader<Video[]> loader, Video[] data) {
-                mTrailersLoading.setVisibility(View.GONE);
-                if(data == null) {
-                    mTrailersErrorLabel.setVisibility(View.VISIBLE);
-                } else {
-                    if(data.length == 0) {
-                        mNoTrailersLabel.setVisibility(View.VISIBLE);
-                    } else {
-                        ArrayList<Video> trailers = new ArrayList<>();
-                        for(Video video: data) {
-                            if(video.getType().equals("Trailer")){
-                                trailers.add(video);
-                            }
-                        }
-                        if(trailers.size() == 0) {
-                            mNoTrailersLabel.setVisibility(View.VISIBLE);
-                        } else {
-                            Video[] array = trailers.toArray(new Video[0]);
-                            mTrailersLinearAdapter.setTrailers(array);
-                            mTrailers.setVisibility(View.VISIBLE);
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onLoaderReset(Loader<Video[]> loader) { }
-        };
-    }
-
-    private void setReviewsLoaderCallback() {
-        reviewsCallbacks = new LoaderManager.LoaderCallbacks<Review[]>() {
-            @Override
-            public Loader<Review[]> onCreateLoader(int id, Bundle args) {
-                return new AsyncTaskLoader<Review[]>(getBaseContext()) {
-                    @Override
-                    protected void onStartLoading() {
-                        forceLoad();
-                    }
-
-                    @Override
-                    public Review[] loadInBackground() {
-                        try {
-                            return MovieApiManager.fetchMovieReviews(movie.getId(), 1);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            return null;
-                        }
-                    }
-                };
-            }
-
-            @Override
-            public void onLoadFinished(Loader<Review[]> loader, Review[] data) {
-                mReviewsLoading.setVisibility(View.GONE);
-                if(data == null) {
-                    mReviewsErrorLabel.setVisibility(View.VISIBLE);
-                } else {
-                    if(data.length == 0) {
-                        mNoReviewsLabel.setVisibility(View.VISIBLE);
-                    } else {
-                        mReviews.setVisibility(View.VISIBLE);
-                        mReviewsLinearAdapter.setReviews(data);
-                    }
-                }
-            }
-
-            @Override
-            public void onLoaderReset(Loader<Review[]> loader) { }
-        };
-    }
-
     private void updateMovieDetails(Movie movie) {
-        Picasso.with(this).load(movie.getBackdropURL()).into(mMovieBackdrop);
-        Picasso.with(this).load(movie.getPosterURL()).into(mMoviePoster);
-        CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsingToolbar);
-        collapsingToolbarLayout.setTitle(movie.getTitle());
-        String formatted = movie.getReleaseDateFormatted();
-        mReleaseDate.setText(formatted);
-        String rating = movie.getVoteAverage()+getString(R.string.out_of_ten);
-        mMovieRating.setText(rating);
-        mMovieSynopsis.setText(movie.getOverview());
+        if (movie != null) {
+            Picasso.with(this).load(movie.getBackdropURL()).into(mMovieBackdrop);
+            Picasso.with(this).load(movie.getPosterURL()).into(mMoviePoster);
+            CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsingToolbar);
+            collapsingToolbarLayout.setTitle(movie.getTitle());
+            String formatted = movie.getReleaseDateFormatted();
+            mReleaseDate.setText(formatted);
+            String rating = movie.getVoteAverage()+getString(R.string.out_of_ten);
+            mMovieRating.setText(rating);
+            mMovieSynopsis.setText(movie.getOverview());
+        }
     }
 
     private void updateStarIcon(FavoriteMovie favoriteMovie) {

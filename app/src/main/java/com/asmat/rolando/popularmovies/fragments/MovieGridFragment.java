@@ -122,7 +122,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
     public void onClick(Movie movie) {
         Class destinationClass = MovieDetailActivity.class;
         Intent intentToStartDetailActivity = new Intent(mContext, destinationClass);
-        intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_TAG, movie);
+        intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_MOVIE_ID, movie.getId());
         startActivity(intentToStartDetailActivity);
     }
 
