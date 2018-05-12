@@ -1,9 +1,5 @@
 package com.asmat.rolando.popularmovies.models;
 
-/**
- * Created by rolandoasmat on 5/18/17.
- */
-
 public class Review {
 
     private String author;

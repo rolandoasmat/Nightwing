@@ -1,9 +1,5 @@
 package com.asmat.rolando.popularmovies.models;
 
-/**
- * Created by rolandoasmat on 5/18/17.
- */
-
 public class Video {
 
     private static final String YOUTUBE_URL = "https://www.youtube.com/watch?v=";
