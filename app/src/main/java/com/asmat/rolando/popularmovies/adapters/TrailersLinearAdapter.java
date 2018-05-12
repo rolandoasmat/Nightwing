@@ -80,8 +80,7 @@ public class TrailersLinearAdapter
     }
 
     // ----------------------------- ViewHolder -----------------------------
-    class TrailersLinearAdapterViewHolder
-            extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class TrailersLinearAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final ImageView mTrailerThumbnail;
         public final TextView mCaption;
 

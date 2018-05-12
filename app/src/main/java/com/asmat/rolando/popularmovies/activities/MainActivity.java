@@ -21,19 +21,29 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DatabaseManager.INSTANCE.setInstance(this);
         setContentView(R.layout.activity_main);
+
+        DatabaseManager.INSTANCE.setInstance(this);
+        setupToolBar();
+        setupViewPager();
+        if (savedInstanceState != null) {
+            int tab = savedInstanceState.getInt(CURRENT_TAB);
+            ViewPager viewPager = findViewById(R.id.container);
+            viewPager.setCurrentItem(tab);
+        }
+    }
+
+    private void setupToolBar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this);
-        ViewPager mViewPager = findViewById(R.id.container);
-        mViewPager.setAdapter(sectionsPagerAdapter);
+    }
+
+    private void setupViewPager() {
+        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager(), this);
+        ViewPager viewPager = findViewById(R.id.container);
+        viewPager.setAdapter(adapter);
         mTabLayout = findViewById(R.id.tabs);
-        mTabLayout.setupWithViewPager(mViewPager);
-        if(savedInstanceState != null) {
-            int tab = savedInstanceState.getInt(CURRENT_TAB);
-            mViewPager.setCurrentItem(tab);
-        }
+        mTabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
@@ -67,8 +77,4 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt(CURRENT_TAB, selectedTab);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }
