@@ -27,10 +27,6 @@ import com.asmat.rolando.popularmovies.utilities.ViewUtils;
 
 import java.util.ArrayList;
 
-/**
- * Created by rolandoasmat on 5/29/17.
- */
-
 public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHandler {
 
     private MoviesGridAdapter mMoviesGridAdapter;

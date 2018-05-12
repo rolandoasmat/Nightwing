@@ -9,13 +9,9 @@ import com.asmat.rolando.popularmovies.fragments.FavoriteMoviesGridFragment;
 import com.asmat.rolando.popularmovies.fragments.MovieGridFragment;
 import com.asmat.rolando.popularmovies.models.RequestType;
 
-/**
- * Created by rolandoasmat on 5/29/17.
- */
-
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    private final int NUM_OF_PAGES = 3;
+    private static final int NUM_OF_PAGES = 3;
     private Context context;
 
     public SectionsPagerAdapter(FragmentManager fm, Context context) {

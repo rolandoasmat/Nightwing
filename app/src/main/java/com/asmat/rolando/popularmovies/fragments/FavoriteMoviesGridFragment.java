@@ -21,11 +21,6 @@ import com.asmat.rolando.popularmovies.database.Movie;
 import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.utilities.ViewUtils;
 
-
-/**
- * Created by rolandoasmat on 5/29/17.
- */
-
 public class FavoriteMoviesGridFragment extends Fragment
         implements MovieAdapterOnClickHandler {
 

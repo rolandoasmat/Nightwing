@@ -1,6 +1,7 @@
 package com.asmat.rolando.popularmovies.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +20,9 @@ public class ReviewsLinearAdapter extends RecyclerView.Adapter<ReviewsLinearAdap
         this.notifyDataSetChanged();
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         int layoutForLinearItem = R.layout.review_linear_item;
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -29,7 +31,7 @@ public class ReviewsLinearAdapter extends RecyclerView.Adapter<ReviewsLinearAdap
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Review review = mReviews[position];
         holder.bind(review);
     }
