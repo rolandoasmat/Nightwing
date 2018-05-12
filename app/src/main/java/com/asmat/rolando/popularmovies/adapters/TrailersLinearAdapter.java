@@ -13,10 +13,6 @@ import com.asmat.rolando.popularmovies.models.TrailerAdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.models.Video;
 import com.squareup.picasso.Picasso;
 
-/**
- * Created by rolandoasmat on 5/20/17.
- */
-
 public class TrailersLinearAdapter
         extends RecyclerView.Adapter<TrailersLinearAdapter.TrailersLinearAdapterViewHolder> {
 
@@ -86,8 +82,8 @@ public class TrailersLinearAdapter
 
         public TrailersLinearAdapterViewHolder(View view) {
             super(view);
-            mTrailerThumbnail = (ImageView) view.findViewById(R.id.iv_trailer_thumbnail);
-            mCaption = (TextView) view.findViewById(R.id.tv_trailer_caption);
+            mTrailerThumbnail = view.findViewById(R.id.iv_trailer_thumbnail);
+            mCaption = view.findViewById(R.id.tv_trailer_caption);
             mTrailerThumbnail.setOnClickListener(this);
         }
 
@@ -98,5 +94,4 @@ public class TrailersLinearAdapter
             mClickHandler.onClick(trailer);
         }
     }
-
 }

@@ -1,6 +1,7 @@
 package com.asmat.rolando.popularmovies.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,33 +14,23 @@ import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-/**
- * Created by rolandoasmat on 2/9/17.
- */
+public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.ViewHolder> {
 
-public class MoviesGridAdapter
-        extends RecyclerView.Adapter<MoviesGridAdapter.MoviesGridAdapterViewHolder> {
-
-    private ArrayList<Movie> mMovies;
+    private List<Movie> mMovies;
     private final MovieAdapterOnClickHandler mClickHandler;
 
-    /**
-     * ----------------------------- API -----------------------------
-     */
     public MoviesGridAdapter(MovieAdapterOnClickHandler handler) {
         this.mClickHandler = handler;
     }
 
     public void setMovies(Movie[] movies) {
-        ArrayList<Movie> list = new ArrayList<>();
-        for(Movie movie : movies) {
-            list.add(movie);
-        }
-        this.setMovies(list);
+        this.setMovies(Arrays.asList(movies));
     }
 
-    public void setMovies(ArrayList<Movie> movies) {
+    public void setMovies(List<Movie> movies) {
         this.mMovies  = movies;
         notifyDataSetChanged();
     }
@@ -50,28 +41,20 @@ public class MoviesGridAdapter
         notifyItemRangeInserted(indexOfFirstNewItem,indexOfFirstNewItem+movies.size());
     }
 
-    /**
-     * ----------------------------- Overrides -----------------------------
-     */
+    @NonNull
     @Override
-    public MoviesGridAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         int layoutIdForGridItem = R.layout.movie_grid_item;
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(layoutIdForGridItem, parent, false);
-        return new MoviesGridAdapterViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MoviesGridAdapterViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Movie movie = mMovies.get(position);
-        String posterURL = movie.getPosterURL();
-        ImageView imageView = holder.mMoviePoster;
-        Picasso.with(imageView.getContext())
-                .load(posterURL)
-                .resize(342, 485)
-                .into(imageView);
-        // TODO could we use the position to know whether we're close to the end and we need to load more data?
+        holder.bind(movie);
     }
 
     @Override
@@ -83,18 +66,22 @@ public class MoviesGridAdapter
         }
     }
 
-    /**
-     * ----------------------------- View Holder -----------------------------
-     */
-    class MoviesGridAdapterViewHolder
-            extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public final ImageView mMoviePoster;
+        private final ImageView mMoviePoster;
 
-        public MoviesGridAdapterViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
-            mMoviePoster = (ImageView) itemView.findViewById(R.id.iv_movie_grid_item);
+            mMoviePoster = itemView.findViewById(R.id.iv_movie_grid_item);
             itemView.setOnClickListener(this);
+        }
+
+        void bind(Movie movie) {
+            String posterURL = movie.getPosterURL();
+            Picasso.with(mMoviePoster.getContext())
+                    .load(posterURL)
+                    .resize(340, 500)
+                    .into(mMoviePoster);
         }
 
         @Override
@@ -104,6 +91,4 @@ public class MoviesGridAdapter
             mClickHandler.onClick(movie);
         }
     }
-
 }
-

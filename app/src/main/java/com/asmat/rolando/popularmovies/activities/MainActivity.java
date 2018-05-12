@@ -76,5 +76,4 @@ public class MainActivity extends AppCompatActivity {
         int selectedTab = mTabLayout.getSelectedTabPosition();
         outState.putInt(CURRENT_TAB, selectedTab);
     }
-
 }

@@ -14,7 +14,6 @@ import android.view.MenuInflater;
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.fragments.SearchResultsFragment;
 
-
 public class SearchResultsActivity extends AppCompatActivity {
     SearchResultsFragment mResultsGrid;
     SearchView mSearchview;
