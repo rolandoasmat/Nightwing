@@ -10,7 +10,6 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.widget.Toast;
 
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.fragments.SearchResultsFragment;

@@ -197,6 +197,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         mTrailers.setLayoutManager(mTrailersLayoutManager);
         mTrailersLinearAdapter = new TrailersLinearAdapter(this);
         mTrailers.setAdapter(mTrailersLinearAdapter);
+        mTrailers.setNestedScrollingEnabled(false);
     }
 
     private void setupReviewsRecyclerView() {
