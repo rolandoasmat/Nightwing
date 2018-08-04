@@ -79,12 +79,4 @@ public class MainActivity extends AppCompatActivity {
         int selectedTab = mTabLayout.getSelectedTabPosition();
         outState.putInt(CURRENT_TAB, selectedTab);
     }
-
-    /**
-     * Retry internet connection
-     */
-    public void retry(View view) {
-        Log.v("","");
-        // todo implement retry
-    }
 }

@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.asmat.rolando.popularmovies.R;
@@ -27,7 +28,7 @@ import com.asmat.rolando.popularmovies.utilities.ViewUtils;
 
 import java.util.ArrayList;
 
-public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHandler {
+public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHandler, View.OnClickListener {
 
     private MoviesGridAdapter mMoviesGridAdapter;
     private Context mContext;
@@ -68,12 +69,20 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
         }
         mMoviesGrid.addOnScrollListener(createScrollListener(mMoviesGridLayoutManager));
         mMoviesGrid.setNestedScrollingEnabled(false);
+
+        Button retryButton = rootView.findViewById(R.id.retry_button);
+        retryButton.setOnClickListener(this);
+
         return rootView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        checkInternet();
+    }
+
+    private void checkInternet() {
         if(!NetworkUtils.isOnline(getContext())) {
             // User has no internet
             mMoviesGrid.setVisibility(View.GONE);
@@ -169,4 +178,13 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
         };
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.retry_button:
+                checkInternet();
+                fetchMovies();
+                break;
+        }
+    }
 }
