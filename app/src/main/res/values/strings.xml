@@ -21,6 +21,7 @@
     <string name="synopsis">Synopsis</string>
     <string name="favorite">Favorite</string>
     <string name="share">Share</string>
+    <string name="watch_later">To Watch</string>
     <string name="trailers">Trailers</string>
     <string name="reviews">Reviews</string>
     <string name="out_of_ten" translatable="false">/10.0</string>

@@ -64,7 +64,7 @@
             <include
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/star_and_share"/>
+                layout="@layout/movie_details_user_actions"/>
             <!--Trailers-->
             <TextView
                 android:layout_width="wrap_content"

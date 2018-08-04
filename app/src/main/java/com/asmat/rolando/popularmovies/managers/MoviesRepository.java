@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import com.asmat.rolando.popularmovies.database.DatabaseManager;
 import com.asmat.rolando.popularmovies.database.FavoriteMovie;
 import com.asmat.rolando.popularmovies.database.Movie;
+import com.asmat.rolando.popularmovies.database.WatchLaterMovie;
 import com.asmat.rolando.popularmovies.models.Review;
 import com.asmat.rolando.popularmovies.models.Video;
 
@@ -36,6 +37,10 @@ public class MoviesRepository {
 
     public static LiveData<FavoriteMovie> getFavoriteMovie(int movieID) {
         return DatabaseManager.INSTANCE.getFavoriteMovie(movieID);
+    }
+
+    public static LiveData<WatchLaterMovie> getWatchLaterMovie(int movieID) {
+        return DatabaseManager.INSTANCE.getWatchLaterMovie(movieID);
     }
 
     public static LiveData<Video[]> getVideos(int movieID) {

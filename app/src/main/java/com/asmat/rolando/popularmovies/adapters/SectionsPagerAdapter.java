@@ -7,11 +7,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.fragments.FavoriteMoviesGridFragment;
 import com.asmat.rolando.popularmovies.fragments.MovieGridFragment;
+import com.asmat.rolando.popularmovies.fragments.WatchLaterMoviesGridFragment;
 import com.asmat.rolando.popularmovies.models.RequestType;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    private static final int NUM_OF_PAGES = 3;
+    private static final int NUM_OF_PAGES = 4;
     private Context context;
 
     public SectionsPagerAdapter(FragmentManager fm, Context context) {
@@ -38,6 +39,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 2:
                 FavoriteMoviesGridFragment favoritesFragment = new FavoriteMoviesGridFragment();
                 return favoritesFragment;
+            case 3:
+                WatchLaterMoviesGridFragment watchLaterFragment = new WatchLaterMoviesGridFragment();
+                return watchLaterFragment;
         }
         return null;
     }
@@ -55,8 +59,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 2:
                 title =  context.getString(R.string.favorites);
                 break;
+            case 3:
+                title =  context.getString(R.string.watch_later);
+                break;
             default:
-                title = null;
+                title = "";
         }
         return title;
     }

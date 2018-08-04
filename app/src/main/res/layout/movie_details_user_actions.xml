@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/star"
+            app:srcCompat="@drawable/ic_star_filled"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_marginTop="@dimen/activity_vertical_margin_small"
+            android:onClick="onStar"/>
+
+        <TextView
+            android:id="@+id/tv_star_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/favorite"
+            android:textSize="@dimen/icon_label_size"
+            android:layout_margin="@dimen/activity_vertical_margin_small"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/share"
+            app:srcCompat="@drawable/ic_share"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_marginTop="@dimen/activity_vertical_margin_small"
+            android:onClick="onShare"/>
+
+        <TextView
+            android:id="@+id/tv_share_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/share"
+            android:textSize="@dimen/icon_label_size"
+            android:layout_margin="@dimen/activity_vertical_margin_small"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/bookmark"
+            app:srcCompat="@drawable/ic_bookmark"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_marginTop="@dimen/activity_vertical_margin_small"
+            android:onClick="onBookmark"/>
+
+        <TextView
+            android:id="@+id/tv_to_watch_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/watch_later"
+            android:textSize="@dimen/icon_label_size"
+            android:layout_margin="@dimen/activity_vertical_margin_small"/>
+    </LinearLayout>
+
+</LinearLayout>

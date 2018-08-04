@@ -24,6 +24,7 @@ import com.asmat.rolando.popularmovies.adapters.TrailersLinearAdapter;
 import com.asmat.rolando.popularmovies.database.DatabaseManager;
 import com.asmat.rolando.popularmovies.database.FavoriteMovie;
 import com.asmat.rolando.popularmovies.database.Movie;
+import com.asmat.rolando.popularmovies.database.WatchLaterMovie;
 import com.asmat.rolando.popularmovies.models.Review;
 import com.asmat.rolando.popularmovies.models.TrailerAdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.models.Video;
@@ -72,6 +73,9 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     // Star
     @BindView(R.id.star)
     ImageView star;
+    // Bookmark
+    @BindView(R.id.bookmark)
+    ImageView bookmark;
 
     public final static String INTENT_EXTRA_MOVIE_ID = "MOVIE_ID";
 
@@ -100,6 +104,12 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
             @Override
             public void onChanged(@Nullable FavoriteMovie favoriteMovie) {
                 MovieDetailActivity.this.updateStarIcon(favoriteMovie);
+            }
+        });
+        viewModel.getWatchLaterMovie().observe(this, new Observer<WatchLaterMovie>() {
+            @Override
+            public void onChanged(@Nullable WatchLaterMovie watchLaterMovie) {
+                MovieDetailActivity.this.updateBookmarkIcon(watchLaterMovie);
             }
         });
         viewModel.getVideos().observe(this, new Observer<Video[]>() {
@@ -152,24 +162,16 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     }
 
     /**
-     * User tapped on star icon.
-     * @param view Star icon.
+     * User Actions
      */
     public void onStar(View view) {
         Movie movie = MovieDetailActivity.this.viewModel.getMovie().getValue();
-        if (this.viewModel.getFavoriteMovie().getValue() == null) {
-            DatabaseManager.INSTANCE.addFavoriteMovie(movie);
+        FavoriteMovie favoriteMovie = new FavoriteMovie(movie.getId());
+        if(this.viewModel.getFavoriteMovie().getValue() == null) {
+            DatabaseManager.INSTANCE.addFavoriteMovie(favoriteMovie);
         } else {
-            DatabaseManager.INSTANCE.removeFavoriteMovie(movie);
+            DatabaseManager.INSTANCE.deleteFavoriteMovie(favoriteMovie);
         }
-    }
-
-    private void fillStar() {
-        star.setImageResource(R.drawable.ic_star_yellow_24dp);
-    }
-
-    private void unfillStar() {
-        star.setImageResource(R.drawable.ic_star_gray_24dp);
     }
 
     public void onShare(View view) {
@@ -189,6 +191,36 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                 .setType(mimeType)
                 .setText(textToShare).getIntent();
         startActivity(Intent.createChooser(intent, title));
+    }
+
+    public void onBookmark(View view) {
+        Movie movie = MovieDetailActivity.this.viewModel.getMovie().getValue();
+        WatchLaterMovie watchLaterMovie = new WatchLaterMovie(movie.getId());
+        if(this.viewModel.getWatchLaterMovie().getValue() == null) {
+            DatabaseManager.INSTANCE.addWatchLaterMovie(watchLaterMovie);
+        } else {
+            DatabaseManager.INSTANCE.deleteWatchLaterMovie(watchLaterMovie);
+        }
+    }
+
+    /**
+     * Private methods
+     */
+
+    private void fillStar() {
+        star.setImageResource(R.drawable.ic_star_filled);
+    }
+
+    private void unfillStar() {
+        star.setImageResource(R.drawable.ic_star);
+    }
+
+    private void fillBookmark() {
+        bookmark.setImageResource(R.drawable.ic_bookmark_filled);
+    }
+
+    private void unfillBookmark() {
+        bookmark.setImageResource(R.drawable.ic_bookmark);
     }
 
     private void setupTrailersRecyclerView() {
@@ -229,6 +261,14 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
             unfillStar();
         } else {
             fillStar();
+        }
+    }
+
+    private void updateBookmarkIcon(WatchLaterMovie watchLaterMovie) {
+        if (watchLaterMovie == null) {
+            unfillBookmark();
+        } else {
+            fillBookmark();
         }
     }
 

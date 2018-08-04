@@ -56,6 +56,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_margin_general"
         android:layout_alignParentRight="true"
-        layout="@layout/star_and_share"/>
+        layout="@layout/movie_details_user_actions"/>
 
 </RelativeLayout>
