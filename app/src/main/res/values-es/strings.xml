@@ -4,12 +4,12 @@
 
     <!-- Main Activity -->
     <string name="error_message">Error obteniendo data!</string>
-    <string name="most_popular">Más Populares</string>
+    <string name="most_popular">Populares</string>
     <string name="top_rated">Más Votadas</string>
     <string name="favorites">Favoritos</string>
     <!--Menu-->
     <string name="sort_menu_title">Ordenar</string>
-    <string name="sort_most_popular">Ordena por Más Popular</string>
+    <string name="sort_most_popular">Ordena por Popularidad</string>
     <string name="sort_top_rated">Ordena por Más Votados</string>
     <string name="show_favorites">Mostrar Favoritos</string>
 
