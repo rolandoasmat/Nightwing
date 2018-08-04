@@ -8,9 +8,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by rolandoasmat on 2/9/17.
- */
 @Entity(tableName = "movies", indices = {@Index("id")})
 public class Movie implements Parcelable {
 

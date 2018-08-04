@@ -14,5 +14,4 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 public class FavoriteMovie {
     @PrimaryKey
     public int id;
-
 }

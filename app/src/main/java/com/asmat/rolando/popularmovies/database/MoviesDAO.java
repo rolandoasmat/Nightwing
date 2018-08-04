@@ -21,3 +21,4 @@ public interface MoviesDAO {
     @Query("SELECT * FROM favorite_movies WHERE id LIKE :id")
     LiveData<FavoriteMovie> findFavoriteMovie(int id);
 }
+// todo refactor API

@@ -169,5 +169,4 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
         };
     }
 
-
 }

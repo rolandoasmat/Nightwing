@@ -8,15 +8,10 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Scanner;
-
-/**
- * Created by rolandoasmat on 2/10/17.
- */
 
 public final class NetworkUtils {
 
