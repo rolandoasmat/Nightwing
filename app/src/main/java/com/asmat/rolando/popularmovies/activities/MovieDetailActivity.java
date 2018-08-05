@@ -166,11 +166,33 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
      */
     public void onStar(View view) {
         Movie movie = MovieDetailActivity.this.viewModel.getMovie().getValue();
+        if (movie == null) return;
         FavoriteMovie favoriteMovie = new FavoriteMovie(movie.getId());
         if(this.viewModel.getFavoriteMovie().getValue() == null) {
+            DatabaseManager.INSTANCE.addMovie(movie);
             DatabaseManager.INSTANCE.addFavoriteMovie(favoriteMovie);
         } else {
-            DatabaseManager.INSTANCE.deleteFavoriteMovie(favoriteMovie);
+            if (this.viewModel.getWatchLaterMovie().getValue() == null) {
+                DatabaseManager.INSTANCE.deleteMovie(movie);
+            } else {
+                DatabaseManager.INSTANCE.deleteFavoriteMovie(favoriteMovie);
+            }
+        }
+    }
+
+    public void onBookmark(View view) {
+        Movie movie = MovieDetailActivity.this.viewModel.getMovie().getValue();
+        if (movie == null) return;
+        WatchLaterMovie watchLaterMovie = new WatchLaterMovie(movie.getId());
+        if(this.viewModel.getWatchLaterMovie().getValue() == null) {
+            DatabaseManager.INSTANCE.addMovie(movie);
+            DatabaseManager.INSTANCE.addWatchLaterMovie(watchLaterMovie);
+        } else {
+            if (this.viewModel.getFavoriteMovie().getValue() == null) {
+                DatabaseManager.INSTANCE.deleteMovie(movie);
+            } else {
+                DatabaseManager.INSTANCE.deleteWatchLaterMovie(watchLaterMovie);
+            }
         }
     }
 
@@ -191,16 +213,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                 .setType(mimeType)
                 .setText(textToShare).getIntent();
         startActivity(Intent.createChooser(intent, title));
-    }
-
-    public void onBookmark(View view) {
-        Movie movie = MovieDetailActivity.this.viewModel.getMovie().getValue();
-        WatchLaterMovie watchLaterMovie = new WatchLaterMovie(movie.getId());
-        if(this.viewModel.getWatchLaterMovie().getValue() == null) {
-            DatabaseManager.INSTANCE.addWatchLaterMovie(watchLaterMovie);
-        } else {
-            DatabaseManager.INSTANCE.deleteWatchLaterMovie(watchLaterMovie);
-        }
     }
 
     /**

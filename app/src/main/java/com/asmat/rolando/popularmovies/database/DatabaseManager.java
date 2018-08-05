@@ -103,7 +103,7 @@ public enum DatabaseManager {
     /**
      * Movie
      */
-    public void insertMovie(final Movie movie) {
+    public void addMovie(final Movie movie) {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
