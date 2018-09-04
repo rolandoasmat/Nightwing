@@ -10,19 +10,26 @@ import android.widget.ImageView;
 
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.database.Movie;
+import com.asmat.rolando.popularmovies.models.ContainsEmptyState;
 import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
+import com.asmat.rolando.popularmovies.models.MovieGridItemType;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.ViewHolder> {
+public class MoviesGridBaseAdapter extends RecyclerView.Adapter<MoviesGridBaseAdapter.ViewHolder> {
 
+    private boolean showEmptyState = false;
     private List<Movie> mMovies;
     private final MovieAdapterOnClickHandler mClickHandler;
 
-    public MoviesGridAdapter(MovieAdapterOnClickHandler handler) {
+    public int getEmptyStateLayoutID() {
+        return R.layout.empty_state_generic;
+    }
+
+    public MoviesGridBaseAdapter(MovieAdapterOnClickHandler handler) {
         this.mClickHandler = handler;
     }
 
@@ -31,7 +38,10 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Vi
     }
 
     public void setMovies(List<Movie> movies) {
-        this.mMovies  = movies;
+        showEmptyState = movies == null || movies.size() == 0;
+        if (!showEmptyState) {
+            this.mMovies  = movies;
+        }
         notifyDataSetChanged();
     }
 
@@ -41,11 +51,28 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Vi
         notifyItemRangeInserted(indexOfFirstNewItem,indexOfFirstNewItem+movies.size());
     }
 
+    @Override
+    public @MovieGridItemType.Def int getItemViewType(int position) {
+        if (showEmptyState) {
+            return MovieGridItemType.EMPTY;
+        } else {
+            return MovieGridItemType.REGULAR;
+        }
+    }
+
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, @MovieGridItemType.Def int viewType) {
         Context context = parent.getContext();
-        int layoutIdForGridItem = R.layout.movie_grid_item;
+        int layoutIdForGridItem;
+        switch(viewType) {
+            case MovieGridItemType.EMPTY: layoutIdForGridItem = getEmptyStateLayoutID();
+            break;
+            case MovieGridItemType.REGULAR: layoutIdForGridItem = R.layout.movie_grid_item;
+            break;
+            default: layoutIdForGridItem = R.layout.movie_grid_item;
+            break;
+        }
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(layoutIdForGridItem, parent, false);
         return new ViewHolder(view);
@@ -53,12 +80,15 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Movie movie = mMovies.get(position);
-        holder.bind(movie);
+        if (!showEmptyState) {
+            Movie movie = mMovies.get(position);
+            holder.bind(movie);
+        }
     }
 
     @Override
     public int getItemCount() {
+        if (showEmptyState) return 1;
         if(mMovies == null){
             return 0;
         } else {
@@ -91,4 +121,6 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Vi
             mClickHandler.onClick(movie);
         }
     }
+
+
 }
