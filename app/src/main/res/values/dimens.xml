@@ -25,4 +25,9 @@
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
+    <!--empty state-->
+    <dimen name="empty_state_text_size">18sp</dimen>
+    <dimen name="empty_state_vertical_spacing">16dp</dimen>
+    <dimen name="empty_state_icon_size">50dp</dimen>
+
 </resources>

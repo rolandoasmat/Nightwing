@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/empty_state"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:text="No favorite movies found!"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/empty_state_text_size"
+        android:layout_marginBottom="@dimen/empty_state_vertical_spacing"
+        app:layout_constraintBottom_toTopOf="@id/star"
+        android:gravity="center"/>
+
+    <ImageView
+        android:id="@+id/star"
+        app:srcCompat="@drawable/ic_star"
+        android:layout_width="@dimen/empty_state_icon_size"
+        android:layout_height="@dimen/empty_state_icon_size"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:text="Tap the star icon to save a favorite movie."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/empty_state_text_size"
+        android:layout_marginTop="@dimen/empty_state_vertical_spacing"
+        app:layout_constraintTop_toBottomOf="@id/star"
+        android:gravity="center"/>
+
+</android.support.constraint.ConstraintLayout>
