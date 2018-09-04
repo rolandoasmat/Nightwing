@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.activities.MovieDetailActivity;
-import com.asmat.rolando.popularmovies.adapters.MoviesGridAdapter;
+import com.asmat.rolando.popularmovies.adapters.MoviesGridBaseAdapter;
 import com.asmat.rolando.popularmovies.managers.MovieApiManager;
 import com.asmat.rolando.popularmovies.database.Movie;
 import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHandler, View.OnClickListener {
 
-    private MoviesGridAdapter mMoviesGridAdapter;
+    private MoviesGridBaseAdapter mMoviesGridAdapter;
     private Context mContext;
     private LoaderManager.LoaderCallbacks<ArrayList<Movie>> fetchMoviesCallbacks;
     private @RequestType.Def int typeOfMovies;
@@ -56,7 +56,7 @@ public class MovieGridFragment extends Fragment implements MovieAdapterOnClickHa
         if(page == 1) {
             int numOfCol = ViewUtils.calculateNumberOfColumns(mContext);
             mMoviesGridLayoutManager = new GridLayoutManager(mContext, numOfCol);
-            mMoviesGridAdapter = new MoviesGridAdapter(this);
+            mMoviesGridAdapter = new MoviesGridBaseAdapter(this);
             mMoviesGrid.setHasFixedSize(true);
             mMoviesGrid.setLayoutManager(mMoviesGridLayoutManager);
             mMoviesGrid.setAdapter(mMoviesGridAdapter);
