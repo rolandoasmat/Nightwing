@@ -10,7 +10,6 @@ import android.widget.ImageView;
 
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.database.Movie;
-import com.asmat.rolando.popularmovies.models.ContainsEmptyState;
 import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.models.MovieGridItemType;
 import com.squareup.picasso.Picasso;
