@@ -13,12 +13,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.asmat.rolando.popularmovies.R;
-import com.asmat.rolando.popularmovies.adapters.SectionsPagerAdapter;
+import com.asmat.rolando.popularmovies.adapters.BaseSectionsPagerAdapter;
 import com.asmat.rolando.popularmovies.database.DatabaseManager;
 
 abstract class BaseActivity extends AppCompatActivity {
 
-    private TabLayout mTabLayout;
+    private TabLayout tabLayout;
     static private final String CURRENT_TAB = "current_Tab";
 
     @Override
@@ -64,11 +64,16 @@ abstract class BaseActivity extends AppCompatActivity {
         // there is only 1 so that's causing page 0 and 1 to be the same :(
         // super.onSaveInstanceState(outState);
 
-        int selectedTab = mTabLayout.getSelectedTabPosition();
+        int selectedTab = tabLayout.getSelectedTabPosition();
         outState.putInt(CURRENT_TAB, selectedTab);
     }
 
+    //region Abstract
+
     abstract String getActivityTitle();
+    abstract BaseSectionsPagerAdapter getPagerAdapter();
+
+    //endregion
 
     //region Private
 
@@ -125,11 +130,11 @@ abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void setupViewPager() {
-        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager(), this);
+        BaseSectionsPagerAdapter adapter = getPagerAdapter();
         ViewPager viewPager = findViewById(R.id.container);
         viewPager.setAdapter(adapter);
-        mTabLayout = findViewById(R.id.tabs);
-        mTabLayout.setupWithViewPager(viewPager);
+        tabLayout = findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     //endregion
