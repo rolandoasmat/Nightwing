@@ -6,6 +6,7 @@
     <string name="error_message">Error fetching movie data!</string>
     <string name="most_popular">Popular</string>
     <string name="top_rated">Top Rated</string>
+    <string name="now_playing">Now Playing</string>
     <string name="favorites">Favorites</string>
     <!--Menu-->
     <string name="sort_menu_title">Sort</string>

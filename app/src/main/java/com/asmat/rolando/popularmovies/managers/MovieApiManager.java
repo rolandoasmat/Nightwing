@@ -41,6 +41,7 @@ public final class MovieApiManager {
      */
     private static final String MOVIES_POPULAR = "popular";     // /movie/popular
     private static final String MOVIES_TOP_RATED = "top_rated"; // /movie/top_rated
+    private static final String MOVIES_NOW_PLAYING = "now_playing"; // /movie/top_rated
     private static final String MOVIES_MOVIE = "";              // /movie/{movie_id}
     private static final String MOVIES_VIDEOS = "videos";       // /movie/{movie_id}/videos
     private static final String MOVIES_REVIEWS = "reviews";     // /movie/{movie_id}/reviews
@@ -54,6 +55,8 @@ public final class MovieApiManager {
     private static final String API_KEY_VALUE  = BuildConfig.API_KEY;
     private static final String LANGUAGE_PARAM = "language";
     private static final String LANGUAGE_VALUE = Locale.getDefault().getLanguage();
+    private static final String PARAM_REGION = "region";
+    private static final String PARAM_REGION_VALUE = Locale.getDefault().getCountry();
     private static final String PAGE_PARAM     = "page";
 
     /**
@@ -71,6 +74,8 @@ public final class MovieApiManager {
                 return fetchMostPopularMovies(page);
             case RequestType.TOP_RATED:
                 return fetchTopRatedMovies(page);
+            case RequestType.NOW_PLAYING:
+                return fetchNowPlayingMovies(page);
             default:
                 throw new InvalidParameterException();
         }
@@ -87,7 +92,7 @@ public final class MovieApiManager {
      * @throws JSONException
      * @throws ParseException
      */
-    public static ArrayList<Movie> fetchMostPopularMovies(int page) throws IOException, JSONException, ParseException {
+    private static ArrayList<Movie> fetchMostPopularMovies(int page) throws IOException, JSONException, ParseException {
         return fetchMovies(BASE_URL, MOVIES, MOVIES_POPULAR, page);
     }
 
@@ -102,8 +107,12 @@ public final class MovieApiManager {
      * @throws JSONException
      * @throws ParseException
      */
-    public static ArrayList<Movie> fetchTopRatedMovies(int page) throws IOException, JSONException, ParseException {
+    private static ArrayList<Movie> fetchTopRatedMovies(int page) throws IOException, JSONException, ParseException {
         return fetchMovies(BASE_URL, MOVIES, MOVIES_TOP_RATED, page);
+    }
+
+    private static ArrayList<Movie> fetchNowPlayingMovies(int page) throws IOException, JSONException, ParseException {
+        return fetchMovies(BASE_URL, MOVIES, MOVIES_NOW_PLAYING, page);
     }
 
     /**
@@ -117,7 +126,7 @@ public final class MovieApiManager {
      * @throws JSONException
      * @throws ParseException
      */
-    public static Review[] fetchMovieReviews(int id) throws IOException, JSONException, ParseException {
+    static Review[] fetchMovieReviews(int id) throws IOException, JSONException, ParseException {
         return fetchReviews(id, BASE_URL, MOVIES, MOVIES_REVIEWS);
     }
 
@@ -220,6 +229,7 @@ public final class MovieApiManager {
                                       int page) throws IOException {
         Hashtable<String,String> params = new Hashtable<>();
         params.put(PAGE_PARAM, Integer.toString(page));
+        params.put(PARAM_REGION, PARAM_REGION_VALUE);
         return  httpRequest(baseURL, subComponent, endpoint, params);
     }
 

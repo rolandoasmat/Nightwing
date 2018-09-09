@@ -19,14 +19,17 @@ public class DiscoverPagerAdapter extends BaseSectionsPagerAdapter {
         MovieGridFragment popular = new MovieGridFragment();
         popular.setTypeOfMovies(RequestType.MOST_POPULAR);
         MovieGridFragment topRated = new MovieGridFragment();
-        popular.setTypeOfMovies(RequestType.TOP_RATED);
-        return new Fragment[]{popular, topRated};
+        topRated.setTypeOfMovies(RequestType.TOP_RATED);
+        MovieGridFragment nowPlaying = new MovieGridFragment();
+        nowPlaying.setTypeOfMovies(RequestType.NOW_PLAYING);
+        return new Fragment[]{popular, topRated, nowPlaying};
     }
 
     @Override
     String[] getPageTitles() {
         String popular = getString(R.string.most_popular);
         String topRated = getString(R.string.top_rated);
-        return new String[]{popular, topRated};
+        String nowPlaying = getString(R.string.now_playing);
+        return new String[]{popular, topRated, nowPlaying};
     }
 }

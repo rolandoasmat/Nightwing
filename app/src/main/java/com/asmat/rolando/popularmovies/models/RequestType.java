@@ -8,9 +8,10 @@ import java.lang.annotation.RetentionPolicy;
 public class RequestType {
     public static final int MOST_POPULAR = 0;
     public static final int TOP_RATED = 1;
+    public static final int NOW_PLAYING = 2;
 
 
-    @IntDef({MOST_POPULAR, TOP_RATED})
+    @IntDef({MOST_POPULAR, TOP_RATED, NOW_PLAYING})
     @Retention(RetentionPolicy.SOURCE)
 
     public @interface Def {}
