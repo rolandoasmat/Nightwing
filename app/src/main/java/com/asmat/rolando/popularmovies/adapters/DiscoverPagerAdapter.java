@@ -22,7 +22,9 @@ public class DiscoverPagerAdapter extends BaseSectionsPagerAdapter {
         topRated.setTypeOfMovies(RequestType.TOP_RATED);
         MovieGridFragment nowPlaying = new MovieGridFragment();
         nowPlaying.setTypeOfMovies(RequestType.NOW_PLAYING);
-        return new Fragment[]{popular, topRated, nowPlaying};
+        MovieGridFragment upcoming = new MovieGridFragment();
+        upcoming.setTypeOfMovies(RequestType.UPCOMING);
+        return new Fragment[]{popular, topRated, nowPlaying, upcoming};
     }
 
     @Override
@@ -30,6 +32,7 @@ public class DiscoverPagerAdapter extends BaseSectionsPagerAdapter {
         String popular = getString(R.string.most_popular);
         String topRated = getString(R.string.top_rated);
         String nowPlaying = getString(R.string.now_playing);
-        return new String[]{popular, topRated, nowPlaying};
+        String upcoming = getString(R.string.coming_soon);
+        return new String[]{popular, topRated, nowPlaying, upcoming};
     }
 }

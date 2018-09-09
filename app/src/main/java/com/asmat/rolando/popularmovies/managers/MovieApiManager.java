@@ -42,6 +42,7 @@ public final class MovieApiManager {
     private static final String MOVIES_POPULAR = "popular";     // /movie/popular
     private static final String MOVIES_TOP_RATED = "top_rated"; // /movie/top_rated
     private static final String MOVIES_NOW_PLAYING = "now_playing"; // /movie/top_rated
+    private static final String MOVIES_UPCOMING = "upcoming"; // /movie/upcoming
     private static final String MOVIES_MOVIE = "";              // /movie/{movie_id}
     private static final String MOVIES_VIDEOS = "videos";       // /movie/{movie_id}/videos
     private static final String MOVIES_REVIEWS = "reviews";     // /movie/{movie_id}/reviews
@@ -76,6 +77,8 @@ public final class MovieApiManager {
                 return fetchTopRatedMovies(page);
             case RequestType.NOW_PLAYING:
                 return fetchNowPlayingMovies(page);
+            case RequestType.UPCOMING:
+                return fetchUpcomingMovies(page);
             default:
                 throw new InvalidParameterException();
         }
@@ -113,6 +116,10 @@ public final class MovieApiManager {
 
     private static ArrayList<Movie> fetchNowPlayingMovies(int page) throws IOException, JSONException, ParseException {
         return fetchMovies(BASE_URL, MOVIES, MOVIES_NOW_PLAYING, page);
+    }
+
+    private static ArrayList<Movie> fetchUpcomingMovies(int page) throws IOException, JSONException, ParseException {
+        return fetchMovies(BASE_URL, MOVIES, MOVIES_UPCOMING, page);
     }
 
     /**
