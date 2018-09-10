@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/rolandoasmat/Popular-Movies.svg?branch=master)](https://travis-ci.org/rolandoasmat/Popular-Movies)
 
-# Popular Movies
+# Movie Night
 
 ![](https://img.shields.io/badge/platform-Android-blue.svg?style=flat)
 
