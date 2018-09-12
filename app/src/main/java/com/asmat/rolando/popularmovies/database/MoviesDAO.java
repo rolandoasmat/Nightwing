@@ -8,7 +8,7 @@ public interface MoviesDAO {
 
     // Movie
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMovie(Movie movie);
 
     @Delete
