@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -25,16 +27,15 @@ abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
-
         DatabaseManager.INSTANCE.setInstance(this);
         setupToolBar();
         setupViewPager();
+        setupDrawer();
         if (savedInstanceState != null) {
             int tab = savedInstanceState.getInt(CURRENT_TAB);
             ViewPager viewPager = findViewById(R.id.container);
             viewPager.setCurrentItem(tab);
         }
-        setupDrawer();
     }
 
     @Override
@@ -50,6 +51,9 @@ abstract class BaseActivity extends AppCompatActivity {
             case R.id.search:
                 Intent intent = new Intent(this, SearchResultsActivity.class);
                 startActivity(intent);
+                return true;
+            case android.R.id.home:
+                openDrawer();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -127,6 +131,9 @@ abstract class BaseActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(getActivityTitle());
         setSupportActionBar(toolbar);
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
     }
 
     private void setupViewPager() {
@@ -135,6 +142,11 @@ abstract class BaseActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void openDrawer() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.openDrawer(GravityCompat.START);
     }
 
     //endregion
