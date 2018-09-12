@@ -168,14 +168,15 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         Movie movie = MovieDetailActivity.this.viewModel.getMovie().getValue();
         if (movie == null) return;
         FavoriteMovie favoriteMovie = new FavoriteMovie(movie.getId());
-        if(this.viewModel.getFavoriteMovie().getValue() == null) {
+        if (this.viewModel.getFavoriteMovie().getValue() == null) {
+            // Add the Favorite movie
             DatabaseManager.INSTANCE.addMovie(movie);
             DatabaseManager.INSTANCE.addFavoriteMovie(favoriteMovie);
         } else {
+            DatabaseManager.INSTANCE.deleteFavoriteMovie(favoriteMovie);
+            // Check if it's a watch later movie, delete movie ref if it's not
             if (this.viewModel.getWatchLaterMovie().getValue() == null) {
                 DatabaseManager.INSTANCE.deleteMovie(movie);
-            } else {
-                DatabaseManager.INSTANCE.deleteFavoriteMovie(favoriteMovie);
             }
         }
     }
@@ -184,14 +185,13 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         Movie movie = MovieDetailActivity.this.viewModel.getMovie().getValue();
         if (movie == null) return;
         WatchLaterMovie watchLaterMovie = new WatchLaterMovie(movie.getId());
-        if(this.viewModel.getWatchLaterMovie().getValue() == null) {
+        if (this.viewModel.getWatchLaterMovie().getValue() == null) {
             DatabaseManager.INSTANCE.addMovie(movie);
             DatabaseManager.INSTANCE.addWatchLaterMovie(watchLaterMovie);
         } else {
+            DatabaseManager.INSTANCE.deleteWatchLaterMovie(watchLaterMovie);
             if (this.viewModel.getFavoriteMovie().getValue() == null) {
                 DatabaseManager.INSTANCE.deleteMovie(movie);
-            } else {
-                DatabaseManager.INSTANCE.deleteWatchLaterMovie(watchLaterMovie);
             }
         }
     }
