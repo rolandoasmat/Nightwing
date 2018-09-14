@@ -46,6 +46,7 @@ public final class MovieApiManager {
     private static final String MOVIES_MOVIE = "";              // /movie/{movie_id}
     private static final String MOVIES_VIDEOS = "videos";       // /movie/{movie_id}/videos
     private static final String MOVIES_REVIEWS = "reviews";     // /movie/{movie_id}/reviews
+    private static final String MOVIES_CREDITS = "credits";     // /movie/{movie_id}/credits
 
     private static final String SEARCH_MOVIES     = "movie"; // /search/movie
 
@@ -84,32 +85,31 @@ public final class MovieApiManager {
         }
     }
 
-    /**
-     * Fetch all the popular movies from movie API.
-     *
-     * @param page Page to fetch.
-     *
-     * @return Array of movies.
-     *
-     * @throws IOException
-     * @throws JSONException
-     * @throws ParseException
-     */
+    public static Video[] fetchMovieVideos(int id) throws IOException, JSONException, ParseException {
+        return fetchVideos(id, BASE_URL, MOVIES, MOVIES_VIDEOS);
+    }
+
+    public static ArrayList<Movie> fetchSearchMovies(String query, int page) throws IOException, JSONException, ParseException {
+        Hashtable<String, String> queryParams = new Hashtable<>();
+        queryParams.put(QUERY_PARAM, query);
+        queryParams.put(PAGE_PARAM, String.valueOf(page));
+        return fetchMovies(BASE_URL, SEARCH, SEARCH_MOVIES, queryParams);
+    }
+
+    public static Movie fetchMovie(int id) throws IOException, JSONException {
+        return fetchMovie(id, BASE_URL, MOVIES, MOVIES_MOVIE);
+    }
+
+    public static Review[] fetchMovieReviews(int id) throws IOException, JSONException, ParseException {
+        return fetchReviews(id, BASE_URL, MOVIES, MOVIES_REVIEWS);
+    }
+
+    //region Private
+
     private static ArrayList<Movie> fetchMostPopularMovies(int page) throws IOException, JSONException, ParseException {
         return fetchMovies(BASE_URL, MOVIES, MOVIES_POPULAR, page);
     }
 
-    /**
-     * Fetch the top rated movies from movie API.
-     *
-     * @param page Page to fetch.
-     *
-     * @return Array of movies.
-     *
-     * @throws IOException
-     * @throws JSONException
-     * @throws ParseException
-     */
     private static ArrayList<Movie> fetchTopRatedMovies(int page) throws IOException, JSONException, ParseException {
         return fetchMovies(BASE_URL, MOVIES, MOVIES_TOP_RATED, page);
     }
@@ -121,51 +121,6 @@ public final class MovieApiManager {
     private static ArrayList<Movie> fetchUpcomingMovies(int page) throws IOException, JSONException, ParseException {
         return fetchMovies(BASE_URL, MOVIES, MOVIES_UPCOMING, page);
     }
-
-    /**
-     * Fetch reviews of specified movie id.
-     *
-     * @param id ID of movie.
-     *
-     * @return Array of reviews.
-     *
-     * @throws IOException
-     * @throws JSONException
-     * @throws ParseException
-     */
-    static Review[] fetchMovieReviews(int id) throws IOException, JSONException, ParseException {
-        return fetchReviews(id, BASE_URL, MOVIES, MOVIES_REVIEWS);
-    }
-
-    /**
-     * Fetch videos(trailers and teasers) of specified movie id.
-     *
-     * @param id ID of movie.
-     *
-     * @return Array of videos.
-     *
-     * @throws IOException
-     * @throws JSONException
-     * @throws ParseException
-     */
-    public static Video[] fetchMovieVideos(int id) throws IOException, JSONException, ParseException {
-        return fetchVideos(id, BASE_URL, MOVIES, MOVIES_VIDEOS);
-    }
-
-    public static ArrayList<Movie>  fetchSearchMovies(String query, int page) throws IOException, JSONException, ParseException {
-        Hashtable<String, String> queryParams = new Hashtable<>();
-        queryParams.put(QUERY_PARAM, query);
-        queryParams.put(PAGE_PARAM, String.valueOf(page));
-        return fetchMovies(BASE_URL, SEARCH, SEARCH_MOVIES, queryParams);
-    }
-
-    public static Movie fetchMovie(int id) throws IOException, JSONException {
-        return fetchMovie(id, BASE_URL, MOVIES, MOVIES_MOVIE);
-    }
-
-    /**
-     * ---------------------------- Private Methods ----------------------------
-     */
 
     private static ArrayList<Movie> fetchMovies(String baseURL,
                                        String subComponent,
@@ -337,4 +292,6 @@ public final class MovieApiManager {
         // Create Movie object
         return new Review(author, content);
     }
+
+    //endregion
 }

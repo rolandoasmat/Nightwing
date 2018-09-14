@@ -65,6 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 layout="@layout/movie_details_user_actions"/>
+            <!--TODO add actors here-->
             <!--Trailers-->
             <TextView
                 android:layout_width="wrap_content"
