@@ -2,6 +2,9 @@ package com.asmat.rolando.popularmovies.managers;
 
 import com.asmat.rolando.popularmovies.BuildConfig;
 import com.asmat.rolando.popularmovies.database.Movie;
+import com.asmat.rolando.popularmovies.models.Cast;
+import com.asmat.rolando.popularmovies.models.Credit;
+import com.asmat.rolando.popularmovies.models.Crew;
 import com.asmat.rolando.popularmovies.models.RequestType;
 import com.asmat.rolando.popularmovies.models.Review;
 import com.asmat.rolando.popularmovies.models.Video;
@@ -14,7 +17,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URL;
 import java.security.InvalidParameterException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Locale;
@@ -70,7 +72,11 @@ public final class MovieApiManager {
      *  ---------------------------- API ----------------------------
      */
 
-    public static ArrayList<Movie> fetchMoviesOfType(@RequestType.Def int type, int page) throws IOException, JSONException, ParseException {
+    public static Movie fetchMovie(int id) throws IOException, JSONException {
+        return fetchMovie(id, BASE_URL, MOVIES, MOVIES_MOVIE);
+    }
+
+    public static ArrayList<Movie> fetchMoviesOfType(@RequestType.Def int type, int page) throws IOException, JSONException {
         switch(type) {
             case RequestType.MOST_POPULAR:
                 return fetchMostPopularMovies(page);
@@ -85,99 +91,196 @@ public final class MovieApiManager {
         }
     }
 
-    public static Video[] fetchMovieVideos(int id) throws IOException, JSONException, ParseException {
-        return fetchVideos(id, BASE_URL, MOVIES, MOVIES_VIDEOS);
-    }
-
-    public static ArrayList<Movie> fetchSearchMovies(String query, int page) throws IOException, JSONException, ParseException {
+    public static ArrayList<Movie> fetchSearchMovies(String query, int page) throws IOException, JSONException {
         Hashtable<String, String> queryParams = new Hashtable<>();
         queryParams.put(QUERY_PARAM, query);
         queryParams.put(PAGE_PARAM, String.valueOf(page));
         return fetchMovies(BASE_URL, SEARCH, SEARCH_MOVIES, queryParams);
     }
 
-    public static Movie fetchMovie(int id) throws IOException, JSONException {
-        return fetchMovie(id, BASE_URL, MOVIES, MOVIES_MOVIE);
+    public static Video[] fetchMovieVideos(int id) throws IOException, JSONException {
+        return fetchVideos(id, BASE_URL, MOVIES, MOVIES_VIDEOS);
     }
 
-    public static Review[] fetchMovieReviews(int id) throws IOException, JSONException, ParseException {
+    public static Review[] fetchMovieReviews(int id) throws IOException, JSONException {
         return fetchReviews(id, BASE_URL, MOVIES, MOVIES_REVIEWS);
+    }
+
+    public static Credit fetchMovieCredits(int id) throws IOException, JSONException {
+        return fetchCredits(id, BASE_URL, MOVIES, MOVIES_CREDITS);
     }
 
     //region Private
 
-    private static ArrayList<Movie> fetchMostPopularMovies(int page) throws IOException, JSONException, ParseException {
+    private static ArrayList<Movie> fetchMostPopularMovies(int page) throws IOException, JSONException {
         return fetchMovies(BASE_URL, MOVIES, MOVIES_POPULAR, page);
     }
 
-    private static ArrayList<Movie> fetchTopRatedMovies(int page) throws IOException, JSONException, ParseException {
+    private static ArrayList<Movie> fetchTopRatedMovies(int page) throws IOException, JSONException {
         return fetchMovies(BASE_URL, MOVIES, MOVIES_TOP_RATED, page);
     }
 
-    private static ArrayList<Movie> fetchNowPlayingMovies(int page) throws IOException, JSONException, ParseException {
+    private static ArrayList<Movie> fetchNowPlayingMovies(int page) throws IOException, JSONException {
         return fetchMovies(BASE_URL, MOVIES, MOVIES_NOW_PLAYING, page);
     }
 
-    private static ArrayList<Movie> fetchUpcomingMovies(int page) throws IOException, JSONException, ParseException {
+    private static ArrayList<Movie> fetchUpcomingMovies(int page) throws IOException, JSONException {
         return fetchMovies(BASE_URL, MOVIES, MOVIES_UPCOMING, page);
     }
 
     private static ArrayList<Movie> fetchMovies(String baseURL,
                                        String subComponent,
                                        String endpoint,
-                                       int page) throws IOException, JSONException, ParseException {
-        // Make request
+                                       int page) throws IOException, JSONException {
         String jsonResponse =  httpRequest(baseURL, subComponent, endpoint, page);
-        // Map to Movie objects
-        ArrayList<Movie> movies = mapMovies(jsonResponse);
-        return movies;
+        return mapMovies(jsonResponse);
     }
 
     private static Movie fetchMovie(int id,
                                     String baseURL,
                                     String subComponent,
                                     String endpoint) throws IOException, JSONException {
-        // Make request
         String jsonResponse =  httpRequest(baseURL, subComponent+"/"+id, endpoint);
-        // Map to Movie objects
-        Movie movie = mapMovie(jsonResponse);
-        return movie;
+        return mapMovie(jsonResponse);
     }
 
     private static ArrayList<Movie> fetchMovies(String baseURL,
                                                 String subComponent,
                                                 String endpoint,
-                                                Hashtable<String, String> queryParams) throws IOException, JSONException, ParseException {
-        // Make request
+                                                Hashtable<String, String> queryParams) throws IOException, JSONException {
         String jsonResponse =  httpRequest(baseURL, subComponent, endpoint, queryParams);
-        // Map to Movie objects
-        ArrayList<Movie> movies = mapMovies(jsonResponse);
-        return movies;
+        return mapMovies(jsonResponse);
     }
 
     private static Review[] fetchReviews(int id,
                                          String baseURL,
                                          String subComponent,
-                                         String endpoint) throws IOException, JSONException, ParseException {
-        // Make request
+                                         String endpoint) throws IOException, JSONException {
         String jsonResponse =  httpRequest(baseURL, subComponent+"/"+id, endpoint);
-        // Map to Movie objects
-        Review[] reviews = mapReviews(jsonResponse);
-        return reviews;
+        return mapReviews(jsonResponse);
     }
 
     private static Video[] fetchVideos(int id,
                                         String baseURL,
                                         String subComponent,
-                                        String endpoint) throws IOException, JSONException, ParseException {
-        // Make request
+                                        String endpoint) throws IOException, JSONException {
         String jsonResponse =  httpRequest(baseURL, subComponent+"/"+id, endpoint);
-        // Map to Movie objects
-        Video[] videos = mapVideos(jsonResponse);
+        return mapVideos(jsonResponse);
+    }
+
+    private static Credit fetchCredits(int id,
+                                       String baseURL,
+                                       String subComponent,
+                                       String endpoint) throws IOException, JSONException {
+        String jsonResponse =  httpRequest(baseURL, subComponent+"/"+id, endpoint);
+        return mapCredit(jsonResponse);
+    }
+
+
+
+    //endregion
+
+    /**
+     * ---------------------------- Mappings ----------------------------
+     */
+
+    //region Mappings
+
+    private static Movie mapMovie(String jsonString) throws JSONException {
+        JSONObject json = new JSONObject(jsonString);
+        return mapMovie(json);
+    }
+
+    private static Movie mapMovie(JSONObject json) throws JSONException {
+        String posterPath    = json.getString("poster_path");
+        String overview      = json.getString("overview");
+        String releaseDate   = json.getString("release_date");
+        int id               = json.getInt("id");
+        String title         = json.getString("title");
+        String backdropPath  = json.getString("backdrop_path");
+        double userRating    = json.getDouble("vote_average");
+        return new Movie(id, title, posterPath, backdropPath, overview, userRating, releaseDate);
+    }
+
+    private static ArrayList<Movie> mapMovies(String jsonStr) throws JSONException {
+        ArrayList<Movie> movies = new ArrayList<>();
+        JSONObject forecastJson = new JSONObject(jsonStr);
+        JSONArray results = forecastJson.getJSONArray("results");
+        for(int i = 0; i < results.length(); i++){
+            JSONObject movieJson = results.getJSONObject(i);
+            movies.add(mapMovie(movieJson));
+        }
+        return movies;
+    }
+
+    private static Video mapVideo(JSONObject json) throws JSONException {
+        // Get properties
+        String name = json.getString("name");
+        String site = json.getString("site");
+        String key  = json.getString("key");
+        String type = json.getString("type");
+        // Create Movie object
+        return new Video(name, site, key, type);
+    }
+
+    private static Video[] mapVideos(String jsonStr) throws JSONException {
+        JSONObject forecastJson = new JSONObject(jsonStr);
+        JSONArray results = forecastJson.getJSONArray("results");
+        Video[] videos = new Video[results.length()];
+        for(int i = 0; i < results.length(); i++){
+            JSONObject movieJson = results.getJSONObject(i);
+            videos[i] = mapVideo(movieJson);
+        }
         return videos;
     }
 
-    // TODO refactor and delete this method
+    private static Review mapReview(JSONObject json) throws JSONException {
+        // Get properties
+        String author  = json.getString("author");
+        String content = json.getString("content");
+        // Create Movie object
+        return new Review(author, content);
+    }
+
+    private static Review[] mapReviews(String jsonStr) throws JSONException {
+        JSONObject forecastJson = new JSONObject(jsonStr);
+        JSONArray results = forecastJson.getJSONArray("results");
+        Review[] reviews = new Review[results.length()];
+        for(int i = 0; i < results.length(); i++){
+            JSONObject movieJson = results.getJSONObject(i);
+            reviews[i] = mapReview(movieJson);
+        }
+        return reviews;
+    }
+
+    private static Cast[] mapCast(JSONArray jsonArray) throws JSONException {
+        Cast[] cast = new Cast[jsonArray.length()];
+        for (int i = 0; i < cast.length; i++) {
+            cast[i] = new Cast(jsonArray.getJSONObject(i));
+        }
+        return cast;
+    }
+
+    private static Crew[] mapCrew(JSONArray jsonArray) throws JSONException {
+        Crew[] crew = new Crew[jsonArray.length()];
+        for (int i = 0; i < crew.length; i++) {
+            crew[i] = new Crew(jsonArray.getJSONObject(i));
+        }
+        return crew;
+    }
+
+    private static Credit mapCredit(String jsonStr) throws JSONException {
+        JSONObject jsonObject = new JSONObject(jsonStr);
+        int id = jsonObject.getInt("id");
+        Cast[] cast = mapCast(jsonObject.getJSONArray("cast"));
+        Crew[] crew = mapCrew(jsonObject.getJSONArray("crew"));
+        return new Credit(id, cast, crew);
+    }
+
+    //endregion
+
+    //region HTTP
+
     private static String httpRequest(String baseURL,
                                       String subComponent,
                                       String endpoint) throws IOException {
@@ -220,77 +323,6 @@ public final class MovieApiManager {
         URL url = NetworkUtils.buildUrl(urlBuilder.toString(), params);
         // Make request
         return  NetworkUtils.httpRequest(url);
-    }
-
-    /**
-     * ---------------------------- Mappings ----------------------------
-     */
-
-    private static ArrayList<Movie> mapMovies(String jsonStr) throws JSONException, ParseException {
-        ArrayList<Movie> movies = new ArrayList<>();
-        JSONObject forecastJson = new JSONObject(jsonStr);
-        JSONArray results = forecastJson.getJSONArray("results");
-        for(int i = 0; i < results.length(); i++){
-            JSONObject movieJson = results.getJSONObject(i);
-            movies.add(mapMovie(movieJson));
-        }
-        return movies;
-    }
-
-    private static Video[] mapVideos(String jsonStr) throws JSONException, ParseException {
-        JSONObject forecastJson = new JSONObject(jsonStr);
-        JSONArray results = forecastJson.getJSONArray("results");
-        Video[] videos = new Video[results.length()];
-        for(int i = 0; i < results.length(); i++){
-            JSONObject movieJson = results.getJSONObject(i);
-            videos[i] = mapVideo(movieJson);
-        }
-        return videos;
-    }
-
-    private static Review[] mapReviews(String jsonStr) throws JSONException, ParseException {
-        JSONObject forecastJson = new JSONObject(jsonStr);
-        JSONArray results = forecastJson.getJSONArray("results");
-        Review[] reviews = new Review[results.length()];
-        for(int i = 0; i < results.length(); i++){
-            JSONObject movieJson = results.getJSONObject(i);
-            reviews[i] = mapReview(movieJson);
-        }
-        return reviews;
-    }
-
-    private static Movie mapMovie(String jsonString) throws JSONException {
-        JSONObject json = new JSONObject(jsonString);
-        return mapMovie(json);
-    }
-
-    private static Movie mapMovie(JSONObject json) throws JSONException {
-        String posterPath    = json.getString("poster_path");
-        String overview      = json.getString("overview");
-        String releaseDate   = json.getString("release_date");
-        int id               = json.getInt("id");
-        String title         = json.getString("title");
-        String backdropPath  = json.getString("backdrop_path");
-        double userRating    = json.getDouble("vote_average");
-        return new Movie(id, title, posterPath, backdropPath, overview, userRating, releaseDate);
-    }
-
-    private static Video mapVideo(JSONObject json) throws JSONException, ParseException {
-        // Get properties
-        String name = json.getString("name");
-        String site = json.getString("site");
-        String key  = json.getString("key");
-        String type = json.getString("type");
-        // Create Movie object
-        return new Video(name, site, key, type);
-    }
-
-    private static Review mapReview(JSONObject json) throws JSONException, ParseException {
-        // Get properties
-        String author  = json.getString("author");
-        String content = json.getString("content");
-        // Create Movie object
-        return new Review(author, content);
     }
 
     //endregion
