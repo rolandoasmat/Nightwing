@@ -7,13 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.asmat.rolando.popularmovies.models.AdapterOnClickHandler;
 
-public abstract class BaseLinearAdapter<T, V extends BaseLinearAdapter.ViewHolder > extends RecyclerView.Adapter<V> {
+public abstract class BaseLinearAdapter<T, V extends BaseLinearAdapter.ViewHolder> extends RecyclerView.Adapter<V> {
 
     private T[] data;
     private final AdapterOnClickHandler<T> clickHandler;
 
     //region API
 
+    BaseLinearAdapter() {
+        this.clickHandler = null;
+    }
     BaseLinearAdapter(AdapterOnClickHandler<T> clickHandler) {
         this.clickHandler = clickHandler;
     }
@@ -32,7 +35,6 @@ public abstract class BaseLinearAdapter<T, V extends BaseLinearAdapter.ViewHolde
     //region Abstract
     abstract int getLayoutForLinearItem();
     abstract V createViewHolder(View view);
-    abstract void bindViewHolder(T item, V holder);
     //endregion
 
     @Override
@@ -47,7 +49,7 @@ public abstract class BaseLinearAdapter<T, V extends BaseLinearAdapter.ViewHolde
     @Override
     public void onBindViewHolder(V holder, int position) {
         T item = data[position];
-        bindViewHolder(item, holder);
+        holder.bind(item);
     }
 
     @Override
@@ -65,8 +67,12 @@ public abstract class BaseLinearAdapter<T, V extends BaseLinearAdapter.ViewHolde
         public void onClick(View v) {
             int position = getAdapterPosition();
             T item = data[position];
-            clickHandler.onClick(item);
+            if (clickHandler != null) {
+                clickHandler.onClick(item);
+            }
         }
+
+        abstract void bind(T item);
     }
 
 }

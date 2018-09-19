@@ -1,63 +1,44 @@
 package com.asmat.rolando.popularmovies.adapters;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.models.Review;
 
-public class ReviewsLinearAdapter extends RecyclerView.Adapter<ReviewsLinearAdapter.ViewHolder> {
+public class ReviewsLinearAdapter extends BaseLinearAdapter<Review, ReviewsLinearAdapter.ViewHolder>{
 
-    private Review[] mReviews;
-
-    public void setReviews(Review[] reviews) {
-        this.mReviews = reviews;
-        this.notifyDataSetChanged();
-    }
-
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        int layoutForLinearItem = R.layout.review_linear_item;
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(layoutForLinearItem, parent, false);
-        return new ViewHolder(view);
+    public ReviewsLinearAdapter() {
+        super();
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Review review = mReviews[position];
-        holder.bind(review);
+    int getLayoutForLinearItem() {
+        return R.layout.review_linear_item;
     }
 
     @Override
-    public int getItemCount() {
-        if(mReviews == null) {
-            return 0;
-        } else {
-            return mReviews.length;
-        }
+    ViewHolder createViewHolder(View view) {
+        return new ReviewsLinearAdapter.ViewHolder(view);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView mReviewContent;
-        private final TextView mReviewer;
+    class ViewHolder extends BaseLinearAdapter.ViewHolder {
+        private final TextView content;
+        private final TextView reviewer;
 
         ViewHolder(View itemView) {
             super(itemView);
-            mReviewContent = itemView.findViewById(R.id.tv_review_content);
-            mReviewer = itemView.findViewById(R.id.tv_reviewer);
+            content = itemView.findViewById(R.id.tv_review_content);
+            reviewer = itemView.findViewById(R.id.tv_reviewer);
         }
 
-        void bind(Review review) {
-            mReviewContent.setText(review.getContent());
-            mReviewer.setText(review.getAuthor());
+        @Override
+        void bind(Object item) {
+            if (item instanceof Review) {
+                Review review = (Review) item;
+                content.setText(review.getContent());
+                reviewer.setText(review.getAuthor());
+            }
         }
     }
 }

@@ -318,7 +318,7 @@ public class MovieDetailActivity extends AppCompatActivity implements AdapterOnC
                 mNoReviewsLabel.setVisibility(View.VISIBLE);
             } else {
                 mReviews.setVisibility(View.VISIBLE);
-                mReviewsLinearAdapter.setReviews(reviews);
+                mReviewsLinearAdapter.setData(reviews);
             }
         }
     }

@@ -25,17 +25,6 @@ public class TrailersLinearAdapter extends BaseLinearAdapter<Video,TrailersLinea
         return new TrailersLinearAdapter.ViewHolder(view);
     }
 
-    @Override
-    void bindViewHolder(Video item, ViewHolder holder) {
-        String caption = item.getName();
-        holder.caption.setText(caption);
-        String thumbnail = item.getYouTubeThumbnailURL();
-        ImageView imageView = holder.thumbnail;
-        Picasso.with(imageView.getContext())
-                .load(thumbnail)
-                .into(imageView);
-    }
-
     class ViewHolder extends BaseLinearAdapter.ViewHolder {
         final ImageView thumbnail;
         final TextView caption;
@@ -45,6 +34,20 @@ public class TrailersLinearAdapter extends BaseLinearAdapter<Video,TrailersLinea
             thumbnail = view.findViewById(R.id.iv_trailer_thumbnail);
             caption = view.findViewById(R.id.tv_trailer_caption);
             thumbnail.setOnClickListener(this);
+        }
+
+        @Override
+        void bind(Object item) {
+            if (item instanceof Video) {
+                Video video = (Video) item;
+                String caption = video.getName();
+                this.caption.setText(caption);
+                String thumbnail = video.getYouTubeThumbnailURL();
+                ImageView imageView = this.thumbnail;
+                Picasso.with(imageView.getContext())
+                        .load(thumbnail)
+                        .into(imageView);
+            }
         }
     }
 }
