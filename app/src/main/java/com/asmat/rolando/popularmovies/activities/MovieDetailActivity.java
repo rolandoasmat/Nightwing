@@ -25,8 +25,8 @@ import com.asmat.rolando.popularmovies.database.DatabaseManager;
 import com.asmat.rolando.popularmovies.database.FavoriteMovie;
 import com.asmat.rolando.popularmovies.database.Movie;
 import com.asmat.rolando.popularmovies.database.WatchLaterMovie;
+import com.asmat.rolando.popularmovies.models.AdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.models.Review;
-import com.asmat.rolando.popularmovies.models.TrailerAdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.models.Video;
 import com.asmat.rolando.popularmovies.viewmodels.MovieDetailsViewModel;
 import com.squareup.picasso.Picasso;
@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MovieDetailActivity extends AppCompatActivity implements TrailerAdapterOnClickHandler {
+public class MovieDetailActivity extends AppCompatActivity implements AdapterOnClickHandler<Video> {
     // Movie details
     @BindView(R.id.toolbarImage)
     ImageView mMovieBackdrop;
@@ -203,7 +203,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         String movieTitle = movie.getTitle();
         String textToShare = getResources().getString(R.string.check_out_movie)+
                 " \""+movieTitle+"\"";
-        Video[] videos = mTrailersLinearAdapter.getTrailers();
+        Video[] videos = mTrailersLinearAdapter.getData();
         if(videos != null && videos.length > 0) {
             textToShare += "\n" + videos[0].getYouTubeURL();
         }
@@ -302,7 +302,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                     mNoTrailersLabel.setVisibility(View.VISIBLE);
                 } else {
                     Video[] array = trailers.toArray(new Video[0]);
-                    mTrailersLinearAdapter.setTrailers(array);
+                    mTrailersLinearAdapter.setData(array);
                     mTrailers.setVisibility(View.VISIBLE);
                 }
             }
