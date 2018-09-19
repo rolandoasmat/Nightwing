@@ -3,7 +3,6 @@ package com.asmat.rolando.popularmovies.adapters;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.models.AdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.models.Video;
