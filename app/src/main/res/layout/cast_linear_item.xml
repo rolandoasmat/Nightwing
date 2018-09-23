@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="120dp"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/activity_margin_general"
+    android:layout_marginRight="8dp"
     android:orientation="vertical">
 
     <ImageView
@@ -15,14 +15,13 @@
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:layout_marginTop="@dimen/activity_vertical_margin_small"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
         android:id="@+id/role"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        android:layout_marginTop="@dimen/activity_vertical_margin_small"/>
+        android:layout_marginTop="2dp"/>
 
 </LinearLayout>

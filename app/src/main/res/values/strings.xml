@@ -52,4 +52,5 @@
     <string name="cast">Cast</string>
     <string name="no_cast">No cast.</string>
     <string name="error_cast">Error fetching cast.</string>
+    <string name="search">search</string>
 </resources>

@@ -120,6 +120,7 @@
                 android:id="@+id/cast_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:visibility="gone"/>
 
             <TextView

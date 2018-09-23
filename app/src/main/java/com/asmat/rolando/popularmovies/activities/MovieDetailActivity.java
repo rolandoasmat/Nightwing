@@ -51,8 +51,6 @@ public class MovieDetailActivity extends AppCompatActivity implements AdapterOnC
     @BindView(R.id.tv_synopsis_content)
     TextView synopsisLabel;
 
-    // TODO raa create custom view to wrap label, rv, loader, error label, empty label
-    // TODO raa use data bindings
     // Trailers
     @BindView(R.id.rv_trailers)
     RecyclerView trailers;
@@ -371,7 +369,7 @@ public class MovieDetailActivity extends AppCompatActivity implements AdapterOnC
 
     private void fillStar() {
         star.setImageResource(R.drawable.ic_star_filled);
-    } // TODO raa use selectors instead
+    }
 
     private void unfillStar() {
         star.setImageResource(R.drawable.ic_star);
