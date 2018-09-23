@@ -1,5 +1,7 @@
 package com.asmat.rolando.popularmovies.models;
 
+import com.asmat.rolando.popularmovies.utilities.ImageURLUtil;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,7 +23,11 @@ public class Cast {
         this.id = json.getInt("id");
         this.name = json.getString("name");
         this.order = json.getInt("order");
-        this.profilePath = json.getString("profilePath");
+        this.profilePath = json.getString("profile_path");
+    }
+
+    public String getThumbnailURL() {
+        return ImageURLUtil.getImageURL342(profilePath);
     }
 
     //region Getters

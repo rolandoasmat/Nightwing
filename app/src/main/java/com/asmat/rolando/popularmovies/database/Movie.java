@@ -4,6 +4,8 @@ import android.arch.persistence.room.*;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.asmat.rolando.popularmovies.utilities.ImageURLUtil;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,10 +30,6 @@ public class Movie implements Parcelable {
 
     @ColumnInfo(name = "release_date")
     private String releaseDate;
-
-    // "w92", "w154", "w185", "w342", "w500", "w780"
-    private static final String IMAGE_BASE_URL_POSTER = "http://image.tmdb.org/t/p/w342";
-    private static final String IMAGE_BASE_URL_BACKDROP = "http://image.tmdb.org/t/p/w780";
 
     private static final String DATE_FORMAT_ORIGINAL = "yyyy-MM-dd";
     private static final String DATE_FORMAT_DESIRED = "MMMM dd, yyyy";
@@ -61,11 +59,11 @@ public class Movie implements Parcelable {
     }
 
     public String getBackdropURL() {
-        return IMAGE_BASE_URL_BACKDROP + this.backdropPath;
+        return ImageURLUtil.getImageURL780(backdropPath);
     }
 
     public String getPosterURL() {
-        return IMAGE_BASE_URL_POSTER + this.posterPath;
+        return ImageURLUtil.getImageURL342(posterPath);
     }
 
     public int getId() {

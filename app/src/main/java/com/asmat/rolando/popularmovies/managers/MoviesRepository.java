@@ -8,6 +8,8 @@ import com.asmat.rolando.popularmovies.database.DatabaseManager;
 import com.asmat.rolando.popularmovies.database.FavoriteMovie;
 import com.asmat.rolando.popularmovies.database.Movie;
 import com.asmat.rolando.popularmovies.database.WatchLaterMovie;
+import com.asmat.rolando.popularmovies.models.Cast;
+import com.asmat.rolando.popularmovies.models.Credit;
 import com.asmat.rolando.popularmovies.models.Review;
 import com.asmat.rolando.popularmovies.models.Video;
 
@@ -82,6 +84,28 @@ public class MoviesRepository {
             @Override
             protected void onPostExecute(Review[] reviews) {
                 data.postValue(reviews);
+            }
+        }.execute(movieID);
+        return data;
+    }
+
+    public static LiveData<Credit> getMovieCreadits(int movieID) {
+        final MutableLiveData<Credit> data = new MutableLiveData<>();
+        new AsyncTask<Integer, Void, Credit>() {
+            @Override
+            protected Credit doInBackground(Integer... integers) {
+                try {
+                    Credit credit = MovieApiManager.fetchMovieCredits(integers[0]);
+                    return credit;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Credit credit) {
+                data.postValue(credit);
             }
         }.execute(movieID);
         return data;

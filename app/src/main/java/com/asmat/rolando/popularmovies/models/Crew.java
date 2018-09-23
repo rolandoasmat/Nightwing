@@ -20,7 +20,7 @@ public class Crew {
         this.id = json.getInt("id");
         this.job = json.getString("job");
         this.name = json.getString("name");
-        this.profilePath = json.getString("profilePath");
+        this.profilePath = json.getString("profile_path");
     }
 
     //region Getters

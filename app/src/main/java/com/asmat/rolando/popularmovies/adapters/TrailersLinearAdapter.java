@@ -39,13 +39,11 @@ public class TrailersLinearAdapter extends BaseLinearAdapter<Video,TrailersLinea
         void bind(Object item) {
             if (item instanceof Video) {
                 Video video = (Video) item;
-                String caption = video.getName();
-                this.caption.setText(caption);
-                String thumbnail = video.getYouTubeThumbnailURL();
-                ImageView imageView = this.thumbnail;
-                Picasso.with(imageView.getContext())
-                        .load(thumbnail)
-                        .into(imageView);
+                caption.setText(video.getName());
+                String url = video.getYouTubeThumbnailURL();
+                Picasso.with(thumbnail.getContext())
+                        .load(url)
+                        .into(thumbnail);
             }
         }
     }

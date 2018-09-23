@@ -7,6 +7,7 @@ import com.asmat.rolando.popularmovies.database.FavoriteMovie;
 import com.asmat.rolando.popularmovies.database.Movie;
 import com.asmat.rolando.popularmovies.database.WatchLaterMovie;
 import com.asmat.rolando.popularmovies.managers.MoviesRepository;
+import com.asmat.rolando.popularmovies.models.Credit;
 import com.asmat.rolando.popularmovies.models.Review;
 import com.asmat.rolando.popularmovies.models.Video;
 
@@ -17,6 +18,7 @@ public class MovieDetailsViewModel extends ViewModel {
     private LiveData<WatchLaterMovie> watchLaterMovie;
     private LiveData<Video[]> videos;
     private LiveData<Review[]> reviews;
+    private LiveData<Credit> credit;
 
     public void init(int movieID) {
         this.movieID = movieID;
@@ -30,6 +32,7 @@ public class MovieDetailsViewModel extends ViewModel {
         watchLaterMovie = MoviesRepository.getWatchLaterMovie(movieID);
         videos = MoviesRepository.getVideos(movieID);
         reviews = MoviesRepository.getReviews(movieID);
+        credit = MoviesRepository.getMovieCreadits(movieID);
     }
 
     // Getters
@@ -53,4 +56,9 @@ public class MovieDetailsViewModel extends ViewModel {
     public LiveData<Review[]> getReviews() {
         return reviews;
     }
+
+    public LiveData<Credit> getCredit() {
+        return credit;
+    }
+
 }

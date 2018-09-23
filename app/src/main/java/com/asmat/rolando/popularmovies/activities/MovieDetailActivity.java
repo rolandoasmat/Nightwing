@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.asmat.rolando.popularmovies.R;
+import com.asmat.rolando.popularmovies.adapters.CastLinearAdapter;
 import com.asmat.rolando.popularmovies.adapters.ReviewsLinearAdapter;
 import com.asmat.rolando.popularmovies.adapters.TrailersLinearAdapter;
 import com.asmat.rolando.popularmovies.database.DatabaseManager;
@@ -26,6 +27,7 @@ import com.asmat.rolando.popularmovies.database.FavoriteMovie;
 import com.asmat.rolando.popularmovies.database.Movie;
 import com.asmat.rolando.popularmovies.database.WatchLaterMovie;
 import com.asmat.rolando.popularmovies.models.AdapterOnClickHandler;
+import com.asmat.rolando.popularmovies.models.Credit;
 import com.asmat.rolando.popularmovies.models.Review;
 import com.asmat.rolando.popularmovies.models.Video;
 import com.asmat.rolando.popularmovies.viewmodels.MovieDetailsViewModel;
@@ -37,39 +39,53 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MovieDetailActivity extends AppCompatActivity implements AdapterOnClickHandler<Video> {
-    // Movie details
+
     @BindView(R.id.toolbarImage)
-    ImageView mMovieBackdrop;
+    ImageView backdrop;
     @BindView(R.id.iv_poster_thumbnail)
-    ImageView mMoviePoster;
+    ImageView thumbnail;
     @BindView(R.id.tv_release_date)
-    TextView mReleaseDate;
+    TextView releaseDateLabel;
     @BindView(R.id.tv_movie_rating)
-    TextView mMovieRating;
+    TextView ratingLabel;
     @BindView(R.id.tv_synopsis_content)
-    TextView mMovieSynopsis;
+    TextView synopsisLabel;
+
+    // TODO raa create custom view to wrap label, rv, loader, error label, empty label
+    // TODO raa use data bindings
     // Trailers
     @BindView(R.id.rv_trailers)
-    RecyclerView mTrailers;
+    RecyclerView trailers;
     @BindView(R.id.pb_trailers_loading_bar)
-    ProgressBar mTrailersLoading;
+    ProgressBar trailersLoading;
     @BindView(R.id.tv_no_trailers)
-    TextView mNoTrailersLabel;
+    TextView noTrailersLabel;
     @BindView(R.id.tv_error_trailers)
-    TextView mTrailersErrorLabel;
-    private LinearLayoutManager mTrailersLayoutManager;
-    private TrailersLinearAdapter mTrailersLinearAdapter;
+    TextView trailersErrorLabel;
+    private TrailersLinearAdapter trailersLinearAdapter;
+
+    // Cast
+    @BindView(R.id.cast_recycler_view)
+    RecyclerView cast;
+    @BindView(R.id.cast_loading)
+    ProgressBar castLoading;
+    @BindView(R.id.cast_empty)
+    TextView noCastLabel;
+    @BindView(R.id.cast_error)
+    TextView castErrorLabel;
+    private CastLinearAdapter castLinearAdapter;
+
     // Reviews
     @BindView(R.id.rv_reviews)
-    RecyclerView mReviews;
+    RecyclerView reviews;
     @BindView(R.id.pb_reviews_loading_bar)
-    ProgressBar mReviewsLoading;
+    ProgressBar reviewsLoading;
     @BindView(R.id.tv_no_reviews)
-    TextView mNoReviewsLabel;
+    TextView noReviewsLabel;
     @BindView(R.id.tv_error_reviews)
-    TextView mReviewsErrorLabel;
-    private LinearLayoutManager mReviewsLayoutManager;
+    TextView reviewsErrorLabel;
     private ReviewsLinearAdapter mReviewsLinearAdapter;
+
     // Star
     @BindView(R.id.star)
     ImageView star;
@@ -118,6 +134,13 @@ public class MovieDetailActivity extends AppCompatActivity implements AdapterOnC
                 MovieDetailActivity.this.updateTrailers(videos);
             }
         });
+        viewModel.getCredit().observe(this, new Observer<Credit>() {
+            @Override
+            public void onChanged(@Nullable Credit credit) {
+                MovieDetailActivity.this.updateCredit(credit);
+            }
+        });
+
         viewModel.getReviews().observe(this, new Observer<Review[]>() {
             @Override
             public void onChanged(@Nullable Review[] reviews) {
@@ -125,15 +148,7 @@ public class MovieDetailActivity extends AppCompatActivity implements AdapterOnC
             }
         });
 
-        setupToolbar();
-        setupTrailersRecyclerView();
-        setupReviewsRecyclerView();
-    }
-
-    private void setupToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setup();
     }
 
     @Override
@@ -161,9 +176,8 @@ public class MovieDetailActivity extends AppCompatActivity implements AdapterOnC
         return true;
     }
 
-    /**
-     * User Actions
-     */
+    //region User Actions
+
     public void onStar(View view) {
         Movie movie = MovieDetailActivity.this.viewModel.getMovie().getValue();
         if (movie == null) return;
@@ -203,7 +217,7 @@ public class MovieDetailActivity extends AppCompatActivity implements AdapterOnC
         String movieTitle = movie.getTitle();
         String textToShare = getResources().getString(R.string.check_out_movie)+
                 " \""+movieTitle+"\"";
-        Video[] videos = mTrailersLinearAdapter.getData();
+        Video[] videos = trailersLinearAdapter.getData();
         if(videos != null && videos.length > 0) {
             textToShare += "\n" + videos[0].getYouTubeURL();
         }
@@ -215,56 +229,25 @@ public class MovieDetailActivity extends AppCompatActivity implements AdapterOnC
         startActivity(Intent.createChooser(intent, title));
     }
 
+    //endregion
+
     /**
      * Private methods
      */
 
-    private void fillStar() {
-        star.setImageResource(R.drawable.ic_star_filled);
-    }
-
-    private void unfillStar() {
-        star.setImageResource(R.drawable.ic_star);
-    }
-
-    private void fillBookmark() {
-        bookmark.setImageResource(R.drawable.ic_bookmark_filled);
-    }
-
-    private void unfillBookmark() {
-        bookmark.setImageResource(R.drawable.ic_bookmark);
-    }
-
-    private void setupTrailersRecyclerView() {
-        mTrailers.setHasFixedSize(true);
-        mTrailersLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        mTrailers.setLayoutManager(mTrailersLayoutManager);
-        mTrailersLinearAdapter = new TrailersLinearAdapter(this);
-        mTrailers.setAdapter(mTrailersLinearAdapter);
-        mTrailers.setNestedScrollingEnabled(false);
-    }
-
-    private void setupReviewsRecyclerView() {
-        mReviews.setHasFixedSize(true);
-        mReviewsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mReviews.setLayoutManager(mReviewsLayoutManager);
-        mReviewsLayoutManager.setSmoothScrollbarEnabled(true);
-        mReviewsLinearAdapter = new ReviewsLinearAdapter();
-        mReviews.setAdapter(mReviewsLinearAdapter);
-        mReviews.setNestedScrollingEnabled(false);
-    }
+    //region Update UI
 
     private void updateMovieDetails(Movie movie) {
         if (movie != null) {
-            Picasso.with(this).load(movie.getBackdropURL()).into(mMovieBackdrop);
-            Picasso.with(this).load(movie.getPosterURL()).into(mMoviePoster);
+            Picasso.with(this).load(movie.getBackdropURL()).into(backdrop);
+            Picasso.with(this).load(movie.getPosterURL()).into(thumbnail);
             CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsingToolbar);
             collapsingToolbarLayout.setTitle(movie.getTitle());
             String formatted = movie.getReleaseDateFormatted();
-            mReleaseDate.setText(formatted);
+            releaseDateLabel.setText(formatted);
             String rating = movie.getVoteAverage()+getString(R.string.out_of_ten);
-            mMovieRating.setText(rating);
-            mMovieSynopsis.setText(movie.getOverview());
+            ratingLabel.setText(rating);
+            synopsisLabel.setText(movie.getOverview());
         }
     }
 
@@ -285,12 +268,12 @@ public class MovieDetailActivity extends AppCompatActivity implements AdapterOnC
     }
 
     private void updateTrailers(Video[] videos) {
-        mTrailersLoading.setVisibility(View.GONE);
+        trailersLoading.setVisibility(View.GONE);
         if (videos == null) {
-            mTrailersErrorLabel.setVisibility(View.VISIBLE);
+            trailersErrorLabel.setVisibility(View.VISIBLE);
         } else {
             if(videos.length == 0) {
-                mNoTrailersLabel.setVisibility(View.VISIBLE);
+                noTrailersLabel.setVisibility(View.VISIBLE);
             } else {
                 ArrayList<Video> trailers = new ArrayList<>();
                 for(Video video: videos) {
@@ -299,27 +282,108 @@ public class MovieDetailActivity extends AppCompatActivity implements AdapterOnC
                     }
                 }
                 if(trailers.size() == 0) {
-                    mNoTrailersLabel.setVisibility(View.VISIBLE);
+                    noTrailersLabel.setVisibility(View.VISIBLE);
                 } else {
                     Video[] array = trailers.toArray(new Video[0]);
-                    mTrailersLinearAdapter.setData(array);
-                    mTrailers.setVisibility(View.VISIBLE);
+                    trailersLinearAdapter.setData(array);
+                    this.trailers.setVisibility(View.VISIBLE);
                 }
             }
         }
     }
 
+    private void updateCredit(Credit credit) {
+        castLoading.setVisibility(View.GONE);
+        if (credit == null) {
+            castErrorLabel.setVisibility(View.VISIBLE);
+        } else {
+            if(credit.getCast().length == 0) {
+                noCastLabel.setVisibility(View.VISIBLE);
+            } else {
+                castLinearAdapter.setData(credit.getCast());
+                this.cast.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
     private void updateReviews(Review[] reviews) {
-        mReviewsLoading.setVisibility(View.GONE);
+        reviewsLoading.setVisibility(View.GONE);
         if(reviews == null) {
-            mReviewsErrorLabel.setVisibility(View.VISIBLE);
+            reviewsErrorLabel.setVisibility(View.VISIBLE);
         } else {
             if(reviews.length == 0) {
-                mNoReviewsLabel.setVisibility(View.VISIBLE);
+                noReviewsLabel.setVisibility(View.VISIBLE);
             } else {
-                mReviews.setVisibility(View.VISIBLE);
+                this.reviews.setVisibility(View.VISIBLE);
                 mReviewsLinearAdapter.setData(reviews);
             }
         }
     }
+
+    //endregion
+
+    //region setup
+
+    private void setup() {
+        setupToolbar();
+        setupTrailersRecyclerView();
+        setupReviewsRecyclerView();
+        setupCastRecyclerView();
+    }
+
+    private void setupToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setupTrailersRecyclerView() {
+        trailers.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        trailers.setLayoutManager(layoutManager);
+        trailersLinearAdapter = new TrailersLinearAdapter(this);
+        trailers.setAdapter(trailersLinearAdapter);
+        trailers.setNestedScrollingEnabled(false);
+    }
+
+    private void setupCastRecyclerView() {
+        cast.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        cast.setLayoutManager(layoutManager);
+        castLinearAdapter = new CastLinearAdapter();
+        cast.setAdapter(castLinearAdapter);
+        cast.setNestedScrollingEnabled(false);
+    }
+
+    private void setupReviewsRecyclerView() {
+        reviews.setHasFixedSize(true);
+        LinearLayoutManager reviewsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        reviews.setLayoutManager(reviewsLayoutManager);
+        reviewsLayoutManager.setSmoothScrollbarEnabled(true);
+        mReviewsLinearAdapter = new ReviewsLinearAdapter();
+        reviews.setAdapter(mReviewsLinearAdapter);
+        reviews.setNestedScrollingEnabled(false);
+    }
+
+    //endregion
+
+    //region Icons
+
+    private void fillStar() {
+        star.setImageResource(R.drawable.ic_star_filled);
+    } // TODO raa use selectors instead
+
+    private void unfillStar() {
+        star.setImageResource(R.drawable.ic_star);
+    }
+
+    private void fillBookmark() {
+        bookmark.setImageResource(R.drawable.ic_bookmark_filled);
+    }
+
+    private void unfillBookmark() {
+        bookmark.setImageResource(R.drawable.ic_bookmark);
+    }
+
+    //endregion
 }
