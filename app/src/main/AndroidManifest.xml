@@ -39,6 +39,16 @@
                 android:value=".activities.DiscoverActivity" />
         </activity>
 
+        <!-- Cast Detail -->
+        <activity
+            android:name=".activities.CastDetailActivity"
+            android:parentActivityName=".activities.MovieDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MovieDetailActivity" />
+        </activity>
+
         <!-- Search -->
         <activity
             android:name=".activities.SearchResultsActivity"

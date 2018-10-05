@@ -5,11 +5,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asmat.rolando.popularmovies.R;
+import com.asmat.rolando.popularmovies.models.AdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.models.Cast;
 import com.asmat.rolando.popularmovies.models.RoundedTransformation;
 import com.squareup.picasso.Picasso;
 
 public class CastLinearAdapter extends BaseLinearAdapter<Cast, CastLinearAdapter.ViewHolder> {
+
+    public CastLinearAdapter(AdapterOnClickHandler<Cast> clickHandler) {
+        super(clickHandler);
+    }
 
     @Override
     int getLayoutForLinearItem() {
@@ -31,6 +36,7 @@ public class CastLinearAdapter extends BaseLinearAdapter<Cast, CastLinearAdapter
             thumbnail = itemView.findViewById(R.id.thumbnail);
             name = itemView.findViewById(R.id.name);
             role = itemView.findViewById(R.id.role);
+            thumbnail.setOnClickListener(this);
         }
 
         @Override

@@ -1,11 +1,15 @@
 package com.asmat.rolando.popularmovies.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.asmat.rolando.popularmovies.utilities.ImageURLUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Cast {
+public class Cast implements Parcelable {
+
     private int castID;
     private String character;
     private String creditID;
@@ -63,6 +67,45 @@ public class Cast {
     public String getProfilePath() {
         return profilePath;
     }
+    //endregion
 
+    //region Parcelable
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(castID);
+        dest.writeString(character);
+        dest.writeString(creditID);
+        dest.writeInt(gender);
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeInt(order);
+        dest.writeString(profilePath);
+    }
+
+    private Cast(Parcel in) {
+        castID = in.readInt();
+        character = in.readString();
+        creditID = in.readString();
+        gender = in.readInt();
+        id = in.readInt();
+        name = in.readString();
+        order = in.readInt();
+        profilePath = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<Cast> CREATOR = new Parcelable.Creator<Cast>() {
+        public Cast createFromParcel(Parcel in) {
+            return new Cast(in);
+        }
+
+        public Cast[] newArray(int size) {
+            return new Cast[size];
+        }
+    };
     //endregion
 }

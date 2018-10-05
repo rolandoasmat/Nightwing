@@ -27,6 +27,7 @@ import com.asmat.rolando.popularmovies.database.FavoriteMovie;
 import com.asmat.rolando.popularmovies.database.Movie;
 import com.asmat.rolando.popularmovies.database.WatchLaterMovie;
 import com.asmat.rolando.popularmovies.models.AdapterOnClickHandler;
+import com.asmat.rolando.popularmovies.models.Cast;
 import com.asmat.rolando.popularmovies.models.Credit;
 import com.asmat.rolando.popularmovies.models.Review;
 import com.asmat.rolando.popularmovies.models.Video;
@@ -38,7 +39,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MovieDetailActivity extends AppCompatActivity implements AdapterOnClickHandler<Video> {
+public class MovieDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbarImage)
     ImageView backdrop;
@@ -149,14 +150,29 @@ public class MovieDetailActivity extends AppCompatActivity implements AdapterOnC
         setup();
     }
 
-    @Override
-    public void onClick(Video trailer) {
-        String url = trailer.getYouTubeURL();
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        if(intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
+    //region Adapter Callbacks
+    private AdapterOnClickHandler<Video> trailerClickCallback = new AdapterOnClickHandler<Video>() {
+        @Override
+        public void onClick(Video item) {
+            String url = item.getYouTubeURL();
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            }
         }
-    }
+    };
+
+    private AdapterOnClickHandler<Cast> castClickCallback = new AdapterOnClickHandler<Cast>() {
+        @Override
+        public void onClick(Cast item) {
+            Intent intent = new Intent(MovieDetailActivity.this, CastDetailActivity.class);
+            intent.putExtra(CastDetailActivity.EXTRA_CAST, item);
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            }
+        }
+    };
+    //endregion
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -339,7 +355,7 @@ public class MovieDetailActivity extends AppCompatActivity implements AdapterOnC
         trailers.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         trailers.setLayoutManager(layoutManager);
-        trailersLinearAdapter = new TrailersLinearAdapter(this);
+        trailersLinearAdapter = new TrailersLinearAdapter(trailerClickCallback);
         trailers.setAdapter(trailersLinearAdapter);
         trailers.setNestedScrollingEnabled(false);
     }
@@ -348,7 +364,7 @@ public class MovieDetailActivity extends AppCompatActivity implements AdapterOnC
         cast.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         cast.setLayoutManager(layoutManager);
-        castLinearAdapter = new CastLinearAdapter();
+        castLinearAdapter = new CastLinearAdapter(castClickCallback);
         cast.setAdapter(castLinearAdapter);
         cast.setNestedScrollingEnabled(false);
     }
