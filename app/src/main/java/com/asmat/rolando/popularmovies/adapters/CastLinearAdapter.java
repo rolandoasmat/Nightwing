@@ -42,7 +42,10 @@ public class CastLinearAdapter extends BaseLinearAdapter<Cast, CastLinearAdapter
                 String url = cast.getThumbnailURL();
                 Picasso.with(thumbnail.getContext())
                         .load(url)
+                        .resize(342, 513)
+                        .centerCrop()
                         .transform(new RoundedTransformation(50, 0))
+                        .error(R.drawable.person)
                         .into(thumbnail);
             }
         }
