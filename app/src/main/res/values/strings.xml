@@ -53,4 +53,9 @@
     <string name="no_cast">No cast.</string>
     <string name="error_cast">Error fetching cast.</string>
     <string name="search">search</string>
+    <string name="movies">Movies</string>
+    <string name="no_movie_credits">No movie credits.</string>
+    <string name="error_movie_credits">Error fetching movie credits.</string>
+    <string name="cast_details">Cast Details</string>
+    <string name="movie_details">Movie Details</string>
 </resources>

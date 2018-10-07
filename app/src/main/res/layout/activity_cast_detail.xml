@@ -23,7 +23,7 @@
             app:expandedTitleMarginStart="@dimen/activity_horizontal_margin_small"
             app:expandedTitleMarginEnd="@dimen/activity_horizontal_margin_small"
             app:expandedTitleMarginBottom="@dimen/activity_vertical_margin"
-            app:title="Movie Details">
+            app:title="@string/cast_details">
 
             <!--Image View-->
             <ImageView
@@ -59,35 +59,32 @@
             <include
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/primary_details"/>
+                layout="@layout/cast_primary_details"/>
 
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/movie_details_user_actions"/>
 
-            <!--Trailers-->
+            <!-- Movie Credits -->
             <TextView
+                android:id="@+id/label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_margin_general"
-                android:text="@string/trailers"
+                android:text="@string/movies"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
 
             <ProgressBar
-                android:id="@+id/pb_trailers_loading_bar"
+                android:id="@+id/loadingBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_trailers"
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"/>
 
             <TextView
-                android:id="@+id/tv_no_trailers"
-                android:text="@string/no_trailers"
+                android:id="@+id/emptyLabel"
+                android:text="@string/no_movie_credits"
                 android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -95,84 +92,8 @@
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
 
             <TextView
-                android:id="@+id/tv_error_trailers"
-                android:text="@string/error_reviews"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
-
-            <!--Cast-->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_margin_general"
-                android:text="@string/cast"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
-
-            <ProgressBar
-                android:id="@+id/cast_loading"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/cast_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:visibility="gone"/>
-
-            <TextView
-                android:id="@+id/cast_empty"
-                android:text="@string/no_cast"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
-
-            <TextView
-                android:id="@+id/cast_error"
-                android:text="@string/error_cast"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
-
-            <!--Reviews-->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_margin_general"
-                android:text="@string/reviews"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
-
-            <ProgressBar
-                android:id="@+id/pb_reviews_loading_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_reviews"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_margin="@dimen/activity_margin_general"/>
-
-            <TextView
-                android:id="@+id/tv_no_reviews"
-                android:text="@string/no_reviews"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
-
-            <TextView
-                android:id="@+id/tv_error_reviews"
-                android:text="@string/error_reviews"
+                android:id="@+id/errorLabel"
+                android:text="@string/error_movie_credits"
                 android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

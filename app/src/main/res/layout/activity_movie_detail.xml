@@ -23,7 +23,7 @@
             app:expandedTitleMarginStart="@dimen/activity_horizontal_margin_small"
             app:expandedTitleMarginEnd="@dimen/activity_horizontal_margin_small"
             app:expandedTitleMarginBottom="@dimen/activity_vertical_margin"
-            app:title="Movie Details">
+            app:title="@string/movie_details">
 
             <!--Image View-->
             <ImageView
