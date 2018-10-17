@@ -166,7 +166,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         @Override
         public void onClick(Cast item) {
             Intent intent = new Intent(MovieDetailActivity.this, CastDetailActivity.class);
-            intent.putExtra(CastDetailActivity.EXTRA_CAST, item);
+            intent.putExtra(CastDetailActivity.Companion.getEXTRA_CAST(), item);
             if (intent.resolveActivity(getPackageManager()) != null) {
                 startActivity(intent);
             }
