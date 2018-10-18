@@ -116,6 +116,9 @@ public class MoviesGridBaseAdapter extends RecyclerView.Adapter<MoviesGridBaseAd
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
+            if (mMovies == null || mMovies.size() <= position) {
+                return;
+            }
             Movie movie = mMovies.get(position);
             mClickHandler.onClick(movie);
         }
