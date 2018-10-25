@@ -3,6 +3,7 @@ package com.asmat.rolando.popularmovies.networking
 import com.asmat.rolando.popularmovies.BuildConfig
 import com.asmat.rolando.popularmovies.database.Movie
 import com.asmat.rolando.popularmovies.models.Cast
+import com.asmat.rolando.popularmovies.models.Credit
 import com.asmat.rolando.popularmovies.models.Review
 import com.asmat.rolando.popularmovies.models.Video
 import io.reactivex.Single
@@ -81,7 +82,7 @@ object TheMovieDBClient {
         return service.getMovieReviews(movieID)
     }
 
-    fun getMovieCredits(movieID: Int): Single<List<Cast>> {
+    fun getMovieCredits(movieID: Int): Single<Credit> {
         return service.getMovieCredits(movieID)
     }
 

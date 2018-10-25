@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.asmat.rolando.popularmovies.models.AdapterOnClickHandler;
 
+import java.util.List;
+
 public abstract class BaseLinearAdapter<T, V extends BaseLinearAdapter.ViewHolder> extends RecyclerView.Adapter<V> {
 
-    private T[] data;
+    private List<T> data;
     private final AdapterOnClickHandler<T> clickHandler;
 
     //region API
@@ -21,12 +23,12 @@ public abstract class BaseLinearAdapter<T, V extends BaseLinearAdapter.ViewHolde
         this.clickHandler = clickHandler;
     }
 
-    public void setData(T[] data) {
+    public void setData(List<T> data) {
         this.data = data;
         notifyDataSetChanged();
     }
 
-    public T[] getData() {
+    public List<T> getData() {
         return data;
     }
 
@@ -48,13 +50,13 @@ public abstract class BaseLinearAdapter<T, V extends BaseLinearAdapter.ViewHolde
 
     @Override
     public void onBindViewHolder(V holder, int position) {
-        T item = data[position];
+        T item = data.get(position);
         holder.bind(item);
     }
 
     @Override
     public int getItemCount() {
-        return (data == null) ? 0 : data.length;
+        return (data == null) ? 0 : data.size();
     }
 
     abstract class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -66,7 +68,7 @@ public abstract class BaseLinearAdapter<T, V extends BaseLinearAdapter.ViewHolde
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            T item = data[position];
+            T item = data.get(position);
             if (clickHandler != null) {
                 clickHandler.onClick(item);
             }

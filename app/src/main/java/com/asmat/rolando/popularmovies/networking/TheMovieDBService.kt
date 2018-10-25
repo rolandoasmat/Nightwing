@@ -1,7 +1,7 @@
 package com.asmat.rolando.popularmovies.networking
 
 import com.asmat.rolando.popularmovies.database.Movie
-import com.asmat.rolando.popularmovies.models.Cast
+import com.asmat.rolando.popularmovies.models.Credit
 import com.asmat.rolando.popularmovies.models.Review
 import com.asmat.rolando.popularmovies.models.Video
 import io.reactivex.Single
@@ -34,7 +34,7 @@ interface TheMovieDBService {
     fun getMovieReviews(@Path("movie_id") id: Int): Single<List<Review>>
 
     @GET("movie/{movie_id}/credits")
-    fun getMovieCredits(@Path("movie_id") id: Int): Single<List<Cast>>
+    fun getMovieCredits(@Path("movie_id") id: Int): Single<Credit>
     //endregion
 
     //region search/*

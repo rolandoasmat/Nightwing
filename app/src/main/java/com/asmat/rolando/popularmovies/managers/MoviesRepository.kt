@@ -6,7 +6,7 @@ import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.database.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.Movie
 import com.asmat.rolando.popularmovies.database.WatchLaterMovie
-import com.asmat.rolando.popularmovies.models.Cast
+import com.asmat.rolando.popularmovies.models.Credit
 import com.asmat.rolando.popularmovies.models.Review
 import com.asmat.rolando.popularmovies.models.Video
 import com.asmat.rolando.popularmovies.networking.TheMovieDBClient
@@ -34,7 +34,7 @@ object MoviesRepository {
         return TheMovieDBClient.getMovieReviews(movieID)
     }
 
-    fun getMovieCreadits(movieID: Int): Single<List<Cast>> {
+    fun getMovieCreadits(movieID: Int): Single<Credit> {
         return TheMovieDBClient.getMovieCredits(movieID)
     }
 }

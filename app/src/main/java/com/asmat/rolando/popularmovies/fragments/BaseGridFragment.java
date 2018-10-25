@@ -75,7 +75,7 @@ abstract public class BaseGridFragment extends Fragment
     public void onClick(Movie movie) {
         Class destinationClass = MovieDetailActivity.class;
         Intent intentToStartDetailActivity = new Intent(context, destinationClass);
-        intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_MOVIE_ID, movie.getId());
+        intentToStartDetailActivity.putExtra(MovieDetailActivity.Companion.getINTENT_EXTRA_MOVIE_ID(), movie.getId());
         startActivity(intentToStartDetailActivity);
     }
 
