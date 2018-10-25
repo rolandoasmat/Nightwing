@@ -2,38 +2,42 @@ package com.asmat.rolando.popularmovies.viewmodels
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-
 import com.asmat.rolando.popularmovies.database.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.Movie
 import com.asmat.rolando.popularmovies.database.WatchLaterMovie
 import com.asmat.rolando.popularmovies.managers.MoviesRepository
-import com.asmat.rolando.popularmovies.models.Cast
-
+import com.asmat.rolando.popularmovies.models.Credit
 import com.asmat.rolando.popularmovies.models.Review
 import com.asmat.rolando.popularmovies.models.Video
 
 import io.reactivex.Single
+import io.reactivex.subjects.BehaviorSubject
 
-data class MovieDetailsViewModel(val movieID: Int) : ViewModel() {
+class MovieDetailsViewModel : ViewModel() {
+    private var movieID: Int? = null
     var movie: Single<Movie>? = null
+    var movieSubject: BehaviorSubject<Movie>? = BehaviorSubject.create()
     var favoriteMovie: LiveData<FavoriteMovie>? = null
     var watchLaterMovie: LiveData<WatchLaterMovie>? = null
     var videos: Single<List<Video>>? = null
     var reviews: Single<List<Review>>? = null
-    var credit: Single<List<Cast>>? = null
+    var credit: Single<Credit>? = null
 
-    init {
+    fun init(movieID: Int) {
+        this.movieID = movieID
         initLiveData()
     }
 
     // Setup LiveData
     private fun initLiveData() {
-        movie = MoviesRepository.getMovie(movieID)
-        favoriteMovie = MoviesRepository.getFavoriteMovie(movieID)
-        watchLaterMovie = MoviesRepository.getWatchLaterMovie(movieID)
-        videos = MoviesRepository.getVideos(movieID)
-        reviews = MoviesRepository.getReviews(movieID)
-        credit = MoviesRepository.getMovieCreadits(movieID)
+        movieID?.let {
+            movie = MoviesRepository.getMovie(it)
+            movie?.doOnSuccess { movieSubject?.onNext(it) }
+            favoriteMovie = MoviesRepository.getFavoriteMovie(it)
+            watchLaterMovie = MoviesRepository.getWatchLaterMovie(it)
+            videos = MoviesRepository.getVideos(it)
+            reviews = MoviesRepository.getReviews(it)
+            credit = MoviesRepository.getMovieCreadits(it)
+        }
     }
-
 }
