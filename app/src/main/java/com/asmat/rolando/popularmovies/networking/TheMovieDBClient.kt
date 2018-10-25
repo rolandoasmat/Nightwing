@@ -16,7 +16,7 @@ import java.util.*
 object TheMovieDBClient {
 
     //region Private
-    private const val baseURL = "https://api.themoviedb.org/3"
+    private const val baseURL = "https://api.themoviedb.org/3/"
 
     private val service by lazy { createService() }
 
