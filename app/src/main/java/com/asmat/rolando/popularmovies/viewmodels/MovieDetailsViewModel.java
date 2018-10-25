@@ -27,12 +27,12 @@ public class MovieDetailsViewModel extends ViewModel {
 
     // Setup LiveData
     private void initLiveData() {
-        movie = MoviesRepository.getMovie(movieID);
-        favoriteMovie = MoviesRepository.getFavoriteMovie(movieID);
-        watchLaterMovie = MoviesRepository.getWatchLaterMovie(movieID);
-        videos = MoviesRepository.getVideos(movieID);
-        reviews = MoviesRepository.getReviews(movieID);
-        credit = MoviesRepository.getMovieCreadits(movieID);
+        movie = MoviesRepository.INSTANCE.getMovie(movieID);
+        favoriteMovie = MoviesRepository.INSTANCE.getFavoriteMovie(movieID);
+        watchLaterMovie = MoviesRepository.INSTANCE.getWatchLaterMovie(movieID);
+        videos = MoviesRepository.INSTANCE.getVideos(movieID);
+        reviews = MoviesRepository.INSTANCE.getReviews(movieID);
+        credit = MoviesRepository.INSTANCE.getMovieCreadits(movieID);
     }
 
     // Getters

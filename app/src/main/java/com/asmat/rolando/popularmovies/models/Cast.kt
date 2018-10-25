@@ -17,5 +17,4 @@ data class Cast(val castID: Int,
     val thumbnailURL: String
         get() = ImageURLUtil.getImageURL342(profilePath)
 
-
 }
