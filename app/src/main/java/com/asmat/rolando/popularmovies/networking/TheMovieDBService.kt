@@ -25,16 +25,16 @@ interface TheMovieDBService {
     fun getUpcomingMovies(@Query("page") page: Int): Single<List<Movie>>
 
     @GET("movie/{movie_id}")
-    fun getMovieDetails(@Path("movie_id") id: String): Single<Movie>
+    fun getMovieDetails(@Path("movie_id") id: Int): Single<Movie>
 
     @GET("movie/{movie_id/videos}")
-    fun getMovieVideos(@Path("movie_id") id: String): Single<List<Video>>
+    fun getMovieVideos(@Path("movie_id") id: Int): Single<List<Video>>
 
     @GET("movie/{movie_id/reviews}")
-    fun getMovieReviews(@Path("movie_id") id: String): Single<List<Review>>
+    fun getMovieReviews(@Path("movie_id") id: Int): Single<List<Review>>
 
     @GET("movie/{movie_id}/credits")
-    fun getMovieCredits(@Path("movie_id") id: String): Single<List<Cast>>
+    fun getMovieCredits(@Path("movie_id") id: Int): Single<List<Cast>>
     //endregion
 
     //region search/*

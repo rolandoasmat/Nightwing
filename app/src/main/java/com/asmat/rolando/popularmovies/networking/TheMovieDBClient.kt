@@ -9,6 +9,7 @@ import io.reactivex.Single
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
 object TheMovieDBClient {
@@ -42,6 +43,7 @@ object TheMovieDBClient {
 
         return Retrofit.Builder()
                 .baseUrl(baseURL)
+                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
                 .build()
@@ -67,19 +69,19 @@ object TheMovieDBClient {
         return service.getUpcomingMovies(page)
     }
 
-    fun getMovieDetails(movieID: String): Single<Movie> {
+    fun getMovieDetails(movieID: Int): Single<Movie> {
         return service.getMovieDetails(movieID)
     }
 
-    fun getMovieVideos(movieID: String): Single<List<Video>> {
+    fun getMovieVideos(movieID: Int): Single<List<Video>> {
         return service.getMovieVideos(movieID)
     }
 
-    fun getMovieReviews(movieID: String): Single<List<Review>> {
+    fun getMovieReviews(movieID: Int): Single<List<Review>> {
         return service.getMovieReviews(movieID)
     }
 
-    fun getMovieCredits(movieID: String): Single<List<Cast>> {
+    fun getMovieCredits(movieID: Int): Single<List<Cast>> {
         return service.getMovieCredits(movieID)
     }
 
