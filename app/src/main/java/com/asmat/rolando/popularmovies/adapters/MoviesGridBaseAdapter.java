@@ -44,7 +44,7 @@ public class MoviesGridBaseAdapter extends RecyclerView.Adapter<MoviesGridBaseAd
         notifyDataSetChanged();
     }
 
-    public void addMovies(ArrayList<Movie> movies) {
+    public void addMovies(List<Movie> movies) {
         int indexOfFirstNewItem = this.mMovies.size();
         mMovies.addAll(movies);
         notifyItemRangeInserted(indexOfFirstNewItem,indexOfFirstNewItem+movies.size());
