@@ -4,6 +4,7 @@ import android.arch.persistence.room.*;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.asmat.rolando.popularmovies.networking.models.MovieResponse;
 import com.asmat.rolando.popularmovies.utilities.ImageURLUtil;
 
 import java.text.ParseException;
@@ -43,6 +44,16 @@ public class Movie implements Parcelable {
         this.overview = overview;
         this.voteAverage = voteAverage;
         this.releaseDate = releaseDate;
+    }
+
+    public Movie(MovieResponse movieResponse) {
+        this.id = movieResponse.getId();
+        this.title = movieResponse.getTitle();
+        this.posterPath = movieResponse.getPoster_path();
+        this.backdropPath = movieResponse.getBackdrop_path();
+        this.overview = movieResponse.getOverview();
+        this.voteAverage = movieResponse.getVote_average();
+        this.releaseDate = movieResponse.getRelease_date();
     }
 
     public String getReleaseDateFormatted() {

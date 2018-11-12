@@ -15,6 +15,7 @@ import com.asmat.rolando.popularmovies.activities.MovieDetailActivity
 import com.asmat.rolando.popularmovies.adapters.MoviesGridBaseAdapter
 import com.asmat.rolando.popularmovies.database.Movie
 import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler
+import com.asmat.rolando.popularmovies.networking.models.MoviesResponse
 import com.asmat.rolando.popularmovies.networking.TheMovieDBClient
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
@@ -25,7 +26,7 @@ class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
 
     private var mMoviesGridAdapter: MoviesGridBaseAdapter? = null
     private var mContext: Context? = null
-    private var fetchMoviesCallback: Single<List<Movie>>? = null
+    private var fetchMoviesCallback: Single<MoviesResponse>? = null
     private var searchQuery: String = ""
     private var page: Int = 0
     private var mMoviesGrid: RecyclerView? = null
@@ -103,7 +104,8 @@ class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
     private fun fetchMovies() {
         fetchingMovies = true
         fetchMoviesCallback?.subscribe({ result ->
-            mMoviesGridAdapter?.addMovies(result)
+            val mapped = result.results.map { Movie(it)}
+            mMoviesGridAdapter?.addMovies(mapped.toTypedArray())
             page++
             fetchingMovies = false
         }, { error ->

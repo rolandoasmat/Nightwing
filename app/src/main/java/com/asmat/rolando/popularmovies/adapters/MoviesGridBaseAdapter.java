@@ -14,6 +14,7 @@ import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler;
 import com.asmat.rolando.popularmovies.models.MovieGridItemType;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,10 +45,13 @@ public class MoviesGridBaseAdapter extends RecyclerView.Adapter<MoviesGridBaseAd
         notifyDataSetChanged();
     }
 
-    public void addMovies(List<Movie> movies) {
+    public void addMovies(Movie[] movies) {
+        if(mMovies == null) {
+            mMovies = new ArrayList<>();
+        }
         int indexOfFirstNewItem = this.mMovies.size();
-        mMovies.addAll(movies);
-        notifyItemRangeInserted(indexOfFirstNewItem,indexOfFirstNewItem+movies.size());
+        mMovies.addAll(Arrays.asList(movies));
+        notifyItemRangeInserted(indexOfFirstNewItem,indexOfFirstNewItem+movies.length);
     }
 
     @Override

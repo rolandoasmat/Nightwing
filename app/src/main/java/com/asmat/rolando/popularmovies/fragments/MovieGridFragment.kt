@@ -4,36 +4,34 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.LoaderManager
-import android.support.v4.content.AsyncTaskLoader
-import android.support.v4.content.Loader
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
-
+import android.widget.Toast
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.activities.MovieDetailActivity
 import com.asmat.rolando.popularmovies.adapters.MoviesGridBaseAdapter
 import com.asmat.rolando.popularmovies.database.Movie
-import com.asmat.rolando.popularmovies.managers.MoviesRepository
 import com.asmat.rolando.popularmovies.models.MovieAdapterOnClickHandler
+import com.asmat.rolando.popularmovies.networking.models.MoviesResponse
 import com.asmat.rolando.popularmovies.models.RequestType
 import com.asmat.rolando.popularmovies.networking.TheMovieDBClient
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import io.reactivex.Single
-
-import java.util.ArrayList
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickListener {
 
     private var moviesGridAdapter: MoviesGridBaseAdapter? = null
     private var mContext: Context? = null
-    private var fetchMoviesCallback: Single<List<Movie>>? = null
+    private var fetchMoviesCallback: Single<MoviesResponse>? = null
     @RequestType.Def
     private var typeOfMovies: Int = 0
     private var page: Int = 0
@@ -116,14 +114,18 @@ class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickLi
 
     private fun fetchMovies() {
         fetchingMovies = true
-        fetchMoviesCallback?.subscribe({ result ->
-            moviesGridAdapter?.addMovies(result)
-            page++
-            fetchingMovies = false
-        },{ error ->
-            // TODO handle error
-            fetchingMovies = false
-        })
+        fetchMoviesCallback
+                ?.subscribeOn(Schedulers.io())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe({ result ->
+                    val mapped = result.results.map { Movie(it)}
+                    moviesGridAdapter?.addMovies(mapped.toTypedArray())
+                    page++
+                    fetchingMovies = false
+                },{ error ->
+                    handleError(error)
+                    fetchingMovies = false
+                })
     }
 
     override fun onClick(movie: Movie) {
@@ -150,5 +152,12 @@ class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickLi
                 fetchMovies()
             }
         }
+    }
+
+    private fun handleError(error: Throwable) {
+        val message = error.message ?: "Whoops, error fetching movies."
+        val toast = Toast.makeText(context, message, Toast.LENGTH_LONG)
+        toast.show()
+        Log.e("MovieGridFragment", error.toString())
     }
 }

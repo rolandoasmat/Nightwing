@@ -2,10 +2,8 @@ package com.asmat.rolando.popularmovies.networking
 
 import com.asmat.rolando.popularmovies.BuildConfig
 import com.asmat.rolando.popularmovies.database.Movie
-import com.asmat.rolando.popularmovies.models.Cast
-import com.asmat.rolando.popularmovies.models.Credit
-import com.asmat.rolando.popularmovies.models.Review
-import com.asmat.rolando.popularmovies.models.Video
+import com.asmat.rolando.popularmovies.models.*
+import com.asmat.rolando.popularmovies.networking.models.*
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -54,27 +52,27 @@ object TheMovieDBClient {
     //endregion
 
     //region API
-    fun getPopularMovies(page: Int): Single<List<Movie>> {
+    fun getPopularMovies(page: Int): Single<MoviesResponse> {
         return service.getPopularMovies(page)
     }
 
-    fun getTopRatedMovies(page: Int): Single<List<Movie>> {
+    fun getTopRatedMovies(page: Int): Single<MoviesResponse> {
         return service.getTopRatedMovies(page)
     }
 
-    fun getNowPlayingMovies(page: Int): Single<List<Movie>> {
+    fun getNowPlayingMovies(page: Int): Single<MoviesResponse> {
         return service.getNowPlayingMovies(page)
     }
 
-    fun getUpcomingMovies(page: Int): Single<List<Movie>> {
+    fun getUpcomingMovies(page: Int): Single<MoviesResponse> {
         return service.getUpcomingMovies(page)
     }
 
-    fun getMovieDetails(movieID: Int): Single<Movie> {
+    fun getMovieDetails(movieID: Int): Single<MovieResponse> {
         return service.getMovieDetails(movieID)
     }
 
-    fun getMovieVideos(movieID: Int): Single<List<Video>> {
+    fun getMovieVideos(movieID: Int): Single<VideosResponse> {
         return service.getMovieVideos(movieID)
     }
 
@@ -86,7 +84,7 @@ object TheMovieDBClient {
         return service.getMovieCredits(movieID)
     }
 
-    fun searchMovie(searchString: String, page: Int): Single<List<Movie>> {
+    fun searchMovie(searchString: String, page: Int): Single<MoviesResponse> {
         return service.searchMovie(searchString, page)
     }
     //endregion

@@ -29,7 +29,6 @@ import com.asmat.rolando.popularmovies.models.AdapterOnClickHandler
 import com.asmat.rolando.popularmovies.models.Cast
 import com.asmat.rolando.popularmovies.models.Credit
 import com.asmat.rolando.popularmovies.models.Review
-import com.asmat.rolando.popularmovies.models.Video
 import com.asmat.rolando.popularmovies.viewmodels.MovieDetailsViewModel
 import com.squareup.picasso.Picasso
 
@@ -95,7 +94,7 @@ class MovieDetailActivity : AppCompatActivity() {
     private var viewModel: MovieDetailsViewModel? = null
 
     //region Adapter Callbacks
-    private val trailerClickCallback = AdapterOnClickHandler<Video> { item ->
+    private val trailerClickCallback = AdapterOnClickHandler<VideoResponse> { item ->
         val url = item.youTubeURL
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         if (intent.resolveActivity(packageManager) != null) {
@@ -198,7 +197,7 @@ class MovieDetailActivity : AppCompatActivity() {
                 " \"" + movieTitle + "\""
         val videos = trailersLinearAdapter!!.data
         if (videos != null && videos.size > 0) {
-            textToShare += "\n" + videos[0].youTubeURL
+            textToShare += "\n" + videos[0].
         }
 
         val intent = ShareCompat.IntentBuilder.from(this)
@@ -246,7 +245,7 @@ class MovieDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateTrailers(videos: List<Video>?) {
+    private fun updateTrailers(videos: List<VideoResponse>?) {
         trailersLoading!!.visibility = View.GONE
         if (videos == null) {
             trailersErrorLabel!!.visibility = View.VISIBLE
@@ -254,7 +253,7 @@ class MovieDetailActivity : AppCompatActivity() {
             if (videos.size == 0) {
                 noTrailersLabel!!.visibility = View.VISIBLE
             } else {
-                val trailers = ArrayList<Video>()
+                val trailers = ArrayList<VideoResponse>()
                 for (video in videos) {
                     if (video.type == "Trailer") {
                         trailers.add(video)

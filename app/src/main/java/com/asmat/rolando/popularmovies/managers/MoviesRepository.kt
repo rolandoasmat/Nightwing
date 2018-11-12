@@ -4,17 +4,17 @@ import android.arch.lifecycle.LiveData
 
 import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.database.FavoriteMovie
-import com.asmat.rolando.popularmovies.database.Movie
 import com.asmat.rolando.popularmovies.database.WatchLaterMovie
 import com.asmat.rolando.popularmovies.models.Credit
 import com.asmat.rolando.popularmovies.models.Review
-import com.asmat.rolando.popularmovies.models.Video
 import com.asmat.rolando.popularmovies.networking.TheMovieDBClient
+import com.asmat.rolando.popularmovies.networking.models.MovieResponse
+import com.asmat.rolando.popularmovies.networking.models.VideosResponse
 import io.reactivex.Single
 
 object MoviesRepository {
 
-    fun getMovie(movieID: Int): Single<Movie> {
+    fun getMovie(movieID: Int): Single<MovieResponse> {
         return TheMovieDBClient.getMovieDetails(movieID)
     }
 
@@ -26,7 +26,7 @@ object MoviesRepository {
         return DatabaseManager.INSTANCE.getWatchLaterMovie(movieID)
     }
 
-    fun getVideos(movieID: Int): Single<List<Video>> {
+    fun getVideos(movieID: Int): Single<VideosResponse> {
         return TheMovieDBClient.getMovieVideos(movieID)
     }
 

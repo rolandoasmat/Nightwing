@@ -8,7 +8,7 @@ import com.asmat.rolando.popularmovies.database.WatchLaterMovie
 import com.asmat.rolando.popularmovies.managers.MoviesRepository
 import com.asmat.rolando.popularmovies.models.Credit
 import com.asmat.rolando.popularmovies.models.Review
-import com.asmat.rolando.popularmovies.models.Video
+import com.asmat.rolando.popularmovies.networking.models.VideosResponse
 
 import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
@@ -19,7 +19,7 @@ class MovieDetailsViewModel : ViewModel() {
     var movieSubject: BehaviorSubject<Movie>? = BehaviorSubject.create()
     var favoriteMovie: LiveData<FavoriteMovie>? = null
     var watchLaterMovie: LiveData<WatchLaterMovie>? = null
-    var videos: Single<List<Video>>? = null
+    var videos: Single<VideosResponse>? = null
     var reviews: Single<List<Review>>? = null
     var credit: Single<Credit>? = null
 
@@ -31,7 +31,7 @@ class MovieDetailsViewModel : ViewModel() {
     // Setup LiveData
     private fun initLiveData() {
         movieID?.let {
-            movie = MoviesRepository.getMovie(it)
+            movie = MoviesRepository.getMovie(it).map { Movie(it) }
             movie?.doOnSuccess { movieSubject?.onNext(it) }
             favoriteMovie = MoviesRepository.getFavoriteMovie(it)
             watchLaterMovie = MoviesRepository.getWatchLaterMovie(it)
