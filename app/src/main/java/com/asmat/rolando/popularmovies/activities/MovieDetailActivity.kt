@@ -25,17 +25,15 @@ import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.database.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.Movie
 import com.asmat.rolando.popularmovies.database.WatchLaterMovie
-import com.asmat.rolando.popularmovies.models.AdapterOnClickHandler
-import com.asmat.rolando.popularmovies.models.Cast
-import com.asmat.rolando.popularmovies.models.Credit
-import com.asmat.rolando.popularmovies.models.Review
 import com.asmat.rolando.popularmovies.viewmodels.MovieDetailsViewModel
 import com.squareup.picasso.Picasso
 
 import java.util.ArrayList
 
 import butterknife.BindView
-import butterknife.ButterKnife
+import com.asmat.rolando.popularmovies.models.*
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class MovieDetailActivity : AppCompatActivity() {
 
@@ -94,7 +92,7 @@ class MovieDetailActivity : AppCompatActivity() {
     private var viewModel: MovieDetailsViewModel? = null
 
     //region Adapter Callbacks
-    private val trailerClickCallback = AdapterOnClickHandler<VideoResponse> { item ->
+    private val trailerClickCallback = AdapterOnClickHandler<Video> { item ->
         val url = item.youTubeURL
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         if (intent.resolveActivity(packageManager) != null) {
@@ -113,7 +111,6 @@ class MovieDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
-        ButterKnife.bind(this)
 
         val intent = intent
         if (intent != null && intent.hasExtra(INTENT_EXTRA_MOVIE_ID)) {
@@ -121,24 +118,38 @@ class MovieDetailActivity : AppCompatActivity() {
             viewModel = ViewModelProviders.of(this).get(MovieDetailsViewModel::class.java)
             viewModel?.init(movieID)
         }
-        viewModel?.movie?.subscribe { movie ->
+        viewModel?.movie
+                ?.subscribeOn(Schedulers.io())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe { movie ->
             updateMovieDetails(movie)
         }
         viewModel?.favoriteMovie?.observe(this, Observer { favoriteMovie -> this@MovieDetailActivity.updateStarIcon(favoriteMovie) })
         viewModel?.watchLaterMovie?.observe(this, Observer { watchLaterMovie -> this@MovieDetailActivity.updateBookmarkIcon(watchLaterMovie) })
-        viewModel?.videos?.subscribe { videos ->
+        viewModel?.videos
+                ?.subscribeOn(Schedulers.io())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe { videosResponse ->
+            val videos = videosResponse.results.map { Video(it) }
             updateTrailers(videos)
         }
-        viewModel?.credit?.subscribe { credit ->
+        viewModel?.credit
+                ?.subscribeOn(Schedulers.io())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe { credit ->
             updateCredit(credit)
         }
 
-        viewModel?.reviews?.subscribe { reviews ->
+        viewModel?.reviews
+                ?.subscribeOn(Schedulers.io())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe { reviews ->
             updateReviews(reviews)
         }
 
         setup()
     }
+
     //endregion
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -197,7 +208,7 @@ class MovieDetailActivity : AppCompatActivity() {
                 " \"" + movieTitle + "\""
         val videos = trailersLinearAdapter!!.data
         if (videos != null && videos.size > 0) {
-            textToShare += "\n" + videos[0].
+            textToShare += "\n" + videos[0].youTubeURL
         }
 
         val intent = ShareCompat.IntentBuilder.from(this)
@@ -245,7 +256,7 @@ class MovieDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateTrailers(videos: List<VideoResponse>?) {
+    private fun updateTrailers(videos: List<Video>?) {
         trailersLoading!!.visibility = View.GONE
         if (videos == null) {
             trailersErrorLabel!!.visibility = View.VISIBLE
@@ -253,12 +264,7 @@ class MovieDetailActivity : AppCompatActivity() {
             if (videos.size == 0) {
                 noTrailersLabel!!.visibility = View.VISIBLE
             } else {
-                val trailers = ArrayList<VideoResponse>()
-                for (video in videos) {
-                    if (video.type == "Trailer") {
-                        trailers.add(video)
-                    }
-                }
+                val trailers = ArrayList<Video>()
                 if (trailers.size == 0) {
                     noTrailersLabel!!.visibility = View.VISIBLE
                 } else {
@@ -315,31 +321,31 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun setupTrailersRecyclerView() {
-        trailers!!.setHasFixedSize(true)
+        trailers?.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        trailers!!.layoutManager = layoutManager
+        trailers?.layoutManager = layoutManager
         trailersLinearAdapter = TrailersLinearAdapter(trailerClickCallback)
-        trailers!!.adapter = trailersLinearAdapter
-        trailers!!.isNestedScrollingEnabled = false
+        trailers?.adapter = trailersLinearAdapter
+        trailers?.isNestedScrollingEnabled = false
     }
 
     private fun setupCastRecyclerView() {
-        cast!!.setHasFixedSize(true)
+        cast?.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        cast!!.layoutManager = layoutManager
+        cast?.layoutManager = layoutManager
         castLinearAdapter = CastLinearAdapter(castClickCallback)
-        cast!!.adapter = castLinearAdapter
-        cast!!.isNestedScrollingEnabled = false
+        cast?.adapter = castLinearAdapter
+        cast?.isNestedScrollingEnabled = false
     }
 
     private fun setupReviewsRecyclerView() {
-        reviews!!.setHasFixedSize(true)
+        reviews?.setHasFixedSize(true)
         val reviewsLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        reviews!!.layoutManager = reviewsLayoutManager
+        reviews?.layoutManager = reviewsLayoutManager
         reviewsLayoutManager.isSmoothScrollbarEnabled = true
         mReviewsLinearAdapter = ReviewsLinearAdapter()
-        reviews!!.adapter = mReviewsLinearAdapter
-        reviews!!.isNestedScrollingEnabled = false
+        reviews?.adapter = mReviewsLinearAdapter
+        reviews?.isNestedScrollingEnabled = false
     }
 
     //endregion

@@ -5,7 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.models.AdapterOnClickHandler;
-import com.asmat.rolando.popularmovies.networking.models.Video;
+import com.asmat.rolando.popularmovies.models.Video;
 import com.squareup.picasso.Picasso;
 
 public class TrailersLinearAdapter extends BaseLinearAdapter<Video,TrailersLinearAdapter.ViewHolder> {

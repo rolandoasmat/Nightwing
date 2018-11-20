@@ -26,10 +26,10 @@ interface TheMovieDBService {
     @GET("movie/{movie_id}")
     fun getMovieDetails(@Path("movie_id") id: Int): Single<MovieResponse>
 
-    @GET("movie/{movie_id/videos}")
+    @GET("movie/{movie_id}/videos")
     fun getMovieVideos(@Path("movie_id") id: Int): Single<VideosResponse>
 
-    @GET("movie/{movie_id/reviews}")
+    @GET("movie/{movie_id}/reviews")
     fun getMovieReviews(@Path("movie_id") id: Int): Single<List<Review>>
 
     @GET("movie/{movie_id}/credits")

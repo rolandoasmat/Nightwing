@@ -2,8 +2,8 @@ package com.asmat.rolando.popularmovies.models
 
 import com.asmat.rolando.popularmovies.networking.models.VideoResponse
 
-data class Video(val key: String) {
-    constructor(videoResponse: VideoResponse) : this(videoResponse.key)
+data class Video(val key: String, val name: String) {
+    constructor(videoResponse: VideoResponse) : this(videoResponse.key, videoResponse.name)
 
     val youTubeURL: String
         get() = YOUTUBE_URL + key
