@@ -25,19 +25,7 @@ object TheMovieDBClient {
     private fun createService(): TheMovieDBService {
         val okHttpClient = OkHttpClient()
                 .newBuilder()
-                .addInterceptor { chain ->
-                    val originalRequest = chain.request()
-                    val httpURL = originalRequest.url()
-
-                    val newHttpURLBuilder = httpURL.newBuilder()
-                    newHttpURLBuilder.addQueryParameter("api_key", BuildConfig.API_KEY)
-                    newHttpURLBuilder.addQueryParameter("language", Locale.getDefault().getLanguage())
-                    newHttpURLBuilder.addQueryParameter("region", Locale.getDefault().getCountry())
-                    val newHttpURL = newHttpURLBuilder.build()
-
-                    val newRequest = originalRequest.newBuilder().url(newHttpURL).build()
-                    chain.proceed(newRequest)
-                }
+                .addInterceptor(TheMovieDBInterceptor())
                 .build()
 
         return Retrofit.Builder()
