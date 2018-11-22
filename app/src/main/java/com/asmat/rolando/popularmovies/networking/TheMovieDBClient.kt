@@ -1,7 +1,6 @@
 package com.asmat.rolando.popularmovies.networking
 
 import com.asmat.rolando.popularmovies.BuildConfig
-import com.asmat.rolando.popularmovies.database.Movie
 import com.asmat.rolando.popularmovies.models.*
 import com.asmat.rolando.popularmovies.networking.models.*
 import io.reactivex.Single
@@ -9,18 +8,20 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 
+/**
+ * Network requests to The Movie DB API.
+ *
+ * @see <a href="https://developers.themoviedb.org/3"</a>
+ */
 object TheMovieDBClient {
 
     //region Private
-    private const val baseURL = "https://api.themoviedb.org/3/"
-
     private val service by lazy { createService() }
 
     /**
-     * Creates an instance of [TheMovieDBService], all requests will contain the
-     * following query parameters set: api_key, language, and region.
+     * Creates an instance of [TheMovieDBService]. Note: all requests will at least
+     * contain the query parameters specified in [TheMovieDBInterceptor]
      */
     private fun createService(): TheMovieDBService {
         val okHttpClient = OkHttpClient()
@@ -29,13 +30,12 @@ object TheMovieDBClient {
                 .build()
 
         return Retrofit.Builder()
-                .baseUrl(baseURL)
+                .baseUrl(BuildConfig.THE_MOVIE_DB_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
                 .build()
                 .create(TheMovieDBService::class.java)
-
     }
     //endregion
 

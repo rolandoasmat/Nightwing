@@ -18,7 +18,7 @@ class TheMovieDBInterceptor: Interceptor {
         val httpURL = originalRequest.url()
 
         val newHttpURLBuilder = httpURL.newBuilder()
-        newHttpURLBuilder.addQueryParameter(API_KEY, BuildConfig.API_KEY)
+        newHttpURLBuilder.addQueryParameter(API_KEY, "")
         newHttpURLBuilder.addQueryParameter(LANGUAGE, Locale.getDefault().language)
         newHttpURLBuilder.addQueryParameter(REGION, Locale.getDefault().country)
         val newHttpURL = newHttpURLBuilder.build()

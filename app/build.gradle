@@ -12,7 +12,9 @@ android {
         versionCode 9
         versionName "1.4.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "API_KEY", API_KEY)
+
+        buildConfigField("String", "THE_MOVIE_DB_API_KEY", THE_MOVIE_DB_API_KEY)
+        buildConfigField("String", "THE_MOVIE_DB_BASE_URL", THE_MOVIE_DB_BASE_URL)
     }
     buildTypes {
         release {
