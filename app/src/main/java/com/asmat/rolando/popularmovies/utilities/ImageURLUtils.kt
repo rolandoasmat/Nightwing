@@ -1,6 +1,6 @@
 package com.asmat.rolando.popularmovies.utilities
 
-object ImageURLUtil {
+object ImageURLUtils {
 
     /**
      * Sample widths "w92", "w154", "w185", "w342", "w500", "w780"
