@@ -1,43 +1,49 @@
 package com.asmat.rolando.popularmovies.viewmodels
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.asmat.rolando.popularmovies.database.FavoriteMovie
-import com.asmat.rolando.popularmovies.database.Movie
-import com.asmat.rolando.popularmovies.database.WatchLaterMovie
-import com.asmat.rolando.popularmovies.managers.MoviesRepository
-import com.asmat.rolando.popularmovies.models.Credit
-import com.asmat.rolando.popularmovies.models.Review
-import com.asmat.rolando.popularmovies.networking.models.VideosResponse
+import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
+import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
+import com.asmat.rolando.popularmovies.model.MoviesRepository
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MovieDetailsResponse
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
 
-import io.reactivex.Single
-import io.reactivex.subjects.BehaviorSubject
+class MovieDetailsViewModel(moviesRepository: MoviesRepository,
+                            movieID: Int) : ViewModel() {
 
-class MovieDetailsViewModel : ViewModel() {
-    private var movieID: Int? = null
-    var movie: Single<Movie>? = null
-    var movieSubject: BehaviorSubject<Movie>? = BehaviorSubject.create()
-    var favoriteMovie: LiveData<FavoriteMovie>? = null
-    var watchLaterMovie: LiveData<WatchLaterMovie>? = null
-    var videos: Single<VideosResponse>? = null
-    var reviews: Single<List<Review>>? = null
-    var credit: Single<Credit>? = null
+    val movieDetails: LiveData<MovieDetailsResponse>
+    val favoriteMovie: LiveData<FavoriteMovie>
+    val watchLaterMovie: LiveData<WatchLaterMovie>
+    val videos: LiveData<List<VideosResponse.Video>>
+    val cast: LiveData<List<CreditsResponse.Cast>>
 
-    fun init(movieID: Int) {
-        this.movieID = movieID
-        initLiveData()
-    }
 
-    // Setup LiveData
-    private fun initLiveData() {
-        movieID?.let {
-            movie = MoviesRepository.getMovie(it).map { Movie(it) }
-            movie?.doOnSuccess { movieSubject?.onNext(it) }
-            favoriteMovie = MoviesRepository.getFavoriteMovie(it)
-            watchLaterMovie = MoviesRepository.getWatchLaterMovie(it)
-            videos = MoviesRepository.getVideos(it)
-            reviews = MoviesRepository.getReviews(it)
-            credit = MoviesRepository.getMovieCreadits(it)
-        }
-    }
+   init {
+       movieDetails = MutableLiveData<MovieDetailsResponse>()
+       moviesRepository.getMovieDetails(movieID).subscribe({ result ->
+           movieDetails.value = result
+       }, { _ ->
+           movieDetails.value = null
+       })
+
+       favoriteMovie = moviesRepository.getFavoriteMovie(movieID)
+       watchLaterMovie = moviesRepository.getWatchLaterMovie(movieID)
+
+       videos = MutableLiveData<List<VideosResponse.Video>>()
+       moviesRepository.getMovieVideos(movieID).subscribe({ result ->
+           videos.value = result.results
+       }, { _ ->
+           videos.value = null
+       })
+
+       cast = MutableLiveData<List<CreditsResponse.Cast>>()
+       moviesRepository.getMovieCredits(movieID).subscribe({ result ->
+           cast.value = result.cast
+       }, { _ ->
+           cast.value = null
+       })
+   }
+
 }
