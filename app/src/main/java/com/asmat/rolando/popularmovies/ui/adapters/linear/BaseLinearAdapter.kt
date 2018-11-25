@@ -6,32 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import com.asmat.rolando.popularmovies.ui.adapters.AdapterOnClickHandler
 
-abstract class BaseLinearAdapter<T, V : BaseLinearAdapter.ViewHolder> : RecyclerView.Adapter<V> {
 
-    var data: List<T>? = null
+abstract class BaseLinearAdapter<T, V : BaseLinearAdapter<T, V>.ViewHolder>(private val clickHandler: AdapterOnClickHandler<T>? = null) : RecyclerView.Adapter<V>() {
+
+    var data: List<T> = emptyList()
         set(data) {
             field = data
             notifyDataSetChanged()
         }
-    private val clickHandler: AdapterOnClickHandler<T>?
 
-    //endregion
-
-    //region Abstract
-    internal abstract val layoutForLinearItem: Int
-
-    //region API
-
-    internal constructor() {
-        this.clickHandler = null
-    }
-
-    internal constructor(clickHandler: AdapterOnClickHandler<T>) {
-        this.clickHandler = clickHandler
-    }
-
-    internal abstract fun createViewHolder(view: View): V
-    //endregion
+    abstract val layoutForLinearItem: Int
+    abstract fun createViewHolder(view: View): V
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): V {
         val context = parent.context
@@ -42,23 +27,26 @@ abstract class BaseLinearAdapter<T, V : BaseLinearAdapter.ViewHolder> : Recycler
     }
 
     override fun onBindViewHolder(holder: V, position: Int) {
-        val item = this.data!![position]
+        val item = data[position]
         holder.bind(item)
     }
 
     override fun getItemCount(): Int {
-        return if (this.data == null) 0 else this.data!!.size
+        return data.size
     }
 
-    internal abstract inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+    /**
+     * View Holder
+     */
+    abstract inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
         override fun onClick(v: View) {
             val position = adapterPosition
-            val item = this.data!!.get(position)
+            val item = data[position]
             clickHandler?.onClick(item)
         }
 
-        internal abstract fun bind(item: T)
+        abstract fun bind(item: T)
     }
 
 }

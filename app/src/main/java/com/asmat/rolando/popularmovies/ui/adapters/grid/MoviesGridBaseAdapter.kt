@@ -1,12 +1,10 @@
 package com.asmat.rolando.popularmovies.ui.adapters.grid
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
 import com.asmat.rolando.popularmovies.ui.adapters.MovieAdapterOnClickHandler
@@ -24,7 +22,6 @@ abstract class MoviesGridBaseAdapter(private val clickHandler: MovieAdapterOnCli
     private var movies: Movies = mutableListOf()
 
     abstract val emptyStateLayoutID: Int
-//        get() = R.layout.empty_state_generic
 
     fun setMovies(movies: List<Movie>) {
         this.movies.clear()
@@ -93,6 +90,5 @@ abstract class MoviesGridBaseAdapter(private val clickHandler: MovieAdapterOnCli
             clickHandler.onClick(movie)
         }
     }
-
 
 }
