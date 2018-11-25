@@ -9,10 +9,7 @@ import android.graphics.Shader
 
 import com.squareup.picasso.Transformation
 
-class RoundedTransformation// radius is corner radii in dp
-// margin is the board in dp
-(private val radius: Int, private val margin: Int  // dp
-) : Transformation {
+class RoundedTransformation(private val radius: Int, private val margin: Int) : Transformation {
 
     override fun transform(source: Bitmap): Bitmap {
         val paint = Paint()

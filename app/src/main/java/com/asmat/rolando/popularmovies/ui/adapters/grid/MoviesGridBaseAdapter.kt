@@ -34,20 +34,19 @@ abstract class MoviesGridBaseAdapter(private val clickHandler: MovieAdapterOnCli
         notifyDataSetChanged()
     }
 
-    @MovieGridItemType.Def
     override fun getItemViewType(position: Int): Int {
         return if (showEmptyState) {
-            MovieGridItemType.EMPTY
+            MovieGridItemType.EMPTY.ordinal
         } else {
-            MovieGridItemType.REGULAR
+            MovieGridItemType.REGULAR.ordinal
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, @MovieGridItemType.Def viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
         val layoutIdForGridItem = when (viewType) {
-            MovieGridItemType.EMPTY -> emptyStateLayoutID
-            MovieGridItemType.REGULAR ->  R.layout.movie_grid_item
+            MovieGridItemType.EMPTY.ordinal -> emptyStateLayoutID
+            MovieGridItemType.REGULAR.ordinal ->  R.layout.movie_grid_item
             else -> R.layout.movie_grid_item
         }
         val inflater = LayoutInflater.from(context)
