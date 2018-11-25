@@ -15,7 +15,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.ui.activities.MovieDetailActivity
-import com.asmat.rolando.popularmovies.ui.adapters.MoviesGridBaseAdapter
+import com.asmat.rolando.popularmovies.ui.adapters.grid.MoviesGridBaseAdapter
 import com.asmat.rolando.popularmovies.ui.adapters.MovieAdapterOnClickHandler
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
 import com.asmat.rolando.popularmovies.ui.RequestType

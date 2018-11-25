@@ -15,7 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.asmat.rolando.popularmovies.R;
-import com.asmat.rolando.popularmovies.ui.adapters.BaseSectionsPagerAdapter;
+import com.asmat.rolando.popularmovies.ui.adapters.pager.BaseSectionsPagerAdapter;
 import com.asmat.rolando.popularmovies.database.DatabaseManager;
 
 abstract class BaseActivity extends AppCompatActivity {

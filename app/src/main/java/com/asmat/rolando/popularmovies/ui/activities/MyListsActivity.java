@@ -2,8 +2,8 @@ package com.asmat.rolando.popularmovies.ui.activities;
 
 
 import com.asmat.rolando.popularmovies.R;
-import com.asmat.rolando.popularmovies.ui.adapters.BaseSectionsPagerAdapter;
-import com.asmat.rolando.popularmovies.ui.adapters.MyListsPagerAdapter;
+import com.asmat.rolando.popularmovies.ui.adapters.pager.BaseSectionsPagerAdapter;
+import com.asmat.rolando.popularmovies.ui.adapters.pager.MyListsPagerAdapter;
 
 public class MyListsActivity extends BaseActivity {
 

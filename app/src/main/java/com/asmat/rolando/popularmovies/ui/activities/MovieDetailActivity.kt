@@ -18,9 +18,9 @@ import android.widget.ProgressBar
 import android.widget.TextView
 
 import com.asmat.rolando.popularmovies.R
-import com.asmat.rolando.popularmovies.ui.adapters.CastLinearAdapter
-import com.asmat.rolando.popularmovies.ui.adapters.ReviewsLinearAdapter
-import com.asmat.rolando.popularmovies.ui.adapters.TrailersLinearAdapter
+import com.asmat.rolando.popularmovies.ui.adapters.linear.CastLinearAdapter
+import com.asmat.rolando.popularmovies.ui.adapters.linear.ReviewsLinearAdapter
+import com.asmat.rolando.popularmovies.ui.adapters.linear.TrailersLinearAdapter
 import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie

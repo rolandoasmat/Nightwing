@@ -1,10 +1,10 @@
-package com.asmat.rolando.popularmovies.ui.adapters;
+package com.asmat.rolando.popularmovies.ui.adapters.linear;
 
 import android.view.View;
 import android.widget.TextView;
 import com.asmat.rolando.popularmovies.R;
 
-public class ReviewsLinearAdapter extends BaseLinearAdapter<Review, ReviewsLinearAdapter.ViewHolder>{
+public class ReviewsLinearAdapter extends BaseLinearAdapter<Review, ReviewsLinearAdapter.ViewHolder> {
 
     public ReviewsLinearAdapter() {
         super();

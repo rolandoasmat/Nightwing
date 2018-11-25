@@ -1,10 +1,11 @@
-package com.asmat.rolando.popularmovies.ui.adapters;
+package com.asmat.rolando.popularmovies.ui.adapters.pager;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.asmat.rolando.popularmovies.R;
+import com.asmat.rolando.popularmovies.ui.adapters.pager.BaseSectionsPagerAdapter;
 import com.asmat.rolando.popularmovies.ui.fragments.FavoriteMoviesGridFragment;
 import com.asmat.rolando.popularmovies.ui.fragments.WatchLaterMoviesGridFragment;
 

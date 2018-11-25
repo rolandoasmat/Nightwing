@@ -1,8 +1,8 @@
 package com.asmat.rolando.popularmovies.ui.fragments;
 
 import android.arch.lifecycle.LiveData;
-import com.asmat.rolando.popularmovies.ui.adapters.MoviesGridBaseAdapter;
-import com.asmat.rolando.popularmovies.ui.adapters.WatchLaterMoviesGridAdapter;
+import com.asmat.rolando.popularmovies.ui.adapters.grid.MoviesGridBaseAdapter;
+import com.asmat.rolando.popularmovies.ui.adapters.grid.WatchLaterMoviesGridAdapter;
 import com.asmat.rolando.popularmovies.database.DatabaseManager;
 import com.asmat.rolando.popularmovies.ui.adapters.MovieAdapterOnClickHandler;
 

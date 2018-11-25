@@ -2,8 +2,8 @@ package com.asmat.rolando.popularmovies.ui.activities;
 
 
 import com.asmat.rolando.popularmovies.R;
-import com.asmat.rolando.popularmovies.ui.adapters.BaseSectionsPagerAdapter;
-import com.asmat.rolando.popularmovies.ui.adapters.DiscoverPagerAdapter;
+import com.asmat.rolando.popularmovies.ui.adapters.pager.BaseSectionsPagerAdapter;
+import com.asmat.rolando.popularmovies.ui.adapters.pager.DiscoverPagerAdapter;
 
 public class DiscoverActivity extends BaseActivity {
 

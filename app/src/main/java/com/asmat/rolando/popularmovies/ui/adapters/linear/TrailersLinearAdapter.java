@@ -1,10 +1,11 @@
-package com.asmat.rolando.popularmovies.ui.adapters;
+package com.asmat.rolando.popularmovies.ui.adapters.linear;
 
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.asmat.rolando.popularmovies.R;
 import com.asmat.rolando.popularmovies.models.Video;
+import com.asmat.rolando.popularmovies.ui.adapters.AdapterOnClickHandler;
 import com.squareup.picasso.Picasso;
 
 public class TrailersLinearAdapter extends BaseLinearAdapter<Video,TrailersLinearAdapter.ViewHolder> {
