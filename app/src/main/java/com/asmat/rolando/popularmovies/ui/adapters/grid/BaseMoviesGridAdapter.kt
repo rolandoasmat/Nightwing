@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.movie_grid_item.view.*
 private typealias Movie = MoviesResponse.Movie
 private typealias Movies = MutableList<Movie>
 
-abstract class MoviesGridBaseAdapter(private val clickHandler: MovieAdapterOnClickHandler) : RecyclerView.Adapter<MoviesGridBaseAdapter.ViewHolder>() {
+abstract class BaseMoviesGridAdapter(private val clickHandler: MovieAdapterOnClickHandler) : RecyclerView.Adapter<BaseMoviesGridAdapter.ViewHolder>() {
 
     private var showEmptyState = false
     private var movies: Movies = mutableListOf()

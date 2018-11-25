@@ -6,24 +6,28 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.ui.activities.MovieDetailActivity
-import com.asmat.rolando.popularmovies.ui.adapters.grid.MoviesGridBaseAdapter
 import com.asmat.rolando.popularmovies.ui.adapters.MovieAdapterOnClickHandler
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
+import com.asmat.rolando.popularmovies.ui.adapters.grid.MoviesGridAdapter
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.util.ArrayList
 
 class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
 
-    private var mMoviesGridAdapter: MoviesGridBaseAdapter? = null
+    private var mMoviesGridAdapter: MoviesGridAdapter? = null
     private var mContext: Context? = null
     private var fetchMoviesCallback: Single<MoviesResponse>? = null
     private var searchQuery: String = ""
@@ -46,7 +50,7 @@ class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
         if (page == 1) {
             val numOfCol = ViewUtils.calculateNumberOfColumns(mContext!!)
             mMoviesGridLayoutManager = GridLayoutManager(mContext, numOfCol)
-            mMoviesGridAdapter = MoviesGridBaseAdapter(this)
+            mMoviesGridAdapter = MoviesGridAdapter(this)
             mMoviesGrid?.setHasFixedSize(true)
             mMoviesGrid?.layoutManager = mMoviesGridLayoutManager
             mMoviesGrid?.adapter = mMoviesGridAdapter
@@ -102,18 +106,20 @@ class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
 
     private fun fetchMovies() {
         fetchingMovies = true
-        fetchMoviesCallback?.subscribe({ result ->
-            val mapped = result.results.map { Movie(it) }
-            mMoviesGridAdapter?.addMovies(mapped.toTypedArray())
-            page++
-            fetchingMovies = false
-        }, { error ->
-            // TODO handle error
-            fetchingMovies = false
-        })
+        fetchMoviesCallback
+                ?.subscribeOn(Schedulers.io())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe({ result ->
+                    mMoviesGridAdapter?.addMovies(result.results)
+                    page++
+                    fetchingMovies = false
+                },{ error ->
+                    handleError(error)
+                    fetchingMovies = false
+                })
     }
 
-    override fun onClick(movie: Movie) {
+    override fun onClick(movie: MoviesResponse.Movie) {
         val destinationClass = MovieDetailActivity::class.java
         val intentToStartDetailActivity = Intent(mContext, destinationClass)
         intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_MOVIE_ID, movie.id)
@@ -121,6 +127,13 @@ class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
     }
 
     private fun setFetchMoviesLoaderCallback() {
-        fetchMoviesCallback = TheMovieDBClient.searchMovie(searchQuery, page)
+        fetchMoviesCallback = TheMovieDBClient().searchMovie(searchQuery, page)
+    }
+
+    private fun handleError(error: Throwable) {
+        val message = error.message ?: "Whoops, error fetching movies."
+        val toast = Toast.makeText(context, message, Toast.LENGTH_LONG)
+        toast.show()
+        Log.e("MovieGridFragment", error.toString())
     }
 }

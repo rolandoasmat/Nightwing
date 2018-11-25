@@ -15,11 +15,11 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.ui.activities.MovieDetailActivity
-import com.asmat.rolando.popularmovies.ui.adapters.grid.MoviesGridBaseAdapter
 import com.asmat.rolando.popularmovies.ui.adapters.MovieAdapterOnClickHandler
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
 import com.asmat.rolando.popularmovies.ui.RequestType
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
+import com.asmat.rolando.popularmovies.ui.adapters.grid.MoviesGridAdapter
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import io.reactivex.Single
@@ -28,7 +28,7 @@ import io.reactivex.schedulers.Schedulers
 
 class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickListener {
 
-    private var moviesGridAdapter: MoviesGridBaseAdapter? = null
+    private var moviesGridAdapter: MoviesGridAdapter? = null
     private var mContext: Context? = null
     private var fetchMoviesCallback: Single<MoviesResponse>? = null
     private lateinit var typeOfMovies: RequestType
@@ -51,7 +51,7 @@ class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickLi
         if (page == 1) {
             val numOfCol = ViewUtils.calculateNumberOfColumns(mContext!!)
             mMoviesGridLayoutManager = GridLayoutManager(mContext, numOfCol)
-            moviesGridAdapter = MoviesGridBaseAdapter(this)
+            moviesGridAdapter = MoviesGridAdapter(this)
             mMoviesGrid?.setHasFixedSize(true)
             mMoviesGrid?.layoutManager = mMoviesGridLayoutManager
             mMoviesGrid?.adapter = moviesGridAdapter
