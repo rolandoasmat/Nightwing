@@ -67,7 +67,7 @@ class DatabaseManager(context: Context) {
         dao.deleteWatchLaterMovie(movie)
     }
 
-    fun getAllWatchLaterMovis(): LiveData<List<WatchLaterMovie>> {
+    fun getAllWatchLaterMovies(): LiveData<List<WatchLaterMovie>> {
         return dao.loadAllWatchLaterMovies()
     }
 
