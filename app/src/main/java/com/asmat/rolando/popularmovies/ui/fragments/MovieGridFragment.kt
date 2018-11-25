@@ -31,8 +31,7 @@ class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickLi
     private var moviesGridAdapter: MoviesGridBaseAdapter? = null
     private var mContext: Context? = null
     private var fetchMoviesCallback: Single<MoviesResponse>? = null
-    @RequestType.Def
-    private var typeOfMovies: Int = 0
+    private lateinit var typeOfMovies: RequestType
     private var page: Int = 0
     private var mMoviesGrid: RecyclerView? = null
     private var mNoInternetView: LinearLayout? = null
@@ -93,7 +92,7 @@ class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickLi
         page = 1
     }
 
-    fun setTypeOfMovies(@RequestType.Def typeOfMovies: Int) {
+    fun setTypeOfMovies(typeOfMovies: RequestType) {
         this.typeOfMovies = typeOfMovies
     }
 
@@ -117,8 +116,7 @@ class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickLi
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({ result ->
-                    val mapped = result.results.map { Movie(it) }
-                    moviesGridAdapter?.addMovies(mapped.toTypedArray())
+                    moviesGridAdapter?.addMovies(result.results)
                     page++
                     fetchingMovies = false
                 },{ error ->
@@ -127,7 +125,7 @@ class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickLi
                 })
     }
 
-    override fun onClick(movie: Movie) {
+    override fun onClick(movie: MoviesResponse.Movie) {
         val destinationClass = MovieDetailActivity::class.java
         val intentToStartDetailActivity = Intent(mContext, destinationClass)
         intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_MOVIE_ID, movie.id)
@@ -135,11 +133,12 @@ class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickLi
     }
 
     private fun setFetchMoviesLoaderCallback() {
+        val client = TheMovieDBClient()
         fetchMoviesCallback = when (typeOfMovies) {
-            RequestType.MOST_POPULAR -> TheMovieDBClient.getPopularMovies(page)
-            RequestType.TOP_RATED -> TheMovieDBClient.getTopRatedMovies(page)
-            RequestType.NOW_PLAYING -> TheMovieDBClient.getNowPlayingMovies(page)
-            RequestType.UPCOMING -> TheMovieDBClient.getUpcomingMovies(page)
+            RequestType.MOST_POPULAR -> client.getPopularMovies(page)
+            RequestType.TOP_RATED -> client.getTopRatedMovies(page)
+            RequestType.NOW_PLAYING -> client.getNowPlayingMovies(page)
+            RequestType.UPCOMING -> client.getUpcomingMovies(page)
             else -> null
         }
     }
