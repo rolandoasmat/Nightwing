@@ -20,11 +20,20 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue "string", "app_name", "Movie Night"
         }
+
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+            resValue "string", "app_name", "Movie Night Debug"
+        }
+
     }
     defaultConfig {
         vectorDrawables.useSupportLibrary = true
     }
+
     lintOptions {
         abortOnError false
     }
