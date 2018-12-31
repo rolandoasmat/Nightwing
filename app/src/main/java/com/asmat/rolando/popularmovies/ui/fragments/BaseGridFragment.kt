@@ -14,8 +14,8 @@ import android.view.ViewGroup
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
 import com.asmat.rolando.popularmovies.ui.activities.MovieDetailActivity
-import com.asmat.rolando.popularmovies.ui.adapters.grid.MoviesGridBaseAdapter
 import com.asmat.rolando.popularmovies.ui.adapters.MovieAdapterOnClickHandler
+import com.asmat.rolando.popularmovies.ui.adapters.grid.BaseMoviesGridAdapter
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import kotlinx.android.synthetic.main.fragment_movie_grid.view.*
 
@@ -24,10 +24,10 @@ private typealias Movie = MoviesResponse.Movie
 abstract class BaseGridFragment : Fragment(), MovieAdapterOnClickHandler {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: MoviesGridBaseAdapter
+    private lateinit var adapter: BaseMoviesGridAdapter
 
     internal abstract val movieSource: LiveData<List<Movie>>
-    internal abstract fun getAdapter(handler: MovieAdapterOnClickHandler): MoviesGridBaseAdapter
+    internal abstract fun getAdapter(handler: MovieAdapterOnClickHandler): BaseMoviesGridAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_movie_grid, container, false)
