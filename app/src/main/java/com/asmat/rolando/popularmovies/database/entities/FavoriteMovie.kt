@@ -4,28 +4,26 @@ import android.arch.persistence.room.*
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
 
 @Entity(tableName = "favorite_movies")
-data class FavoriteMovie(@PrimaryKey override var id: Int,
-                         override var poster_path: String?,
-                         override var adult: Boolean,
-                         override var overview: String,
-                         override var release_date: String,
-                         override var genre_ids: List<Int>,
-                         override var original_title: String,
-                         override var original_language: String,
-                         override var title: String,
-                         override var backdrop_path: String?,
-                         override var popularity: Double,
-                         override var vote_count: Int,
-                         override var video: Boolean,
-                         override var vote_average: Double): MoviesResponse.Movie(poster_path, adult, overview, release_date, genre_ids, id, original_title, original_language, title, backdrop_path, popularity, vote_count, video, vote_average) {
+data class FavoriteMovie(@PrimaryKey val id: Int,
+                         val poster_path: String?,
+                         val adult: Boolean,
+                         val overview: String,
+                         val release_date: String,
+                         val original_title: String,
+                         val original_language: String,
+                         val title: String,
+                         val backdrop_path: String?,
+                         val popularity: Double,
+                         val vote_count: Int,
+                         val video: Boolean,
+                         val vote_average: Double) {
 
-    constructor(data: MoviesResponse.Movie): this(
+    constructor(data: MoviesResponse.Movie): this( // TODO store List of genre ids
             data.id,
             data.poster_path,
             data.adult,
             data.overview,
             data.release_date,
-            data.genre_ids,
             data.original_title,
             data.original_language,
             data.title,
