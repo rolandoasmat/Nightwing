@@ -10,8 +10,7 @@ import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
 
 /**
- * Creates DB object with any necessary migrations and makes
- * CRUD operations available to Repositories.
+ * Database CRUD operations
  */
 class DatabaseManager(context: Context) {
 
@@ -19,16 +18,16 @@ class DatabaseManager(context: Context) {
         private const val DATABASE_NAME = "movies-database"
     }
 
-    private val db: AppDatabase
-    private val dao: MoviesDAO
-        get() { return db.moviesDAO() }
+    private val dao: MoviesDAO // TODO convert into constructor dependency
 
     init {
-        val db = Room.databaseBuilder(context,
+        dao = Room.databaseBuilder(context,
                 AppDatabase::class.java, DATABASE_NAME)
-                .addMigrations(migration_1_2(), migration_2_3())
+                .addMigrations(
+                        migration_1_2(),
+                        migration_2_3())
                 .build()
-        this.db = db
+                .moviesDAO()
     }
 
     /**
