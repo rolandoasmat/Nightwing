@@ -27,7 +27,7 @@
 
             <!--Image View-->
             <ImageView
-                android:id="@+id/toolbarImage"
+                android:id="@+id/backdrop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
@@ -75,18 +75,18 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
 
             <ProgressBar
-                android:id="@+id/pb_trailers_loading_bar"
+                android:id="@+id/trailersLoadingBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_trailers"
+                android:id="@+id/trailersRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"/>
 
             <TextView
-                android:id="@+id/tv_no_trailers"
+                android:id="@+id/trailersEmptyStateLabel"
                 android:text="@string/no_trailers"
                 android:visibility="gone"
                 android:layout_width="wrap_content"
@@ -95,7 +95,7 @@
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
 
             <TextView
-                android:id="@+id/tv_error_trailers"
+                android:id="@+id/trailersErrorStateLabel"
                 android:text="@string/error_reviews"
                 android:visibility="gone"
                 android:layout_width="wrap_content"
@@ -112,19 +112,19 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
 
             <ProgressBar
-                android:id="@+id/cast_loading"
+                android:id="@+id/castLoadingBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/cast_recycler_view"
+                android:id="@+id/castRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:visibility="gone"/>
 
             <TextView
-                android:id="@+id/cast_empty"
+                android:id="@+id/castEmptyStateLabel"
                 android:text="@string/no_cast"
                 android:visibility="gone"
                 android:layout_width="wrap_content"
@@ -133,7 +133,7 @@
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
 
             <TextView
-                android:id="@+id/cast_error"
+                android:id="@+id/castErrorStateLabel"
                 android:text="@string/error_cast"
                 android:visibility="gone"
                 android:layout_width="wrap_content"
@@ -150,19 +150,19 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
 
             <ProgressBar
-                android:id="@+id/pb_reviews_loading_bar"
+                android:id="@+id/reviewsLoadingBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_reviews"
+                android:id="@+id/reviewsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 android:layout_margin="@dimen/activity_margin_general"/>
 
             <TextView
-                android:id="@+id/tv_no_reviews"
+                android:id="@+id/reviewsEmptyStateLabel"
                 android:text="@string/no_reviews"
                 android:visibility="gone"
                 android:layout_width="wrap_content"
@@ -171,7 +171,7 @@
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
 
             <TextView
-                android:id="@+id/tv_error_reviews"
+                android:id="@+id/reviewsErrorStateLabel"
                 android:text="@string/error_reviews"
                 android:visibility="gone"
                 android:layout_width="wrap_content"

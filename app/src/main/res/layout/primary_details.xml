@@ -8,33 +8,33 @@
     android:padding="@dimen/activity_margin_general">
 
     <TextView
-        android:id="@+id/tv_release_date"
+        android:id="@+id/releaseDateLabel"
         tools:text="@string/release_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/tv_movie_rating"
+        android:id="@+id/movieRatingLabel"
         tools:text="@string/movie_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"/>
 
     <ImageView
-        android:id="@+id/iv_poster_thumbnail"
+        android:id="@+id/thumbnail"
         android:layout_width="@dimen/poster_width"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_margin_general"
         android:layout_marginRight="@dimen/activity_margin_general"
         android:adjustViewBounds="true"
-        android:layout_below="@+id/tv_release_date"/>
+        android:layout_below="@+id/releaseDateLabel"/>
 
     <TextView
-        android:id="@+id/tv_synopsis_content"
+        android:id="@+id/summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/iv_poster_thumbnail"
-        android:layout_alignTop="@id/iv_poster_thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_alignTop="@id/thumbnail"
         tools:text="@string/synopsis"/>
 
 </RelativeLayout>
