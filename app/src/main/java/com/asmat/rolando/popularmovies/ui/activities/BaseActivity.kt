@@ -65,8 +65,9 @@ abstract class BaseActivity : AppCompatActivity() {
         // there is only 1 so that's causing page 0 and 1 to be the same :(
         // super.onSaveInstanceState(outState);
 
-        val selectedTab = tabLayout!!.selectedTabPosition
-        outState.putInt(CURRENT_TAB, selectedTab)
+        tabLayout?.selectedTabPosition?.let { selectedTab ->
+            outState.putInt(CURRENT_TAB, selectedTab)
+        }
     }
 
     //endregion
@@ -120,8 +121,8 @@ abstract class BaseActivity : AppCompatActivity() {
         toolbar.title = activityTitle
         setSupportActionBar(toolbar)
         val actionbar = supportActionBar
-        actionbar!!.setDisplayHomeAsUpEnabled(true)
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu)
+        actionbar?.setDisplayHomeAsUpEnabled(true)
+        actionbar?.setHomeAsUpIndicator(R.drawable.ic_menu)
     }
 
     private fun setupViewPager() {
@@ -129,7 +130,7 @@ abstract class BaseActivity : AppCompatActivity() {
         val viewPager = findViewById<ViewPager>(R.id.container)
         viewPager.adapter = adapter
         tabLayout = findViewById(R.id.tabs)
-        tabLayout!!.setupWithViewPager(viewPager)
+        tabLayout?.setupWithViewPager(viewPager)
     }
 
     private fun openDrawer() {

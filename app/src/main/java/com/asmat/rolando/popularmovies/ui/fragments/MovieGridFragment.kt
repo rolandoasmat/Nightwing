@@ -14,6 +14,8 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.asmat.rolando.popularmovies.R
+import com.asmat.rolando.popularmovies.extensions.gone
+import com.asmat.rolando.popularmovies.extensions.visible
 import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.model.mappers.MovieMapper
 import com.asmat.rolando.popularmovies.ui.activities.MovieDetailActivity
@@ -61,11 +63,11 @@ class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickLi
             fetchMovies()
         } else {
             mMoviesGridLayoutManager = GridLayoutManager(mContext, ViewUtils.calculateNumberOfColumns(mContext!!))
-            mMoviesGrid!!.layoutManager = mMoviesGridLayoutManager
-            mMoviesGrid!!.adapter = moviesGridAdapter
+            mMoviesGrid?.layoutManager = mMoviesGridLayoutManager
+            mMoviesGrid?.adapter = moviesGridAdapter
         }
-        mMoviesGrid!!.addOnScrollListener(createScrollListener(mMoviesGridLayoutManager))
-        mMoviesGrid!!.isNestedScrollingEnabled = false
+        mMoviesGrid?.addOnScrollListener(createScrollListener(mMoviesGridLayoutManager))
+        mMoviesGrid?.isNestedScrollingEnabled = false
 
         val retryButton = rootView.findViewById<Button>(R.id.retry_button)
         retryButton.setOnClickListener(this)
@@ -81,12 +83,12 @@ class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickLi
     private fun checkInternet() {
         if (!NetworkUtils.isOnline(context!!)) {
             // User has no internet
-            mMoviesGrid!!.visibility = View.GONE
-            mNoInternetView!!.visibility = View.VISIBLE
+            mMoviesGrid?.gone()
+            mNoInternetView?.visible()
         } else {
             // Internet connection established
-            mMoviesGrid!!.visibility = View.VISIBLE
-            mNoInternetView!!.visibility = View.GONE
+            mMoviesGrid?.visible()
+            mNoInternetView?.gone()
         }
     }
 

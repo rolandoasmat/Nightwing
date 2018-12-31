@@ -13,6 +13,8 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.asmat.rolando.popularmovies.R
+import com.asmat.rolando.popularmovies.extensions.gone
+import com.asmat.rolando.popularmovies.extensions.visible
 import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.model.mappers.MovieMapper
 import com.asmat.rolando.popularmovies.ui.activities.MovieDetailActivity
@@ -27,7 +29,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.ArrayList
 
-// TODO reuse code that's in moviegridfragment here
+// TODO reuse code that's in MovieGridFragment here
 class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
 
     private var mMoviesGridAdapter: MoviesGridAdapter? = null
@@ -73,12 +75,12 @@ class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
         super.onResume()
         if (!NetworkUtils.isOnline(context!!)) {
             // User has no internet
-            mMoviesGrid!!.visibility = View.GONE
-            mNoInternetView!!.visibility = View.VISIBLE
+            mMoviesGrid?.gone()
+            mNoInternetView?.visible()
         } else {
             // Internet connection established
-            mMoviesGrid!!.visibility = View.VISIBLE
-            mNoInternetView!!.visibility = View.GONE
+            mMoviesGrid?.visible()
+            mNoInternetView?.gone()
         }
     }
 
@@ -88,7 +90,7 @@ class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
 
     fun setSearchQuery(searchQuery: String) {
         this.searchQuery = searchQuery
-        mMoviesGridAdapter!!.setMovies(ArrayList())
+        mMoviesGridAdapter?.setMovies(ArrayList())
         this.page = 1
         fetchMovies()
     }
