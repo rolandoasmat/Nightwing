@@ -61,7 +61,9 @@ abstract class BaseGridFragment : Fragment(), MovieAdapterOnClickHandler {
                 layoutManager.spanCount = 1 // 1 column needed for empty state layout
                 adapter.setMovies(emptyList())
             } else {
-                // TODO need to reset span count?
+                context?.let {
+                    layoutManager.spanCount = ViewUtils.calculateNumberOfColumns(it)
+                }
                 adapter.setMovies(movies)
             }
         })
