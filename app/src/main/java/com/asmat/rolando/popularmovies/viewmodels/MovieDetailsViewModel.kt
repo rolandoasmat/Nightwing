@@ -40,7 +40,7 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
         movie.backdropPath?.let { backdropURL.value = URLUtils.getImageURL780(it) }
         movieTitle.value = movie.title
         movie.releaseDate.let { releaseDate.value = DateUtils.formatDate(it) }
-        rating.value = movie.popularity.toString()
+        rating.value = movie.voteAverage.toString()
         movie.posterPath?.let { posterURL.value = URLUtils.getImageURL342(it) }
         summary.value = movie.overview
 

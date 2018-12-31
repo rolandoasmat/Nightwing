@@ -16,7 +16,7 @@ object MovieMapper {
                 data.id,
                 data.title,
                 data.backdrop_path,
-                data.popularity)
+                data.vote_average)
     }
 
     fun from(data: MoviesResponse.Movie): Movie {
@@ -27,7 +27,7 @@ object MovieMapper {
                 data.id,
                 data.title,
                 data.backdrop_path,
-                data.popularity)
+                data.vote_average)
     }
 
     fun from(data: FavoriteMovie): Movie {
@@ -38,7 +38,7 @@ object MovieMapper {
                 data.id,
                 data.title,
                 data.backdropPath,
-                data.popularity)
+                data.voteAverage)
     }
 
     fun from(data: WatchLaterMovie): Movie {
@@ -49,6 +49,6 @@ object MovieMapper {
                 data.id,
                 data.title,
                 data.backdropPath,
-                data.popularity)
+                data.voteAverage)
     }
 }

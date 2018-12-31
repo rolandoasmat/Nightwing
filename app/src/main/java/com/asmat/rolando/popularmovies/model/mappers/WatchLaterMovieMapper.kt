@@ -13,6 +13,6 @@ object WatchLaterMovieMapper {
                 data.id,
                 data.title,
                 data.backdropPath,
-                data.popularity)
+                data.voteAverage)
     }
 }

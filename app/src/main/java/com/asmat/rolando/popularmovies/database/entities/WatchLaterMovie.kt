@@ -9,4 +9,4 @@ data class WatchLaterMovie(val posterPath: String?,
                            @PrimaryKey val id: Int,
                            val title: String,
                            val backdropPath: String?,
-                           val popularity: Double)
+                           val voteAverage: Double)
