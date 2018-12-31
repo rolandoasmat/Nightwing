@@ -9,7 +9,7 @@ import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
 import com.asmat.rolando.popularmovies.ui.adapters.MovieAdapterOnClickHandler
 import com.asmat.rolando.popularmovies.ui.adapters.MovieGridItemType
-import com.asmat.rolando.popularmovies.utilities.ImageURLUtils
+import com.asmat.rolando.popularmovies.utilities.URLUtils
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.movie_grid_item.view.*
 
@@ -75,7 +75,7 @@ abstract class BaseMoviesGridAdapter(private val clickHandler: MovieAdapterOnCli
 
         fun bind(movie: Movie) {
             movie.poster_path?.let { posterPath ->
-                val posterURL = ImageURLUtils.getImageURL342(posterPath)
+                val posterURL = URLUtils.getImageURL342(posterPath)
                 Picasso.with(poster.context)
                         .load(posterURL)
                         .resize(340, 500)

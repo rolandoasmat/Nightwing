@@ -6,7 +6,7 @@ import android.widget.TextView
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
 import com.asmat.rolando.popularmovies.ui.adapters.AdapterOnClickHandler
-import com.asmat.rolando.popularmovies.utilities.ImageURLUtils
+import com.asmat.rolando.popularmovies.utilities.URLUtils
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.trailer_linear_item.view.*
 
@@ -33,7 +33,7 @@ class TrailersLinearAdapter(clickHandler: AdapterOnClickHandler<Video>) :
         }
 
         override fun bind(item: Video) {
-            val url = ImageURLUtils.getYoutubeThumbnailURL(item.key)
+            val url = URLUtils.getYoutubeThumbnailURL(item.key)
             Picasso.with(thumbnail.context)
                     .load(url)
                     .into(thumbnail)

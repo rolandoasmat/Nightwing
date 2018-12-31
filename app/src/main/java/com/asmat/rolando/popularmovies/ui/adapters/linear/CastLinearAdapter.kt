@@ -8,7 +8,7 @@ import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
 import com.asmat.rolando.popularmovies.ui.adapters.AdapterOnClickHandler
 import com.asmat.rolando.popularmovies.ui.transformations.RoundedTransformation
-import com.asmat.rolando.popularmovies.utilities.ImageURLUtils
+import com.asmat.rolando.popularmovies.utilities.URLUtils
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.cast_linear_item.view.*
 
@@ -39,7 +39,7 @@ class CastLinearAdapter(clickHandler: AdapterOnClickHandler<Cast>) :
             name.text = item.name
             role.text = item.character
             item.profile_path?.let { profilePath ->
-                val url = ImageURLUtils.getImageURL342(profilePath)
+                val url = URLUtils.getImageURL342(profilePath)
                 Picasso.with(thumbnail.context)
                         .load(url)
                         .resize(342, 513)
