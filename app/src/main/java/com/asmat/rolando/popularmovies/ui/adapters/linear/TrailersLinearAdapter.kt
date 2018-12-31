@@ -5,7 +5,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
-import com.asmat.rolando.popularmovies.ui.adapters.AdapterOnClickHandler
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.trailer_linear_item.view.*
@@ -13,7 +12,7 @@ import kotlinx.android.synthetic.main.trailer_linear_item.view.*
 private typealias Video = VideosResponse.Video
 private typealias VideoViewHolder = TrailersLinearAdapter.ViewHolder
 
-class TrailersLinearAdapter(clickHandler: AdapterOnClickHandler<Video>) :
+class TrailersLinearAdapter(clickHandler: (Video) -> Unit?) :
         BaseLinearAdapter<Video, VideoViewHolder>(clickHandler) {
 
     override val layoutForLinearItem: Int

@@ -6,7 +6,6 @@ import android.widget.TextView
 
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
-import com.asmat.rolando.popularmovies.ui.adapters.AdapterOnClickHandler
 import com.asmat.rolando.popularmovies.ui.transformations.RoundedTransformation
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import com.squareup.picasso.Picasso
@@ -15,7 +14,7 @@ import kotlinx.android.synthetic.main.cast_linear_item.view.*
 private typealias Cast = CreditsResponse.Cast
 private typealias CastViewHolder = CastLinearAdapter.ViewHolder
 
-class CastLinearAdapter(clickHandler: AdapterOnClickHandler<Cast>) :
+class CastLinearAdapter(clickHandler: (Cast) -> Unit?) :
         BaseLinearAdapter<Cast, CastViewHolder>(clickHandler) {
 
     override val layoutForLinearItem: Int
