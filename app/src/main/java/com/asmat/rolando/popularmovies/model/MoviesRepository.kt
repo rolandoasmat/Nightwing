@@ -1,6 +1,7 @@
 package com.asmat.rolando.popularmovies.model
 
 import android.arch.lifecycle.LiveData
+import android.os.AsyncTask
 
 import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
@@ -22,12 +23,30 @@ class MoviesRepository(private val db: DatabaseManager,
      * DB
      */
 
+    // Favorite Movie
     fun getFavoriteMovie(movieID: Int): LiveData<FavoriteMovie> {
         return db.getFavoriteMovie(movieID)
     }
 
+    fun removeFavoriteMovie(movieID: Int) {
+        runOnBackground { db.deleteFavoriteMovie(movieID) }
+    }
+
+    fun insertFavoriteMovie(movie: FavoriteMovie) {
+        runOnBackground { db.addFavoriteMovie(movie) }
+    }
+
+    // Watch Later Movie
     fun getWatchLaterMovie(movieID: Int): LiveData<WatchLaterMovie> {
         return db.getWatchLaterMovie(movieID)
+    }
+
+    fun removeWatchLaterMovie(movieID: Int) {
+        runOnBackground { db.deleteWatchLaterMovie(movieID) }
+    }
+
+    fun insertWatchLaterMovie(movie: WatchLaterMovie) {
+        runOnBackground { db.addWatchLaterMovie(movie) }
     }
 
     /**
@@ -48,5 +67,13 @@ class MoviesRepository(private val db: DatabaseManager,
 
     fun getMovieCredits(movieID: Int): Single<CreditsResponse> {
         return tmdbClient.getMovieCredits(movieID)
+    }
+
+    /**
+     * Private
+     */
+
+    private fun runOnBackground(closure: () -> Unit?) {
+        AsyncTask.execute { closure.invoke() }
     }
 }

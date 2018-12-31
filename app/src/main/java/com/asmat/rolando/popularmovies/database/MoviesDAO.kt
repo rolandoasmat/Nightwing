@@ -16,8 +16,8 @@ interface MoviesDAO {
     @Query("SELECT * FROM favorite_movies WHERE id LIKE :id")
     fun findFavoriteMovie(id: Int): LiveData<FavoriteMovie>
 
-    @Delete
-    fun deleteFavoriteMovie(movie: FavoriteMovie)
+    @Query("DELETE FROM favorite_movies WHERE id LIKE :id ")
+    fun deleteFavoriteMovie(id: Int)
 
     @Query("SELECT * FROM favorite_movies")
     fun loadAllFavoriteMovies(): LiveData<List<FavoriteMovie>>
@@ -30,8 +30,8 @@ interface MoviesDAO {
     @Query("SELECT * FROM watch_later_movies WHERE id LIKE :id")
     fun findWatchLaterMovie(id: Int): LiveData<WatchLaterMovie>
 
-    @Delete
-    fun deleteWatchLaterMovie(movie: WatchLaterMovie)
+    @Query("DELETE FROM watch_later_movies WHERE id LIKE :id ")
+    fun deleteWatchLaterMovie(id: Int)
 
     @Query("SELECT * FROM watch_later_movies")
     fun loadAllWatchLaterMovies(): LiveData<List<WatchLaterMovie>>

@@ -60,6 +60,7 @@ abstract class BaseGridFragment : Fragment(), MovieAdapterOnClickHandler {
             val layoutManager = recyclerView.layoutManager as GridLayoutManager
             if (movies == null || movies.isEmpty()) {
                 layoutManager.spanCount = 1 // 1 column needed for empty state layout
+                adapter.setMovies(emptyList())
             } else {
                 adapter.setMovies(movies)
             }

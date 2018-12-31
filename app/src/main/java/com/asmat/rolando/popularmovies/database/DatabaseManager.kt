@@ -42,8 +42,8 @@ class DatabaseManager(context: Context) {
         return dao.findFavoriteMovie(id)
     }
 
-    fun deleteFavoriteMovie(movie: FavoriteMovie) {
-        dao.deleteFavoriteMovie(movie)
+    fun deleteFavoriteMovie(id: Int) {
+        dao.deleteFavoriteMovie(id)
     }
 
     fun getAllFavoriteMovies(): LiveData<List<FavoriteMovie>> {
@@ -62,8 +62,8 @@ class DatabaseManager(context: Context) {
         return dao.findWatchLaterMovie(id)
     }
 
-    fun deleteWatchLaterMovie(movie: WatchLaterMovie) {
-        dao.deleteWatchLaterMovie(movie)
+    fun deleteWatchLaterMovie(id: Int) {
+        dao.deleteWatchLaterMovie(id)
     }
 
     fun getAllWatchLaterMovies(): LiveData<List<WatchLaterMovie>> {

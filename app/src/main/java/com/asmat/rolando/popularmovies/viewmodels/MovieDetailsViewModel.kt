@@ -16,8 +16,8 @@ import io.reactivex.internal.schedulers.IoScheduler
 import io.reactivex.schedulers.Schedulers
 
 @SuppressLint("CheckResult")
-class MovieDetailsViewModel(moviesRepository: MoviesRepository,
-                            movieID: Int) : ViewModel() {
+class MovieDetailsViewModel(val moviesRepository: MoviesRepository,
+                            val movieID: Int) : ViewModel() {
 
     val movieDetails: LiveData<MovieDetailsResponse>
     val favoriteMovie: LiveData<FavoriteMovie>
@@ -79,11 +79,26 @@ class MovieDetailsViewModel(moviesRepository: MoviesRepository,
 
     //region UI events
 
-    fun onStarTapped() { // TODO implement UI events
-
+    fun onStarTapped() {
+        favoriteMovie.value?.let {
+            moviesRepository.removeFavoriteMovie(it.id)
+        } ?: run {
+            movieDetails.value?.let {
+                val favoriteMovie = FavoriteMovie(it)
+                moviesRepository.insertFavoriteMovie(favoriteMovie)
+            }
+        }
     }
 
     fun onBookmarkTapped() {
+        watchLaterMovie.value?.let {
+            moviesRepository.removeWatchLaterMovie(it.id)
+        } ?: run {
+            movieDetails.value?.let {
+                val watchLaterMovie = WatchLaterMovie(it)
+                moviesRepository.insertWatchLaterMovie(watchLaterMovie)
+            }
+        }
 
     }
 

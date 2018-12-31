@@ -1,13 +1,13 @@
 package com.asmat.rolando.popularmovies.database.entities
 
 import android.arch.persistence.room.*
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MovieDetailsResponse
 
 @Entity(tableName = "watch_later_movies")
 data class WatchLaterMovie(@PrimaryKey val id: Int,
                            val poster_path: String?,
                            val adult: Boolean,
-                           val overview: String,
+                           val overview: String?,
                            val release_date: String,
                            val original_title: String,
                            val original_language: String,
@@ -17,7 +17,7 @@ data class WatchLaterMovie(@PrimaryKey val id: Int,
                            val vote_count: Int,
                            val video: Boolean,
                            val vote_average: Double) {
-    constructor(data: MoviesResponse.Movie): this(
+    constructor(data: MovieDetailsResponse): this(
             data.id,
             data.poster_path,
             data.adult,

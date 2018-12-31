@@ -6,7 +6,7 @@
     android:background="@android:color/darker_gray">
     
     <ImageView
-        android:id="@+id/iv_movie_grid_item"
+        android:id="@+id/poster"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:minHeight="250dp"

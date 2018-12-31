@@ -71,18 +71,18 @@ abstract class BaseMoviesGridAdapter(private val clickHandler: MovieAdapterOnCli
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-        private val poster: ImageView = itemView.iv_movie_grid_item
+        private val poster: ImageView? = itemView.poster
 
         fun bind(movie: Movie) {
             movie.poster_path?.let { posterPath ->
                 val posterURL = URLUtils.getImageURL342(posterPath)
-                Picasso.with(poster.context)
+                Picasso.with(poster?.context)
                         .load(posterURL)
                         .resize(340, 500)
                         .into(poster)
             }
 
-            poster.setOnClickListener {
+            poster?.setOnClickListener {
                 onClick(poster)
             }
         }
