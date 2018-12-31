@@ -74,7 +74,7 @@ class DatabaseManager(context: Context) {
      * Migrations
      */
 
-    fun migration_1_2(): Migration {
+    fun migration_1_2(): Migration { // TODO test migrations
         return object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL(

@@ -6,14 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.asmat.rolando.popularmovies.R
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
+import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.ui.adapters.MovieAdapterOnClickHandler
 import com.asmat.rolando.popularmovies.ui.adapters.MovieGridItemType
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.movie_grid_item.view.*
 
-private typealias Movie = MoviesResponse.Movie
 private typealias Movies = MutableList<Movie>
 
 abstract class BaseMoviesGridAdapter(private val clickHandler: MovieAdapterOnClickHandler) : RecyclerView.Adapter<BaseMoviesGridAdapter.ViewHolder>() {
@@ -74,7 +73,7 @@ abstract class BaseMoviesGridAdapter(private val clickHandler: MovieAdapterOnCli
         private val poster: ImageView? = itemView.poster
 
         fun bind(movie: Movie) {
-            movie.poster_path?.let { posterPath ->
+            movie.posterPath?.let { posterPath ->
                 val posterURL = URLUtils.getImageURL342(posterPath)
                 Picasso.with(poster?.context)
                         .load(posterURL)

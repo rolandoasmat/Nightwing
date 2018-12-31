@@ -13,6 +13,8 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.asmat.rolando.popularmovies.R
+import com.asmat.rolando.popularmovies.model.Movie
+import com.asmat.rolando.popularmovies.model.mappers.MovieMapper
 import com.asmat.rolando.popularmovies.ui.activities.MovieDetailActivity
 import com.asmat.rolando.popularmovies.ui.adapters.MovieAdapterOnClickHandler
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
@@ -25,6 +27,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.ArrayList
 
+// TODO reuse code that's in moviegridfragment here
 class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
 
     private var mMoviesGridAdapter: MoviesGridAdapter? = null
@@ -110,7 +113,8 @@ class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({ result ->
-                    mMoviesGridAdapter?.addMovies(result.results)
+                    val movies = result.results.map { MovieMapper.from(it) }
+                    mMoviesGridAdapter?.addMovies(movies)
                     page++
                     fetchingMovies = false
                 },{ error ->
@@ -119,10 +123,10 @@ class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
                 })
     }
 
-    override fun onClick(movie: MoviesResponse.Movie) {
+    override fun onClick(movie: Movie) {
         val destinationClass = MovieDetailActivity::class.java
         val intentToStartDetailActivity = Intent(mContext, destinationClass)
-        intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_MOVIE_ID, movie.id)
+        intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_MOVIE_DATA, movie)
         startActivity(intentToStartDetailActivity)
     }
 

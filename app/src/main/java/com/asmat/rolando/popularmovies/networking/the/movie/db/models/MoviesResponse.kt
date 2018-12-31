@@ -1,10 +1,15 @@
 package com.asmat.rolando.popularmovies.networking.the.movie.db.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class MoviesResponse(val page: Int,
                           val results: List<Movie>,
                           val total_results: Int,
-                          val total_pages: Int) {
+                          val total_pages: Int):Parcelable {
 
+    @Parcelize
     open class Movie(open val poster_path: String?,
                          open val adult: Boolean,
                          open val overview: String,
@@ -18,5 +23,5 @@ data class MoviesResponse(val page: Int,
                          open val popularity: Double,
                          open val vote_count: Int,
                          open val video: Boolean,
-                         open val vote_average: Double)
+                         open val vote_average: Double): Parcelable
 }

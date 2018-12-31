@@ -14,6 +14,8 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.asmat.rolando.popularmovies.R
+import com.asmat.rolando.popularmovies.model.Movie
+import com.asmat.rolando.popularmovies.model.mappers.MovieMapper
 import com.asmat.rolando.popularmovies.ui.activities.MovieDetailActivity
 import com.asmat.rolando.popularmovies.ui.adapters.MovieAdapterOnClickHandler
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
@@ -116,7 +118,8 @@ class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickLi
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({ result ->
-                    moviesGridAdapter?.addMovies(result.results)
+                    val movies = result.results.map { MovieMapper.from(it) }
+                    moviesGridAdapter?.addMovies(movies)
                     page++
                     fetchingMovies = false
                 },{ error ->
@@ -125,10 +128,10 @@ class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickLi
                 })
     }
 
-    override fun onClick(movie: MoviesResponse.Movie) {
+    override fun onClick(movie: Movie) {
         val destinationClass = MovieDetailActivity::class.java
         val intentToStartDetailActivity = Intent(mContext, destinationClass)
-        intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_MOVIE_ID, movie.id)
+        intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_MOVIE_DATA, movie)
         startActivity(intentToStartDetailActivity)
     }
 

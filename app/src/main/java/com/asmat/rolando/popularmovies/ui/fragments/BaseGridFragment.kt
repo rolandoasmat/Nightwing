@@ -12,14 +12,13 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.asmat.rolando.popularmovies.R
+import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
 import com.asmat.rolando.popularmovies.ui.activities.MovieDetailActivity
 import com.asmat.rolando.popularmovies.ui.adapters.MovieAdapterOnClickHandler
 import com.asmat.rolando.popularmovies.ui.adapters.grid.BaseMoviesGridAdapter
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import kotlinx.android.synthetic.main.fragment_movie_grid.view.*
-
-private typealias Movie = MoviesResponse.Movie
 
 abstract class BaseGridFragment : Fragment(), MovieAdapterOnClickHandler {
 
@@ -50,7 +49,7 @@ abstract class BaseGridFragment : Fragment(), MovieAdapterOnClickHandler {
     override fun onClick(movie: Movie) {
         val destinationClass = MovieDetailActivity::class.java
         val intentToStartDetailActivity = Intent(context, destinationClass)
-        intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_MOVIE_ID, movie.id)
+        intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_MOVIE_DATA, movie)
         startActivity(intentToStartDetailActivity)
     }
 
@@ -62,6 +61,7 @@ abstract class BaseGridFragment : Fragment(), MovieAdapterOnClickHandler {
                 layoutManager.spanCount = 1 // 1 column needed for empty state layout
                 adapter.setMovies(emptyList())
             } else {
+                // TODO need to reset span count?
                 adapter.setMovies(movies)
             }
         })

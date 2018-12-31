@@ -17,17 +17,12 @@ import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.ui.adapters.linear.CastLinearAdapter
 import com.asmat.rolando.popularmovies.ui.adapters.linear.ReviewsLinearAdapter
 import com.asmat.rolando.popularmovies.ui.adapters.linear.TrailersLinearAdapter
-import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
-import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
 import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
+import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.model.MoviesRepository
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MovieDetailsResponse
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.ReviewsResponse
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
-import com.asmat.rolando.popularmovies.utilities.DateUtils
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
 import com.asmat.rolando.popularmovies.viewmodels.MovieDetailsViewModel
 import com.squareup.picasso.Picasso
 
@@ -40,7 +35,7 @@ import kotlinx.android.synthetic.main.primary_details.*
 class MovieDetailActivity : AppCompatActivity() {
 
     companion object {
-        const val INTENT_EXTRA_MOVIE_ID = "MOVIE_ID"
+        const val INTENT_EXTRA_MOVIE_DATA = "MOVIE_DATA"
     }
 
     // Recycler View Adapters
@@ -73,12 +68,12 @@ class MovieDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
 
-        if (intent != null && intent.hasExtra(INTENT_EXTRA_MOVIE_ID)) {
+        if (intent != null && intent.hasExtra(INTENT_EXTRA_MOVIE_DATA)) {
             val databaseManager = DatabaseManager(this)
             val tmdbClient = TheMovieDBClient()
             val moviesRepository = MoviesRepository(databaseManager, tmdbClient)
-            val movieID = intent.getIntExtra(INTENT_EXTRA_MOVIE_ID, 0)
-            viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, movieID)).get(MovieDetailsViewModel::class.java) // TODO use movieID to create view model
+            val movieData = intent.getParcelableExtra<Movie>(INTENT_EXTRA_MOVIE_DATA)
+            viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, movieData)).get(MovieDetailsViewModel::class.java) // TODO use movieID to create view model
         }
         setupObservers()
         setupUI()
@@ -112,9 +107,8 @@ class MovieDetailActivity : AppCompatActivity() {
     fun onShare(view: View) {
         val mimeType = "text/plain"
         val title = resources.getString(R.string.share_movie)
-        val movieDetails = viewModel.movieDetails.value
         var textToShare = resources.getString(R.string.check_out_movie) +
-                " \"" + movieDetails?.title + "\"" // TODO replace with string resource with variables
+                " \"" + viewModel.movieTitle.value + "\"" // TODO replace with string resource with variables
         val videos = trailersLinearAdapter.data
         if (videos.isNotEmpty()) {
             textToShare += "\n" + URLUtils.getYoutubeURL(videos.first().key)
@@ -129,98 +123,61 @@ class MovieDetailActivity : AppCompatActivity() {
 
     //endregion
 
-    //region Update UI
-
-    private fun updateMovieDetails(movie: MovieDetailsResponse?) {
-        if (movie == null) {
-            return
-        }
-        val backdropURL = URLUtils.getImageURL780(movie.backdrop_path!!) // TODO create UI model classes
-        val posterURL = URLUtils.getImageURL342(movie.poster_path!!)
-        Picasso.with(this).load(backdropURL).into(backdrop)
-        Picasso.with(this).load(posterURL).into(thumbnail)
-        collapsingToolbar.title = movie.title
-        val formatted = DateUtils.formatDate(movie.release_date)
-        releaseDateLabel.text = formatted
-        val rating = movie.popularity.toString() + getString(R.string.out_of_ten) // TODO use string resource with variables
-        movieRatingLabel.text = rating
-        summary.text = movie.overview
-    }
-
-    private fun updateStarIcon(favoriteMovie: FavoriteMovie?) {
-        if (favoriteMovie == null) {
-            unfillStar()
-        } else {
-            fillStar()
-        }
-    }
-
-    private fun updateBookmarkIcon(watchLaterMovie: WatchLaterMovie?) {
-        if (watchLaterMovie == null) {
-            unfillBookmark()
-        } else {
-            fillBookmark()
-        }
-    }
-
-    private fun updateTrailers(videos: List<VideosResponse.Video>?) { // TODO observe and update error state
-        trailersLoadingBar.gone()
-        when {
-            videos == null -> trailersErrorStateLabel.visible()
-            videos.isEmpty() -> trailersEmptyStateLabel.visible()
-            else -> {
-                trailersLinearAdapter.data = videos
-                trailersRecyclerView.visible()
-            }
-        }
-    }
-
-    private fun updateCast(cast: List<CreditsResponse.Cast>?) {
-        castLoadingBar.gone()
-        when {
-            cast == null -> castErrorStateLabel.visible()
-            cast.isEmpty() -> castEmptyStateLabel.visible()
-            else -> {
-                castLinearAdapter.data = cast
-                castRecyclerView.visible()
-            }
-        }
-    }
-
-    private fun updateReviews(reviews: List<ReviewsResponse.Review>?) {
-        reviewsLoadingBar.gone()
-        when {
-            reviews == null -> reviewsErrorStateLabel.visible()
-            reviews.isEmpty() -> reviewsEmptyStateLabel.visible()
-            else -> {
-                reviewsLinearAdapter.data = reviews
-                reviewsRecyclerView.visible()
-            }
-        }
-    }
-
-    //endregion
-
     //region setup
 
     private fun setupObservers() {
+        // Movie info
         viewModel
-                .movieDetails
-                .observe(this, Observer { movieDetailsResponse ->
-                    updateMovieDetails(movieDetailsResponse)
+                .backdropURL
+                .observe(this, Observer { url ->
+                    updateBackdrop(url)
                 })
 
         viewModel
-                .favoriteMovie
-                .observe(this, Observer { favoriteMovie ->
-                    updateStarIcon(favoriteMovie)
+                .movieTitle
+                .observe(this, Observer { title ->
+                    updateTitle(title)
                 })
 
         viewModel
-                .watchLaterMovie
-                .observe(this, Observer { watchLaterMovie ->
-                    updateBookmarkIcon(watchLaterMovie)
+                .releaseDate
+                .observe(this, Observer { date ->
+                    updateReleaseDate(date)
                 })
+
+        viewModel
+                .rating
+                .observe(this, Observer { rating ->
+                    updateRating(rating)
+                })
+
+        viewModel
+                .posterURL
+                .observe(this, Observer { url ->
+                    updatePoster(url)
+                })
+
+        viewModel
+                .summary
+                .observe(this, Observer { summary ->
+                    updateSummary(summary)
+                })
+
+        // Movie icons
+
+        viewModel
+                .isFavoriteMovie
+                .observe(this, Observer { isFavoriteMovie ->
+                    updateStarIcon(isFavoriteMovie)
+                })
+
+        viewModel
+                .isWatchLaterMovie
+                .observe(this, Observer { isWatchLaterMovie ->
+                    updateBookmarkIcon(isWatchLaterMovie)
+                })
+
+        // Movie lists
 
         viewModel
                 .videos
@@ -280,6 +237,103 @@ class MovieDetailActivity : AppCompatActivity() {
         reviewsLinearAdapter = ReviewsLinearAdapter()
         reviewsRecyclerView.adapter = reviewsLinearAdapter
         reviewsRecyclerView.isNestedScrollingEnabled = false
+    }
+
+    //endregion
+
+    //region Update UI
+
+    private fun updateBackdrop(url: String?) {
+        url?.let {
+            Picasso.with(this).load(it).into(backdrop)
+        }
+    }
+
+    private fun updateTitle(title: String?) {
+        title?.let {
+            collapsingToolbar.title = it
+        }
+    }
+
+    private fun updateReleaseDate(date: String?) {
+        date?.let {
+            releaseDateLabel.text = it
+        }
+    }
+
+    private fun updateRating(rating: String?) {
+        rating?.let {
+            val ratingFormatted = it + getString(R.string.out_of_ten) // TODO use string resource with variables
+            movieRatingLabel.text = ratingFormatted
+        }
+    }
+
+    private fun updatePoster(url: String?) {
+        url?.let {
+            Picasso.with(this).load(it).into(thumbnail)
+        }
+    }
+
+    private fun updateSummary(summaryStr: String?) {
+        summaryStr?.let {
+            summary.text = it
+        }
+    }
+
+    private fun updateStarIcon(isFavoriteMovie: Boolean?) {
+        isFavoriteMovie?.let {
+            if (it) {
+                fillStar()
+            } else {
+                unfillStar()
+            }
+        } ?: unfillStar()
+    }
+
+    private fun updateBookmarkIcon(isWatchLaterMovie: Boolean?) {
+        isWatchLaterMovie?.let {
+            if (it) {
+                fillBookmark()
+            } else {
+                unfillBookmark()
+            }
+        } ?: unfillBookmark()
+    }
+
+    private fun updateTrailers(videos: List<VideosResponse.Video>?) { // TODO observe and update error state
+        trailersLoadingBar.gone()
+        when {
+            videos == null -> trailersErrorStateLabel.visible()
+            videos.isEmpty() -> trailersEmptyStateLabel.visible()
+            else -> {
+                trailersLinearAdapter.data = videos
+                trailersRecyclerView.visible()
+            }
+        }
+    }
+
+    private fun updateCast(cast: List<CreditsResponse.Cast>?) {
+        castLoadingBar.gone()
+        when {
+            cast == null -> castErrorStateLabel.visible()
+            cast.isEmpty() -> castEmptyStateLabel.visible()
+            else -> {
+                castLinearAdapter.data = cast
+                castRecyclerView.visible()
+            }
+        }
+    }
+
+    private fun updateReviews(reviews: List<ReviewsResponse.Review>?) {
+        reviewsLoadingBar.gone()
+        when {
+            reviews == null -> reviewsErrorStateLabel.visible()
+            reviews.isEmpty() -> reviewsEmptyStateLabel.visible()
+            else -> {
+                reviewsLinearAdapter.data = reviews
+                reviewsRecyclerView.visible()
+            }
+        }
     }
 
     //endregion
