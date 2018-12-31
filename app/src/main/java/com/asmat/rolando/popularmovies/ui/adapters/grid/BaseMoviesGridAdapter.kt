@@ -81,6 +81,10 @@ abstract class BaseMoviesGridAdapter(private val clickHandler: MovieAdapterOnCli
                         .resize(340, 500)
                         .into(poster)
             }
+
+            poster.setOnClickListener {
+                onClick(poster)
+            }
         }
 
         override fun onClick(v: View) {
