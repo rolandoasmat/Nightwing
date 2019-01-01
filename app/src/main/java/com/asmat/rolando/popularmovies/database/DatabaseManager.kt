@@ -1,13 +1,13 @@
 package com.asmat.rolando.popularmovies.database
 
 import android.arch.lifecycle.LiveData
-import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Room
-import android.arch.persistence.room.migration.Migration
 import android.content.Context
 
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
+import com.asmat.rolando.popularmovies.database.migrations.Migration_1_2
+import com.asmat.rolando.popularmovies.database.migrations.Migration_2_3
 
 /**
  * Database CRUD operations
@@ -24,8 +24,9 @@ class DatabaseManager(context: Context) {
         dao = Room.databaseBuilder(context,
                 AppDatabase::class.java, DATABASE_NAME)
                 .addMigrations(
-                        migration_1_2(),
-                        migration_2_3())
+                        Migration_1_2(),
+                        Migration_2_3())
+                .fallbackToDestructiveMigration()
                 .build()
                 .moviesDAO()
     }
@@ -68,33 +69,6 @@ class DatabaseManager(context: Context) {
 
     fun getAllWatchLaterMovies(): LiveData<List<WatchLaterMovie>> {
         return dao.loadAllWatchLaterMovies()
-    }
-
-    /**
-     * Migrations
-     */
-
-    fun migration_1_2(): Migration { // TODO test migrations
-        return object : Migration(1, 2) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL(
-                        "CREATE TABLE `watch_later_movies` (`id` INTEGER NOT NULL, "
-                                + " PRIMARY KEY(`id`),"
-                                + " FOREIGN KEY(`id`) REFERENCES `movies`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE)")
-            }
-        }
-    }
-
-    fun migration_2_3(): Migration {
-        return object : Migration(1, 2) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                // TODO update watch later and favorite movies with new columns. delete movies table
-                database.execSQL(
-                        "CREATE TABLE `watch_later_movies` (`id` INTEGER NOT NULL, "
-                                + " PRIMARY KEY(`id`),"
-                                + " FOREIGN KEY(`id`) REFERENCES `movies`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE)")
-            }
-        }
     }
 
 }
