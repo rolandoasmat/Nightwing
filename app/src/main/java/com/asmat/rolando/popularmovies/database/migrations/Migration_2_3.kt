@@ -8,6 +8,7 @@ import android.arch.persistence.room.migration.Migration
  */
 class Migration_2_3: Migration(2, 3) {
     override fun migrate(database: SupportSQLiteDatabase) {
+
         // Create new favorite_movies table
         database.execSQL("""CREATE TABLE favorite_movies_new
                     (id INTEGER PRIMARY KEY NOT NULL,
@@ -20,10 +21,10 @@ class Migration_2_3: Migration(2, 3) {
         // Populate new favorite_movies table
         database.execSQL("""
                     INSERT INTO favorite_movies_new
-                    SELECT movies.id, poster_path, overview, release_date, title, backdrop_path, vote_average
+                    SELECT movies_temp.id, poster_path, overview, release_date, title, backdrop_path, vote_average
                     FROM favorite_movies
-                    INNER JOIN movies
-                    ON favorite_movies.id = movies.id""")
+                    INNER JOIN movies_temp
+                    ON favorite_movies.id = movies_temp.id""")
 
 
         // Create watch_later_movies table again
@@ -38,16 +39,16 @@ class Migration_2_3: Migration(2, 3) {
         // Populate new watch_later_movies table
         database.execSQL("""
                     INSERT INTO watch_later_movies_new
-                    SELECT movies.id, poster_path, overview, release_date, title, backdrop_path, vote_average
+                    SELECT movies_temp.id, poster_path, overview, release_date, title, backdrop_path, vote_average
                     FROM watch_later_movies
-                    INNER JOIN movies
-                    ON watch_later_movies.id = movies.id""")
+                    INNER JOIN movies_temp
+                    ON watch_later_movies.id = movies_temp.id""")
 
 
         // Delete old tables
         database.execSQL("DROP TABLE IF EXISTS favorite_movies")
         database.execSQL("DROP TABLE IF EXISTS watch_later_movies")
-        database.execSQL("DROP TABLE IF EXISTS movies")
+        database.execSQL("DROP TABLE IF EXISTS movies_temp")
 
         // Rename new tables
         database.execSQL("ALTER TABLE favorite_movies_new RENAME TO favorite_movies")
