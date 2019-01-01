@@ -7,10 +7,10 @@ object FavoriteMovieMapper {
 
     fun from(data: Movie): FavoriteMovie {
         return FavoriteMovie(
+                data.id,
                 data.posterPath,
                 data.overview,
                 data.releaseDate,
-                data.id,
                 data.title,
                 data.backdropPath,
                 data.voteAverage)

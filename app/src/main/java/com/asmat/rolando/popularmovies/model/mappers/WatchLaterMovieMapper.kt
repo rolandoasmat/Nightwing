@@ -7,10 +7,10 @@ object WatchLaterMovieMapper {
 
     fun from(data: Movie): WatchLaterMovie {
         return WatchLaterMovie(
+                data.id,
                 data.posterPath,
                 data.overview,
                 data.releaseDate,
-                data.id,
                 data.title,
                 data.backdropPath,
                 data.voteAverage)
