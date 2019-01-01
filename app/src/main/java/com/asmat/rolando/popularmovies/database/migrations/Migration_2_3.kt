@@ -21,9 +21,9 @@ class Migration_2_3: Migration(2, 3) {
         database.execSQL("""
                     INSERT INTO favorite_movies_new
                     SELECT movies.id, poster_path, overview, release_date, title, backdrop_path, vote_average
-                    FROM favorite_movies_deprecated
+                    FROM favorite_movies
                     INNER JOIN movies
-                    ON favorite_movies_deprecated.id = movies.id""")
+                    ON favorite_movies.id = movies.id""")
 
 
         // Create watch_later_movies table again
@@ -39,9 +39,9 @@ class Migration_2_3: Migration(2, 3) {
         database.execSQL("""
                     INSERT INTO watch_later_movies_new
                     SELECT movies.id, poster_path, overview, release_date, title, backdrop_path, vote_average
-                    FROM watch_later_movies_deprecated
+                    FROM watch_later_movies
                     INNER JOIN movies
-                    ON watch_later_movies_deprecated.id = movies.id""")
+                    ON watch_later_movies.id = movies.id""")
 
 
         // Delete old tables
