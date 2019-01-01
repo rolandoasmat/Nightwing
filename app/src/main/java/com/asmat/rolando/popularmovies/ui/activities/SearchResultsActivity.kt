@@ -23,7 +23,6 @@ class SearchResultsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_search_results)
         setupToolbar()
         setupFragment()
-        handleIntent(intent)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -48,6 +47,7 @@ class SearchResultsActivity : AppCompatActivity() {
         if (Intent.ACTION_SEARCH == intent.action) {
             val query = intent.getStringExtra(SearchManager.QUERY)
             searchview.setQuery(query, false)
+            searchview.clearFocus()
             resultsGrid.setSearchQuery(query)
         }
     }
@@ -64,6 +64,7 @@ class SearchResultsActivity : AppCompatActivity() {
         searchview.isIconified = false
         searchview.setIconifiedByDefault(true)
         searchview.isSubmitButtonEnabled = true
+        handleIntent(intent)
         return true
     }
 }

@@ -30,12 +30,11 @@ import io.reactivex.schedulers.Schedulers
 import java.util.ArrayList
 
 // TODO reuse code that's in MovieGridFragment here
+// TODO refactor this mess to mvvm
 class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
 
     private var mMoviesGridAdapter: MoviesGridAdapter? = null
     private var mContext: Context? = null
-    private var fetchMoviesCallback: Single<MoviesResponse>? = null
-    private var searchQuery: String = ""
     private var page: Int = 0
     private var mMoviesGrid: RecyclerView? = null
     private var mNoInternetView: LinearLayout? = null
@@ -59,8 +58,6 @@ class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
             mMoviesGrid?.setHasFixedSize(true)
             mMoviesGrid?.layoutManager = mMoviesGridLayoutManager
             mMoviesGrid?.adapter = mMoviesGridAdapter
-            setFetchMoviesLoaderCallback()
-            fetchMovies()
         } else {
             mMoviesGridLayoutManager = GridLayoutManager(mContext, ViewUtils.calculateNumberOfColumns(mContext!!))
             mMoviesGrid?.layoutManager = mMoviesGridLayoutManager
@@ -92,8 +89,10 @@ class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
         this.searchQuery = searchQuery
         mMoviesGridAdapter?.setMovies(ArrayList())
         this.page = 1
-        fetchMovies()
+        fetchMovies(searchQuery)
     }
+
+    private var searchQuery = ""
 
     private fun createScrollListener(layoutManager: GridLayoutManager): RecyclerView.OnScrollListener {
         return object : RecyclerView.OnScrollListener() {
@@ -102,16 +101,18 @@ class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
                     val positionOfLastItem = layoutManager.itemCount - 1
                     val currentPositionOfLastVisibleItem = layoutManager.findLastVisibleItemPosition()
                     if (currentPositionOfLastVisibleItem >= positionOfLastItem - 5) {
-                        fetchMovies()
+                        fetchMovies(searchQuery)
                     }
                 }
             }
         }
     }
 
-    private fun fetchMovies() {
+    private val client = TheMovieDBClient()
+
+    private fun fetchMovies(searchText: String) {
         fetchingMovies = true
-        fetchMoviesCallback
+        client.searchMovie(searchText, page)
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({ result ->
@@ -130,10 +131,6 @@ class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
         val intentToStartDetailActivity = Intent(mContext, destinationClass)
         intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_MOVIE_DATA, movie)
         startActivity(intentToStartDetailActivity)
-    }
-
-    private fun setFetchMoviesLoaderCallback() {
-        fetchMoviesCallback = TheMovieDBClient().searchMovie(searchQuery, page)
     }
 
     private fun handleError(error: Throwable) {
