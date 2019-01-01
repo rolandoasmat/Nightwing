@@ -120,8 +120,10 @@ class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickLi
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({ result ->
                     val movies = result.results.map { MovieMapper.from(it) }
-                    moviesGridAdapter?.addMovies(movies)
-                    this.page++
+                    if (!movies.isEmpty()) {
+                        moviesGridAdapter?.addMovies(movies)
+                        this.page++
+                    }
                     fetchingMovies = false
                 },{ error ->
                     handleError(error)

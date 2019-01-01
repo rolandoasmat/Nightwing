@@ -29,7 +29,7 @@ abstract class BaseMoviesGridAdapter(private val clickHandler: MovieAdapterOnCli
 
     fun addMovies(movies: List<Movie>) {
         this.movies.addAll(movies)
-        showEmptyState = movies.isEmpty()
+        showEmptyState = this.movies.isEmpty()
         notifyDataSetChanged()
     }
 
