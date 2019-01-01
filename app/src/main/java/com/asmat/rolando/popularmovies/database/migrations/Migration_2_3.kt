@@ -18,14 +18,6 @@ class Migration_2_3: Migration(2, 3) {
                     title TEXT NOT NULL,
                     backdrop_path TEXT,
                     vote_average REAL NOT NULL)""")
-        // Populate new favorite_movies table
-        database.execSQL("""
-                    INSERT INTO favorite_movies_new
-                    SELECT movies_temp.id, poster_path, overview, release_date, title, backdrop_path, vote_average
-                    FROM favorite_movies
-                    INNER JOIN movies_temp
-                    ON favorite_movies.id = movies_temp.id""")
-
 
         // Create watch_later_movies table again
         database.execSQL("""CREATE TABLE watch_later_movies_new
@@ -36,19 +28,11 @@ class Migration_2_3: Migration(2, 3) {
                     title TEXT NOT NULL,
                     backdrop_path TEXT,
                     vote_average REAL NOT NULL)""")
-        // Populate new watch_later_movies table
-        database.execSQL("""
-                    INSERT INTO watch_later_movies_new
-                    SELECT movies_temp.id, poster_path, overview, release_date, title, backdrop_path, vote_average
-                    FROM watch_later_movies
-                    INNER JOIN movies_temp
-                    ON watch_later_movies.id = movies_temp.id""")
-
 
         // Delete old tables
         database.execSQL("DROP TABLE IF EXISTS favorite_movies")
         database.execSQL("DROP TABLE IF EXISTS watch_later_movies")
-        database.execSQL("DROP TABLE IF EXISTS movies_temp")
+        database.execSQL("DROP TABLE IF EXISTS movies")
 
         // Rename new tables
         database.execSQL("ALTER TABLE favorite_movies_new RENAME TO favorite_movies")
