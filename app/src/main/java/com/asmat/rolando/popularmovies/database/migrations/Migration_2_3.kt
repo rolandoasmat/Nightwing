@@ -8,10 +8,8 @@ import android.arch.persistence.room.migration.Migration
  */
 class Migration_2_3: Migration(2, 3) {
     override fun migrate(database: SupportSQLiteDatabase) {
-        // Deprecate old favorite_movies table
-        database.execSQL("ALTER TABLE favorite_movies RENAME TO favorite_movies_deprecated")
-        // Create favorite_movies table again
-        database.execSQL("""CREATE TABLE favorite_movies
+        // Create new favorite_movies table
+        database.execSQL("""CREATE TABLE favorite_movies_new
                     (id INTEGER PRIMARY KEY NOT NULL,
                     poster_path TEXT,
                     overview TEXT NOT NULL,
@@ -21,18 +19,15 @@ class Migration_2_3: Migration(2, 3) {
                     vote_average REAL NOT NULL)""")
         // Populate new favorite_movies table
         database.execSQL("""
-                    INSERT INTO favorite_movies
+                    INSERT INTO favorite_movies_new
                     SELECT movies.id, poster_path, overview, release_date, title, backdrop_path, vote_average
                     FROM favorite_movies_deprecated
                     INNER JOIN movies
                     ON favorite_movies_deprecated.id = movies.id""")
-        // Delete old favorite_movies table
-        database.execSQL("DROP TABLE favorite_movies_deprecated")
 
-        // Deprecate old favorite_movies table
-        database.execSQL("ALTER TABLE watch_later_movies RENAME TO watch_later_movies_deprecated")
-        // Create favorite_movies table again
-        database.execSQL("""CREATE TABLE watch_later_movies
+
+        // Create watch_later_movies table again
+        database.execSQL("""CREATE TABLE watch_later_movies_new
                     (id INTEGER PRIMARY KEY NOT NULL,
                     poster_path TEXT,
                     overview TEXT NOT NULL,
@@ -40,17 +35,22 @@ class Migration_2_3: Migration(2, 3) {
                     title TEXT NOT NULL,
                     backdrop_path TEXT,
                     vote_average REAL NOT NULL)""")
-        // Populate new favorite_movies table
+        // Populate new watch_later_movies table
         database.execSQL("""
-                    INSERT INTO watch_later_movies
+                    INSERT INTO watch_later_movies_new
                     SELECT movies.id, poster_path, overview, release_date, title, backdrop_path, vote_average
                     FROM watch_later_movies_deprecated
                     INNER JOIN movies
                     ON watch_later_movies_deprecated.id = movies.id""")
-        // Delete old favorite_movies table
-        database.execSQL("DROP TABLE watch_later_movies_deprecated")
 
-        // Delete movies table
-        database.execSQL("DROP TABLE movies")
+
+        // Delete old tables
+        database.execSQL("DROP TABLE IF EXISTS favorite_movies")
+        database.execSQL("DROP TABLE IF EXISTS watch_later_movies")
+        database.execSQL("DROP TABLE IF EXISTS movies")
+
+        // Rename new tables
+        database.execSQL("ALTER TABLE favorite_movies_new RENAME TO favorite_movies")
+        database.execSQL("ALTER TABLE watch_later_movies_new RENAME TO watch_later_movies")
     }
 }
