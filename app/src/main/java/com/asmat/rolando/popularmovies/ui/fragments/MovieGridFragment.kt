@@ -59,8 +59,7 @@ class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickLi
             mMoviesGrid?.setHasFixedSize(true)
             mMoviesGrid?.layoutManager = mMoviesGridLayoutManager
             mMoviesGrid?.adapter = moviesGridAdapter
-            setFetchMoviesLoaderCallback()
-            fetchMovies()
+            fetchMovies(page)
         } else {
             mMoviesGridLayoutManager = GridLayoutManager(mContext, ViewUtils.calculateNumberOfColumns(mContext!!))
             mMoviesGrid?.layoutManager = mMoviesGridLayoutManager
@@ -107,22 +106,22 @@ class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickLi
                     val positionOfLastItem = layoutManager.itemCount - 1
                     val currentPositionOfLastVisibleItem = layoutManager.findLastVisibleItemPosition()
                     if (currentPositionOfLastVisibleItem >= positionOfLastItem - 5) {
-                        fetchMovies()
+                        fetchMovies(page)
                     }
                 }
             }
         }
     }
 
-    private fun fetchMovies() {
+    private fun fetchMovies(page: Int) {
         fetchingMovies = true
-        fetchMoviesCallback
+        fetchMoviesRequest(page)
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({ result ->
                     val movies = result.results.map { MovieMapper.from(it) }
                     moviesGridAdapter?.addMovies(movies)
-                    page++
+                    this.page++
                     fetchingMovies = false
                 },{ error ->
                     handleError(error)
@@ -137,14 +136,14 @@ class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickLi
         startActivity(intentToStartDetailActivity)
     }
 
-    private fun setFetchMoviesLoaderCallback() {
-        val client = TheMovieDBClient()
-        fetchMoviesCallback = when (typeOfMovies) {
+    private val client = TheMovieDBClient()
+
+    private fun fetchMoviesRequest(page: Int): Single<MoviesResponse> {
+        return when (typeOfMovies) {
             RequestType.MOST_POPULAR -> client.getPopularMovies(page)
             RequestType.TOP_RATED -> client.getTopRatedMovies(page)
             RequestType.NOW_PLAYING -> client.getNowPlayingMovies(page)
             RequestType.UPCOMING -> client.getUpcomingMovies(page)
-            else -> null
         }
     }
 
@@ -152,7 +151,7 @@ class MovieGridFragment : Fragment(), MovieAdapterOnClickHandler, View.OnClickLi
         when (v.id) {
             R.id.retry_button -> {
                 checkInternet()
-                fetchMovies()
+                fetchMovies(page)
             }
         }
     }
