@@ -24,7 +24,7 @@ class CastLinearAdapter(clickHandler: (Cast) -> Unit?) :
         return ViewHolder(view)
     }
 
-    inner class ViewHolder(view: View) : BaseLinearAdapter<Cast, CastViewHolder>.ViewHolder(view) {
+    inner class ViewHolder(val view: View) : BaseLinearAdapter<Cast, CastViewHolder>.ViewHolder(view) {
 
         private val thumbnail: ImageView = view.thumbnail
         private val name: TextView = view.name
@@ -46,6 +46,10 @@ class CastLinearAdapter(clickHandler: (Cast) -> Unit?) :
                         .transform(RoundedTransformation(50, 0))
                         .error(R.drawable.person)
                         .into(thumbnail)
+            } ?: run {
+                val resources = view.resources
+                val image = resources.getDrawable(R.drawable.person, null)
+                thumbnail.setImageDrawable(image)
             }
         }
     }
