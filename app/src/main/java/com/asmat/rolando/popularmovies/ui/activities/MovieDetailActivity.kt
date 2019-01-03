@@ -59,7 +59,7 @@ class MovieDetailActivity : AppCompatActivity() {
         val intent = Intent(this@MovieDetailActivity, CastDetailActivity::class.java)
         intent.putExtra(CastDetailActivity.EXTRA_CAST, cast)
         intent.resolveActivity(packageManager)?.let {
-            startActivity(intent)
+//            startActivity(intent)
         }
     }
     //endregion
