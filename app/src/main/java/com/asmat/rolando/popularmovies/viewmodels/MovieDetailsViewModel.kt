@@ -29,6 +29,7 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
 
     val isFavoriteMovie: LiveData<Boolean>
     val isWatchLaterMovie: LiveData<Boolean>
+    val shareMovie: MutableLiveData<Pair<String, String>>
 
     val videos: LiveData<List<VideosResponse.Video>>
     val cast: LiveData<List<CreditsResponse.Cast>>
@@ -51,6 +52,8 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
         isWatchLaterMovie = Transformations.map(moviesRepository.getWatchLaterMovie(movieID)) {
             it != null
         }
+
+        shareMovie = MutableLiveData()
 
         videos = MutableLiveData<List<VideosResponse.Video>>()
         cast = MutableLiveData<List<CreditsResponse.Cast>>()
@@ -109,6 +112,12 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
                 moviesRepository.insertWatchLaterMovie(watchLaterMovie)
             }
         }
+    }
+
+    fun onShareTapped() {
+        val movieTitle = movie.title
+        val youtubeURL = videos.value?.firstOrNull()?.key?.let { URLUtils.getYoutubeURL(it) } ?: ""
+        shareMovie.value = Pair(movieTitle, youtubeURL)
     }
 
 }

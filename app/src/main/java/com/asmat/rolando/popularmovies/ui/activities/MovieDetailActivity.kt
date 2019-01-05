@@ -73,7 +73,7 @@ class MovieDetailActivity : AppCompatActivity() {
             val tmdbClient = TheMovieDBClient()
             val moviesRepository = MoviesRepository(databaseManager, tmdbClient)
             val movieData = intent.getParcelableExtra<Movie>(INTENT_EXTRA_MOVIE_DATA)
-            viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, movieData)).get(MovieDetailsViewModel::class.java) // TODO use movieID to create view model
+            viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, movieData)).get(MovieDetailsViewModel::class.java)
         }
         setupObservers()
         setupUI()
@@ -105,20 +105,7 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     fun onShare(view: View) {
-        val mimeType = "text/plain"
-        val title = resources.getString(R.string.share_movie)
-        var textToShare = resources.getString(R.string.check_out_movie) +
-                " \"" + viewModel.movieTitle.value + "\"" // TODO replace with string resource with variables
-        val videos = trailersLinearAdapter.data
-        if (videos.isNotEmpty()) {
-            textToShare += "\n" + URLUtils.getYoutubeURL(videos.first().key)
-        }
-
-        val intent = ShareCompat.IntentBuilder.from(this)
-                .setChooserTitle(title)
-                .setType(mimeType)
-                .setText(textToShare).intent
-        startActivity(Intent.createChooser(intent, title))
+        viewModel.onShareTapped()
     }
 
     //endregion
@@ -175,6 +162,12 @@ class MovieDetailActivity : AppCompatActivity() {
                 .isWatchLaterMovie
                 .observe(this, Observer { isWatchLaterMovie ->
                     updateBookmarkIcon(isWatchLaterMovie)
+                })
+
+        viewModel
+                .shareMovie
+                .observe(this, Observer { movieData ->
+                    shareMovie(movieData)
                 })
 
         // Movie lists
@@ -263,7 +256,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private fun updateRating(rating: String?) {
         rating?.let {
-            val ratingFormatted = it + getString(R.string.out_of_ten) // TODO use string resource with variables
+            val ratingFormatted = getString(R.string.out_of_ten, it)
             movieRatingLabel.text = ratingFormatted
         }
     }
@@ -334,6 +327,20 @@ class MovieDetailActivity : AppCompatActivity() {
                 reviewsRecyclerView.visible()
             }
         }
+    }
+
+    private fun shareMovie(movieData: Pair<String, String>?) {
+        if (movieData == null) { return }
+        val movieTitle = movieData.first
+        val movieURL = movieData.second
+        val mimeType = "text/plain"
+        val title = resources.getString(R.string.share_movie)
+        val textToShare = resources.getString(R.string.check_out_movie, movieTitle, movieURL)
+        val intent = ShareCompat.IntentBuilder.from(this)
+                .setChooserTitle(title)
+                .setType(mimeType)
+                .setText(textToShare).intent
+        startActivity(Intent.createChooser(intent, title))
     }
 
     //endregion
