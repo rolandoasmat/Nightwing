@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Películas Populares</string>
 
     <!-- Main Activity -->
     <string name="error_message">Error obteniendo data!</string>
     <string name="most_popular">Populares</string>
     <string name="top_rated">Más Votadas</string>
+    <string name="now_playing">En Estreno</string>
     <string name="favorites">Favoritos</string>
     <!--Menu-->
     <string name="sort_menu_title">Ordenar</string>
@@ -21,9 +21,10 @@
     <string name="synopsis">Sinopsis</string>
     <string name="favorite">Favorito</string>
     <string name="share">Compartir</string>
+    <string name="watch_later">Ver despues</string>
     <string name="trailers">Videos</string>
     <string name="reviews">Comentarios</string>
-
+    <string name="out_of_ten" translatable="false">%1$s/10.0</string>
 
     <!--Error Messages-->
     <string name="generic_error">"Oops! Algo salió horriblemente mal:'("</string>
@@ -38,10 +39,22 @@
 
     <!--Share-->
     <string name="share_movie">Compartir pelicula</string>
-    <string name="check_out_movie">Chequea esta pelicula!</string>
+    <string name="check_out_movie">Chequea "%1$s"! %2$s</string>
 
     <!--Search-->
     <string name="search_hint">Buscar peliculas</string>
     <string name="title_activity_search_results">Buscar</string>
     <string name="action_settings">Ajustes</string>
+    <string name="discover">Descubrir</string>
+    <string name="my_lists">Mis Peliculas</string>
+    <string name="coming_soon">Próximamente</string>
+    <string name="cast">Actores</string>
+    <string name="no_cast">No acores.</string>
+    <string name="error_cast">Error bajando actores.</string>
+    <string name="search">buscar</string>
+    <string name="movies">Peliculas</string>
+    <string name="no_movie_credits">No creditos de pelicular.</string>
+    <string name="error_movie_credits">Error bajando creditos de pelicula.</string>
+    <string name="cast_details">Actor Detalles</string>
+    <string name="movie_details">Pelicula Detalles</string>
 </resources>
