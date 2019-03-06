@@ -38,6 +38,8 @@ class MovieDetailActivity : AppCompatActivity() {
         const val INTENT_EXTRA_MOVIE_DATA = "MOVIE_DATA"
     }
 
+    private lateinit var moviesRepository: MoviesRepository
+
     // Recycler View Adapters
     private lateinit var trailersLinearAdapter: TrailersLinearAdapter
     private lateinit var castLinearAdapter: CastLinearAdapter
@@ -69,9 +71,6 @@ class MovieDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_movie_detail)
 
         if (intent != null && intent.hasExtra(INTENT_EXTRA_MOVIE_DATA)) {
-            val databaseManager = DatabaseManager(this)
-            val tmdbClient = TheMovieDBClient()
-            val moviesRepository = MoviesRepository(databaseManager, tmdbClient)
             val movieData = intent.getParcelableExtra<Movie>(INTENT_EXTRA_MOVIE_DATA)
             viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, movieData)).get(MovieDetailsViewModel::class.java)
         }

@@ -1,35 +1,13 @@
 package com.asmat.rolando.popularmovies.database
 
 import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.Room
-import android.content.Context
-
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
-import com.asmat.rolando.popularmovies.database.migrations.Migration_1_2
-import com.asmat.rolando.popularmovies.database.migrations.Migration_2_3
 
 /**
  * Database CRUD operations
  */
-class DatabaseManager(context: Context) {
-
-    companion object {
-        private const val DATABASE_NAME = "movies-database"
-    }
-
-    private val dao: MoviesDAO // TODO convert into constructor dependency
-
-    init {
-        dao = Room.databaseBuilder(context,
-                AppDatabase::class.java, DATABASE_NAME)
-                .addMigrations(
-                        Migration_1_2(),
-                        Migration_2_3())
-                .fallbackToDestructiveMigration()
-                .build()
-                .moviesDAO()
-    }
+class DatabaseManager(private val dao: MoviesDAO) {
 
     /**
      * Favorite movies
