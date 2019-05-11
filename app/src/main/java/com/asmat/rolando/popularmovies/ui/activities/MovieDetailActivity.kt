@@ -13,7 +13,6 @@ import android.view.MenuItem
 import android.view.View
 
 import com.asmat.rolando.popularmovies.R
-import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.ui.adapters.linear.CastLinearAdapter
 import com.asmat.rolando.popularmovies.ui.adapters.linear.ReviewsLinearAdapter
 import com.asmat.rolando.popularmovies.ui.adapters.linear.TrailersLinearAdapter
@@ -21,7 +20,6 @@ import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
 import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.model.MoviesRepository
-import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
 import com.asmat.rolando.popularmovies.viewmodels.MovieDetailsViewModel
 import com.squareup.picasso.Picasso
@@ -31,6 +29,7 @@ import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 import kotlinx.android.synthetic.main.movie_details_user_actions.*
 import kotlinx.android.synthetic.main.primary_details.*
+import javax.inject.Inject
 
 class MovieDetailActivity : AppCompatActivity() {
 
@@ -38,7 +37,8 @@ class MovieDetailActivity : AppCompatActivity() {
         const val INTENT_EXTRA_MOVIE_DATA = "MOVIE_DATA"
     }
 
-    private lateinit var moviesRepository: MoviesRepository
+    @Inject
+    lateinit var moviesRepository: MoviesRepository
 
     // Recycler View Adapters
     private lateinit var trailersLinearAdapter: TrailersLinearAdapter

@@ -13,6 +13,7 @@ import android.view.Menu
 import android.view.MenuItem
 
 import com.asmat.rolando.popularmovies.R
+import com.asmat.rolando.popularmovies.di.components.DaggerApplicationComponent
 import com.asmat.rolando.popularmovies.ui.adapters.pager.BaseSectionsPagerAdapter
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -26,6 +27,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DaggerApplicationComponent.create().inject(this)
         setContentView(R.layout.activity_base)
         setupToolBar()
         setupViewPager()

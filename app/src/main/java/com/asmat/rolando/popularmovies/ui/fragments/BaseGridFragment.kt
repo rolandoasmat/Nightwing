@@ -12,14 +12,12 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.asmat.rolando.popularmovies.R
-import com.asmat.rolando.popularmovies.database.MoviesDAO
 import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.ui.activities.MovieDetailActivity
 import com.asmat.rolando.popularmovies.ui.adapters.MovieAdapterOnClickHandler
 import com.asmat.rolando.popularmovies.ui.adapters.grid.BaseMoviesGridAdapter
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import kotlinx.android.synthetic.main.fragment_movie_grid.view.*
-import javax.inject.Inject
 
 abstract class BaseGridFragment : Fragment(), MovieAdapterOnClickHandler {
 
