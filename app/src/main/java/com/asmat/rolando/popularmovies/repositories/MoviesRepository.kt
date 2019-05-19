@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.model
+package com.asmat.rolando.popularmovies.repositories
 
 import android.arch.lifecycle.LiveData
 import android.os.AsyncTask

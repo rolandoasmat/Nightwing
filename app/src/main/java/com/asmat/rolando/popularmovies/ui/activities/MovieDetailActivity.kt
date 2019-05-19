@@ -19,7 +19,7 @@ import com.asmat.rolando.popularmovies.ui.adapters.linear.TrailersLinearAdapter
 import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
 import com.asmat.rolando.popularmovies.model.Movie
-import com.asmat.rolando.popularmovies.model.MoviesRepository
+import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
 import com.asmat.rolando.popularmovies.viewmodels.MovieDetailsViewModel
 import com.squareup.picasso.Picasso

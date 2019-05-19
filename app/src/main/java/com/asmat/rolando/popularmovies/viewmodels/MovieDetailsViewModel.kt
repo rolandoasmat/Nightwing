@@ -5,9 +5,8 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
-import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
 import com.asmat.rolando.popularmovies.model.Movie
-import com.asmat.rolando.popularmovies.model.MoviesRepository
+import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.model.mappers.FavoriteMovieMapper
 import com.asmat.rolando.popularmovies.model.mappers.WatchLaterMovieMapper
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
