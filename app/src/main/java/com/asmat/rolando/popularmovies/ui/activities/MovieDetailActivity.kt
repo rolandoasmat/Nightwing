@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
+import com.asmat.rolando.popularmovies.MovieNightApplication
 
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.ui.adapters.linear.CastLinearAdapter
@@ -68,6 +69,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (applicationContext as MovieNightApplication).component().inject(this)
         setContentView(R.layout.activity_movie_detail)
 
         if (intent != null && intent.hasExtra(INTENT_EXTRA_MOVIE_DATA)) {

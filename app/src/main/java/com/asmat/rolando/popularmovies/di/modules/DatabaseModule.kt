@@ -27,7 +27,6 @@ class DatabaseModule {
                 .fallbackToDestructiveMigration()
                 .build()
                 .moviesDAO()
-
     }
 
     @Provides

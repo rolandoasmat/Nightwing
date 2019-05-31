@@ -27,7 +27,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerApplicationComponent.create().inject(this)
         setContentView(R.layout.activity_base)
         setupToolBar()
         setupViewPager()
