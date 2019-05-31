@@ -5,6 +5,7 @@ import com.asmat.rolando.popularmovies.di.modules.DatabaseModule
 import com.asmat.rolando.popularmovies.di.modules.NetworkModule
 import com.asmat.rolando.popularmovies.di.modules.RepositoriesModule
 import com.asmat.rolando.popularmovies.ui.activities.BaseActivity
+import com.asmat.rolando.popularmovies.ui.activities.CastDetailActivity
 import com.asmat.rolando.popularmovies.ui.activities.MovieDetailActivity
 import com.asmat.rolando.popularmovies.ui.fragments.BaseGridFragment
 import dagger.Component
@@ -14,7 +15,7 @@ interface ApplicationComponent {
 
     fun inject(app: BaseActivity)
     fun inject(fragment: BaseGridFragment)
-
     fun inject(movieDetailActivity: MovieDetailActivity)
+    fun inject(castDetailActivity: CastDetailActivity)
 
 }

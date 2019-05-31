@@ -74,5 +74,9 @@ class TheMovieDBClient {
     fun searchMovie(searchString: String, page: Int): Single<MoviesResponse> {
         return service.searchMovie(searchString, page)
     }
+
+    fun getPersonDetails(id: Int): Single<PersonDetailsResponse> {
+        return service.getPersonDetails(id)
+    }
     //endregion
 }

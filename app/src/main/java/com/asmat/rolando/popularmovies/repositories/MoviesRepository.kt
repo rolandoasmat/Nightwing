@@ -7,11 +7,9 @@ import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MovieDetailsResponse
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.ReviewsResponse
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 
 /**
  * Used by ViewModels to access movie related data sources
@@ -75,6 +73,10 @@ class MoviesRepository(private val db: DatabaseManager,
 
     fun getMovieCredits(movieID: Int): Single<CreditsResponse> {
         return tmdbClient.getMovieCredits(movieID)
+    }
+
+    fun getPersonDetails(id: Int): Single<PersonDetailsResponse> {
+        return tmdbClient.getPersonDetails(id).subscribeOn(Schedulers.io())
     }
 
     /**

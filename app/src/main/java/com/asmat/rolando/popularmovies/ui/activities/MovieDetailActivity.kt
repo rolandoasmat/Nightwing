@@ -60,9 +60,9 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private val castClickCallback = { cast: CreditsResponse.Cast ->
         val intent = Intent(this@MovieDetailActivity, CastDetailActivity::class.java)
-        intent.putExtra(CastDetailActivity.EXTRA_CAST, cast)
+        intent.putExtra(CastDetailActivity.PERSON_ID_KEY, cast.id)
         intent.resolveActivity(packageManager)?.let {
-//            startActivity(intent)
+            startActivity(intent)
         }
     }
     //endregion
