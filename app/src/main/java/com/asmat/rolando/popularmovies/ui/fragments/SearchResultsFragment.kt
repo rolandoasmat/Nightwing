@@ -19,12 +19,10 @@ import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.model.mappers.MovieMapper
 import com.asmat.rolando.popularmovies.ui.activities.MovieDetailActivity
 import com.asmat.rolando.popularmovies.ui.adapters.MovieAdapterOnClickHandler
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
 import com.asmat.rolando.popularmovies.ui.adapters.grid.MoviesGridAdapter
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.ArrayList

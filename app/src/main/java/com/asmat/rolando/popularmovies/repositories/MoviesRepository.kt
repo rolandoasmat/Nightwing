@@ -36,6 +36,10 @@ class MoviesRepository(private val db: DatabaseManager,
         runOnBackground { db.addFavoriteMovie(movie) }
     }
 
+    fun getAllFavoriteMovies(): LiveData<List<FavoriteMovie>> {
+        return db.getAllFavoriteMovies()
+    }
+
     // Watch Later Movie
     fun getWatchLaterMovie(movieID: Int): LiveData<WatchLaterMovie> {
         return db.getWatchLaterMovie(movieID)
@@ -47,6 +51,10 @@ class MoviesRepository(private val db: DatabaseManager,
 
     fun insertWatchLaterMovie(movie: WatchLaterMovie) {
         runOnBackground { db.addWatchLaterMovie(movie) }
+    }
+
+    fun getAllWatchLaterMovies(): LiveData<List<WatchLaterMovie>> {
+        return db.getAllWatchLaterMovies()
     }
 
     /**

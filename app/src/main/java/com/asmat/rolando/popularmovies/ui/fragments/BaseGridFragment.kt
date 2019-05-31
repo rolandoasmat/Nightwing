@@ -10,22 +10,34 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.asmat.rolando.popularmovies.MovieNightApplication
 
 import com.asmat.rolando.popularmovies.R
+import com.asmat.rolando.popularmovies.database.MoviesDAO
 import com.asmat.rolando.popularmovies.model.Movie
+import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.ui.activities.MovieDetailActivity
 import com.asmat.rolando.popularmovies.ui.adapters.MovieAdapterOnClickHandler
 import com.asmat.rolando.popularmovies.ui.adapters.grid.BaseMoviesGridAdapter
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import kotlinx.android.synthetic.main.fragment_movie_grid.view.*
+import javax.inject.Inject
 
 abstract class BaseGridFragment : Fragment(), MovieAdapterOnClickHandler {
+
+    @Inject
+    lateinit var moviesRepository: MoviesRepository
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: BaseMoviesGridAdapter
 
     internal abstract val movieSource: LiveData<List<Movie>>
     internal abstract fun getAdapter(handler: MovieAdapterOnClickHandler): BaseMoviesGridAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (activity?.applicationContext as MovieNightApplication).component().inject(this)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_movie_grid, container, false)
