@@ -16,8 +16,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 @SuppressLint("CheckResult")
-class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
-                            private val movie: Movie) : ViewModel() {
+class MovieDetailsViewModel(private val moviesRepository: MoviesRepository) : ViewModel() {
 
     val backdropURL = MutableLiveData<String>()
     val movieTitle = MutableLiveData<String>()
@@ -26,17 +25,18 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
     val posterURL = MutableLiveData<String>()
     val summary = MutableLiveData<String>()
 
-    val isFavoriteMovie: LiveData<Boolean>
-    val isWatchLaterMovie: LiveData<Boolean>
-    val shareMovie: MutableLiveData<Pair<String, String>>
+    lateinit var isFavoriteMovie: LiveData<Boolean>
+    lateinit var isWatchLaterMovie: LiveData<Boolean>
+    val shareMovie = MutableLiveData<Pair<String, String>>()
 
-    val videos: LiveData<List<VideosResponse.Video>>
-    val cast: LiveData<List<CreditsResponse.Cast>>
-    val reviews: LiveData<List<ReviewsResponse.Review>>
+    val videos = MutableLiveData<List<VideosResponse.Video>>()
+    val cast = MutableLiveData<List<CreditsResponse.Cast>>()
+    val reviews = MutableLiveData<List<ReviewsResponse.Review>>()
     
-    private val movieID = movie.id
+    private var movie: Movie? = null
 
-    init {
+    fun init(movie: Movie) {
+        this.movie = movie
         movie.backdropPath?.let { backdropURL.value = URLUtils.getImageURL780(it) }
         movieTitle.value = movie.title
         movie.releaseDate.let { releaseDate.value = DateUtils.formatDate(it) }
@@ -44,22 +44,16 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
         movie.posterPath?.let { posterURL.value = URLUtils.getImageURL342(it) }
         summary.value = movie.overview
 
-        isFavoriteMovie = Transformations.map(moviesRepository.getFavoriteMovie(movieID)) {
+        isFavoriteMovie = Transformations.map(moviesRepository.getFavoriteMovie(movie.id)) {
             it != null
         }
 
-        isWatchLaterMovie = Transformations.map(moviesRepository.getWatchLaterMovie(movieID)) {
+        isWatchLaterMovie = Transformations.map(moviesRepository.getWatchLaterMovie(movie.id)) {
             it != null
         }
-
-        shareMovie = MutableLiveData()
-
-        videos = MutableLiveData<List<VideosResponse.Video>>()
-        cast = MutableLiveData<List<CreditsResponse.Cast>>()
-        reviews = MutableLiveData<List<ReviewsResponse.Review>>()
 
         moviesRepository
-                .getMovieVideos(movieID)
+                .getMovieVideos(movie.id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ result ->
@@ -69,7 +63,7 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
                 })
 
         moviesRepository
-                .getMovieCredits(movieID)
+                .getMovieCredits(movie.id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ result ->
@@ -79,7 +73,7 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
                 })
 
         moviesRepository
-                .getMovieReviews(movieID)
+                .getMovieReviews(movie.id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ result ->
@@ -92,9 +86,10 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
     //region UI events
 
     fun onStarTapped() {
+        val movie = this.movie ?: return
         isFavoriteMovie.value?.let {
             if (it) {
-                moviesRepository.removeFavoriteMovie(movieID)
+                moviesRepository.removeFavoriteMovie(movie.id)
             } else {
                 val favoriteMovie = FavoriteMovieMapper.from(movie)
                 moviesRepository.insertFavoriteMovie(favoriteMovie)
@@ -103,9 +98,10 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
     }
 
     fun onBookmarkTapped() {
+        val movie = this.movie ?: return
         isWatchLaterMovie.value?.let {
             if (it) {
-                moviesRepository.removeWatchLaterMovie(movieID)
+                moviesRepository.removeWatchLaterMovie(movie.id)
             } else {
                 val watchLaterMovie = WatchLaterMovieMapper.from(movie)
                 moviesRepository.insertWatchLaterMovie(watchLaterMovie)
@@ -114,6 +110,7 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
     }
 
     fun onShareTapped() {
+        val movie = this.movie ?: return
         val movieTitle = movie.title
         val youtubeURL = videos.value?.firstOrNull()?.key?.let { URLUtils.getYoutubeURL(it) } ?: ""
         shareMovie.value = Pair(movieTitle, youtubeURL)

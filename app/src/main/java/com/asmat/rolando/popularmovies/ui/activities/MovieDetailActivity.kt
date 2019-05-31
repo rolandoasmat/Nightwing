@@ -71,10 +71,10 @@ class MovieDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         (applicationContext as MovieNightApplication).component().inject(this)
         setContentView(R.layout.activity_movie_detail)
-
+        viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository)).get(MovieDetailsViewModel::class.java)
         if (intent != null && intent.hasExtra(INTENT_EXTRA_MOVIE_DATA)) {
             val movieData = intent.getParcelableExtra<Movie>(INTENT_EXTRA_MOVIE_DATA)
-            viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, movieData)).get(MovieDetailsViewModel::class.java)
+            viewModel.init(movieData)
         }
         setupObservers()
         setupUI()
