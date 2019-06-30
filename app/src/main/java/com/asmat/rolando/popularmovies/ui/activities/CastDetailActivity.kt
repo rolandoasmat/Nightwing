@@ -12,7 +12,10 @@ import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.ui.cast_detail.CastDetailViewModel
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_cast_detail.*
+import kotlinx.android.synthetic.main.cast_primary_details.*
+import java.lang.IllegalStateException
 import javax.inject.Inject
 
 class CastDetailActivity : AppCompatActivity() {
@@ -25,7 +28,7 @@ class CastDetailActivity : AppCompatActivity() {
     lateinit var moviesRepository: MoviesRepository
 
     private val personID: Int
-            get() = intent?.getIntExtra(PERSON_ID_KEY, -1) ?: -1
+            get() = intent?.getIntExtra(PERSON_ID_KEY, -1) ?: throw IllegalStateException("No person ID found.")
 
     lateinit var viewModel: CastDetailViewModel
 
@@ -54,6 +57,21 @@ class CastDetailActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.name.observe(this, Observer {
             collapsingToolbar.title = it
+        })
+        viewModel.hometown.observe(this, Observer {
+            homeTown.text = it
+        })
+        viewModel.birthday.observe(this, Observer {
+            birthdate.text = it
+        })
+        viewModel.deathday.observe(this, Observer {
+            deathdate.text = it
+        })
+        viewModel.photoURL.observe(this, Observer {
+            Picasso.with(this).load(it).into(poster)
+        })
+        viewModel.biography.observe(this, Observer {
+            biography.text = it
         })
     }
 
