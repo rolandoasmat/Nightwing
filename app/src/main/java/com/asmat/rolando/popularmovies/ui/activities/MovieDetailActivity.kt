@@ -22,6 +22,7 @@ import com.asmat.rolando.popularmovies.extensions.visible
 import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
+import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.asmat.rolando.popularmovies.viewmodels.MovieDetailsViewModel
 import com.squareup.picasso.Picasso
 
@@ -40,6 +41,8 @@ class MovieDetailActivity : AppCompatActivity() {
 
     @Inject
     lateinit var moviesRepository: MoviesRepository
+    @Inject
+    lateinit var peopleRepository: PeopleRepository
 
     // Recycler View Adapters
     private lateinit var trailersLinearAdapter: TrailersLinearAdapter
@@ -71,7 +74,7 @@ class MovieDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         (applicationContext as MovieNightApplication).component().inject(this)
         setContentView(R.layout.activity_movie_detail)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository)).get(MovieDetailsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository)).get(MovieDetailsViewModel::class.java)
         if (intent != null && intent.hasExtra(INTENT_EXTRA_MOVIE_DATA)) {
             val movieData = intent.getParcelableExtra<Movie>(INTENT_EXTRA_MOVIE_DATA)
             viewModel.init(movieData)

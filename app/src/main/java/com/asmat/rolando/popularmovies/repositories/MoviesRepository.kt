@@ -75,10 +75,6 @@ class MoviesRepository(private val db: DatabaseManager,
         return tmdbClient.getMovieCredits(movieID)
     }
 
-    fun getPersonDetails(id: Int): Single<PersonDetailsResponse> {
-        return tmdbClient.getPersonDetails(id).subscribeOn(Schedulers.io())
-    }
-
     /**
      * Private
      */

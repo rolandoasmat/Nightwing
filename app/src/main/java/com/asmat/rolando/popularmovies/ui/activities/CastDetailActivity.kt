@@ -10,7 +10,9 @@ import com.asmat.rolando.popularmovies.MovieNightApplication
 
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
+import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.asmat.rolando.popularmovies.ui.cast_detail.CastDetailViewModel
+import com.asmat.rolando.popularmovies.ui.transformations.RoundedTransformation
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_cast_detail.*
@@ -26,6 +28,8 @@ class CastDetailActivity : AppCompatActivity() {
 
     @Inject
     lateinit var moviesRepository: MoviesRepository
+    @Inject
+    lateinit var peopleRepository: PeopleRepository
 
     private val personID: Int
             get() = intent?.getIntExtra(PERSON_ID_KEY, -1) ?: throw IllegalStateException("No person ID found.")
@@ -36,7 +40,7 @@ class CastDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         (applicationContext as MovieNightApplication).component().inject(this)
         setContentView(R.layout.activity_cast_detail)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository)).get(CastDetailViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository)).get(CastDetailViewModel::class.java)
         viewModel.init(personID)
         setup()
     }
@@ -68,7 +72,13 @@ class CastDetailActivity : AppCompatActivity() {
             deathdate.text = it
         })
         viewModel.photoURL.observe(this, Observer {
-            Picasso.with(this).load(it).into(poster)
+            Picasso.with(this)
+                    .load(it)
+                    .resize(342, 513)
+                    .centerCrop()
+                    .transform(RoundedTransformation(50, 0))
+                    .error(R.drawable.person)
+                    .into(poster)
         })
         viewModel.biography.observe(this, Observer {
             biography.text = it

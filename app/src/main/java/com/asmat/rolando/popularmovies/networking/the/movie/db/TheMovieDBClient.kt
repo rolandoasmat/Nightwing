@@ -78,5 +78,9 @@ class TheMovieDBClient {
     fun getPersonDetails(id: Int): Single<PersonDetailsResponse> {
         return service.getPersonDetails(id)
     }
+
+    fun getPersonMovieCredits(personID: Int): Single<PersonMovieCredits> {
+        return service.getPersonMovieCredits(personID)
+    }
     //endregion
 }

@@ -42,5 +42,8 @@ interface TheMovieDBService {
     //region people/*
     @GET("person/{person_id}")
     fun getPersonDetails(@Path("person_id") id: Int): Single<PersonDetailsResponse>
+
+    @GET("person/{person_id}/movie_credits")
+    fun getPersonMovieCredits(@Path("person_id") id: Int): Single<PersonMovieCredits>
     //endregion
 }
