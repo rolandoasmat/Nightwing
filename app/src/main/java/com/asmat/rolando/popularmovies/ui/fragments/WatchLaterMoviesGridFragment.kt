@@ -2,11 +2,12 @@ package com.asmat.rolando.popularmovies.ui.fragments
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Transformations
-import com.asmat.rolando.popularmovies.ui.adapters.grid.WatchLaterMoviesGridAdapter
+import com.asmat.rolando.popularmovies.ui.mylists.WatchLaterMoviesGridAdapter
 import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.model.mappers.MovieMapper
-import com.asmat.rolando.popularmovies.ui.adapters.MovieAdapterOnClickHandler
-import com.asmat.rolando.popularmovies.ui.adapters.grid.BaseMoviesGridAdapter
+import com.asmat.rolando.popularmovies.ui.common.MovieAdapterOnClickHandler
+import com.asmat.rolando.popularmovies.ui.common.BaseGridFragment
+import com.asmat.rolando.popularmovies.ui.common.BaseMoviesGridAdapter
 
 class WatchLaterMoviesGridFragment : BaseGridFragment() {
 

@@ -17,7 +17,7 @@
 
         <!-- Discover Activity -->
         <activity
-            android:name="com.asmat.rolando.popularmovies.ui.activities.DiscoverActivity"
+            android:name="com.asmat.rolando.popularmovies.ui.discover.DiscoverActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,35 +27,35 @@
         </activity>
 
         <!-- My Lists Activity -->
-        <activity android:name="com.asmat.rolando.popularmovies.ui.activities.MyListsActivity"
+        <activity android:name="com.asmat.rolando.popularmovies.ui.mylists.MyListsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <!-- Movie Detail -->
         <activity
-            android:name="com.asmat.rolando.popularmovies.ui.activities.MovieDetailActivity"
-            android:parentActivityName="com.asmat.rolando.popularmovies.ui.activities.DiscoverActivity"
+            android:name="com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailActivity"
+            android:parentActivityName="com.asmat.rolando.popularmovies.ui.discover.DiscoverActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asmat.rolando.popularmovies.ui.activities.DiscoverActivity" />
+                android:value="com.asmat.rolando.popularmovies.ui.discover.DiscoverActivity" />
         </activity>
 
         <!-- Cast Detail -->
         <activity
-            android:name="com.asmat.rolando.popularmovies.ui.activities.CastDetailActivity"
-            android:parentActivityName="com.asmat.rolando.popularmovies.ui.activities.MovieDetailActivity"
+            android:name="com.asmat.rolando.popularmovies.ui.castdetails.CastDetailsActivity"
+            android:parentActivityName="com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asmat.rolando.popularmovies.ui.activities.MovieDetailActivity" />
+                android:value="com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailActivity" />
         </activity>
 
         <!-- Search -->
         <activity
-            android:name="com.asmat.rolando.popularmovies.ui.activities.SearchResultsActivity"
+            android:name="com.asmat.rolando.popularmovies.ui.search.SearchResultsActivity"
             android:label="@string/title_activity_search_results"
             android:launchMode="singleTop"
-            android:parentActivityName="com.asmat.rolando.popularmovies.ui.activities.DiscoverActivity"
+            android:parentActivityName="com.asmat.rolando.popularmovies.ui.discover.DiscoverActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -63,7 +63,7 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asmat.rolando.popularmovies.ui.activities.DiscoverActivity" />
+                android:value="com.asmat.rolando.popularmovies.ui.discover.DiscoverActivity" />
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".activities.SearchResultsActivity" />
