@@ -57,4 +57,11 @@
     <string name="error_movie_credits">Error fetching movie credits.</string>
     <string name="cast_details">Cast Details</string>
     <string name="movie_details">Movie Details</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Cast Details-->
+    <string name="info">Info</string>
+    <string name="movie_credits">Movie Credits</string>
 </resources>

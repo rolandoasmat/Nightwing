@@ -23,6 +23,8 @@ class CastDetailViewModel(private val peopleRepository: PeopleRepository): ViewM
     val birthday = MutableLiveData<String>()
     val deathday = MutableLiveData<String>()
 
+    val uiModel = MutableLiveData<CastDetailScreenUiModel>()
+
     fun init(personID: Int) {
         fetchPersonDetails(personID)
     }
@@ -40,11 +42,14 @@ class CastDetailViewModel(private val peopleRepository: PeopleRepository): ViewM
                 .subscribe({
                     loading.value = false
                     name.value = it.name
-                    photoURL.value = URLUtils.getImageURL342(it.profile_path ?: "")
-                    biography.value = it.biography
-                    hometown.value = it.place_of_birth ?: "--"
-                    birthday.value = it.birthday ?: "--"
-                    deathday.value = it.deathday ?: "--"
+                    val infoUiModel = PersonDetailsUiModel(
+                            URLUtils.getImageURL342(it.profile_path ?: ""),
+                            it.place_of_birth ?: "--",
+                            it.birthday ?: "--",
+                            it.deathday ?: "--",
+                            it.biography)
+
+                    uiModel.value = CastDetailScreenUiModel(infoUiModel)
                 }, {
                     error.value = it
                     loading.value = false

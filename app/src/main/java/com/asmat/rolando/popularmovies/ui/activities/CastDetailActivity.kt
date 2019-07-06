@@ -12,11 +12,12 @@ import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.asmat.rolando.popularmovies.ui.cast_detail.CastDetailViewModel
+import com.asmat.rolando.popularmovies.ui.cast_detail.CastDetailsPagerAdapter
+import com.asmat.rolando.popularmovies.ui.cast_detail.PersonDetailsUiModel
 import com.asmat.rolando.popularmovies.ui.transformations.RoundedTransformation
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_cast_detail.*
-import kotlinx.android.synthetic.main.cast_primary_details.*
 import java.lang.IllegalStateException
 import javax.inject.Inject
 
@@ -45,6 +46,7 @@ class CastDetailActivity : AppCompatActivity() {
         setup()
     }
 
+
     //region setup
 
     private fun setup() {
@@ -62,26 +64,8 @@ class CastDetailActivity : AppCompatActivity() {
         viewModel.name.observe(this, Observer {
             collapsingToolbar.title = it
         })
-        viewModel.hometown.observe(this, Observer {
-            homeTown.text = it
-        })
-        viewModel.birthday.observe(this, Observer {
-            birthdate.text = it
-        })
-        viewModel.deathday.observe(this, Observer {
-            deathdate.text = it
-        })
-        viewModel.photoURL.observe(this, Observer {
-            Picasso.with(this)
-                    .load(it)
-                    .resize(342, 513)
-                    .centerCrop()
-                    .transform(RoundedTransformation(50, 0))
-                    .error(R.drawable.person)
-                    .into(poster)
-        })
-        viewModel.biography.observe(this, Observer {
-            biography.text = it
+        viewModel.uiModel.observe(this, Observer { uiModel ->
+            uiModel?.let { setupViewPager(uiModel.personDetailsUiModel) }
         })
     }
 
@@ -100,5 +84,11 @@ class CastDetailActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    private fun setupViewPager(personDetailsUiModel: PersonDetailsUiModel) {
+        val adapter = CastDetailsPagerAdapter(personDetailsUiModel, supportFragmentManager, this)
+        castDetailsViewPager?.adapter = adapter
+        tabLayout?.setupWithViewPager(castDetailsViewPager)
     }
 }
