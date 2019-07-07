@@ -12,8 +12,7 @@ import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
-import com.asmat.rolando.popularmovies.ui.castdetails.personinfo.PersonInfoUiModel
-import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.PersonMovieCreditsFragment
+ import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.PersonMovieCreditsFragment
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_cast_detail.*
 import java.lang.IllegalStateException
