@@ -16,11 +16,6 @@ class CastDetailsViewModel(private val peopleRepository: PeopleRepository): View
     val loading = MutableLiveData<Boolean>()
     val error = MutableLiveData<Throwable>()
     val name = MutableLiveData<String>()
-    val photoURL = MutableLiveData<String>()
-    val biography = MutableLiveData<String>()
-    val hometown = MutableLiveData<String>()
-    val birthday = MutableLiveData<String>()
-    val deathday = MutableLiveData<String>()
 
     val uiModel = MutableLiveData<CastDetailsUiModel>()
 
@@ -48,20 +43,7 @@ class CastDetailsViewModel(private val peopleRepository: PeopleRepository): View
                             it.deathday ?: "--",
                             it.biography)
 
-                    uiModel.value = CastDetailsUiModel(infoUiModel)
-                }, {
-                    error.value = it
-                    loading.value = false
-                })
-        peopleRepository
-                .getPersonMovieCredits(personID)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    it.cast.forEach {
-                        // TODO populate UI with list of movies
-
-                    }
+                    uiModel.value = CastDetailsUiModel(infoUiModel, personID)
                 }, {
                     error.value = it
                     loading.value = false

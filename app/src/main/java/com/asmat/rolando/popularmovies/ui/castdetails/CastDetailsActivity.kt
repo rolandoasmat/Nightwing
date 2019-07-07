@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.MenuItem
 import com.asmat.rolando.popularmovies.MovieNightApplication
 
@@ -12,12 +13,13 @@ import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.asmat.rolando.popularmovies.ui.castdetails.personinfo.PersonInfoUiModel
+import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.PersonMovieCreditsFragment
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_cast_detail.*
 import java.lang.IllegalStateException
 import javax.inject.Inject
 
-class CastDetailsActivity : AppCompatActivity() {
+class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.Listener {
 
     companion object {
         const val PERSON_ID_KEY = "PERSON_ID_KEY"
@@ -61,7 +63,7 @@ class CastDetailsActivity : AppCompatActivity() {
             collapsingToolbar.title = it
         })
         viewModel.uiModel.observe(this, Observer { uiModel ->
-            uiModel?.let { setupViewPager(uiModel.personInfoUiModel) }
+            uiModel?.let { setupViewPager(uiModel) }
         })
     }
 
@@ -82,9 +84,13 @@ class CastDetailsActivity : AppCompatActivity() {
         return true
     }
 
-    private fun setupViewPager(personInfoUiModel: PersonInfoUiModel) {
-        val adapter = CastDetailsPagerAdapter(personInfoUiModel, supportFragmentManager, this)
+    private fun setupViewPager(uiModel: CastDetailsUiModel) {
+        val adapter = CastDetailsPagerAdapter(uiModel, supportFragmentManager, this)
         castDetailsViewPager?.adapter = adapter
         tabLayout?.setupWithViewPager(castDetailsViewPager)
+    }
+
+    override fun onMoviePressed(position: Int) {
+        Log.v("TESTTAG", "Movie credit pressed: $position")
     }
 }

@@ -15,7 +15,7 @@ class PeopleRepository @Inject constructor(private val tmdbClient: TheMovieDBCli
     }
 
     fun getPersonMovieCredits(id: Int) : Single<PersonMovieCredits> {
-        return tmdbClient.getPersonMovieCredits(id)
+        return tmdbClient.getPersonMovieCredits(id).subscribeOn(Schedulers.io())
     }
 
 }
