@@ -9,8 +9,8 @@ android {
         applicationId "com.asmat.rolando.popularmovies"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 13
-        versionName "1.5.3"
+        versionCode 14
+        versionName "1.6.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "THE_MOVIE_DB_API_KEY", THE_MOVIE_DB_API_KEY)
