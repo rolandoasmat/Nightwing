@@ -15,6 +15,7 @@ import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
+import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.person_movie_credits.*
 import javax.inject.Inject
@@ -82,7 +83,8 @@ class PersonMovieCreditsFragment : Fragment() {
     }
 
     private fun setup() {
-        movieCreditsRecyclerView?.layoutManager = GridLayoutManager(context, 2)
+        val numOfColumns = ViewUtils.calculateNumberOfColumns(activity!!)
+        movieCreditsRecyclerView?.layoutManager = GridLayoutManager(context, numOfColumns)
         movieCreditsRecyclerView?.adapter = adapter
         personID?. let { id -> viewModel.init(id) }
         observeViewModel()
