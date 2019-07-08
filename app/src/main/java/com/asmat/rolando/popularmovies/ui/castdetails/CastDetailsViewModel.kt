@@ -31,7 +31,6 @@ class CastDetailsViewModel(private val peopleRepository: PeopleRepository): View
         loading.value = true
         disposable = peopleRepository
                 .getPersonDetails(personID)
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     loading.value = false

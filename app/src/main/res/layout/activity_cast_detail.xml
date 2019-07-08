@@ -24,6 +24,7 @@
             app:expandedTitleMarginStart="@dimen/activity_horizontal_margin_small"
             app:expandedTitleMarginEnd="@dimen/activity_horizontal_margin_small"
             app:expandedTitleMarginBottom="@dimen/activity_vertical_margin"
+            app:title="@string/loading"
             tools:title="@string/cast_details">
 
             <!--Image View-->
@@ -52,11 +53,27 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+
     <android.support.v4.view.ViewPager
         android:id="@+id/castDetailsViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_scrollFlags="scroll"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
 
 </android.support.design.widget.CoordinatorLayout>

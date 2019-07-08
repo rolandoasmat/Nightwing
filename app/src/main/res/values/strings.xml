@@ -64,4 +64,5 @@
     <!--Cast Details-->
     <string name="info">Info</string>
     <string name="movie_credits">Movie Credits</string>
+    <string name="loading">Loading...</string>
 </resources>

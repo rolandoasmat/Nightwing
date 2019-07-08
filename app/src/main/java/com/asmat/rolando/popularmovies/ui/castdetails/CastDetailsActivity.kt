@@ -10,6 +10,8 @@ import android.view.MenuItem
 import com.asmat.rolando.popularmovies.MovieNightApplication
 
 import com.asmat.rolando.popularmovies.R
+import com.asmat.rolando.popularmovies.extensions.gone
+import com.asmat.rolando.popularmovies.extensions.visible
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
  import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.PersonMovieCreditsFragment
@@ -65,6 +67,9 @@ class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.List
         viewModel.uiModel.observe(this, Observer { uiModel ->
             uiModel?.let { setupViewPager(uiModel) }
         })
+        viewModel.loading.observe(this, Observer { loading ->
+            updateLoading(loading == true)
+        })
     }
 
     //endregion
@@ -101,4 +106,12 @@ class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.List
         }
     }
     //endregion
+
+    private fun updateLoading(loading: Boolean) {
+        if (loading) {
+            loadingView?.visible()
+        } else {
+            loadingView?.gone()
+        }
+    }
 }
