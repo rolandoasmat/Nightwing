@@ -45,7 +45,6 @@ class MovieCreditsAdapter: RecyclerView.Adapter<MovieCreditsAdapter.ViewHolder>(
         fun bind(model: MovieCreditUiModel) {
             Picasso.with(poster?.context)
                     .load(model.posterURL)
-                    .resize(340, 500)
                     .into(poster)
             characterName?.text = model.characterName
         }

@@ -14,6 +14,7 @@ import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
  import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.PersonMovieCreditsFragment
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_cast_detail.*
 import java.lang.IllegalStateException
 import javax.inject.Inject
@@ -89,7 +90,15 @@ class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.List
         tabLayout?.setupWithViewPager(castDetailsViewPager)
     }
 
+    //region Callbacks
     override fun onMoviePressed(position: Int) {
         Log.v("TESTTAG", "Movie credit pressed: $position")
     }
+
+    override fun backdropURL(url: String?) {
+        url?.let {
+            Picasso.with(this).load(it).into(toolbarImage)
+        }
+    }
+    //endregion
 }

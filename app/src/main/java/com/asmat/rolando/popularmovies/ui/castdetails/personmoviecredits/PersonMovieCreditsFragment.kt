@@ -96,6 +96,7 @@ class PersonMovieCreditsFragment : Fragment() {
 
     private fun updateUI(uiModel: PersonMovieCreditsUiModel) {
         adapter.updateData(uiModel.movies)
+        listener?.backdropURL(uiModel.backdropURL)
     }
 
     private fun onMoviePressed(position: Int) {
@@ -104,6 +105,7 @@ class PersonMovieCreditsFragment : Fragment() {
 
     interface Listener {
         fun onMoviePressed(position: Int)
+        fun backdropURL(url: String?)
     }
 
 }
