@@ -7,7 +7,7 @@
             android:title="@string/discover" />
         <item
             android:id="@+id/my_lists"
-            android:icon="@drawable/ic_star"
+            android:icon="@drawable/ic_star_empty"
             android:title="@string/my_lists" />
     </group>
 </menu>

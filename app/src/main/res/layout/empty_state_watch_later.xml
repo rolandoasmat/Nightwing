@@ -17,7 +17,7 @@
 
     <ImageView
         android:id="@+id/bookmark"
-        app:srcCompat="@drawable/ic_bookmark"
+        app:srcCompat="@drawable/ic_bookmark_empty"
         android:layout_width="@dimen/empty_state_icon_size"
         android:layout_height="@dimen/empty_state_icon_size"
         app:layout_constraintTop_toTopOf="parent"

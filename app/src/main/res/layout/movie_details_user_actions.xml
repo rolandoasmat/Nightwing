@@ -15,7 +15,7 @@
 
         <ImageView
             android:id="@+id/star"
-            app:srcCompat="@drawable/ic_star_filled"
+            app:srcCompat="@drawable/ic_star"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
             android:layout_marginTop="@dimen/activity_vertical_margin_small"

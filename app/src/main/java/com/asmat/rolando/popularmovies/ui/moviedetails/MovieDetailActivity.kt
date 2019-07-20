@@ -156,13 +156,13 @@ class MovieDetailActivity : AppCompatActivity() {
         viewModel
                 .isFavoriteMovie
                 .observe(this, Observer { isFavoriteMovie ->
-                    updateStarIcon(isFavoriteMovie)
+                    updateStar(isFavoriteMovie == true)
                 })
 
         viewModel
                 .isWatchLaterMovie
                 .observe(this, Observer { isWatchLaterMovie ->
-                    updateBookmarkIcon(isWatchLaterMovie)
+                    updateBookmark(isWatchLaterMovie == true)
                 })
 
         viewModel
@@ -274,26 +274,6 @@ class MovieDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateStarIcon(isFavoriteMovie: Boolean?) {
-        isFavoriteMovie?.let {
-            if (it) {
-                fillStar()
-            } else {
-                unfillStar()
-            }
-        } ?: unfillStar()
-    }
-
-    private fun updateBookmarkIcon(isWatchLaterMovie: Boolean?) {
-        isWatchLaterMovie?.let {
-            if (it) {
-                fillBookmark()
-            } else {
-                unfillBookmark()
-            }
-        } ?: unfillBookmark()
-    }
-
     private fun updateTrailers(videos: List<VideosResponse.Video>?) { // TODO observe and update error state
         trailersLoadingBar.gone()
         when {
@@ -347,22 +327,12 @@ class MovieDetailActivity : AppCompatActivity() {
     //endregion
 
     //region Icons
-
-    private fun fillStar() {
-        star.setImageResource(R.drawable.ic_star_filled)
+    private fun updateStar(enable: Boolean) {
+        star?.isSelected = enable
     }
 
-    private fun unfillStar() {
-        star.setImageResource(R.drawable.ic_star)
+    private fun updateBookmark(enable: Boolean) {
+        bookmark?.isSelected = enable
     }
-
-    private fun fillBookmark() {
-        bookmark.setImageResource(R.drawable.ic_bookmark_filled)
-    }
-
-    private fun unfillBookmark() {
-        bookmark.setImageResource(R.drawable.ic_bookmark)
-    }
-
     //endregion
 }
