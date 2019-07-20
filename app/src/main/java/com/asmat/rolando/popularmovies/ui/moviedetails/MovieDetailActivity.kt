@@ -78,6 +78,7 @@ class MovieDetailActivity : AppCompatActivity() {
         }
         setupObservers()
         setupUI()
+        sendEvents()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -96,19 +97,17 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     //region User Actions
-
-    fun onStar(view: View) {
-        viewModel.onStarTapped()
+    private fun sendEvents() {
+        starContainer?.setOnClickListener {
+            viewModel.onStarTapped()
+        }
+        shareContainer?.setOnClickListener {
+            viewModel.onShareTapped()
+        }
+        toWatchContainer?.setOnClickListener {
+            viewModel.onBookmarkTapped()
+        }
     }
-
-    fun onBookmark(view: View) {
-        viewModel.onBookmarkTapped()
-    }
-
-    fun onShare(view: View) {
-        viewModel.onShareTapped()
-    }
-
     //endregion
 
     //region setup
@@ -328,11 +327,11 @@ class MovieDetailActivity : AppCompatActivity() {
 
     //region Icons
     private fun updateStar(enable: Boolean) {
-        star?.isSelected = enable
+        starIcon?.isSelected = enable
     }
 
     private fun updateBookmark(enable: Boolean) {
-        bookmark?.isSelected = enable
+        bookmarkIcon?.isSelected = enable
     }
     //endregion
 }
