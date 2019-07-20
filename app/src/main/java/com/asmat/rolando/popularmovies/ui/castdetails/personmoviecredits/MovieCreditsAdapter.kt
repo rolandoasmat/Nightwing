@@ -1,6 +1,6 @@
 package com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.person_movie_credit_cell.view.*
 
 private typealias MovieCredits = List<MovieCreditUiModel>
 
-class MovieCreditsAdapter: RecyclerView.Adapter<MovieCreditsAdapter.ViewHolder>() {
+class MovieCreditsAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<MovieCreditsAdapter.ViewHolder>() {
 
     private var data: MovieCredits = emptyList()
 
@@ -37,13 +37,13 @@ class MovieCreditsAdapter: RecyclerView.Adapter<MovieCreditsAdapter.ViewHolder>(
         holder.bind(data[position])
     }
 
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View): androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         private val poster: ImageView? = itemView.posterImage
         private val characterName: TextView? = itemView.characterNameText
 
         fun bind(model: MovieCreditUiModel) {
-            Picasso.with(poster?.context)
+            Picasso.get()
                     .load(model.posterURL)
                     .into(poster)
             characterName?.text = model.characterName

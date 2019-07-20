@@ -1,6 +1,6 @@
 package com.asmat.rolando.popularmovies.database
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
 

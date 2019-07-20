@@ -3,9 +3,9 @@ package com.asmat.rolando.popularmovies.ui.fragments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -29,12 +29,12 @@ import java.util.ArrayList
 
 // TODO reuse code that's in MovieGridFragment here
 // TODO refactor this mess to mvvm
-class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
+class SearchResultsFragment : androidx.fragment.app.Fragment(), MovieAdapterOnClickHandler {
 
     private var mMoviesGridAdapter: MoviesGridAdapter? = null
     private var mContext: Context? = null
     private var page: Int = 0
-    private var mMoviesGrid: RecyclerView? = null
+    private var mMoviesGrid: androidx.recyclerview.widget.RecyclerView? = null
     private var mNoInternetView: LinearLayout? = null
     private var fetchingMovies = false
 
@@ -48,16 +48,16 @@ class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
         val rootView = inflater.inflate(R.layout.fragment_movie_grid, container, false)
         mMoviesGrid = rootView.findViewById(R.id.rv_movie_grid)
         mNoInternetView = rootView.findViewById(R.id.no_internet_layout)
-        val mMoviesGridLayoutManager: GridLayoutManager
+        val mMoviesGridLayoutManager: androidx.recyclerview.widget.GridLayoutManager
         if (page == 1) {
             val numOfCol = ViewUtils.calculateNumberOfColumns(mContext!!)
-            mMoviesGridLayoutManager = GridLayoutManager(mContext, numOfCol)
+            mMoviesGridLayoutManager = androidx.recyclerview.widget.GridLayoutManager(mContext, numOfCol)
             mMoviesGridAdapter = MoviesGridAdapter(this)
             mMoviesGrid?.setHasFixedSize(true)
             mMoviesGrid?.layoutManager = mMoviesGridLayoutManager
             mMoviesGrid?.adapter = mMoviesGridAdapter
         } else {
-            mMoviesGridLayoutManager = GridLayoutManager(mContext, ViewUtils.calculateNumberOfColumns(mContext!!))
+            mMoviesGridLayoutManager = androidx.recyclerview.widget.GridLayoutManager(mContext, ViewUtils.calculateNumberOfColumns(mContext!!))
             mMoviesGrid?.layoutManager = mMoviesGridLayoutManager
             mMoviesGrid?.adapter = mMoviesGridAdapter
         }
@@ -92,9 +92,9 @@ class SearchResultsFragment : Fragment(), MovieAdapterOnClickHandler {
 
     private var searchQuery = ""
 
-    private fun createScrollListener(layoutManager: GridLayoutManager): RecyclerView.OnScrollListener {
-        return object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+    private fun createScrollListener(layoutManager: androidx.recyclerview.widget.GridLayoutManager): androidx.recyclerview.widget.RecyclerView.OnScrollListener {
+        return object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0 && !fetchingMovies) { // User is scrolling down
                     val positionOfLastItem = layoutManager.itemCount - 1
                     val currentPositionOfLastVisibleItem = layoutManager.findLastVisibleItemPosition()

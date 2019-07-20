@@ -1,7 +1,7 @@
 package com.asmat.rolando.popularmovies.ui.castdetails
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.asmat.rolando.popularmovies.ui.castdetails.personinfo.PersonInfoUiModel
 import com.asmat.rolando.popularmovies.utilities.URLUtils

@@ -40,7 +40,7 @@ class CastLinearAdapter(clickHandler: (Cast) -> Unit?) :
             role.text = item.character
             item.profile_path?.let { profilePath ->
                 val url = URLUtils.getImageURL342(profilePath)
-                Picasso.with(thumbnail.context)
+                Picasso.get()
                         .load(url)
                         .resize(342, 513)
                         .centerCrop()

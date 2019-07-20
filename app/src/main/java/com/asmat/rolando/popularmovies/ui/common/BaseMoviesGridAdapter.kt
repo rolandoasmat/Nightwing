@@ -1,6 +1,6 @@
 package com.asmat.rolando.popularmovies.ui.common
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.movie_grid_item.view.*
 
 private typealias Movies = MutableList<Movie>
 
-abstract class BaseMoviesGridAdapter(private val clickHandler: MovieAdapterOnClickHandler) : RecyclerView.Adapter<BaseMoviesGridAdapter.ViewHolder>() {
+abstract class BaseMoviesGridAdapter(private val clickHandler: MovieAdapterOnClickHandler) : androidx.recyclerview.widget.RecyclerView.Adapter<BaseMoviesGridAdapter.ViewHolder>() {
 
     private var showEmptyState = false
     private var movies: Movies = mutableListOf()
@@ -66,14 +66,14 @@ abstract class BaseMoviesGridAdapter(private val clickHandler: MovieAdapterOnCli
         }
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val poster: ImageView? = itemView.poster
 
         fun bind(movie: Movie) {
             movie.posterPath?.let { posterPath ->
                 val posterURL = URLUtils.getImageURL342(posterPath)
-                Picasso.with(poster?.context)
+                Picasso.get()
                         .load(posterURL)
                         .resize(340, 500)
                         .into(poster)

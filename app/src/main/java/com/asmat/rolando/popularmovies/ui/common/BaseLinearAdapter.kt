@@ -1,12 +1,12 @@
 package com.asmat.rolando.popularmovies.ui.common
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 
-abstract class BaseLinearAdapter<T, V : BaseLinearAdapter<T, V>.ViewHolder>(private val clickHandler: ((T) -> Unit?)? = null) : RecyclerView.Adapter<V>() {
+abstract class BaseLinearAdapter<T, V : BaseLinearAdapter<T, V>.ViewHolder>(private val clickHandler: ((T) -> Unit?)? = null) : androidx.recyclerview.widget.RecyclerView.Adapter<V>() {
 
     var data: List<T> = emptyList()
         set(data) {
@@ -37,7 +37,7 @@ abstract class BaseLinearAdapter<T, V : BaseLinearAdapter<T, V>.ViewHolder>(priv
     /**
      * View Holder
      */
-    abstract inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+    abstract inner class ViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view), View.OnClickListener {
 
         override fun onClick(v: View) {
             val position = adapterPosition

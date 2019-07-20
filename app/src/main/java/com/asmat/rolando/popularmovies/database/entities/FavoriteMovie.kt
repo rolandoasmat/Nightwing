@@ -1,6 +1,6 @@
 package com.asmat.rolando.popularmovies.database.entities
 
-import android.arch.persistence.room.*
+import androidx.room.*
 
 @Entity(tableName = "favorite_movies")
 data class FavoriteMovie(@PrimaryKey

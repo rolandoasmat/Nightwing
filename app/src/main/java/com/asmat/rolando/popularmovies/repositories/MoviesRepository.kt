@@ -1,6 +1,6 @@
 package com.asmat.rolando.popularmovies.repositories
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import android.os.AsyncTask
 
 import com.asmat.rolando.popularmovies.database.DatabaseManager

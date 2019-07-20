@@ -1,11 +1,11 @@
 package com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +25,7 @@ private const val ARG_PERSON_ID = "ARG_PERSON_ID"
 /**
  * Uses the Person ID to retrieve a person's movie credits.
  */
-class PersonMovieCreditsFragment : Fragment() {
+class PersonMovieCreditsFragment : androidx.fragment.app.Fragment() {
 
     companion object {
         @JvmStatic
@@ -84,7 +84,7 @@ class PersonMovieCreditsFragment : Fragment() {
 
     private fun setup() {
         val numOfColumns = ViewUtils.calculateNumberOfColumns(activity!!)
-        movieCreditsRecyclerView?.layoutManager = GridLayoutManager(context, numOfColumns)
+        movieCreditsRecyclerView?.layoutManager = androidx.recyclerview.widget.GridLayoutManager(context, numOfColumns)
         movieCreditsRecyclerView?.adapter = adapter
         personID?. let { id -> viewModel.init(id) }
         observeViewModel()

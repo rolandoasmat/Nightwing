@@ -1,16 +1,15 @@
 package com.asmat.rolando.popularmovies.ui.moviedetails
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.net.Uri
-import android.support.v4.app.ShareCompat
-import android.support.v7.app.AppCompatActivity
+import androidx.core.app.ShareCompat
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
-import android.view.View
 import com.asmat.rolando.popularmovies.MovieNightApplication
 
 import com.asmat.rolando.popularmovies.R
@@ -206,7 +205,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private fun setupTrailersRecyclerView() {
         trailersRecyclerView.setHasFixedSize(true)
-        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
         trailersRecyclerView.layoutManager = layoutManager
         trailersLinearAdapter = TrailersLinearAdapter(trailerClickCallback)
         trailersRecyclerView.adapter = trailersLinearAdapter
@@ -215,7 +214,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private fun setupCastRecyclerView() {
         castRecyclerView.setHasFixedSize(true)
-        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
         castRecyclerView.layoutManager = layoutManager
         castLinearAdapter = CastLinearAdapter(castClickCallback)
         castRecyclerView.adapter = castLinearAdapter
@@ -224,7 +223,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private fun setupReviewsRecyclerView() {
         reviewsRecyclerView.setHasFixedSize(true)
-        val reviewsLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val reviewsLayoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL, false)
         reviewsRecyclerView.layoutManager = reviewsLayoutManager
         reviewsLayoutManager.isSmoothScrollbarEnabled = true
         reviewsLinearAdapter = ReviewsLinearAdapter()
@@ -238,7 +237,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private fun updateBackdrop(url: String?) {
         url?.let {
-            Picasso.with(this).load(it).into(backdrop)
+            Picasso.get().load(it).into(backdrop)
         }
     }
 
@@ -263,7 +262,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private fun updatePoster(url: String?) {
         url?.let {
-            Picasso.with(this).load(it).into(thumbnail)
+            Picasso.get().load(it).into(thumbnail)
         }
     }
 

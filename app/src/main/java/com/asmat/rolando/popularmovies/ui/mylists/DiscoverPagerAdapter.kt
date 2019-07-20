@@ -1,16 +1,16 @@
 package com.asmat.rolando.popularmovies.ui.mylists
 
 import android.content.Context
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.ui.fragments.MovieGridFragment
 import com.asmat.rolando.popularmovies.ui.discover.RequestType
 import com.asmat.rolando.popularmovies.ui.common.BaseSectionsPagerAdapter
 
-class DiscoverPagerAdapter(fm: FragmentManager, context: Context) : BaseSectionsPagerAdapter(fm, context) {
+class DiscoverPagerAdapter(fm: androidx.fragment.app.FragmentManager, context: Context) : BaseSectionsPagerAdapter(fm, context) {
 
-    override val fragments: Array<Fragment>
+    override val fragments: Array<androidx.fragment.app.Fragment>
         get() {
             val popular = MovieGridFragment()
             popular.setTypeOfMovies(RequestType.MOST_POPULAR)

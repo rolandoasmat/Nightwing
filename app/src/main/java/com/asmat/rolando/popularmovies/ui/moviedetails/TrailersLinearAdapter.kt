@@ -34,7 +34,7 @@ class TrailersLinearAdapter(clickHandler: (Video) -> Unit?) :
 
         override fun bind(item: Video) {
             val url = URLUtils.getYoutubeThumbnailURL(item.key)
-            Picasso.with(thumbnail.context)
+            Picasso.get()
                     .load(url)
                     .into(thumbnail)
             caption.text = item.name

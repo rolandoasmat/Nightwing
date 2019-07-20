@@ -1,10 +1,10 @@
 package com.asmat.rolando.popularmovies.ui.castdetails
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import android.util.Log
 import android.view.MenuItem
 import com.asmat.rolando.popularmovies.MovieNightApplication
@@ -102,7 +102,7 @@ class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.List
 
     override fun backdropURL(url: String?) {
         url?.let {
-            Picasso.with(this).load(it).into(toolbarImage)
+            Picasso.get().load(it).into(toolbarImage)
         }
     }
     //endregion

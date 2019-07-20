@@ -1,21 +1,21 @@
 package com.asmat.rolando.popularmovies.ui.common
 
 import android.content.Context
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 
-abstract class BaseSectionsPagerAdapter internal constructor(fm: FragmentManager, private val context: Context) : FragmentPagerAdapter(fm) {
+abstract class BaseSectionsPagerAdapter internal constructor(fm: androidx.fragment.app.FragmentManager, private val context: Context) : androidx.fragment.app.FragmentPagerAdapter(fm) {
 
     //region Abstract
-    internal abstract val fragments: Array<Fragment>
+    internal abstract val fragments: Array<androidx.fragment.app.Fragment>
     internal abstract val pageTitles: Array<String>
 
     override fun getCount(): Int {
         return fragments.size
     }
 
-    override fun getItem(position: Int): Fragment {
+    override fun getItem(position: Int): androidx.fragment.app.Fragment {
         return fragments[position]
     }
 

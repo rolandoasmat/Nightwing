@@ -1,12 +1,12 @@
 package com.asmat.rolando.popularmovies.ui.common
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,12 +20,12 @@ import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import kotlinx.android.synthetic.main.fragment_movie_grid.view.*
 import javax.inject.Inject
 
-abstract class BaseGridFragment : Fragment(), MovieAdapterOnClickHandler {
+abstract class BaseGridFragment : androidx.fragment.app.Fragment(), MovieAdapterOnClickHandler {
 
     @Inject
     lateinit var moviesRepository: MoviesRepository
 
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
     private lateinit var adapter: BaseMoviesGridAdapter
 
     internal abstract val movieSource: LiveData<List<Movie>>
@@ -42,7 +42,7 @@ abstract class BaseGridFragment : Fragment(), MovieAdapterOnClickHandler {
         adapter = getAdapter(this)
         recyclerView.adapter = adapter
         context?.let {
-            val layoutManager = GridLayoutManager(it, ViewUtils.calculateNumberOfColumns(it))
+            val layoutManager = androidx.recyclerview.widget.GridLayoutManager(it, ViewUtils.calculateNumberOfColumns(it))
             recyclerView.layoutManager = layoutManager
             recyclerView.setHasFixedSize(true)
         }
@@ -64,7 +64,7 @@ abstract class BaseGridFragment : Fragment(), MovieAdapterOnClickHandler {
     private fun fetchMovies() {
         val liveData = movieSource
         liveData.observe(this, Observer<List<Movie>> { movies ->
-            val layoutManager = recyclerView.layoutManager as GridLayoutManager
+            val layoutManager = recyclerView.layoutManager as androidx.recyclerview.widget.GridLayoutManager
             if (movies == null || movies.isEmpty()) {
                 layoutManager.spanCount = 1 // 1 column needed for empty state layout
                 adapter.setMovies(emptyList())

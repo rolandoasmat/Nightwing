@@ -1,7 +1,7 @@
 package com.asmat.rolando.popularmovies.ui.castdetails.personinfo
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +17,7 @@ private const val ARG_BIRTHDATE = "ARG_BIRTHDATE"
 private const val ARG_DEATHDATE = "ARG_DEATHDATE"
 private const val ARG_BIO = "ARG_BIO"
 
-class PersonDetailsFragment : Fragment() {
+class PersonDetailsFragment : androidx.fragment.app.Fragment() {
 
     companion object {
         fun newInstance(uiModel: PersonInfoUiModel) =
@@ -48,7 +48,7 @@ class PersonDetailsFragment : Fragment() {
     }
 
     private fun updateUI() {
-        Picasso.with(activity)
+        Picasso.get()
                 .load(photoURL)
                 .resize(342, 513)
                 .centerCrop()
