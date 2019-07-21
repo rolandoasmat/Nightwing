@@ -19,10 +19,17 @@ class PersonMovieCreditsViewModel(private val peopleRepository: PeopleRepository
                         val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url) }
                         MovieCreditUiModel(posterURL, it.character)
                     }
-                    val backdropURL = response.cast
+                    val movieCreditsWithBackdropImage = response.cast
                             .filter { it.backdrop_path != null }
-                            .random().backdrop_path
-                            ?.let { URLUtils.getImageURL780(it) }
+
+                    val backdropURL = if (movieCreditsWithBackdropImage.isEmpty()) {
+                        null
+                    } else {
+                        movieCreditsWithBackdropImage
+                                .random().backdrop_path
+                                ?.let { URLUtils.getImageURL780(it) }
+                    }
+
                     uiModel.value = PersonMovieCreditsUiModel(backdropURL, mapped)
                 }, { error ->
                     // TODO handle error
