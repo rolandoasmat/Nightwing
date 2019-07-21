@@ -23,6 +23,7 @@
             app:expandedTitleMarginStart="@dimen/activity_horizontal_margin_small"
             app:expandedTitleMarginEnd="@dimen/activity_horizontal_margin_small"
             app:expandedTitleMarginBottom="@dimen/activity_vertical_margin"
+            app:expandedTitleTextAppearance="@style/ExpandedAppBar"
             app:title="@string/movie_details">
 
             <!--Image View-->
@@ -33,6 +34,12 @@
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#8000"
+                android:layout_gravity="bottom"/>
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"

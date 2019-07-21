@@ -1,15 +1,19 @@
 package com.asmat.rolando.popularmovies.ui.common
 
+import android.graphics.drawable.Drawable
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.utilities.URLUtils
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.movie_grid_item.view.*
+import java.lang.Exception
 
 private typealias Movies = MutableList<Movie>
 
@@ -69,6 +73,7 @@ abstract class BaseMoviesGridAdapter(private val clickHandler: MovieAdapterOnCli
     inner class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val poster: ImageView? = itemView.poster
+        private val label: TextView? = itemView.label
 
         fun bind(movie: Movie) {
             movie.posterPath?.let { posterPath ->
@@ -78,6 +83,7 @@ abstract class BaseMoviesGridAdapter(private val clickHandler: MovieAdapterOnCli
                         .resize(340, 500)
                         .into(poster)
             }
+            label?.text = movie.title
 
             poster?.setOnClickListener {
                 onClick(poster)
