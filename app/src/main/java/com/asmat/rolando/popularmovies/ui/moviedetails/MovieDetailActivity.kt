@@ -241,6 +241,8 @@ class MovieDetailActivity : AppCompatActivity() {
                     .load(it)
                     .placeholder(R.drawable.image_loading)
                     .into(backdrop)
+        } ?: run {
+            backdrop?.gone()
         }
     }
 
@@ -266,7 +268,7 @@ class MovieDetailActivity : AppCompatActivity() {
     private fun updatePoster(url: String?) {
         url?.let {
             Picasso.get().load(it).into(thumbnail)
-        }
+        } ?: thumbnail?.gone()
     }
 
     private fun updateSummary(summaryStr: String?) {

@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/activity_margin_general">
 
     <TextView
         android:id="@+id/releaseDateLabel"
-        tools:text="@string/release_date"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="April 4, 1992"/>
 
     <TextView
         android:id="@+id/movieRatingLabel"
-        tools:text="@string/movie_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="10.0/10.0" />
 
     <ImageView
         android:id="@+id/thumbnail"
         android:layout_width="@dimen/poster_width"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_margin_general"
-        android:layout_marginRight="@dimen/activity_margin_general"
         android:adjustViewBounds="true"
-        android:layout_below="@+id/releaseDateLabel"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/releaseDateLabel"/>
 
     <TextView
         android:id="@+id/summary"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:layout_alignTop="@id/thumbnail"
-        tools:text="@string/synopsis"/>
+        android:layout_marginTop="@dimen/activity_margin_general"
+        app:layout_constraintStart_toEndOf="@id/thumbnail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/movieRatingLabel"
+        tools:text="Some very awesome movie about Rolando André and his quest to make a movie app."/>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

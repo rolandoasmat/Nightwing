@@ -37,11 +37,11 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository) : Vi
 
     fun init(movie: Movie) {
         this.movie = movie
-        movie.backdropPath?.let { backdropURL.value = URLUtils.getImageURL780(it) }
+        backdropURL.value = movie.backdropPath?.let {  URLUtils.getImageURL780(it) }
         movieTitle.value = movie.title
         movie.releaseDate.let { releaseDate.value = DateUtils.formatDate(it) }
         rating.value = movie.voteAverage.toString()
-        movie.posterPath?.let { posterURL.value = URLUtils.getImageURL342(it) }
+        posterURL.value = movie.posterPath?.let { URLUtils.getImageURL342(it) }
         summary.value = movie.overview
 
         isFavoriteMovie = Transformations.map(moviesRepository.getFavoriteMovie(movie.id)) {
