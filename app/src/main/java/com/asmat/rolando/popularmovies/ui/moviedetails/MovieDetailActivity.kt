@@ -7,7 +7,6 @@ import android.net.Uri
 import androidx.core.app.ShareCompat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
 import com.asmat.rolando.popularmovies.MovieNightApplication
@@ -237,7 +236,11 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private fun updateBackdrop(url: String?) {
         url?.let {
-            Picasso.get().load(it).into(backdrop)
+            Picasso
+                    .get()
+                    .load(it)
+                    .placeholder(R.drawable.image_loading)
+                    .into(backdrop)
         }
     }
 

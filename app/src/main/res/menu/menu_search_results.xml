@@ -7,6 +7,6 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         android:icon="@drawable/ic_search"
         app:showAsAction="always"
-        android:title="temp search title"/>
+        android:title="Search"/>
 
 </menu>

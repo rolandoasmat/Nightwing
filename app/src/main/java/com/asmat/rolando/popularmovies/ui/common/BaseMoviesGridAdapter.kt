@@ -70,7 +70,7 @@ abstract class BaseMoviesGridAdapter(private val clickHandler: MovieAdapterOnCli
         }
     }
 
-    inner class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val poster: ImageView? = itemView.poster
         private val label: TextView? = itemView.label
@@ -82,6 +82,10 @@ abstract class BaseMoviesGridAdapter(private val clickHandler: MovieAdapterOnCli
                         .load(posterURL)
                         .resize(340, 500)
                         .into(poster)
+            } ?: run {
+                val resources = itemView.resources
+                val image = resources.getDrawable(R.drawable.ic_photo_default, null)
+                poster?.setImageDrawable(image)
             }
             label?.text = movie.title
 

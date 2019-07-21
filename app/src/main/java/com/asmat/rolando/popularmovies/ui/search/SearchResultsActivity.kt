@@ -4,12 +4,10 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
-import android.view.MenuInflater
 
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.ui.fragments.SearchResultsFragment
