@@ -5,13 +5,15 @@ import androidx.lifecycle.ViewModel
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 
 class PersonMovieCreditsViewModel(private val peopleRepository: PeopleRepository): ViewModel() {
+    private val compositeDisposable = CompositeDisposable()
 
     val uiModel = MutableLiveData<PersonMovieCreditsUiModel>()
 
     fun init(personID: Int) {
-        peopleRepository
+        val disposable = peopleRepository
                 .getPersonMovieCredits(personID)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
@@ -29,12 +31,16 @@ class PersonMovieCreditsViewModel(private val peopleRepository: PeopleRepository
                                 .random().backdrop_path
                                 ?.let { URLUtils.getImageURL780(it) }
                     }
-
                     uiModel.value = PersonMovieCreditsUiModel(backdropURL, mapped)
                 }, { error ->
                     // TODO handle error
                 })
+        compositeDisposable.add(disposable)
+    }
 
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.dispose()
     }
 
 }

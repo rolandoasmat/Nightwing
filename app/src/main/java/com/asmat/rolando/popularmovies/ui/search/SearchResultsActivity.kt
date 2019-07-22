@@ -10,7 +10,6 @@ import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 
 import com.asmat.rolando.popularmovies.R
-import com.asmat.rolando.popularmovies.ui.fragments.SearchResultsFragment
 
 class SearchResultsActivity : AppCompatActivity() {
     lateinit var resultsGrid: SearchResultsFragment

@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.ui.discover
+package com.asmat.rolando.popularmovies.ui.common
 
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.ui.common.MovieAdapterOnClickHandler

@@ -1,10 +1,8 @@
-package com.asmat.rolando.popularmovies.ui.fragments
+package com.asmat.rolando.popularmovies.ui.common
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,11 +17,9 @@ import com.asmat.rolando.popularmovies.extensions.visible
 import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.model.mappers.MovieMapper
 import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailActivity
-import com.asmat.rolando.popularmovies.ui.common.MovieAdapterOnClickHandler
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
 import com.asmat.rolando.popularmovies.ui.discover.RequestType
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
-import com.asmat.rolando.popularmovies.ui.discover.MoviesGridAdapter
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import io.reactivex.Single
@@ -37,7 +33,7 @@ class MovieGridFragment : androidx.fragment.app.Fragment(), MovieAdapterOnClickH
     private var fetchMoviesCallback: Single<MoviesResponse>? = null
     private lateinit var typeOfMovies: RequestType
     private var page: Int = 0
-    private var mMoviesGrid: androidx.recyclerview.widget.RecyclerView? = null
+    private var mMoviesGrid: RecyclerView? = null
     private var mNoInternetView: LinearLayout? = null
     private var fetchingMovies = false
 
@@ -99,8 +95,8 @@ class MovieGridFragment : androidx.fragment.app.Fragment(), MovieAdapterOnClickH
         this.typeOfMovies = typeOfMovies
     }
 
-    private fun createScrollListener(layoutManager: androidx.recyclerview.widget.GridLayoutManager): androidx.recyclerview.widget.RecyclerView.OnScrollListener {
-        return object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+    private fun createScrollListener(layoutManager: androidx.recyclerview.widget.GridLayoutManager): RecyclerView.OnScrollListener {
+        return object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0 && !fetchingMovies) { // User is scrolling down
                     val positionOfLastItem = layoutManager.itemCount - 1

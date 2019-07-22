@@ -1,13 +1,13 @@
-package com.asmat.rolando.popularmovies.ui.mylists
+package com.asmat.rolando.popularmovies.ui.discover
 
 import android.content.Context
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.asmat.rolando.popularmovies.R
-import com.asmat.rolando.popularmovies.ui.fragments.MovieGridFragment
-import com.asmat.rolando.popularmovies.ui.discover.RequestType
+import com.asmat.rolando.popularmovies.ui.common.MovieGridFragment
 import com.asmat.rolando.popularmovies.ui.common.BaseSectionsPagerAdapter
 
+/**
+ * Adapter that shows the Popular, Top Rated, Now Playing, and Coming Soon grids.
+ */
 class DiscoverPagerAdapter(fm: androidx.fragment.app.FragmentManager, context: Context) : BaseSectionsPagerAdapter(fm, context) {
 
     override val fragments: Array<androidx.fragment.app.Fragment>

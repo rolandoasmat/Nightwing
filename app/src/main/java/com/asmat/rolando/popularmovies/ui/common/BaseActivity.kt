@@ -17,7 +17,17 @@ import com.asmat.rolando.popularmovies.ui.discover.DiscoverActivity
 import com.asmat.rolando.popularmovies.ui.mylists.MyListsActivity
 import com.asmat.rolando.popularmovies.ui.search.SearchResultsActivity
 
+/**
+ * Base Activity that contains the following common behavior of:
+ * - Housing a FragmentPagerAdapter
+ * - Implementing a side menu, DrawerLayout
+ * - Having a search bar at the top
+ */
 abstract class BaseActivity : AppCompatActivity() {
+
+    companion object {
+        private const val CURRENT_TAB = "current_Tab"
+    }
 
     private var tabLayout: TabLayout? = null
 
@@ -34,7 +44,7 @@ abstract class BaseActivity : AppCompatActivity() {
         setupDrawer()
         if (savedInstanceState != null) {
             val tab = savedInstanceState.getInt(CURRENT_TAB)
-            val viewPager = findViewById<androidx.viewpager.widget.ViewPager>(R.id.container)
+            val viewPager = findViewById<ViewPager>(R.id.container)
             viewPager.currentItem = tab
         }
     }
@@ -77,7 +87,7 @@ abstract class BaseActivity : AppCompatActivity() {
     //region Private
 
     private fun setupDrawer() {
-        val drawerLayout = findViewById<androidx.drawerlayout.widget.DrawerLayout>(R.id.drawer_layout)
+        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener { menuItem ->
             menuItem.isChecked = true
@@ -129,20 +139,18 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private fun setupViewPager() {
         val adapter = pagerAdapter
-        val viewPager = findViewById<androidx.viewpager.widget.ViewPager>(R.id.container)
+        val viewPager = findViewById<ViewPager>(R.id.container)
         viewPager.adapter = adapter
         tabLayout = findViewById(R.id.tabs)
         tabLayout?.setupWithViewPager(viewPager)
     }
 
     private fun openDrawer() {
-        val drawer = findViewById<androidx.drawerlayout.widget.DrawerLayout>(R.id.drawer_layout)
+        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         drawer.openDrawer(GravityCompat.START)
     }
 
-    companion object {
-        private val CURRENT_TAB = "current_Tab"
-    }
+
 
     //endregion
 

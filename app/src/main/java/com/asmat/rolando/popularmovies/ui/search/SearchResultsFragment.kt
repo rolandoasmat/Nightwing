@@ -1,10 +1,8 @@
-package com.asmat.rolando.popularmovies.ui.fragments
+package com.asmat.rolando.popularmovies.ui.search
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,7 +18,7 @@ import com.asmat.rolando.popularmovies.model.mappers.MovieMapper
 import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailActivity
 import com.asmat.rolando.popularmovies.ui.common.MovieAdapterOnClickHandler
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
-import com.asmat.rolando.popularmovies.ui.discover.MoviesGridAdapter
+import com.asmat.rolando.popularmovies.ui.common.MoviesGridAdapter
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import io.reactivex.android.schedulers.AndroidSchedulers

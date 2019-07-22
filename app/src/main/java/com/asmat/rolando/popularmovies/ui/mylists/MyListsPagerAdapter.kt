@@ -1,12 +1,8 @@
 package com.asmat.rolando.popularmovies.ui.mylists
 
 import android.content.Context
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.ui.common.BaseSectionsPagerAdapter
-import com.asmat.rolando.popularmovies.ui.fragments.FavoriteMoviesGridFragment
-import com.asmat.rolando.popularmovies.ui.fragments.WatchLaterMoviesGridFragment
 
 class MyListsPagerAdapter(fm: androidx.fragment.app.FragmentManager, context: Context) : BaseSectionsPagerAdapter(fm, context) {
 
