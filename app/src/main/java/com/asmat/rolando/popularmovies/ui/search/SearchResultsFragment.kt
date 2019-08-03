@@ -9,11 +9,11 @@ import javax.inject.Inject
 
 class SearchResultsFragment : MovieGridFragment() {
 
-    @Inject
-    lateinit var moviesRepository: MoviesRepository
-
-    @Inject
-    lateinit var peopleRepository: PeopleRepository
+//    @Inject
+//    lateinit var moviesRepository: MoviesRepository
+//
+//    @Inject
+//    lateinit var peopleRepository: PeopleRepository
 
     override val viewModel: SearchMoviesViewModel
         get() = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository)).get(SearchMoviesViewModel::class.java)

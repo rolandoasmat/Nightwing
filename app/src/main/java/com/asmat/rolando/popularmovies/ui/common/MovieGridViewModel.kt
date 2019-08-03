@@ -6,6 +6,8 @@ import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 abstract class MovieGridViewModel : ViewModel()  {
 
@@ -27,6 +29,8 @@ abstract class MovieGridViewModel : ViewModel()  {
         pageToFetch = 1
         loading.value = true
         fetchMovies(pageToFetch)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ result ->
                     handleMoviesResponse(result)
                     loading.value = false
@@ -39,6 +43,8 @@ abstract class MovieGridViewModel : ViewModel()  {
     fun loadMore() {
         loadingMore.value = true
         fetchMovies(pageToFetch)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ result ->
                     handleMoviesResponse(result)
                     loadingMore.value = false

@@ -1,5 +1,7 @@
 package com.asmat.rolando.popularmovies.ui.popularmovies
 
+import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
@@ -10,14 +12,12 @@ import javax.inject.Inject
 
 class PopularMoviesFragment : MovieGridFragment() {
 
-    @Inject
-    lateinit var moviesRepository: MoviesRepository
-
-    @Inject
-    lateinit var peopleRepository: PeopleRepository
-
-    override val viewModel: MovieGridViewModel
+    override val viewModel: PopularMoviesViewModel
         get() = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository)).get(PopularMoviesViewModel::class.java)
 
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.load()
+    }
 }
