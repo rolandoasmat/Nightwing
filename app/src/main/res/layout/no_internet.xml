@@ -16,7 +16,7 @@
         android:text="@string/no_internet"/>
 
     <Button
-        android:id="@+id/retry_button"
+        android:id="@+id/retryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

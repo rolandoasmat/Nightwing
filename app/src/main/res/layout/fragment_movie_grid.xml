@@ -5,12 +5,13 @@
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_movie_grid"
+        android:id="@+id/moviesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
 
     <include
+        android:id="@+id/noInternetLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/no_internet"/>

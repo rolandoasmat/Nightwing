@@ -1,6 +1,5 @@
 package com.asmat.rolando.popularmovies.ui.common
 
-import android.graphics.drawable.Drawable
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,28 +7,24 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.asmat.rolando.popularmovies.R
-import com.asmat.rolando.popularmovies.model.Movie
-import com.asmat.rolando.popularmovies.utilities.URLUtils
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.movie_grid_item.view.*
-import java.lang.Exception
 
-private typealias Movies = MutableList<Movie>
+private typealias Movies = MutableList<MovieGridItemUiModel>
 
-abstract class BaseMoviesGridAdapter(private val clickHandler: MovieAdapterOnClickHandler) : androidx.recyclerview.widget.RecyclerView.Adapter<BaseMoviesGridAdapter.ViewHolder>() {
+abstract class BaseMoviesGridAdapter(val callback: Callback? = null) : RecyclerView.Adapter<BaseMoviesGridAdapter.ViewHolder>() {
 
     private var showEmptyState = false
     private var movies: Movies = mutableListOf()
 
     abstract val emptyStateLayoutID: Int
 
-    fun setMovies(movies: List<Movie>) {
+    fun setMovies(movies: List<MovieGridItemUiModel>) {
         this.movies.clear()
         addMovies(movies)
     }
 
-    fun addMovies(movies: List<Movie>) {
+    fun addMovies(movies: List<MovieGridItemUiModel>) {
         this.movies.addAll(movies)
         showEmptyState = this.movies.isEmpty()
         notifyDataSetChanged()
@@ -70,16 +65,15 @@ abstract class BaseMoviesGridAdapter(private val clickHandler: MovieAdapterOnCli
         }
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val poster: ImageView? = itemView.poster
         private val label: TextView? = itemView.label
 
-        fun bind(movie: Movie) {
-            movie.posterPath?.let { posterPath ->
-                val posterURL = URLUtils.getImageURL342(posterPath)
+        fun bind(uiModel: MovieGridItemUiModel) {
+            uiModel.posterURL?.let { url ->
                 Picasso.get()
-                        .load(posterURL)
+                        .load(url)
                         .resize(340, 500)
                         .into(poster)
             } ?: run {
@@ -87,18 +81,15 @@ abstract class BaseMoviesGridAdapter(private val clickHandler: MovieAdapterOnCli
                 val image = resources.getDrawable(R.drawable.ic_photo_default, null)
                 poster?.setImageDrawable(image)
             }
-            label?.text = movie.title
-
+            label?.text = uiModel.title
             poster?.setOnClickListener {
-                onClick(poster)
+                callback?.itemPressed(adapterPosition)
             }
         }
+    }
 
-        override fun onClick(v: View) {
-            val position = adapterPosition
-            val movie = movies[position]
-            clickHandler.onClick(movie)
-        }
+    interface Callback {
+        fun itemPressed(index: Int)
     }
 
 }

@@ -32,7 +32,7 @@ class SearchResultsFragment : androidx.fragment.app.Fragment(), MovieAdapterOnCl
     private var mMoviesGridAdapter: MoviesGridAdapter? = null
     private var mContext: Context? = null
     private var page: Int = 0
-    private var mMoviesGrid: androidx.recyclerview.widget.RecyclerView? = null
+    private var moviesRecyclerView: RecyclerView? = null
     private var mNoInternetView: LinearLayout? = null
     private var fetchingMovies = false
 
@@ -44,23 +44,22 @@ class SearchResultsFragment : androidx.fragment.app.Fragment(), MovieAdapterOnCl
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_movie_grid, container, false)
-        mMoviesGrid = rootView.findViewById(R.id.rv_movie_grid)
         mNoInternetView = rootView.findViewById(R.id.no_internet_layout)
         val mMoviesGridLayoutManager: androidx.recyclerview.widget.GridLayoutManager
         if (page == 1) {
             val numOfCol = ViewUtils.calculateNumberOfColumns(mContext!!)
             mMoviesGridLayoutManager = androidx.recyclerview.widget.GridLayoutManager(mContext, numOfCol)
             mMoviesGridAdapter = MoviesGridAdapter(this)
-            mMoviesGrid?.setHasFixedSize(true)
-            mMoviesGrid?.layoutManager = mMoviesGridLayoutManager
-            mMoviesGrid?.adapter = mMoviesGridAdapter
+            moviesRecyclerView?.setHasFixedSize(true)
+            moviesRecyclerView?.layoutManager = mMoviesGridLayoutManager
+            moviesRecyclerView?.adapter = mMoviesGridAdapter
         } else {
             mMoviesGridLayoutManager = androidx.recyclerview.widget.GridLayoutManager(mContext, ViewUtils.calculateNumberOfColumns(mContext!!))
-            mMoviesGrid?.layoutManager = mMoviesGridLayoutManager
-            mMoviesGrid?.adapter = mMoviesGridAdapter
+            moviesRecyclerView?.layoutManager = mMoviesGridLayoutManager
+            moviesRecyclerView?.adapter = mMoviesGridAdapter
         }
-        mMoviesGrid?.addOnScrollListener(createScrollListener(mMoviesGridLayoutManager))
-        mMoviesGrid?.isNestedScrollingEnabled = false
+        moviesRecyclerView?.addOnScrollListener(createScrollListener(mMoviesGridLayoutManager))
+        moviesRecyclerView?.isNestedScrollingEnabled = false
         return rootView
     }
 
@@ -68,11 +67,11 @@ class SearchResultsFragment : androidx.fragment.app.Fragment(), MovieAdapterOnCl
         super.onResume()
         if (!NetworkUtils.isOnline(context!!)) {
             // User has no internet
-            mMoviesGrid?.gone()
+            moviesRecyclerView?.gone()
             mNoInternetView?.visible()
         } else {
             // Internet connection established
-            mMoviesGrid?.visible()
+            moviesRecyclerView?.visible()
             mNoInternetView?.gone()
         }
     }
