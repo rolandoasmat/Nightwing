@@ -100,6 +100,10 @@ class MoviesRepository(private val db: DatabaseManager,
         return tmdbClient.getMovieCredits(movieID)
     }
 
+    fun searchMovies(searchTerm: String, page: Int): Single<MoviesResponse> {
+        return tmdbClient.searchMovie(searchTerm, page)
+    }
+
     /**
      * Private
      */
