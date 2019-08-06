@@ -17,13 +17,28 @@ import io.reactivex.Single
 class MoviesRepository(private val db: DatabaseManager,
                        private val tmdbClient: TheMovieDBClient) {
 
-    private val movies = mutableListOf<Movie>()
+    private val popularMovies = mutableListOf<Movie>()
+    private val topRatedMovies = mutableListOf<Movie>()
+    private val nowPlayingMovies = mutableListOf<Movie>()
+    private val upcomingMovies = mutableListOf<Movie>()
 
     /**
      * Cache
      */
     fun getPopularMovieAt(index: Int): Movie {
-        return movies[index]
+        return popularMovies[index]
+    }
+
+    fun getTopRatedMovieAt(index: Int): Movie {
+        return topRatedMovies[index]
+    }
+
+    fun getNowPlayingMovieAt(index: Int): Movie {
+        return nowPlayingMovies[index]
+    }
+
+    fun getUpcomingMovieAt(index: Int): Movie {
+        return upcomingMovies[index]
     }
 
     /**
@@ -80,7 +95,7 @@ class MoviesRepository(private val db: DatabaseManager,
         return tmdbClient.getNowPlayingMovies(page)
     }
 
-    fun getComingSoonMovies(page: Int) : Single<MoviesResponse> {
+    fun getUpcomingMovies(page: Int) : Single<MoviesResponse> {
         return tmdbClient.getUpcomingMovies(page)
     }
 
