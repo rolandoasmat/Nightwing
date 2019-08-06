@@ -64,10 +64,10 @@ abstract class MovieGridFragment : androidx.fragment.app.Fragment() {
             viewModel.load()
         }
 
-        observeViewmodel()
+        observeViewModel()
     }
 
-    private fun observeViewmodel() {
+    private fun observeViewModel() {
         viewModel.movies.observe(this, Observer { movies ->
             moviesGridAdapter?.setMovies(movies)
         })
