@@ -2,6 +2,7 @@ package com.asmat.rolando.popularmovies.ui.upcomingmovies
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.asmat.rolando.popularmovies.ui.common.MovieGridFragment
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
@@ -15,5 +16,12 @@ class UpcomingMoviesFragment : MovieGridFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.load()
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        viewModel.movies.observe(this, Observer { movies ->
+            moviesGridAdapter?.setMovies(movies)
+        })
     }
 }

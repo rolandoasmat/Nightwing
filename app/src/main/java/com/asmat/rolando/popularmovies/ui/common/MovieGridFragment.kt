@@ -32,7 +32,7 @@ abstract class MovieGridFragment : androidx.fragment.app.Fragment() {
     @Inject
     lateinit var peopleRepository: PeopleRepository
 
-    private var moviesGridAdapter: MoviesGridAdapter? = null
+    protected var moviesGridAdapter: MoviesGridAdapter? = null
 
     abstract val viewModel: MovieGridViewModel
 
@@ -63,15 +63,6 @@ abstract class MovieGridFragment : androidx.fragment.app.Fragment() {
         retryButton?.setOnClickListener {
             viewModel.load()
         }
-
-        observeViewModel()
-    }
-
-    private fun observeViewModel() {
-        viewModel.movies.observe(this, Observer { movies ->
-            moviesGridAdapter?.setMovies(movies)
-        })
-
     }
 
     override fun onResume() {

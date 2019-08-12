@@ -1,6 +1,5 @@
 package com.asmat.rolando.popularmovies.ui.discover
 
-
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.ui.common.BaseSectionsPagerAdapter
 import com.asmat.rolando.popularmovies.ui.common.BaseActivity

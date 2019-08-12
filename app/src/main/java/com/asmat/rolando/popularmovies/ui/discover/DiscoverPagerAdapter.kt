@@ -27,7 +27,7 @@ class DiscoverPagerAdapter(fm: androidx.fragment.app.FragmentManager, context: C
             val popular = getString(R.string.most_popular)
             val topRated = getString(R.string.top_rated)
             val nowPlaying = getString(R.string.now_playing)
-            val upcoming = getString(R.string.coming_soon)
+            val upcoming = getString(R.string.upcoming)
             return arrayOf(popular, topRated, nowPlaying, upcoming)
         }
 }
