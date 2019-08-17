@@ -7,7 +7,7 @@ import com.asmat.rolando.popularmovies.ui.common.MovieGridViewModel
 
 class PopularMoviesViewModel(private val moviesRepository: MoviesRepository) : MovieGridViewModel() {
 
-    val paginatedRequest: PaginatedRequest<MoviesResponse.Movie>
+    override val paginatedRequest: PaginatedRequest<MoviesResponse.Movie>
         get() = moviesRepository.popularMoviesPagedData
 
 }

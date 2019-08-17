@@ -21,7 +21,7 @@ abstract class PaginatedRequest<T> {
     /**
      * What data to fetch
      */
-    abstract fun fetchData(pageToLoad: Int): Single<List<T>>
+    abstract fun fetchData(pageToLoad: Int): Single<PagedData<T>>
 
     /**
      * Load first page of data
@@ -32,9 +32,9 @@ abstract class PaginatedRequest<T> {
         loading.value = true
         fetchData(pageToLoad)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response ->
+                .subscribe({ pagedData ->
                     loading.value = false
-                    data.value = response
+                    data.value = pagedData.items
                 }, { loadError ->
                     loading.value = false
                     error.value = loadError
@@ -50,9 +50,9 @@ abstract class PaginatedRequest<T> {
         loadingMore.value = true
         fetchData(pageToLoad)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response ->
+                .subscribe({ pagedData ->
                     val currentItems = data.value ?: emptyList()
-                    val newList = currentItems + response
+                    val newList = currentItems + pagedData.items
                     loadingMore.value = false
                     data.value = newList
                 }, { loadError ->

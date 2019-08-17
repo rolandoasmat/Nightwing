@@ -9,7 +9,7 @@ class SearchMoviesViewModel(private val moviesRepository: MoviesRepository) : Mo
 
     private var searchTerm = ""
 
-    val paginatedRequest: PaginatedRequest<MoviesResponse.Movie>
+    override val paginatedRequest: PaginatedRequest<MoviesResponse.Movie>
         get() = moviesRepository.popularMoviesPagedData
 
     fun searchTermChanged(newSearchTerm: String) {
