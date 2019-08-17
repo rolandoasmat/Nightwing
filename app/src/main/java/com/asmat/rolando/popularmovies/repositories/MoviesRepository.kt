@@ -7,7 +7,7 @@ import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
 import com.asmat.rolando.popularmovies.model.Movie
-import com.asmat.rolando.popularmovies.model.PopularMoviesPagedData
+import com.asmat.rolando.popularmovies.model.PopularMoviesPaginatedRequest
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
 import io.reactivex.Single
@@ -85,8 +85,13 @@ class MoviesRepository(private val db: DatabaseManager,
      * Network
      */
 
-    // Popular Movies paginated request
-    val popularMoviesPagedData = PopularMoviesPagedData(tmdbClient)
+    //region Paginated Request
+    val popularMoviesPagedData = PopularMoviesPaginatedRequest(tmdbClient)
+    val topRatedPagedData = PopularMoviesPaginatedRequest(tmdbClient)
+    val nowPlayingPagedData = PopularMoviesPaginatedRequest(tmdbClient)
+    val upcomingPagedData = PopularMoviesPaginatedRequest(tmdbClient)
+
+
 
     fun getTopRatedMovies(page: Int) : Single<MoviesResponse> {
         return tmdbClient.getTopRatedMovies(page).subscribeOn(Schedulers.io())

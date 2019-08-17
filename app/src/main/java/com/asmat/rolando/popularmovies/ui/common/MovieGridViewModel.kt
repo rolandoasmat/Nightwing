@@ -3,7 +3,7 @@ package com.asmat.rolando.popularmovies.ui.common
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.asmat.rolando.popularmovies.model.PagedData
+import com.asmat.rolando.popularmovies.model.PaginatedRequest
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
 import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsUIModel
 import com.asmat.rolando.popularmovies.utilities.URLUtils
@@ -14,20 +14,20 @@ import com.asmat.rolando.popularmovies.utilities.URLUtils
 abstract class MovieGridViewModel : ViewModel()  {
 
     val movies by lazy {
-        Transformations.map(pagedData.data) { movies ->
+        Transformations.map(paginatedRequest.data) { movies ->
             map(movies)
         }
     }
-    val loading by lazy { pagedData.loading }
-    val loadingMore by lazy { pagedData.loadingMore }
-    val error by lazy { pagedData.error }
-    val errorLoadingMore by lazy { pagedData.errorLoadingMore }
+    val loading by lazy { paginatedRequest.loading }
+    val loadingMore by lazy { paginatedRequest.loadingMore }
+    val error by lazy { paginatedRequest.error }
+    val errorLoadingMore by lazy { paginatedRequest.errorLoadingMore }
     val navigationEvent = MutableLiveData<NavigationEvent>()
 
     /**
      * Paginated data source
      */
-    abstract val pagedData: PagedData<MoviesResponse.Movie>
+    abstract val paginatedRequest: PaginatedRequest<MoviesResponse.Movie>
 
     //region API
 
@@ -35,21 +35,21 @@ abstract class MovieGridViewModel : ViewModel()  {
      * Load first page of movies
      */
     fun load() {
-        pagedData.load()
+        paginatedRequest.load()
     }
 
     /**
      * Load next page of movies
      */
     fun loadMore() {
-        pagedData.loadMore()
+        paginatedRequest.loadMore()
     }
 
     /**
      * An movie grid item was pressed
      */
     fun itemPressed(index: Int) {
-        pagedData.getItem(index)?.let { data ->
+        paginatedRequest.getItem(index)?.let { data ->
             val uiModel = map(data)
             val event = NavigationEvent.ShowMovieDetailScreen(uiModel)
             navigationEvent.value = event

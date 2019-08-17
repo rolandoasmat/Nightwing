@@ -8,7 +8,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
  * Encapsulates the states and data of a paginated
  * data request.
  */
-abstract class PagedData<T> {
+abstract class PaginatedRequest<T> {
 
     private var pageToLoad = 1
 

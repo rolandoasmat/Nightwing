@@ -5,11 +5,11 @@ import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResp
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
-data class TopRatedPagedData(private val tmdbClient: TheMovieDBClient): PagedData<MoviesResponse.Movie>() {
+data class TopRatedPaginatedRequest(private val tmdbClient: TheMovieDBClient): PaginatedRequest<MoviesResponse.Movie>() {
 
     override fun fetchData(pageToLoad: Int): Single<List<MoviesResponse.Movie>> {
         return tmdbClient
-                .getPopularMovies(pageToLoad)
+                .getTopRatedMovies(pageToLoad)
                 .subscribeOn(Schedulers.computation())
                 .map { it.results }
     }
