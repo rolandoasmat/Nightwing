@@ -3,6 +3,7 @@ package com.asmat.rolando.popularmovies.model
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 
 /**
  * Encapsulates the states and data of a paginated
@@ -11,12 +12,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 abstract class PaginatedRequest<T> {
 
     private var pageToLoad = 1
+    private var totalNumOfPages: Int? = null
 
     val data = MutableLiveData<List<T>>()
     val loading = MutableLiveData<Boolean>()
     val loadingMore = MutableLiveData<Boolean>()
     val error = MutableLiveData<Throwable>()
     val errorLoadingMore = MutableLiveData<Throwable>()
+
+    private var loadSubscription: Disposable? = null
+    private var loadMoreSubscription: Disposable? = null
 
     /**
      * What data to fetch
@@ -30,11 +35,13 @@ abstract class PaginatedRequest<T> {
         pageToLoad = 1
         error.value = null
         loading.value = true
-        fetchData(pageToLoad)
+        loadSubscription = fetchData(pageToLoad)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ pagedData ->
                     loading.value = false
                     data.value = pagedData.items
+                    totalNumOfPages = pagedData.totalNumOfPages
+                    pageToLoad++
                 }, { loadError ->
                     loading.value = false
                     error.value = loadError
@@ -45,16 +52,28 @@ abstract class PaginatedRequest<T> {
      * Load next page of data and add it to the current list of data
      */
     fun loadMore() {
-        pageToLoad++
+        val loadingValue = this.loading.value ?: false
+        val loadingMoreValue = this.loadingMore.value ?: false
+        if (loadingValue || loadingMoreValue) {
+            // Ignore if any request is loading
+            return
+        }
+        totalNumOfPages?.let { maxPage ->
+            if (pageToLoad > maxPage) {
+                // Ignore if there's no more pages to load
+                return@let
+            }
+        }
         errorLoadingMore.value = null
         loadingMore.value = true
-        fetchData(pageToLoad)
+        loadMoreSubscription = fetchData(pageToLoad)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ pagedData ->
                     val currentItems = data.value ?: emptyList()
                     val newList = currentItems + pagedData.items
                     loadingMore.value = false
                     data.value = newList
+                    pageToLoad++
                 }, { loadError ->
                     loadingMore.value = false
                     errorLoadingMore.value = loadError

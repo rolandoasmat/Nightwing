@@ -6,8 +6,7 @@ import android.os.AsyncTask
 import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
-import com.asmat.rolando.popularmovies.model.Movie
-import com.asmat.rolando.popularmovies.model.PopularMoviesPaginatedRequest
+import com.asmat.rolando.popularmovies.model.*
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
 import io.reactivex.Single
@@ -85,25 +84,10 @@ class MoviesRepository(private val db: DatabaseManager,
      * Network
      */
 
-    //region Paginated Request
     val popularMoviesPagedData = PopularMoviesPaginatedRequest(tmdbClient)
-    val topRatedPagedData = PopularMoviesPaginatedRequest(tmdbClient)
-    val nowPlayingPagedData = PopularMoviesPaginatedRequest(tmdbClient)
-    val upcomingPagedData = PopularMoviesPaginatedRequest(tmdbClient)
-
-
-
-    fun getTopRatedMovies(page: Int) : Single<MoviesResponse> {
-        return tmdbClient.getTopRatedMovies(page).subscribeOn(Schedulers.io())
-    }
-
-    fun getNowPlayingMovies(page: Int) : Single<MoviesResponse> {
-        return tmdbClient.getNowPlayingMovies(page).subscribeOn(Schedulers.io())
-    }
-
-    fun getUpcomingMovies(page: Int) : Single<MoviesResponse> {
-        return tmdbClient.getUpcomingMovies(page).subscribeOn(Schedulers.io())
-    }
+    val topRatedPagedData = TopRatedPaginatedRequest(tmdbClient)
+    val nowPlayingPagedData = NowPlayingPaginatedRequest(tmdbClient)
+    val upcomingPagedData = UpcomingPaginatedRequest(tmdbClient)
 
     fun getMovieDetails(movieID: Int): Single<MovieDetailsResponse> {
         return tmdbClient.getMovieDetails(movieID).subscribeOn(Schedulers.io())
