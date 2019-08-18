@@ -2,14 +2,13 @@ package com.asmat.rolando.popularmovies.ui.common
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.gone
@@ -24,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_movie_grid.*
 import kotlinx.android.synthetic.main.no_internet.*
 import javax.inject.Inject
 
-abstract class PaginatedMovieGridFragment : androidx.fragment.app.Fragment() {
+abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
 
     @Inject
     lateinit var moviesRepository: MoviesRepository
@@ -111,7 +110,7 @@ abstract class PaginatedMovieGridFragment : androidx.fragment.app.Fragment() {
         viewModel.navigationEvent.observe(this, Observer { navigationEvent ->
             navigationEvent?.let { event ->
                 when (event) {
-                     is PaginatedMovieGridViewModel.NavigationEvent.ShowMovieDetailScreen -> {
+                    is PaginatedMovieGridViewModel.NavigationEvent.ShowMovieDetailScreen -> {
                         showMovieDetailScreen(event.uiModel)
                     }
                 }

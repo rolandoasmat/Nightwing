@@ -12,7 +12,7 @@ class WatchLaterMoviesGridFragment : PaginatedMovieGridFragment() {
 //    @Inject
 //    lateinit var peopleRepository: PeopleRepository
 
-    override val viewModel: MovieGridViewModel
+    override val viewModel: PaginatedMovieGridViewModel
         get() = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository)).get(WatchLaterViewModel::class.java)
 
 }

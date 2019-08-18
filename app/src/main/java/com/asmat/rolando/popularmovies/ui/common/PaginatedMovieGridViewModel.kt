@@ -11,7 +11,7 @@ import com.asmat.rolando.popularmovies.utilities.URLUtils
 /**
  * Base view model class for a grid of Movie items
  */
-abstract class MovieGridViewModel : ViewModel()  {
+abstract class PaginatedMovieGridViewModel : ViewModel()  {
 
     val movies by lazy {
         Transformations.map(paginatedRequest.data) { movies ->

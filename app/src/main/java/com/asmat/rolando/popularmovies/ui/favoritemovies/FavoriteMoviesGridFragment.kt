@@ -12,7 +12,7 @@ class FavoriteMoviesGridFragment : PaginatedMovieGridFragment() {
 //    @Inject
 //    lateinit var peopleRepository: PeopleRepository
 
-    override val viewModel: MovieGridViewModel
+    override val viewModel: PaginatedMovieGridViewModel
         get() = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository)).get(FavoriteMoviesViewModel::class.java)
 
 }
