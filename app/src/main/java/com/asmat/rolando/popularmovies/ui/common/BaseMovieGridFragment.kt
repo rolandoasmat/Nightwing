@@ -34,7 +34,7 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
 
     protected var moviesGridAdapter: MoviesGridAdapter? = null
 
-    abstract val viewModel: PaginatedMovieGridViewModel
+    abstract val viewModel: BaseMovieGridViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +57,6 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
             }
         })
         moviesRecyclerView?.adapter = moviesGridAdapter
-        moviesRecyclerView?.addOnScrollListener(createScrollListener(layoutManager))
         moviesRecyclerView?.isNestedScrollingEnabled = false
 
         retryButton?.setOnClickListener {
@@ -85,20 +84,6 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
         }
     }
 
-    private fun createScrollListener(layoutManager: GridLayoutManager): RecyclerView.OnScrollListener {
-        return object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0) { // User is scrolling down
-                    val positionOfLastItem = layoutManager.itemCount - 1
-                    val currentPositionOfLastVisibleItem = layoutManager.findLastVisibleItemPosition()
-                    if (currentPositionOfLastVisibleItem >= positionOfLastItem - 5) {
-                        viewModel.loadMore()
-                    }
-                }
-            }
-        }
-    }
-
     private fun observeViewModel() {
         viewModel.movies.observe(this, Observer { movies ->
             moviesGridAdapter?.setMovies(movies)
@@ -111,7 +96,7 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
         viewModel.navigationEvent.observe(this, Observer { navigationEvent ->
             navigationEvent?.let { event ->
                 when (event) {
-                    is PaginatedMovieGridViewModel.NavigationEvent.ShowMovieDetailScreen -> {
+                    is BaseMovieGridViewModel.NavigationEvent.ShowMovieDetailScreen -> {
                         showMovieDetailScreen(event.uiModel)
                     }
                 }
