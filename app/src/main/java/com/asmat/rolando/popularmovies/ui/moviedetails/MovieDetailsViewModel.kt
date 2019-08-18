@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.model.mappers.FavoriteMovieMapper
 import com.asmat.rolando.popularmovies.model.mappers.WatchLaterMovieMapper
@@ -32,11 +31,8 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository) : Vi
     val videos = MutableLiveData<List<VideosResponse.Video>>()
     val cast = MutableLiveData<List<CreditsResponse.Cast>>()
     val reviews = MutableLiveData<List<ReviewsResponse.Review>>()
-    
-    private var movie: Movie? = null
 
-    fun init(movie: Movie) {
-        this.movie = movie
+    fun init(movie: MovieDetailsUIModel) {
         backdropURL.value = movie.backdropPath?.let {  URLUtils.getImageURL780(it) }
         movieTitle.value = movie.title
         movie.releaseDate.let { releaseDate.value = DateUtils.formatDate(it) }
@@ -85,33 +81,30 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository) : Vi
 
     //region UI events
 
-    fun onStarTapped() {
-        val movie = this.movie ?: return
+    fun onStarTapped(movieID: Int) {
         isFavoriteMovie.value?.let {
             if (it) {
-                moviesRepository.removeFavoriteMovie(movie.id)
+                moviesRepository.removeFavoriteMovie(movieID)
             } else {
-                val favoriteMovie = FavoriteMovieMapper.from(movie)
-                moviesRepository.insertFavoriteMovie(favoriteMovie)
+//                val favoriteMovie = FavoriteMovieMapper.from(movie)
+//                moviesRepository.insertFavoriteMovie(favoriteMovie)
             }
         }
     }
 
-    fun onBookmarkTapped() {
-        val movie = this.movie ?: return
+    fun onBookmarkTapped(movieID: Int) {
         isWatchLaterMovie.value?.let {
             if (it) {
-                moviesRepository.removeWatchLaterMovie(movie.id)
+                moviesRepository.removeWatchLaterMovie(movieID)
             } else {
-                val watchLaterMovie = WatchLaterMovieMapper.from(movie)
-                moviesRepository.insertWatchLaterMovie(watchLaterMovie)
+//                val watchLaterMovie = WatchLaterMovieMapper.from(movie)
+//                moviesRepository.insertWatchLaterMovie(watchLaterMovie)
             }
         }
     }
 
     fun onShareTapped() {
-        val movie = this.movie ?: return
-        val movieTitle = movie.title
+        val movieTitle = movieTitle.value ?: ""
         val youtubeURL = videos.value?.firstOrNull()?.key?.let { URLUtils.getYoutubeURL(it) } ?: ""
         shareMovie.value = Pair(movieTitle, youtubeURL)
     }

@@ -14,7 +14,6 @@ import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
-import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
@@ -71,7 +70,7 @@ class MovieDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_movie_detail)
         viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository)).get(MovieDetailsViewModel::class.java)
         if (intent != null && intent.hasExtra(INTENT_EXTRA_MOVIE_DATA)) {
-            val movieData = intent.getParcelableExtra<Movie>(INTENT_EXTRA_MOVIE_DATA)
+            val movieData = intent.getParcelableExtra<MovieDetailsUIModel>(INTENT_EXTRA_MOVIE_DATA)
             viewModel.init(movieData)
         }
         setupObservers()
@@ -97,13 +96,13 @@ class MovieDetailActivity : AppCompatActivity() {
     //region User Actions
     private fun sendEvents() {
         starContainer?.setOnClickListener {
-            viewModel.onStarTapped()
+            viewModel.onStarTapped(1) // TODO pass in movie id from bundle
         }
         shareContainer?.setOnClickListener {
             viewModel.onShareTapped()
         }
         toWatchContainer?.setOnClickListener {
-            viewModel.onBookmarkTapped()
+            viewModel.onBookmarkTapped(1) // TODO pass in movie id from bundle
         }
     }
     //endregion

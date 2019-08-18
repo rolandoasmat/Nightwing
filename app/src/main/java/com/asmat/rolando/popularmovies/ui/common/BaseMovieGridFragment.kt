@@ -18,6 +18,7 @@ import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailActivity
+import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsUIModel
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import kotlinx.android.synthetic.main.fragment_movie_grid.*
@@ -103,9 +104,23 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
         viewModel.movies.observe(this, Observer { movies ->
             moviesGridAdapter?.setMovies(movies)
         })
+        viewModel.error.observe(this, Observer { error ->
+            error?.let {
+                handleError(it)
+            }
+        })
+        viewModel.navigationEvent.observe(this, Observer { navigationEvent ->
+            navigationEvent?.let { event ->
+                when (event) {
+                     is MovieGridViewModel.NavigationEvent.ShowMovieDetailScreen -> {
+                        showMovieDetailScreen(event.uiModel)
+                    }
+                }
+            }
+        })
     }
 
-    private fun showMovieDetailScreen(data: Movie) {
+    private fun showMovieDetailScreen(data: MovieDetailsUIModel) {
         val context = context ?: return
         val destinationClass = MovieDetailActivity::class.java
         val intentToStartDetailActivity = Intent(context, destinationClass)
