@@ -1,13 +1,10 @@
 package com.asmat.rolando.popularmovies.ui.search
 
 import androidx.lifecycle.ViewModelProviders
-import com.asmat.rolando.popularmovies.repositories.MoviesRepository
-import com.asmat.rolando.popularmovies.repositories.PeopleRepository
-import com.asmat.rolando.popularmovies.ui.common.MovieGridFragment
+import com.asmat.rolando.popularmovies.ui.common.BaseMovieGridFragment
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
-import javax.inject.Inject
 
-class SearchResultsFragment : MovieGridFragment() {
+class SearchResultsFragment : BaseMovieGridFragment() {
 
 //    @Inject
 //    lateinit var moviesRepository: MoviesRepository

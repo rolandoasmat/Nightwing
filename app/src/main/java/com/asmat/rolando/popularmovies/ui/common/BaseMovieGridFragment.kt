@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_movie_grid.*
 import kotlinx.android.synthetic.main.no_internet.*
 import javax.inject.Inject
 
-abstract class MovieGridFragment : androidx.fragment.app.Fragment() {
+abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
 
     @Inject
     lateinit var moviesRepository: MoviesRepository
@@ -117,6 +117,6 @@ abstract class MovieGridFragment : androidx.fragment.app.Fragment() {
         val message = error.message ?: "Whoops, error fetching movies."
         val toast = Toast.makeText(context, message, Toast.LENGTH_LONG)
         toast.show()
-        Log.e("MovieGridFragment", error.toString())
+        Log.e("BaseMovieGridFragment", error.toString())
     }
 }

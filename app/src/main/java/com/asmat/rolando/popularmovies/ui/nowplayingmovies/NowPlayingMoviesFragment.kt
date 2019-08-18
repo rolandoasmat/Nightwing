@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.asmat.rolando.popularmovies.ui.common.MovieGridFragment
+import com.asmat.rolando.popularmovies.ui.common.BaseMovieGridFragment
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 
-class NowPlayingMoviesFragment : MovieGridFragment() {
+class NowPlayingMoviesFragment : BaseMovieGridFragment() {
 
     override val viewModel: NowPlayingMoviesViewModel
         get() = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository)).get(NowPlayingMoviesViewModel::class.java)
