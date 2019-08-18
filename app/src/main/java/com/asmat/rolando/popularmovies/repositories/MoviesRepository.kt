@@ -22,25 +22,6 @@ class MoviesRepository(private val db: DatabaseManager,
                        private val tmdbClient: TheMovieDBClient) {
 
     /**
-     * Cache
-     */
-    fun getPopularMovieAt(index: Int): MoviesResponse.Movie? {
-        return popularMoviesPaginatedRequest.data.value?.getOrNull(index)
-    }
-
-    fun getTopRatedMovieAt(index: Int): MoviesResponse.Movie? {
-        return topRatedPaginatedRequest.data.value?.getOrNull(index)
-    }
-
-    fun getNowPlayingMovieAt(index: Int): MoviesResponse.Movie? {
-        return nowPlayingPaginatedRequest.data.value?.getOrNull(index)
-    }
-
-    fun getUpcomingMovieAt(index: Int): MoviesResponse.Movie? {
-        return upcomingPaginatedRequest.data.value?.getOrNull(index)
-    }
-
-    /**
      * DB
      */
 
