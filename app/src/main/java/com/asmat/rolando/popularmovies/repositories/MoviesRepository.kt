@@ -6,7 +6,10 @@ import android.os.AsyncTask
 import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
-import com.asmat.rolando.popularmovies.model.*
+import com.asmat.rolando.popularmovies.model.NowPlayingPaginatedRequest
+import com.asmat.rolando.popularmovies.model.PopularMoviesPaginatedRequest
+import com.asmat.rolando.popularmovies.model.TopRatedPaginatedRequest
+import com.asmat.rolando.popularmovies.model.UpcomingPaginatedRequest
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
 import io.reactivex.Single
@@ -18,28 +21,23 @@ import io.reactivex.schedulers.Schedulers
 class MoviesRepository(private val db: DatabaseManager,
                        private val tmdbClient: TheMovieDBClient) {
 
-    private val popularMovies = mutableListOf<Movie>()
-    private val topRatedMovies = mutableListOf<Movie>()
-    private val nowPlayingMovies = mutableListOf<Movie>()
-    private val upcomingMovies = mutableListOf<Movie>()
-
     /**
      * Cache
      */
-    fun getPopularMovieAt(index: Int): Movie {
-        return popularMovies[index]
+    fun getPopularMovieAt(index: Int): MoviesResponse.Movie? {
+        return popularMoviesPaginatedRequest.data.value?.getOrNull(index)
     }
 
-    fun getTopRatedMovieAt(index: Int): Movie {
-        return topRatedMovies[index]
+    fun getTopRatedMovieAt(index: Int): MoviesResponse.Movie? {
+        return topRatedPaginatedRequest.data.value?.getOrNull(index)
     }
 
-    fun getNowPlayingMovieAt(index: Int): Movie {
-        return nowPlayingMovies[index]
+    fun getNowPlayingMovieAt(index: Int): MoviesResponse.Movie? {
+        return nowPlayingPaginatedRequest.data.value?.getOrNull(index)
     }
 
-    fun getUpcomingMovieAt(index: Int): Movie {
-        return upcomingMovies[index]
+    fun getUpcomingMovieAt(index: Int): MoviesResponse.Movie? {
+        return upcomingPaginatedRequest.data.value?.getOrNull(index)
     }
 
     /**
@@ -84,10 +82,10 @@ class MoviesRepository(private val db: DatabaseManager,
      * Network
      */
 
-    val popularMoviesPagedData = PopularMoviesPaginatedRequest(tmdbClient)
-    val topRatedPagedData = TopRatedPaginatedRequest(tmdbClient)
-    val nowPlayingPagedData = NowPlayingPaginatedRequest(tmdbClient)
-    val upcomingPagedData = UpcomingPaginatedRequest(tmdbClient)
+    val popularMoviesPaginatedRequest = PopularMoviesPaginatedRequest(tmdbClient)
+    val topRatedPaginatedRequest = TopRatedPaginatedRequest(tmdbClient)
+    val nowPlayingPaginatedRequest = NowPlayingPaginatedRequest(tmdbClient)
+    val upcomingPaginatedRequest = UpcomingPaginatedRequest(tmdbClient)
 
     fun getMovieDetails(movieID: Int): Single<MovieDetailsResponse> {
         return tmdbClient.getMovieDetails(movieID).subscribeOn(Schedulers.io())
