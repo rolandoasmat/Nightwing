@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.asmat.rolando.popularmovies.ui.common.*
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 
-class WatchLaterMoviesGridFragment : BaseMovieGridFragment() {
+class WatchLaterMoviesGridFragment : PaginatedMovieGridFragment() {
 
 //    @Inject
 //    lateinit var moviesRepository: MoviesRepository
