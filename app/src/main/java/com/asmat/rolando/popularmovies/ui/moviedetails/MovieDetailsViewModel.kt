@@ -6,8 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
-import com.asmat.rolando.popularmovies.model.mappers.FavoriteMovieMapper
-import com.asmat.rolando.popularmovies.model.mappers.WatchLaterMovieMapper
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
 import com.asmat.rolando.popularmovies.utilities.DateUtils
 import com.asmat.rolando.popularmovies.utilities.URLUtils
@@ -33,11 +31,11 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository) : Vi
     val reviews = MutableLiveData<List<ReviewsResponse.Review>>()
 
     fun init(movie: MovieDetailsUIModel) {
-        backdropURL.value = movie.backdropPath?.let {  URLUtils.getImageURL780(it) }
+        backdropURL.value = movie.backdropPath
         movieTitle.value = movie.title
         movie.releaseDate.let { releaseDate.value = DateUtils.formatDate(it) }
         rating.value = movie.voteAverage.toString()
-        posterURL.value = movie.posterPath?.let { URLUtils.getImageURL342(it) }
+        posterURL.value = movie.posterPath
         summary.value = movie.overview
 
         isFavoriteMovie = Transformations.map(moviesRepository.getFavoriteMovie(movie.id)) {

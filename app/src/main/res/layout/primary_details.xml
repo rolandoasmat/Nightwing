@@ -37,6 +37,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_margin_general"
+        android:layout_marginStart="@dimen/activity_margin_general"
         app:layout_constraintStart_toEndOf="@id/thumbnail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/movieRatingLabel"
