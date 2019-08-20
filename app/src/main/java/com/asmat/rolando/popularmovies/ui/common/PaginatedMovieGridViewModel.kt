@@ -15,6 +15,7 @@ abstract class PaginatedMovieGridViewModel : BaseMovieGridViewModel() {
 
     override val moviesUIModels: LiveData<List<MovieGridItemUiModel>>
         get() = Transformations.map(paginatedRequest.data) { movies ->
+            moviesData = movies.map { MovieMapper.from(it) }
             movies.map {
                 val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url) }
                 MovieGridItemUiModel(it.title, posterURL)
