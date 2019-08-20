@@ -1,17 +1,22 @@
 package com.asmat.rolando.popularmovies.ui.moviedetails
 
 import android.annotation.SuppressLint
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.asmat.rolando.popularmovies.model.Movie
+import com.asmat.rolando.popularmovies.model.mappers.FavoriteMovieMapper
+import com.asmat.rolando.popularmovies.model.mappers.WatchLaterMovieMapper
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.ReviewsResponse
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
 import com.asmat.rolando.popularmovies.utilities.DateUtils
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
+/**
+ * Movie Details Screen view model
+ */
 @SuppressLint("CheckResult")
 class MovieDetailsViewModel(private val moviesRepository: MoviesRepository) : ViewModel() {
 
@@ -22,89 +27,138 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository) : Vi
     val posterURL = MutableLiveData<String>()
     val summary = MutableLiveData<String>()
 
-    lateinit var isFavoriteMovie: LiveData<Boolean>
-    lateinit var isWatchLaterMovie: LiveData<Boolean>
+    val isFavoriteMovie = MutableLiveData<Boolean>()
+    val isWatchLaterMovie = MutableLiveData<Boolean>()
     val shareMovie = MutableLiveData<Pair<String, String>>()
 
     val videos = MutableLiveData<List<VideosResponse.Video>>()
+    val videosError = MutableLiveData<Throwable>()
+
     val cast = MutableLiveData<List<CreditsResponse.Cast>>()
+    val castError = MutableLiveData<Throwable>()
+
     val reviews = MutableLiveData<List<ReviewsResponse.Review>>()
+    val reviewsError = MutableLiveData<Throwable>()
 
-    fun init(movie: MovieDetailsUIModel) {
-        backdropURL.value = movie.backdropPath
-        movieTitle.value = movie.title
-        movie.releaseDate.let { releaseDate.value = DateUtils.formatDate(it) }
-        rating.value = movie.voteAverage.toString()
-        posterURL.value = movie.posterPath
-        summary.value = movie.overview
 
-        isFavoriteMovie = Transformations.map(moviesRepository.getFavoriteMovie(movie.id)) {
-            it != null
-        }
 
-        isWatchLaterMovie = Transformations.map(moviesRepository.getWatchLaterMovie(movie.id)) {
-            it != null
-        }
-
-        moviesRepository
-                .getMovieVideos(movie.id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ result ->
-                    videos.value = result.results
-                }, { _ ->
-                    videos.value = null
-                })
-
-        moviesRepository
-                .getMovieCredits(movie.id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ result ->
-                    cast.value = result.cast
-                }, { _ ->
-                    cast.value = null
-                })
-
-        moviesRepository
-                .getMovieReviews(movie.id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ result ->
-                    reviews.value = result.results
-                }, { _ ->
-                    reviews.value = null
-                })
+    private var uiModel: MovieDetailsUIModel? = null
+    set(value) {
+        handleUiModel(value)
     }
 
-    //region UI events
+    private val movieDetailsRawData: Movie? get() { return moviesRepository.getMovieDetails() }
 
-    fun onStarTapped(movieID: Int) {
+    init {
+        movieDetailsRawData?.let { movie ->
+            uiModel = map(movie)
+            fetchData(movie.id)
+        }
+    }
+
+    //region API
+
+    /**
+     * User pressed the star, "favorite movie", icon
+     */
+    fun onStarTapped() {
+        val movie = movieDetailsRawData ?: return
         isFavoriteMovie.value?.let {
             if (it) {
-                moviesRepository.removeFavoriteMovie(movieID)
+                // It's a favorite movie, "un-favorite" it
+                moviesRepository.removeFavoriteMovie(movie.id)
             } else {
-//                val favoriteMovie = FavoriteMovieMapper.from(movie)
-//                moviesRepository.insertFavoriteMovie(favoriteMovie)
+                // It's not a favorite movie, "favorite" it
+                val favoriteMovie = FavoriteMovieMapper.from(movie)
+                moviesRepository.insertFavoriteMovie(favoriteMovie)
             }
         }
     }
 
-    fun onBookmarkTapped(movieID: Int) {
+    /**
+     * User pressed the bookmark, "watch later movie", icon
+     */
+    fun onBookmarkTapped() {
+        val movie = movieDetailsRawData ?: return
         isWatchLaterMovie.value?.let {
             if (it) {
-                moviesRepository.removeWatchLaterMovie(movieID)
+                // It's a watch later movie, "un-watch-later" it
+                moviesRepository.removeWatchLaterMovie(movie.id)
             } else {
-//                val watchLaterMovie = WatchLaterMovieMapper.from(movie)
-//                moviesRepository.insertWatchLaterMovie(watchLaterMovie)
+                // It's not a watch later movie, "watch-later" it
+                val favoriteMovie = WatchLaterMovieMapper.from(movie)
+                moviesRepository.insertWatchLaterMovie(favoriteMovie)
             }
         }
     }
 
+    /**
+     * User pressed the share button
+     */
     fun onShareTapped() {
         val movieTitle = movieTitle.value ?: ""
         val youtubeURL = videos.value?.firstOrNull()?.key?.let { URLUtils.getYoutubeURL(it) } ?: ""
         shareMovie.value = Pair(movieTitle, youtubeURL)
     }
+    //endregion
 
+    private fun map(movie: Movie): MovieDetailsUIModel {
+        val posterURL = movie.posterPath?.let { url -> URLUtils.getImageURL342(url)}
+        val backdropURL = movie.backdropPath?.let { url -> URLUtils.getImageURL780(url)}
+        val releaseDate = DateUtils.formatDate(movie.releaseDate)
+        val voteAverage = movie.voteAverage.toString()
+        return MovieDetailsUIModel(posterURL, movie.overview, releaseDate, movie.id, movie.title, backdropURL, voteAverage)
+    }
+
+    // Updates the live data streams with the UI model data
+    private fun handleUiModel(movie: MovieDetailsUIModel?) {
+        backdropURL.value = movie?.backdropPath
+        movieTitle.value = movie?.title
+        releaseDate.value = movie?.releaseDate
+        rating.value = movie?.voteAverage
+        posterURL.value = movie?.posterPath
+        summary.value = movie?.overview
+    }
+
+    // Fetch other movie data from network or db
+    private fun fetchData(movieID: Int?) {
+        movieID ?: return
+        moviesRepository.getFavoriteMovie(movieID).observeForever {
+            isFavoriteMovie.value = it != null
+        }
+
+        moviesRepository.getWatchLaterMovie(movieID).observeForever {
+            isWatchLaterMovie.value = it != null
+        }
+
+        moviesRepository
+                .getMovieVideos(movieID)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ result ->
+                    videos.value = result.results
+                }, { error ->
+                    videosError.value = error
+                    videos.value = null
+                })
+
+        moviesRepository
+                .getMovieCredits(movieID)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ result ->
+                    cast.value = result.cast
+                }, { error ->
+                    castError.value = error
+                    cast.value = null
+                })
+
+        moviesRepository
+                .getMovieReviews(movieID)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ result ->
+                    reviews.value = result.results
+                }, { error ->
+                    reviewsError.value = error
+                    reviews.value = null
+                })
+    }
 }

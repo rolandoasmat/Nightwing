@@ -6,12 +6,13 @@ import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.model.PaginatedRequest
 import com.asmat.rolando.popularmovies.model.mappers.MovieMapper
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
+import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.ui.moviegrid.BaseMovieGridViewModel
 
 /**
  * Paginated movie grid
  */
-abstract class PaginatedMovieGridViewModel : BaseMovieGridViewModel() {
+abstract class PaginatedMovieGridViewModel(moviesRepository: MoviesRepository) : BaseMovieGridViewModel(moviesRepository) {
 
     override val movies: LiveData<List<Movie>> by lazy {
         Transformations.map(paginatedRequest.data) { movies ->

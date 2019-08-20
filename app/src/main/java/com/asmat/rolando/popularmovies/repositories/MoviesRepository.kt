@@ -6,10 +6,7 @@ import android.os.AsyncTask
 import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
-import com.asmat.rolando.popularmovies.model.NowPlayingPaginatedRequest
-import com.asmat.rolando.popularmovies.model.PopularMoviesPaginatedRequest
-import com.asmat.rolando.popularmovies.model.TopRatedPaginatedRequest
-import com.asmat.rolando.popularmovies.model.UpcomingPaginatedRequest
+import com.asmat.rolando.popularmovies.model.*
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
 import io.reactivex.Single
@@ -20,6 +17,18 @@ import io.reactivex.schedulers.Schedulers
  */
 class MoviesRepository(private val db: DatabaseManager,
                        private val tmdbClient: TheMovieDBClient) {
+
+    private var movieDetailsData: Movie? = null
+
+    /**
+     * Cache
+     */
+
+    fun setMovieDetails(data: Movie) {
+        movieDetailsData = data
+    }
+
+    fun getMovieDetails() = movieDetailsData
 
     /**
      * DB

@@ -29,10 +29,6 @@ import javax.inject.Inject
 
 class MovieDetailActivity : AppCompatActivity() {
 
-    companion object {
-        const val INTENT_EXTRA_MOVIE_DATA = "MOVIE_DATA"
-    }
-
     @Inject
     lateinit var moviesRepository: MoviesRepository
     @Inject
@@ -69,10 +65,6 @@ class MovieDetailActivity : AppCompatActivity() {
         (applicationContext as MovieNightApplication).component().inject(this)
         setContentView(R.layout.activity_movie_detail)
         viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository)).get(MovieDetailsViewModel::class.java)
-        if (intent != null && intent.hasExtra(INTENT_EXTRA_MOVIE_DATA)) {
-            val movieData = intent.getParcelableExtra<MovieDetailsUIModel>(INTENT_EXTRA_MOVIE_DATA)
-            viewModel.init(movieData)
-        }
         setupObservers()
         setupUI()
         sendEvents()
@@ -96,13 +88,13 @@ class MovieDetailActivity : AppCompatActivity() {
     //region User Actions
     private fun sendEvents() {
         starContainer?.setOnClickListener {
-            viewModel.onStarTapped(1) // TODO pass in movie id from bundle
+            viewModel.onStarTapped()
         }
         shareContainer?.setOnClickListener {
             viewModel.onShareTapped()
         }
         toWatchContainer?.setOnClickListener {
-            viewModel.onBookmarkTapped(1) // TODO pass in movie id from bundle
+            viewModel.onBookmarkTapped()
         }
     }
     //endregion

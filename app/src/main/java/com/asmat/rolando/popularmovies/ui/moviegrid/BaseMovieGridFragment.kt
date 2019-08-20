@@ -96,18 +96,17 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
             navigationEvent?.let { event ->
                 when (event) {
                     is BaseMovieGridViewModel.NavigationEvent.ShowMovieDetailScreen -> {
-                        showMovieDetailScreen(event.uiModel)
+                        showMovieDetailScreen()
                     }
                 }
             }
         })
     }
 
-    private fun showMovieDetailScreen(data: MovieDetailsUIModel) {
+    private fun showMovieDetailScreen() {
         val context = context ?: return
         val destinationClass = MovieDetailActivity::class.java
         val intentToStartDetailActivity = Intent(context, destinationClass)
-        intentToStartDetailActivity.putExtra(MovieDetailActivity.INTENT_EXTRA_MOVIE_DATA, data)
         startActivity(intentToStartDetailActivity)
     }
 

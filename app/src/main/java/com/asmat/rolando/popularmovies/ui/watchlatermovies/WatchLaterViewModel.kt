@@ -8,7 +8,7 @@ import com.asmat.rolando.popularmovies.model.mappers.MovieMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.ui.moviegrid.BaseMovieGridViewModel
 
-class WatchLaterViewModel(private val moviesRepository: MoviesRepository) : BaseMovieGridViewModel() {
+class WatchLaterViewModel(moviesRepository: MoviesRepository) : BaseMovieGridViewModel(moviesRepository) {
 
     override val movies: LiveData<List<Movie>> by lazy {
         Transformations.map(moviesRepository.getAllWatchLaterMovies()) {

@@ -12,7 +12,9 @@ import com.asmat.rolando.popularmovies.ui.moviegrid.paginated.PaginatedMovieGrid
 import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailActivity
 import com.asmat.rolando.popularmovies.ui.popularmovies.PopularMoviesFragment
 import dagger.Component
+import javax.inject.Singleton
 
+@Singleton
 @Component(modules = [ContextModule::class, DatabaseModule::class, NetworkModule::class, RepositoriesModule::class])
 interface ApplicationComponent {
 

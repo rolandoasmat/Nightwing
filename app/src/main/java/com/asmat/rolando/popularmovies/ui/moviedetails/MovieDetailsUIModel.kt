@@ -10,4 +10,4 @@ data class MovieDetailsUIModel(val posterPath: String?,
                  val id: Int,
                  val title: String,
                  val backdropPath: String?,
-                 val voteAverage: Double): Parcelable
+                 val voteAverage: String): Parcelable

@@ -5,7 +5,7 @@ import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResp
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.ui.moviegrid.paginated.PaginatedMovieGridViewModel
 
-class SearchMoviesViewModel(private val moviesRepository: MoviesRepository) : PaginatedMovieGridViewModel() {
+class SearchMoviesViewModel(moviesRepository: MoviesRepository) : PaginatedMovieGridViewModel(moviesRepository) {
 
     private var searchTerm = ""
 
