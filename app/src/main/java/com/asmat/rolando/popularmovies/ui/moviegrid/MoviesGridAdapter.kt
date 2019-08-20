@@ -1,8 +1,7 @@
-package com.asmat.rolando.popularmovies.ui.common
+package com.asmat.rolando.popularmovies.ui.moviegrid
 
 import com.asmat.rolando.popularmovies.R
-import com.asmat.rolando.popularmovies.ui.common.MovieAdapterOnClickHandler
-import com.asmat.rolando.popularmovies.ui.common.BaseMoviesGridAdapter
+import com.asmat.rolando.popularmovies.ui.moviegrid.BaseMoviesGridAdapter
 
 class MoviesGridAdapter(callback: Callback?) : BaseMoviesGridAdapter(callback) {
 

@@ -1,10 +1,8 @@
 package com.asmat.rolando.popularmovies.ui.common
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 
 abstract class BaseLinearAdapter<T, V : BaseLinearAdapter<T, V>.ViewHolder>(private val clickHandler: ((T) -> Unit?)? = null) : androidx.recyclerview.widget.RecyclerView.Adapter<V>() {
 

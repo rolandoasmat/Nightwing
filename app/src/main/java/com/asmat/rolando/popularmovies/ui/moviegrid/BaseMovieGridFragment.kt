@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.ui.common
+package com.asmat.rolando.popularmovies.ui.moviegrid
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.gone
@@ -52,7 +51,7 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
         val numOfColumns = ViewUtils.calculateNumberOfColumns(context)
         val layoutManager = GridLayoutManager(context, numOfColumns)
         moviesRecyclerView?.layoutManager = layoutManager
-        moviesGridAdapter = MoviesGridAdapter(object: BaseMoviesGridAdapter.Callback {
+        moviesGridAdapter = MoviesGridAdapter(object : BaseMoviesGridAdapter.Callback {
             override fun itemPressed(index: Int) {
                 viewModel.itemPressed(index)
             }

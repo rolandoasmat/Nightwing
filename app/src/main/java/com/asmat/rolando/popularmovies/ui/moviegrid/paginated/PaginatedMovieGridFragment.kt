@@ -1,9 +1,10 @@
-package com.asmat.rolando.popularmovies.ui.common
+package com.asmat.rolando.popularmovies.ui.moviegrid.paginated
 
 import android.os.Bundle
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
+import com.asmat.rolando.popularmovies.ui.moviegrid.BaseMovieGridFragment
 import kotlinx.android.synthetic.main.fragment_movie_grid.*
 
 abstract class PaginatedMovieGridFragment : BaseMovieGridFragment() {

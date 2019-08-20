@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.ui.common
+package com.asmat.rolando.popularmovies.ui.moviegrid
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -61,7 +61,8 @@ abstract class BaseMovieGridViewModel : ViewModel()  {
     protected fun map(movies: List<Movie>): List<MovieGridItemUiModel> {
         return movies.map {
             val posterURL = it.posterPath?.let { url -> URLUtils.getImageURL342(url)}
-            MovieGridItemUiModel(it.title, posterURL) }
+            MovieGridItemUiModel(it.title, posterURL)
+        }
     }
 
     protected fun map(movie: Movie): MovieDetailsUIModel {

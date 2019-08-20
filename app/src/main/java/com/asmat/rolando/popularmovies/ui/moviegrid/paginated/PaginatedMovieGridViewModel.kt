@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.ui.common
+package com.asmat.rolando.popularmovies.ui.moviegrid.paginated
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
@@ -6,6 +6,7 @@ import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.model.PaginatedRequest
 import com.asmat.rolando.popularmovies.model.mappers.MovieMapper
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
+import com.asmat.rolando.popularmovies.ui.moviegrid.BaseMovieGridViewModel
 
 /**
  * Paginated movie grid

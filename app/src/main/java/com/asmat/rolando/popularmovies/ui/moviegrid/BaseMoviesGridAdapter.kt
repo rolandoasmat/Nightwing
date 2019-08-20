@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.ui.common
+package com.asmat.rolando.popularmovies.ui.moviegrid
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
