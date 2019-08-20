@@ -5,12 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.asmat.rolando.popularmovies.model.Movie
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
 import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsUIModel
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 
+/**
+ * ViewModel of a movie grid
+ */
 abstract class BaseMovieGridViewModel : ViewModel()  {
 
+    /**
+     * Navigation event from a movie grid
+     */
     val navigationEvent = MutableLiveData<NavigationEvent>()
 
     /**
@@ -18,6 +23,9 @@ abstract class BaseMovieGridViewModel : ViewModel()  {
      */
     abstract val movies: LiveData<List<Movie>>
 
+    /**
+     * UI models of movie grids
+     */
     val moviesUIModels: LiveData<List<MovieGridItemUiModel>> by lazy {
         Transformations.map(movies) {
             map(it)
@@ -25,11 +33,14 @@ abstract class BaseMovieGridViewModel : ViewModel()  {
     }
 
     /**
-     * Any error related to fetching movies
+     * Loading movies
+     */
+    abstract val loading: LiveData<Boolean>
+
+    /**
+     * Error fetching movies
      */
     abstract val error: LiveData<Throwable>
-
-    //region API
 
     /**
      * Load movies
@@ -46,7 +57,6 @@ abstract class BaseMovieGridViewModel : ViewModel()  {
             navigationEvent.value = event
         }
     }
-    //endregion
 
     protected fun map(movies: List<Movie>): List<MovieGridItemUiModel> {
         return movies.map {
