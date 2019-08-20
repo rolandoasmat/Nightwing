@@ -12,16 +12,4 @@ class UpcomingMoviesFragment : PaginatedMovieGridFragment() {
     override val viewModel: UpcomingMoviesViewModel
         get() = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository)).get(UpcomingMoviesViewModel::class.java)
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.load()
-        observeViewModel()
-    }
-
-    private fun observeViewModel() {
-        viewModel.movies.observe(this, Observer { movies ->
-            moviesGridAdapter?.setMovies(movies)
-        })
-    }
 }

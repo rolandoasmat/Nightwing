@@ -3,6 +3,7 @@ package com.asmat.rolando.popularmovies.ui.common
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
 import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsUIModel
 import com.asmat.rolando.popularmovies.utilities.URLUtils
@@ -11,10 +12,12 @@ abstract class BaseMovieGridViewModel : ViewModel()  {
 
     val navigationEvent = MutableLiveData<NavigationEvent>()
 
+    protected var moviesData: List<Movie>? = null
+
     /**
      * Movies data source
      */
-    abstract val movies: LiveData<List<MovieGridItemUiModel>>
+    abstract val moviesUIModels: LiveData<List<MovieGridItemUiModel>>
 
     /**
      * Any error related to fetching movies
@@ -29,15 +32,10 @@ abstract class BaseMovieGridViewModel : ViewModel()  {
     abstract fun load()
 
     /**
-     * Get the data of movie at a specific index
-     */
-    abstract fun getMovieAt(index: Int): MoviesResponse.Movie?
-
-    /**
      * An movie grid item was pressed
      */
     fun itemPressed(index: Int) {
-        getMovieAt(index)?.let { data ->
+        moviesData?.get(index)?.let { data ->
             val uiModel = map(data)
             val event = NavigationEvent.ShowMovieDetailScreen(uiModel)
             navigationEvent.value = event
@@ -45,17 +43,16 @@ abstract class BaseMovieGridViewModel : ViewModel()  {
     }
     //endregion
 
-    // Maps from a network to UI model
-    protected fun map(movies: List<MoviesResponse.Movie>): List<MovieGridItemUiModel> {
+    protected fun map(movies: List<Movie>): List<MovieGridItemUiModel> {
         return movies.map {
-            val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}
+            val posterURL = it.posterPath?.let { url -> URLUtils.getImageURL342(url)}
             MovieGridItemUiModel(it.title, posterURL) }
     }
 
-    protected fun map(movie: MoviesResponse.Movie): MovieDetailsUIModel {
-        val posterURL = movie.poster_path?.let { url -> URLUtils.getImageURL342(url)}
-        val backdropURL = movie.backdrop_path?.let { url -> URLUtils.getImageURL780(url)}
-        return MovieDetailsUIModel(posterURL, movie.overview, movie.release_date, movie.id, movie.title, backdropURL, movie.vote_average)
+    protected fun map(movie: Movie): MovieDetailsUIModel {
+        val posterURL = movie.posterPath?.let { url -> URLUtils.getImageURL342(url)}
+        val backdropURL = movie.backdropPath?.let { url -> URLUtils.getImageURL780(url)}
+        return MovieDetailsUIModel(posterURL, movie.overview, movie.releaseDate, movie.id, movie.title, backdropURL, movie.voteAverage)
     }
 
     /**

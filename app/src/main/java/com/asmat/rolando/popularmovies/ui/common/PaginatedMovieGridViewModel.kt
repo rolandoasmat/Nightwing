@@ -1,19 +1,26 @@
 package com.asmat.rolando.popularmovies.ui.common
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.model.PaginatedRequest
+import com.asmat.rolando.popularmovies.model.mappers.MovieMapper
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
+import com.asmat.rolando.popularmovies.utilities.URLUtils
 
 /**
  * Base view model class for a grid of Movie items
  */
-abstract class PaginatedMovieGridViewModel : BaseMovieGridViewModel()  {
+abstract class PaginatedMovieGridViewModel : BaseMovieGridViewModel() {
 
-    override val movies by lazy {
-        Transformations.map(paginatedRequest.data) { movies ->
-            map(movies)
+    override val moviesUIModels: LiveData<List<MovieGridItemUiModel>>
+        get() = Transformations.map(paginatedRequest.data) { movies ->
+            movies.map {
+                val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url) }
+                MovieGridItemUiModel(it.title, posterURL)
+            }
         }
-    }
+
     val loading by lazy { paginatedRequest.loading }
     val loadingMore by lazy { paginatedRequest.loadingMore }
     override val error by lazy { paginatedRequest.error }
@@ -31,10 +38,6 @@ abstract class PaginatedMovieGridViewModel : BaseMovieGridViewModel()  {
      */
     override fun load() {
         paginatedRequest.load()
-    }
-
-    override fun getMovieAt(index: Int): MoviesResponse.Movie? {
-        return paginatedRequest.getItem(index)
     }
 
     /**

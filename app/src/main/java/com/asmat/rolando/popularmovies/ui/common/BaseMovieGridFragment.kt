@@ -85,7 +85,7 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.movies.observe(this, Observer { movies ->
+        viewModel.moviesUIModels.observe(this, Observer { movies ->
             moviesGridAdapter?.setMovies(movies)
         })
         viewModel.error.observe(this, Observer { error ->
