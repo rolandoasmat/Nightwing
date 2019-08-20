@@ -46,13 +46,13 @@ abstract class BaseMovieGridViewModel : ViewModel()  {
     //endregion
 
     // Maps from a network to UI model
-    private fun map(movies: List<MoviesResponse.Movie>): List<MovieGridItemUiModel> {
+    protected fun map(movies: List<MoviesResponse.Movie>): List<MovieGridItemUiModel> {
         return movies.map {
             val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}
             MovieGridItemUiModel(it.title, posterURL) }
     }
 
-    private fun map(movie: MoviesResponse.Movie): MovieDetailsUIModel {
+    protected fun map(movie: MoviesResponse.Movie): MovieDetailsUIModel {
         val posterURL = movie.poster_path?.let { url -> URLUtils.getImageURL342(url)}
         val backdropURL = movie.backdrop_path?.let { url -> URLUtils.getImageURL780(url)}
         return MovieDetailsUIModel(posterURL, movie.overview, movie.release_date, movie.id, movie.title, backdropURL, movie.vote_average)
