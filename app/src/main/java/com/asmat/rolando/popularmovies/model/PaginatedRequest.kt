@@ -23,6 +23,8 @@ abstract class PaginatedRequest<T> {
     private var loadSubscription: Disposable? = null
     private var loadMoreSubscription: Disposable? = null
 
+    open val shouldLoad = true
+
     /**
      * What data to fetch
      */
@@ -32,6 +34,7 @@ abstract class PaginatedRequest<T> {
      * Load first page of data
      */
     fun load() {
+        if(!shouldLoad) { return }
         pageToLoad = 1
         error.value = null
         loading.value = true

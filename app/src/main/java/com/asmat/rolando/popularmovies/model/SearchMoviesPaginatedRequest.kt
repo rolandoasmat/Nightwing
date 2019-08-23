@@ -9,6 +9,8 @@ data class SearchMoviesPaginatedRequest(private val tmdbClient: TheMovieDBClient
 
     private var searchTerm = ""
 
+    override val shouldLoad: Boolean get() { return this.searchTerm.isNotEmpty()}
+
     fun setSearchTerm(newSearchTerm: String) {
         searchTerm = newSearchTerm
     }
