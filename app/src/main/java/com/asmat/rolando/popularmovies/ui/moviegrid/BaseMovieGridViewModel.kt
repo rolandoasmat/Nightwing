@@ -6,7 +6,6 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
-import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsUIModel
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 
 /**
@@ -53,7 +52,7 @@ abstract class BaseMovieGridViewModel(val moviesRepository: MoviesRepository) : 
      */
     fun itemPressed(index: Int) {
         movies.value?.get(index)?.let { data ->
-            moviesRepository.setMovieDetails(data)
+            moviesRepository.setMovieDetailsData(data)
             val event = NavigationEvent.ShowMovieDetailScreen
             navigationEvent.value = event
         }

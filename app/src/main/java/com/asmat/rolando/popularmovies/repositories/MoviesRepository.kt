@@ -24,11 +24,11 @@ class MoviesRepository(private val db: DatabaseManager,
      * Cache
      */
 
-    fun setMovieDetails(data: Movie) {
+    fun setMovieDetailsData(data: Movie) {
         movieDetailsData = data
     }
 
-    fun getMovieDetails() = movieDetailsData
+    fun getMovieDetailsData() = movieDetailsData
 
     /**
      * DB

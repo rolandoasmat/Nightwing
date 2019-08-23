@@ -47,7 +47,7 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository) : Vi
         handleUiModel(value)
     }
 
-    private val movieDetailsRawData: Movie? get() { return moviesRepository.getMovieDetails() }
+    private val movieDetailsRawData: Movie? get() { return moviesRepository.getMovieDetailsData() }
 
     init {
         movieDetailsRawData?.let { movie ->
