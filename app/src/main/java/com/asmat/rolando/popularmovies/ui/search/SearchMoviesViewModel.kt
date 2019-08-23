@@ -1,19 +1,15 @@
 package com.asmat.rolando.popularmovies.ui.search
 
-import com.asmat.rolando.popularmovies.model.PaginatedRequest
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.ui.moviegrid.paginated.PaginatedMovieGridViewModel
 
 class SearchMoviesViewModel(moviesRepository: MoviesRepository) : PaginatedMovieGridViewModel(moviesRepository) {
 
-    private var searchTerm = ""
-
-    override val paginatedRequest: PaginatedRequest<MoviesResponse.Movie>
-        get() = moviesRepository.popularMoviesPaginatedRequest
+    override val paginatedRequest by lazy { moviesRepository.searchMoviesPaginatedRequest }
 
     fun searchTermChanged(newSearchTerm: String) {
-        searchTerm = newSearchTerm
+        paginatedRequest.setSearchTerm(newSearchTerm)
+        paginatedRequest.load()
     }
 
 }

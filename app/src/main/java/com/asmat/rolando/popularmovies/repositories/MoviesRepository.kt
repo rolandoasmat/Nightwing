@@ -76,6 +76,7 @@ class MoviesRepository(private val db: DatabaseManager,
     val topRatedPaginatedRequest = TopRatedPaginatedRequest(tmdbClient)
     val nowPlayingPaginatedRequest = NowPlayingPaginatedRequest(tmdbClient)
     val upcomingPaginatedRequest = UpcomingPaginatedRequest(tmdbClient)
+    val searchMoviesPaginatedRequest = SearchMoviesPaginatedRequest(tmdbClient)
 
     fun getMovieDetails(movieID: Int): Single<MovieDetailsResponse> {
         return tmdbClient.getMovieDetails(movieID).subscribeOn(Schedulers.io())

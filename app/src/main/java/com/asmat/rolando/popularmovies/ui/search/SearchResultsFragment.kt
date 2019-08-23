@@ -6,12 +6,6 @@ import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 
 class SearchResultsFragment : PaginatedMovieGridFragment() {
 
-//    @Inject
-//    lateinit var moviesRepository: MoviesRepository
-//
-//    @Inject
-//    lateinit var peopleRepository: PeopleRepository
-
     override val viewModel: SearchMoviesViewModel
         get() = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository)).get(SearchMoviesViewModel::class.java)
 

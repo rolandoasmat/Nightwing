@@ -39,7 +39,7 @@ class SearchResultsActivity : AppCompatActivity() {
         resultsGrid = supportFragmentManager.findFragmentById(R.id.results_grid) as SearchResultsFragment
     }
 
-    // Handle the search query
+    // User entered search term and pressed the search button
     private fun handleIntent(intent: Intent) {
         if (Intent.ACTION_SEARCH == intent.action) {
             val query = intent.getStringExtra(SearchManager.QUERY)

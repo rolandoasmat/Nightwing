@@ -10,6 +10,7 @@ import com.asmat.rolando.popularmovies.ui.favoritemovies.FavoriteMoviesViewModel
 import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsViewModel
 import com.asmat.rolando.popularmovies.ui.nowplayingmovies.NowPlayingMoviesViewModel
 import com.asmat.rolando.popularmovies.ui.popularmovies.PopularMoviesViewModel
+import com.asmat.rolando.popularmovies.ui.search.SearchMoviesViewModel
 import com.asmat.rolando.popularmovies.ui.topratedmovies.TopRatedMoviesViewModel
 import com.asmat.rolando.popularmovies.ui.upcomingmovies.UpcomingMoviesViewModel
 import com.asmat.rolando.popularmovies.ui.watchlatermovies.WatchLaterViewModel
@@ -28,6 +29,7 @@ class ViewModelFactory(private val moviesRepository: MoviesRepository,
             modelClass.isAssignableFrom(PersonMovieCreditsViewModel::class.java) -> PersonMovieCreditsViewModel(peopleRepository) as T
             modelClass.isAssignableFrom(FavoriteMoviesViewModel::class.java) -> FavoriteMoviesViewModel(moviesRepository) as T
             modelClass.isAssignableFrom(WatchLaterViewModel::class.java) -> WatchLaterViewModel(moviesRepository) as T
+            modelClass.isAssignableFrom(SearchMoviesViewModel::class.java) -> SearchMoviesViewModel(moviesRepository) as T
             else -> {
                 throw IllegalArgumentException("Unknown ViewModel class")
             }

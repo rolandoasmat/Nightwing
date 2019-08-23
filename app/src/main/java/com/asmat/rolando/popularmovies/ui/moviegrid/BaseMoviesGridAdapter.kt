@@ -14,7 +14,7 @@ private typealias Movies = MutableList<MovieGridItemUiModel>
 
 abstract class BaseMoviesGridAdapter(val callback: Callback? = null) : RecyclerView.Adapter<BaseMoviesGridAdapter.ViewHolder>() {
 
-    private var showEmptyState = false
+    private val showEmptyState: Boolean get() { return movies.isEmpty() }
     private var movies: Movies = mutableListOf()
 
     abstract val emptyStateLayoutID: Int
@@ -26,7 +26,6 @@ abstract class BaseMoviesGridAdapter(val callback: Callback? = null) : RecyclerV
 
     fun addMovies(movies: List<MovieGridItemUiModel>) {
         this.movies.addAll(movies)
-        showEmptyState = this.movies.isEmpty()
         notifyDataSetChanged()
     }
 
