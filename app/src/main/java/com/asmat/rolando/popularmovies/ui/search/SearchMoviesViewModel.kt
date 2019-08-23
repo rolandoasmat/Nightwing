@@ -12,4 +12,9 @@ class SearchMoviesViewModel(moviesRepository: MoviesRepository) : PaginatedMovie
         paginatedRequest.load()
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        paginatedRequest.reset()
+    }
+
 }

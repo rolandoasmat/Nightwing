@@ -22,4 +22,9 @@ data class SearchMoviesPaginatedRequest(private val tmdbClient: TheMovieDBClient
                 .map { PagedData(it.results, it.total_pages) }
     }
 
+    override fun reset() {
+        super.reset()
+        searchTerm = ""
+    }
+
 }

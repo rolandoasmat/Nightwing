@@ -91,4 +91,21 @@ abstract class PaginatedRequest<T> {
         return data.value?.getOrNull(index)
     }
 
+    /**
+     * Resets the paginated request to its original state
+     */
+    open fun reset() {
+        pageToLoad = 1
+        totalNumOfPages = null
+        data.value = emptyList()
+        loading.value = false
+        loadingMore.value = false
+        error.value = null
+        errorLoadingMore.value = null
+        loadSubscription?.dispose()
+        loadSubscription = null
+        loadMoreSubscription?.dispose()
+        loadMoreSubscription = null
+    }
+
 }
