@@ -39,6 +39,7 @@
     <!--Empty States-->
     <string name="no_trailers">No trailers available.</string>
     <string name="no_reviews">No reviews available.</string>
+    <string name="no_movies">No movies found!</string>
 
     <!--Share-->
     <string name="share_movie">Share movie</string>

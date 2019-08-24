@@ -16,11 +16,10 @@ import com.asmat.rolando.popularmovies.extensions.visible
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailActivity
-import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsUIModel
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import kotlinx.android.synthetic.main.fragment_movie_grid.*
-import kotlinx.android.synthetic.main.no_internet.*
+import kotlinx.android.synthetic.main.retry_layout.*
 import javax.inject.Inject
 
 abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
@@ -31,9 +30,11 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
     @Inject
     lateinit var peopleRepository: PeopleRepository
 
-    protected var moviesGridAdapter: MoviesGridAdapter? = null
+    private var moviesGridAdapter: MoviesGridAdapter? = null
 
     abstract val viewModel: BaseMovieGridViewModel
+
+    open val requiresInternet = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +68,9 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
 
     override fun onResume() {
         super.onResume()
-        checkInternet()
+        if (requiresInternet) {
+            checkInternet()
+        }
     }
 
     private fun checkInternet() {
@@ -75,11 +78,11 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
         if (!NetworkUtils.isOnline(context)) {
             // User has no internet
             moviesRecyclerView?.gone()
-            noInternetLayout?.visible()
+            retryLayout?.visible()
         } else {
             // Internet connection established
             moviesRecyclerView?.visible()
-            noInternetLayout?.gone()
+            retryLayout?.gone()
         }
     }
 
@@ -110,10 +113,24 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
         startActivity(intentToStartDetailActivity)
     }
 
-    private fun handleError(error: Throwable) {
-        val message = error.message ?: "Whoops, error fetching movies."
-        val toast = Toast.makeText(context, message, Toast.LENGTH_LONG)
-        toast.show()
-        Log.e("PaginatedMovieGridFragment", error.toString())
+    private fun handleError(error: Throwable?) {
+        error?.let {
+            val message = getString(R.string.generic_error)
+            updateRetryLayout(message)
+        } ?: run {
+            updateRetryLayout(null)
+        }
+    }
+
+    /**
+     * Sets the message of the retry layout and updates its visibility
+     */
+    private fun updateRetryLayout(message: String?) {
+        retryMessageTextView?.text = message
+        if (message?.isEmpty() == false) {
+            retryLayout?.visible()
+        } else {
+            retryLayout?.gone()
+        }
     }
 }

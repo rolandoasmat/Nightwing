@@ -11,9 +11,10 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <include
-        android:id="@+id/noInternetLayout"
+        android:id="@+id/retryLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/no_internet"/>
+        android:layout_height="match_parent"
+        layout="@layout/retry_layout"
+        android:visibility="gone"/>
 
 </FrameLayout>
