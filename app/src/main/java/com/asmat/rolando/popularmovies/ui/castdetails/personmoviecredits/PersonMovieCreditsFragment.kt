@@ -1,22 +1,17 @@
 package com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.asmat.rolando.popularmovies.BuildConfig
 import com.asmat.rolando.popularmovies.MovieNightApplication
-
 import com.asmat.rolando.popularmovies.R
-import com.asmat.rolando.popularmovies.repositories.MoviesRepository
-import com.asmat.rolando.popularmovies.repositories.PeopleRepository
+import com.asmat.rolando.popularmovies.di.ViewModelFactory
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
-import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.person_movie_credits.*
 import javax.inject.Inject
 
@@ -38,9 +33,7 @@ class PersonMovieCreditsFragment : androidx.fragment.app.Fragment() {
     }
 
     @Inject
-    lateinit var moviesRepository: MoviesRepository
-    @Inject
-    lateinit var peopleRepository: PeopleRepository
+    lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var viewModel: PersonMovieCreditsViewModel
     private var listener: Listener? = null
@@ -60,7 +53,7 @@ class PersonMovieCreditsFragment : androidx.fragment.app.Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository)).get(PersonMovieCreditsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(PersonMovieCreditsViewModel::class.java)
         setup()
     }
 

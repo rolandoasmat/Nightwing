@@ -11,12 +11,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
+import com.asmat.rolando.popularmovies.di.ViewModelFactory
 import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailActivity
-import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsUIModel
 import com.asmat.rolando.popularmovies.utilities.NetworkUtils
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import kotlinx.android.synthetic.main.fragment_movie_grid.*
@@ -27,9 +27,10 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
 
     @Inject
     lateinit var moviesRepository: MoviesRepository
-
     @Inject
     lateinit var peopleRepository: PeopleRepository
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     protected var moviesGridAdapter: MoviesGridAdapter? = null
 

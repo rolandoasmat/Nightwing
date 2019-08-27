@@ -1,24 +1,20 @@
 package com.asmat.rolando.popularmovies.ui.castdetails
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import android.util.Log
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.asmat.rolando.popularmovies.MovieNightApplication
-
 import com.asmat.rolando.popularmovies.R
+import com.asmat.rolando.popularmovies.di.ViewModelFactory
 import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
-import com.asmat.rolando.popularmovies.repositories.MoviesRepository
-import com.asmat.rolando.popularmovies.repositories.PeopleRepository
- import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.PersonMovieCreditsFragment
-import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
+import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.PersonMovieCreditsFragment
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_cast_detail.*
-import java.lang.IllegalStateException
 import javax.inject.Inject
 
 class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.Listener {
@@ -28,12 +24,11 @@ class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.List
     }
 
     @Inject
-    lateinit var moviesRepository: MoviesRepository
-    @Inject
-    lateinit var peopleRepository: PeopleRepository
+    lateinit var viewModelFactory: ViewModelFactory
 
     private val personID: Int
-            get() = intent?.getIntExtra(PERSON_ID_KEY, -1) ?: throw IllegalStateException("No person ID found.")
+        get() = intent?.getIntExtra(PERSON_ID_KEY, -1)
+                ?: throw IllegalStateException("No person ID found.")
 
     lateinit var viewModel: CastDetailsViewModel
 
@@ -41,7 +36,7 @@ class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.List
         super.onCreate(savedInstanceState)
         (applicationContext as MovieNightApplication).component().inject(this)
         setContentView(R.layout.activity_cast_detail)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository)).get(CastDetailsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(CastDetailsViewModel::class.java)
         viewModel.init(personID)
         setup()
     }

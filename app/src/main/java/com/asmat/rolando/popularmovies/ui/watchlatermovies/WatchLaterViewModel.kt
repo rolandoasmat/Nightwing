@@ -7,8 +7,11 @@ import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.model.mappers.MovieMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.ui.moviegrid.BaseMovieGridViewModel
+import javax.inject.Inject
 
-class WatchLaterViewModel(moviesRepository: MoviesRepository) : BaseMovieGridViewModel(moviesRepository) {
+class WatchLaterViewModel @Inject constructor(
+        moviesRepository: MoviesRepository
+) : BaseMovieGridViewModel(moviesRepository) {
 
     override val movies: LiveData<List<Movie>> by lazy {
         Transformations.map(moviesRepository.getAllWatchLaterMovies()) {

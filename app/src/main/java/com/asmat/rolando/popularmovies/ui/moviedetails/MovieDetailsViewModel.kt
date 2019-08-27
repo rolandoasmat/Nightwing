@@ -13,12 +13,15 @@ import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.utilities.DateUtils
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
+import javax.inject.Inject
 
 /**
  * Movie Details Screen view model
  */
 @SuppressLint("CheckResult")
-class MovieDetailsViewModel(private val moviesRepository: MoviesRepository) : ViewModel() {
+class MovieDetailsViewModel @Inject constructor(
+        private val moviesRepository: MoviesRepository
+) : ViewModel() {
 
     val backdropURL = MutableLiveData<String>()
     val movieTitle = MutableLiveData<String>()

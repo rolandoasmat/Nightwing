@@ -1,27 +1,25 @@
 package com.asmat.rolando.popularmovies.ui.moviedetails
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.net.Uri
-import androidx.core.app.ShareCompat
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ShareCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.asmat.rolando.popularmovies.MovieNightApplication
-
 import com.asmat.rolando.popularmovies.R
+import com.asmat.rolando.popularmovies.di.ViewModelFactory
 import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
-import com.asmat.rolando.popularmovies.repositories.MoviesRepository
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
-import com.asmat.rolando.popularmovies.repositories.PeopleRepository
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.ReviewsResponse
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
 import com.asmat.rolando.popularmovies.ui.castdetails.CastDetailsActivity
-import com.squareup.picasso.Picasso
-
 import com.asmat.rolando.popularmovies.utilities.URLUtils
-import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 import kotlinx.android.synthetic.main.movie_details_user_actions.*
 import kotlinx.android.synthetic.main.primary_details.*
@@ -30,9 +28,7 @@ import javax.inject.Inject
 class MovieDetailActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var moviesRepository: MoviesRepository
-    @Inject
-    lateinit var peopleRepository: PeopleRepository
+    lateinit var viewModelFactory: ViewModelFactory
 
     // Recycler View Adapters
     private lateinit var trailersLinearAdapter: TrailersLinearAdapter
@@ -64,7 +60,7 @@ class MovieDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         (applicationContext as MovieNightApplication).component().inject(this)
         setContentView(R.layout.activity_movie_detail)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository)).get(MovieDetailsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieDetailsViewModel::class.java)
         setupObservers()
         setupUI()
         sendEvents()
@@ -305,7 +301,9 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun shareMovie(movieData: Pair<String, String>?) {
-        if (movieData == null) { return }
+        if (movieData == null) {
+            return
+        }
         val movieTitle = movieData.first
         val movieURL = movieData.second
         val mimeType = "text/plain"

@@ -7,9 +7,11 @@ import com.asmat.rolando.popularmovies.ui.castdetails.personinfo.PersonInfoUiMod
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class CastDetailsViewModel(private val peopleRepository: PeopleRepository): ViewModel() {
+class CastDetailsViewModel @Inject constructor(
+        private val peopleRepository: PeopleRepository
+) : ViewModel() {
 
     private var disposable: Disposable? = null
 
