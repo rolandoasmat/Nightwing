@@ -9,14 +9,15 @@ import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
 import com.asmat.rolando.popularmovies.model.*
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
+import io.reactivex.Scheduler
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 
 /**
  * Used by ViewModels to access movie related data sources
  */
 class MoviesRepository(private val db: DatabaseManager,
-                       private val tmdbClient: TheMovieDBClient) {
+                       private val tmdbClient: TheMovieDBClient,
+                       private val computationScheduler: Scheduler) {
 
     private var movieDetailsData: Movie? = null
 
@@ -72,30 +73,30 @@ class MoviesRepository(private val db: DatabaseManager,
      * Network
      */
 
-    val popularMoviesPaginatedRequest = PopularMoviesPaginatedRequest(tmdbClient)
-    val topRatedPaginatedRequest = TopRatedPaginatedRequest(tmdbClient)
-    val nowPlayingPaginatedRequest = NowPlayingPaginatedRequest(tmdbClient)
-    val upcomingPaginatedRequest = UpcomingPaginatedRequest(tmdbClient)
-    val searchMoviesPaginatedRequest = SearchMoviesPaginatedRequest(tmdbClient)
+    val popularMoviesPaginatedRequest = PopularMoviesPaginatedRequest(tmdbClient, computationScheduler)
+    val topRatedPaginatedRequest = TopRatedPaginatedRequest(tmdbClient, computationScheduler)
+    val nowPlayingPaginatedRequest = NowPlayingPaginatedRequest(tmdbClient, computationScheduler)
+    val upcomingPaginatedRequest = UpcomingPaginatedRequest(tmdbClient, computationScheduler)
+    val searchMoviesPaginatedRequest = SearchMoviesPaginatedRequest(tmdbClient, computationScheduler)
 
     fun getMovieDetails(movieID: Int): Single<MovieDetailsResponse> {
-        return tmdbClient.getMovieDetails(movieID).subscribeOn(Schedulers.io())
+        return tmdbClient.getMovieDetails(movieID).subscribeOn(computationScheduler)
     }
 
     fun getMovieVideos(movieID: Int): Single<VideosResponse> {
-        return tmdbClient.getMovieVideos(movieID).subscribeOn(Schedulers.io())
+        return tmdbClient.getMovieVideos(movieID).subscribeOn(computationScheduler)
     }
 
     fun getMovieReviews(movieID: Int): Single<ReviewsResponse> {
-        return tmdbClient.getMovieReviews(movieID).subscribeOn(Schedulers.io())
+        return tmdbClient.getMovieReviews(movieID).subscribeOn(computationScheduler)
     }
 
     fun getMovieCredits(movieID: Int): Single<CreditsResponse> {
-        return tmdbClient.getMovieCredits(movieID).subscribeOn(Schedulers.io())
+        return tmdbClient.getMovieCredits(movieID).subscribeOn(computationScheduler)
     }
 
     fun searchMovies(searchTerm: String, page: Int): Single<MoviesResponse> {
-        return tmdbClient.searchMovie(searchTerm, page).subscribeOn(Schedulers.io())
+        return tmdbClient.searchMovie(searchTerm, page).subscribeOn(computationScheduler)
     }
 
     /**
