@@ -4,11 +4,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 
 class PersonMovieCreditsViewModel(private val peopleRepository: PeopleRepository,
-                                  private val uiModelMapper: UiModelMapper): ViewModel() {
+                                  private val uiModelMapper: UiModelMapper,
+                                  private val mainThreadScheduler: Scheduler): ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
     val uiModel = MutableLiveData<PersonMovieCreditsUiModel>()
@@ -16,7 +17,7 @@ class PersonMovieCreditsViewModel(private val peopleRepository: PeopleRepository
     fun init(personID: Int) {
         val disposable = peopleRepository
                 .getPersonMovieCredits(personID)
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(mainThreadScheduler)
                 .subscribe({ response ->
                     uiModel.value = uiModelMapper.map(response)
                 }, { error ->

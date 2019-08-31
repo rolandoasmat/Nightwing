@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModel
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.asmat.rolando.popularmovies.ui.castdetails.personinfo.PersonInfoUiModel
 import com.asmat.rolando.popularmovies.utilities.URLUtils
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 
-class CastDetailsViewModel(private val peopleRepository: PeopleRepository): ViewModel() {
+class CastDetailsViewModel(private val peopleRepository: PeopleRepository,
+                           private val mainThreadScheduler: Scheduler): ViewModel() {
 
     private var disposable: Disposable? = null
 
@@ -31,7 +31,7 @@ class CastDetailsViewModel(private val peopleRepository: PeopleRepository): View
         loading.value = true
         disposable = peopleRepository
                 .getPersonDetails(personID)
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(mainThreadScheduler)
                 .subscribe({
                     loading.value = false
                     name.value = it.name

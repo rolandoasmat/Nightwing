@@ -1,15 +1,15 @@
 package com.asmat.rolando.popularmovies.model
 
 import androidx.lifecycle.MutableLiveData
+import io.reactivex.Scheduler
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 
 /**
  * Encapsulates the states and data of a paginated
  * data request.
  */
-abstract class PaginatedRequest<T> {
+abstract class PaginatedRequest<T>(open val mainThreadScheduler: Scheduler) {
 
     private var pageToLoad = 1
     private var totalNumOfPages: Int? = null
@@ -39,7 +39,7 @@ abstract class PaginatedRequest<T> {
         error.value = null
         loading.value = true
         loadSubscription = fetchData(pageToLoad)
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(mainThreadScheduler)
                 .subscribe({ pagedData ->
                     loading.value = false
                     data.value = pagedData.items
@@ -70,7 +70,7 @@ abstract class PaginatedRequest<T> {
         errorLoadingMore.value = null
         loadingMore.value = true
         loadMoreSubscription = fetchData(pageToLoad)
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(mainThreadScheduler)
                 .subscribe({ pagedData ->
                     val currentItems = data.value ?: emptyList()
                     val newList = currentItems + pagedData.items

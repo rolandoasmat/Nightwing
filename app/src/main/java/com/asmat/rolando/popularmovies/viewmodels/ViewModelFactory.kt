@@ -16,6 +16,7 @@ import com.asmat.rolando.popularmovies.ui.search.SearchMoviesViewModel
 import com.asmat.rolando.popularmovies.ui.topratedmovies.TopRatedMoviesViewModel
 import com.asmat.rolando.popularmovies.ui.upcomingmovies.UpcomingMoviesViewModel
 import com.asmat.rolando.popularmovies.ui.watchlatermovies.WatchLaterViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
 
 class ViewModelFactory(private val moviesRepository: MoviesRepository,
                        private val peopleRepository: PeopleRepository,
@@ -28,9 +29,9 @@ class ViewModelFactory(private val moviesRepository: MoviesRepository,
             modelClass.isAssignableFrom(TopRatedMoviesViewModel::class.java) -> TopRatedMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
             modelClass.isAssignableFrom(NowPlayingMoviesViewModel::class.java) -> NowPlayingMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
             modelClass.isAssignableFrom(UpcomingMoviesViewModel::class.java) -> UpcomingMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
-            modelClass.isAssignableFrom(MovieDetailsViewModel::class.java) -> MovieDetailsViewModel(moviesRepository, dataModelMapper) as T
-            modelClass.isAssignableFrom(CastDetailsViewModel::class.java) -> CastDetailsViewModel(peopleRepository) as T
-            modelClass.isAssignableFrom(PersonMovieCreditsViewModel::class.java) -> PersonMovieCreditsViewModel(peopleRepository, uiModelMapper) as T
+            modelClass.isAssignableFrom(MovieDetailsViewModel::class.java) -> MovieDetailsViewModel(moviesRepository, dataModelMapper, AndroidSchedulers.mainThread()) as T
+            modelClass.isAssignableFrom(CastDetailsViewModel::class.java) -> CastDetailsViewModel(peopleRepository, AndroidSchedulers.mainThread()) as T
+            modelClass.isAssignableFrom(PersonMovieCreditsViewModel::class.java) -> PersonMovieCreditsViewModel(peopleRepository, uiModelMapper, AndroidSchedulers.mainThread()) as T
             modelClass.isAssignableFrom(FavoriteMoviesViewModel::class.java) -> FavoriteMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
             modelClass.isAssignableFrom(WatchLaterViewModel::class.java) -> WatchLaterViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
             modelClass.isAssignableFrom(SearchMoviesViewModel::class.java) -> SearchMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T

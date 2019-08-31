@@ -11,14 +11,15 @@ import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResp
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.utilities.DateUtils
 import com.asmat.rolando.popularmovies.utilities.URLUtils
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.Scheduler
 
 /**
  * Movie Details Screen view model
  */
 @SuppressLint("CheckResult")
 class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
-                            private val dataModelMapper: DataModelMapper) : ViewModel() {
+                            private val dataModelMapper: DataModelMapper,
+                            private val mainThreadScheduler: Scheduler) : ViewModel() {
 
     val backdropURL = MutableLiveData<String>()
     val movieTitle = MutableLiveData<String>()
@@ -134,7 +135,7 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
 
         moviesRepository
                 .getMovieVideos(movieID)
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(mainThreadScheduler)
                 .subscribe({ result ->
                     videos.value = result.results
                 }, { error ->
@@ -144,7 +145,7 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
 
         moviesRepository
                 .getMovieCredits(movieID)
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(mainThreadScheduler)
                 .subscribe({ result ->
                     cast.value = result.cast
                 }, { error ->
@@ -154,7 +155,7 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
 
         moviesRepository
                 .getMovieReviews(movieID)
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(mainThreadScheduler)
                 .subscribe({ result ->
                     reviews.value = result.results
                 }, { error ->
