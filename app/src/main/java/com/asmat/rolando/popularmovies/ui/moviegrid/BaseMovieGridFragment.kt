@@ -11,6 +11,8 @@ import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
+import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
+import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailActivity
@@ -26,6 +28,12 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
 
     @Inject
     lateinit var peopleRepository: PeopleRepository
+
+    @Inject
+    lateinit var dataModelMapper: DataModelMapper
+
+    @Inject
+    lateinit var uiModelMapper: UiModelMapper
 
     private var moviesGridAdapter: BaseMoviesGridAdapter? = null
 

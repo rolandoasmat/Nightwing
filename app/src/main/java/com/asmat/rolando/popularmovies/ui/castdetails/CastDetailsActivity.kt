@@ -12,6 +12,8 @@ import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
+import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
+import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
  import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.PersonMovieCreditsFragment
@@ -29,8 +31,15 @@ class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.List
 
     @Inject
     lateinit var moviesRepository: MoviesRepository
+
     @Inject
     lateinit var peopleRepository: PeopleRepository
+
+    @Inject
+    lateinit var dataModelMapper: DataModelMapper
+
+    @Inject
+    lateinit var uiModelMapper: UiModelMapper
 
     private val personID: Int
             get() = intent?.getIntExtra(PERSON_ID_KEY, -1) ?: throw IllegalStateException("No person ID found.")
@@ -41,7 +50,7 @@ class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.List
         super.onCreate(savedInstanceState)
         (applicationContext as MovieNightApplication).component().inject(this)
         setContentView(R.layout.activity_cast_detail)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository)).get(CastDetailsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository, dataModelMapper, uiModelMapper)).get(CastDetailsViewModel::class.java)
         viewModel.init(personID)
         setup()
     }

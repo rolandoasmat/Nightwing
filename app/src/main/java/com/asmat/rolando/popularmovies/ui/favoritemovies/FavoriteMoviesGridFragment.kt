@@ -6,6 +6,6 @@ import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 
 class FavoriteMoviesGridFragment : BaseMovieGridFragment() {
 
-    override val viewModel by lazy { ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository)).get(FavoriteMoviesViewModel::class.java) }
+    override val viewModel by lazy { ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository, dataModelMapper, uiModelMapper)).get(FavoriteMoviesViewModel::class.java) }
 
 }

@@ -5,8 +5,11 @@ import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
 import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MovieDetailsResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
+import javax.inject.Inject
+import javax.inject.Singleton
 
-object MovieMapper {
+@Singleton
+class MovieMapper @Inject constructor() {
 
     fun from(data: MovieDetailsResponse): Movie {
         return Movie(

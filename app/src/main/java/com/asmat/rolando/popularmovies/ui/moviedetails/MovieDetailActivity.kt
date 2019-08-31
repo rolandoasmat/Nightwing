@@ -14,6 +14,8 @@ import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
+import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
+import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
@@ -31,8 +33,15 @@ class MovieDetailActivity : AppCompatActivity() {
 
     @Inject
     lateinit var moviesRepository: MoviesRepository
+
     @Inject
     lateinit var peopleRepository: PeopleRepository
+
+    @Inject
+    lateinit var dataModelMapper: DataModelMapper
+
+    @Inject
+    lateinit var uiModelMapper: UiModelMapper
 
     // Recycler View Adapters
     private lateinit var trailersLinearAdapter: TrailersLinearAdapter
@@ -64,7 +73,7 @@ class MovieDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         (applicationContext as MovieNightApplication).component().inject(this)
         setContentView(R.layout.activity_movie_detail)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository)).get(MovieDetailsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository, dataModelMapper, uiModelMapper)).get(MovieDetailsViewModel::class.java)
         setupObservers()
         setupUI()
         sendEvents()

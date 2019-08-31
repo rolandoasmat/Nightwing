@@ -7,7 +7,6 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-
 class PeopleRepository @Inject constructor(private val tmdbClient: TheMovieDBClient) {
 
     fun getPersonDetails(id: Int): Single<PersonDetailsResponse> {

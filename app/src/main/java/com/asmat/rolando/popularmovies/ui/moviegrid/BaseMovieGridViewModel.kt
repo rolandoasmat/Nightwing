@@ -5,13 +5,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.asmat.rolando.popularmovies.model.Movie
+import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
-import com.asmat.rolando.popularmovies.utilities.URLUtils
 
 /**
  * ViewModel of a movie grid
  */
-abstract class BaseMovieGridViewModel(val moviesRepository: MoviesRepository) : ViewModel()  {
+abstract class BaseMovieGridViewModel(val moviesRepository: MoviesRepository,
+                                      private val uiModelMapper: UiModelMapper) : ViewModel()  {
 
     /**
      * Navigation event from a movie grid
@@ -44,7 +45,7 @@ abstract class BaseMovieGridViewModel(val moviesRepository: MoviesRepository) : 
     @CallSuper
     open fun load() {
         movies.observeForever {
-            moviesUIModels.value = map(it)
+            moviesUIModels.value = uiModelMapper.map(it)
         }
     }
 
@@ -56,13 +57,6 @@ abstract class BaseMovieGridViewModel(val moviesRepository: MoviesRepository) : 
             moviesRepository.setMovieDetailsData(data)
             val event = NavigationEvent.ShowMovieDetailScreen
             navigationEvent.value = event
-        }
-    }
-
-    protected fun map(movies: List<Movie>?): List<MovieGridItemUiModel>? {
-        return movies?.map {
-            val posterURL = it.posterPath?.let { url -> URLUtils.getImageURL342(url)}
-            MovieGridItemUiModel(it.title, posterURL)
         }
     }
 

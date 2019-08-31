@@ -2,8 +2,11 @@ package com.asmat.rolando.popularmovies.model.mappers
 
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.model.Movie
+import javax.inject.Inject
+import javax.inject.Singleton
 
-object FavoriteMovieMapper {
+@Singleton
+class FavoriteMovieMapper @Inject constructor() {
 
     fun from(data: Movie): FavoriteMovie {
         return FavoriteMovie(

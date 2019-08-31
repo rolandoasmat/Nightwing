@@ -4,8 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.asmat.rolando.popularmovies.model.Movie
-import com.asmat.rolando.popularmovies.model.mappers.FavoriteMovieMapper
-import com.asmat.rolando.popularmovies.model.mappers.WatchLaterMovieMapper
+import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.ReviewsResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
@@ -18,7 +17,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
  * Movie Details Screen view model
  */
 @SuppressLint("CheckResult")
-class MovieDetailsViewModel(private val moviesRepository: MoviesRepository) : ViewModel() {
+class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
+                            private val dataModelMapper: DataModelMapper) : ViewModel() {
 
     val backdropURL = MutableLiveData<String>()
     val movieTitle = MutableLiveData<String>()
@@ -69,8 +69,8 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository) : Vi
                 moviesRepository.removeFavoriteMovie(movie.id)
             } else {
                 // It's not a favorite movie, "favorite" it
-                val favoriteMovie = FavoriteMovieMapper.from(movie)
-                moviesRepository.insertFavoriteMovie(favoriteMovie)
+                val mapped = dataModelMapper.mapToFavoriteMovie(movie)
+                moviesRepository.insertFavoriteMovie(mapped)
             }
         }
     }
@@ -86,8 +86,8 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository) : Vi
                 moviesRepository.removeWatchLaterMovie(movie.id)
             } else {
                 // It's not a watch later movie, "watch-later" it
-                val favoriteMovie = WatchLaterMovieMapper.from(movie)
-                moviesRepository.insertWatchLaterMovie(favoriteMovie)
+                val mapped = dataModelMapper.mapToWatchLaterMovie(movie)
+                moviesRepository.insertWatchLaterMovie(mapped)
             }
         }
     }

@@ -1,9 +1,13 @@
 package com.asmat.rolando.popularmovies.ui.search
 
+import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
+import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.ui.moviegrid.paginated.PaginatedMovieGridViewModel
 
-class SearchMoviesViewModel(moviesRepository: MoviesRepository) : PaginatedMovieGridViewModel(moviesRepository) {
+class SearchMoviesViewModel(moviesRepository: MoviesRepository,
+                            uiModelMapper: UiModelMapper,
+                            dataModelMapper: DataModelMapper) : PaginatedMovieGridViewModel(moviesRepository, uiModelMapper, dataModelMapper) {
 
     override val onlyLoadIfDataIsNull = false
 

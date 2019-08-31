@@ -13,6 +13,8 @@ import com.asmat.rolando.popularmovies.BuildConfig
 import com.asmat.rolando.popularmovies.MovieNightApplication
 
 import com.asmat.rolando.popularmovies.R
+import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
+import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
@@ -39,8 +41,15 @@ class PersonMovieCreditsFragment : androidx.fragment.app.Fragment() {
 
     @Inject
     lateinit var moviesRepository: MoviesRepository
+
     @Inject
     lateinit var peopleRepository: PeopleRepository
+
+    @Inject
+    lateinit var dataModelMapper: DataModelMapper
+
+    @Inject
+    lateinit var uiModelMapper: UiModelMapper
 
     private lateinit var viewModel: PersonMovieCreditsViewModel
     private var listener: Listener? = null
@@ -60,7 +69,7 @@ class PersonMovieCreditsFragment : androidx.fragment.app.Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository)).get(PersonMovieCreditsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository, dataModelMapper, uiModelMapper)).get(PersonMovieCreditsViewModel::class.java)
         setup()
     }
 
