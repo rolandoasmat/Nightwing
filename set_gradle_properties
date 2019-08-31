@@ -2,5 +2,11 @@
 
 if [ ${TRAVIS_SECURE_ENV_VARS} == true ]
 then
-    echo "THE_MOVIE_DB_API_KEY=\"${THE_MOVIE_DB_API_KEY}\"" > 'gradle.properties'
+    GRADLE_FILE_LOCATION="gradle.properties"
+    KEY="THE_MOVIE_DB_API_KEY"
+    FIND=''${KEY}'=""'
+    REPLACE=''${KEY}'="'${THE_MOVIE_DB_API_KEY}'"'
+    SED='s/'${FIND}'/'${REPLACE}'/g'
+    RESULT=`sed ${SED} ${GRADLE_FILE_LOCATION}`
+    echo "${RESULT}" > ${GRADLE_FILE_LOCATION}
 fi
