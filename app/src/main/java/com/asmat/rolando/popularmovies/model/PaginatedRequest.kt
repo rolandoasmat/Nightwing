@@ -97,9 +97,9 @@ abstract class PaginatedRequest<T> {
     open fun reset() {
         pageToLoad = 1
         totalNumOfPages = null
-        data.value = emptyList()
-        loading.value = false
-        loadingMore.value = false
+        data.value = null
+        loading.value = null
+        loadingMore.value = null
         error.value = null
         errorLoadingMore.value = null
         loadSubscription?.dispose()

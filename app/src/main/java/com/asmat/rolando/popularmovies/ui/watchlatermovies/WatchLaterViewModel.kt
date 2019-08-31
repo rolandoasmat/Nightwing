@@ -20,6 +20,4 @@ class WatchLaterViewModel(moviesRepository: MoviesRepository) : BaseMovieGridVie
 
     override val error = MutableLiveData<Throwable>()
 
-    override fun load() {}
-
 }

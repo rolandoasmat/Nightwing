@@ -30,7 +30,7 @@
     <string name="out_of_ten" translatable="false">%1$s/10.0</string>
 
     <!--Error Messages-->
-    <string name="generic_error">"Oops! something went horribly wrong :("</string>
+    <string name="generic_error">"Error loading data! :("</string>
     <string name="no_internet">"Lost internet connection."</string>
     <string name="retry">Retry</string>
     <string name="error_reviews">Error fetching reviews.</string>

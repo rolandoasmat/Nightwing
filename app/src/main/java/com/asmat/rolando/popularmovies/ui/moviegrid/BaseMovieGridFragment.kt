@@ -31,8 +31,6 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
 
     abstract val viewModel: BaseMovieGridViewModel
 
-    open val requiresInternet = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity?.applicationContext as MovieNightApplication).component().inject(this)
@@ -86,7 +84,12 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
 
     private fun renderMoviesUIModels(movies: List<MovieGridItemUiModel>?) {
         movies?.let {
-            moviesGridAdapter?.setMovies(it)
+            if (it.isEmpty()) {
+                onlyShow(Layout.EMPTY)
+            } else {
+                moviesGridAdapter?.setMovies(it)
+                onlyShow(Layout.GRID)
+            }
         }
     }
 
@@ -107,24 +110,45 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
         startActivity(intentToStartDetailActivity)
     }
 
+    /**
+     * Sets a generic error message and updates layouts' visibility
+     */
     private fun renderError(error: Throwable?) {
         error?.let {
             val message = getString(R.string.generic_error)
             updateRetryLayout(message)
-        } ?: run {
-            updateRetryLayout(null)
         }
     }
 
     /**
-     * Sets the message of the retry layout and updates its visibility
+     * Sets the message of the retry layout and updates layouts' visibility
      */
     private fun updateRetryLayout(message: String?) {
-        retryMessageTextView?.text = message
-        if (message?.isEmpty() == false) {
-            retryLayout?.visible()
-        } else {
-            retryLayout?.gone()
+        message?.let {
+            retryMessageTextView?.text = it
+            onlyShow(Layout.RETRY)
         }
+    }
+
+    /**
+     * Makes one 1 of [Layout] layouts visible.
+     *
+     * @param layout Make sure only this layout is visible
+     */
+    private fun onlyShow(layout: Layout) {
+        moviesRecyclerView?.gone()
+        retryLayout?.gone()
+        emptyLayout?.gone()
+        when (layout) {
+            Layout.GRID -> moviesRecyclerView?.visible()
+            Layout.RETRY -> retryLayout?.visible()
+            Layout.EMPTY -> emptyLayout?.visible()
+        }
+    }
+
+    enum class Layout {
+        GRID,
+        RETRY,
+        EMPTY
     }
 }

@@ -5,6 +5,8 @@ import com.asmat.rolando.popularmovies.ui.moviegrid.paginated.PaginatedMovieGrid
 
 class SearchMoviesViewModel(moviesRepository: MoviesRepository) : PaginatedMovieGridViewModel(moviesRepository) {
 
+    override val onlyLoadIfDataIsNull = false
+
     override val paginatedRequest by lazy { moviesRepository.searchMoviesPaginatedRequest }
 
     fun searchTermChanged(newSearchTerm: String) {

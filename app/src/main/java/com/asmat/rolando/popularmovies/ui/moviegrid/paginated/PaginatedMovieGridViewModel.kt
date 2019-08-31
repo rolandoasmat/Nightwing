@@ -1,7 +1,6 @@
 package com.asmat.rolando.popularmovies.ui.moviegrid.paginated
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.MutableLiveData
 import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.model.PaginatedRequest
 import com.asmat.rolando.popularmovies.model.mappers.MovieMapper
@@ -14,11 +13,7 @@ import com.asmat.rolando.popularmovies.ui.moviegrid.BaseMovieGridViewModel
  */
 abstract class PaginatedMovieGridViewModel(moviesRepository: MoviesRepository) : BaseMovieGridViewModel(moviesRepository) {
 
-    override val movies: LiveData<List<Movie>> by lazy {
-        Transformations.map(paginatedRequest.data) { movies ->
-            movies.map { MovieMapper.from(it) }
-        }
-    }
+    override val movies = MutableLiveData<List<Movie>>()
 
     override val loading by lazy { paginatedRequest.loading }
     val loadingMore by lazy { paginatedRequest.loadingMore }
@@ -36,6 +31,8 @@ abstract class PaginatedMovieGridViewModel(moviesRepository: MoviesRepository) :
      * Load first page of movies
      */
     override fun load() {
+        super.load()
+        init()
         if (onlyLoadIfDataIsNull) {
             if (paginatedRequest.data.value == null) {
                 paginatedRequest.load()
@@ -50,6 +47,14 @@ abstract class PaginatedMovieGridViewModel(moviesRepository: MoviesRepository) :
      */
     fun loadMore() {
         paginatedRequest.loadMore()
+    }
+
+    private fun init() {
+        paginatedRequest.data.removeObserver {  }
+        paginatedRequest.data.observeForever { movieResponses ->
+            val mapped = movieResponses?.map { MovieMapper.from(it) }
+            movies.value = mapped
+        }
     }
 
 }

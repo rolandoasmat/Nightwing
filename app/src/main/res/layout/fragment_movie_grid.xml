@@ -17,4 +17,11 @@
         layout="@layout/retry_layout"
         android:visibility="gone"/>
 
+    <include
+        android:id="@+id/emptyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/empty_state_generic"
+        android:visibility="gone"/>
+
 </FrameLayout>

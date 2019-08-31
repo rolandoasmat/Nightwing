@@ -102,7 +102,8 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository) : Vi
     }
     //endregion
 
-    private fun map(movie: Movie): MovieDetailsUIModel {
+    private fun map(movie: Movie?): MovieDetailsUIModel? {
+        if (movie == null) return null
         val posterURL = movie.posterPath?.let { url -> URLUtils.getImageURL342(url)}
         val backdropURL = movie.backdropPath?.let { url -> URLUtils.getImageURL780(url)}
         val releaseDate = DateUtils.formatDate(movie.releaseDate)

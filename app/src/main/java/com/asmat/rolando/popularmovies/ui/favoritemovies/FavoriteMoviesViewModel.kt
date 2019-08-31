@@ -20,6 +20,4 @@ class FavoriteMoviesViewModel(moviesRepository: MoviesRepository) : BaseMovieGri
 
     override val error = MutableLiveData<Throwable>()
 
-    override fun load() {}
-
 }

@@ -1,8 +1,8 @@
 package com.asmat.rolando.popularmovies.ui.moviegrid
 
+import androidx.annotation.CallSuper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
@@ -26,11 +26,7 @@ abstract class BaseMovieGridViewModel(val moviesRepository: MoviesRepository) : 
     /**
      * UI models of movie grids
      */
-    val moviesUIModels: LiveData<List<MovieGridItemUiModel>> by lazy {
-        Transformations.map(movies) {
-            map(it)
-        }
-    }
+    val moviesUIModels = MutableLiveData<List<MovieGridItemUiModel>>()
 
     /**
      * Loading movies
@@ -45,7 +41,12 @@ abstract class BaseMovieGridViewModel(val moviesRepository: MoviesRepository) : 
     /**
      * Load movies
      */
-    abstract fun load()
+    @CallSuper
+    open fun load() {
+        movies.observeForever {
+            moviesUIModels.value = map(it)
+        }
+    }
 
     /**
      * An movie grid item was pressed
@@ -58,8 +59,8 @@ abstract class BaseMovieGridViewModel(val moviesRepository: MoviesRepository) : 
         }
     }
 
-    protected fun map(movies: List<Movie>): List<MovieGridItemUiModel> {
-        return movies.map {
+    protected fun map(movies: List<Movie>?): List<MovieGridItemUiModel>? {
+        return movies?.map {
             val posterURL = it.posterPath?.let { url -> URLUtils.getImageURL342(url)}
             MovieGridItemUiModel(it.title, posterURL)
         }
