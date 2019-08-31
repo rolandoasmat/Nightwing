@@ -37,6 +37,7 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
         super.onCreate(savedInstanceState)
         (activity?.applicationContext as MovieNightApplication).component().inject(this)
         observeViewModel()
+        viewModel.load()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -60,25 +61,43 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
         retryButton?.setOnClickListener {
             viewModel.load()
         }
+
+        refreshUI()
         viewModel.load()
+    }
+
+    private fun refreshUI() {
+        renderMoviesUIModels(viewModel.moviesUIModels.value)
+        renderError(viewModel.error.value)
+        handleNavigationEvent(viewModel.navigationEvent.value)
     }
 
     private fun observeViewModel() {
         viewModel.moviesUIModels.observe(this, Observer { movies ->
-            moviesGridAdapter?.setMovies(movies)
+            renderMoviesUIModels(movies)
         })
         viewModel.error.observe(this, Observer { error ->
-            handleError(error)
+            renderError(error)
         })
         viewModel.navigationEvent.observe(this, Observer { navigationEvent ->
-            navigationEvent?.let { event ->
-                when (event) {
-                    is BaseMovieGridViewModel.NavigationEvent.ShowMovieDetailScreen -> {
-                        showMovieDetailScreen()
-                    }
+            handleNavigationEvent(navigationEvent)
+        })
+    }
+
+    private fun renderMoviesUIModels(movies: List<MovieGridItemUiModel>?) {
+        movies?.let {
+            moviesGridAdapter?.setMovies(it)
+        }
+    }
+
+    private fun handleNavigationEvent(navigationEvent: BaseMovieGridViewModel.NavigationEvent?) {
+        navigationEvent?.let { event ->
+            when (event) {
+                is BaseMovieGridViewModel.NavigationEvent.ShowMovieDetailScreen -> {
+                    showMovieDetailScreen()
                 }
             }
-        })
+        }
     }
 
     private fun showMovieDetailScreen() {
@@ -88,7 +107,7 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
         startActivity(intentToStartDetailActivity)
     }
 
-    private fun handleError(error: Throwable?) {
+    private fun renderError(error: Throwable?) {
         error?.let {
             val message = getString(R.string.generic_error)
             updateRetryLayout(message)

@@ -25,6 +25,8 @@ abstract class PaginatedMovieGridViewModel(moviesRepository: MoviesRepository) :
     override val error by lazy { paginatedRequest.error }
     val errorLoadingMore by lazy { paginatedRequest.errorLoadingMore }
 
+    open val onlyLoadIfDataIsNull = true
+
     /**
      * Paginated data source
      */
@@ -34,7 +36,13 @@ abstract class PaginatedMovieGridViewModel(moviesRepository: MoviesRepository) :
      * Load first page of movies
      */
     override fun load() {
-        paginatedRequest.load()
+        if (onlyLoadIfDataIsNull) {
+            if (paginatedRequest.data.value == null) {
+                paginatedRequest.load()
+            }
+        } else {
+            paginatedRequest.load()
+        }
     }
 
     /**
