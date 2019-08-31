@@ -2,11 +2,9 @@ package com.asmat.rolando.popularmovies.ui.moviegrid
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.asmat.rolando.popularmovies.MovieNightApplication
@@ -30,7 +28,7 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
     @Inject
     lateinit var peopleRepository: PeopleRepository
 
-    private var moviesGridAdapter: MoviesGridAdapter? = null
+    private var moviesGridAdapter: BaseMoviesGridAdapter? = null
 
     abstract val viewModel: BaseMovieGridViewModel
 
@@ -52,7 +50,7 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
         val numOfColumns = ViewUtils.calculateNumberOfColumns(context)
         val layoutManager = GridLayoutManager(context, numOfColumns)
         moviesRecyclerView?.layoutManager = layoutManager
-        moviesGridAdapter = MoviesGridAdapter(object : BaseMoviesGridAdapter.Callback {
+        moviesGridAdapter = BaseMoviesGridAdapter(object : BaseMoviesGridAdapter.Callback {
             override fun itemPressed(index: Int) {
                 viewModel.itemPressed(index)
             }
