@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/rolandoasmat/Movie-Night.svg?branch=master)](https://travis-ci.org/rolandoasmat/Movie-Night)
+[![Build Status](https://travis-ci.org/rolandoasmat/Movie-Night.svg?branch=develop)](https://travis-ci.org/rolandoasmat/Movie-Night)
 
 # Movie Night
 Android application to browse, save and share movies to watch! originally a Udacity Android Nanodegree [project](ProjectRequirements.md).
