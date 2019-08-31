@@ -2,5 +2,5 @@
 
 if [ ${TRAVIS_SECURE_ENV_VARS} == true ]
 then
-    echo "API_KEY=\"${API_KEY}\"" > 'gradle.properties'
+    echo "THE_MOVIE_DB_API_KEY=\"${THE_MOVIE_DB_API_KEY}\"" > 'gradle.properties'
 fi
