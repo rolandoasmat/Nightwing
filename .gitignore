@@ -40,3 +40,7 @@ build/
 .classpath
 .project
 release
+
+#Room
+app/schemas
+
