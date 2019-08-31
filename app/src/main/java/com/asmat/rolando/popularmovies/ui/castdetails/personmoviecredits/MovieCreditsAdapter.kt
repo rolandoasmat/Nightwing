@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.person_movie_credit_cell.view.*
 
 private typealias MovieCredits = List<MovieCreditUiModel>
 
-class MovieCreditsAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<MovieCreditsAdapter.ViewHolder>() {
+class MovieCreditsAdapter: RecyclerView.Adapter<MovieCreditsAdapter.ViewHolder>() {
 
     private var data: MovieCredits = emptyList()
 
@@ -37,7 +37,7 @@ class MovieCreditsAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<Mov
         holder.bind(data[position])
     }
 
-    class ViewHolder(itemView: View): androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         private val poster: ImageView? = itemView.posterImage
         private val characterName: TextView? = itemView.characterNameText
@@ -46,7 +46,8 @@ class MovieCreditsAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<Mov
             Picasso.get()
                     .load(model.posterURL)
                     .into(poster)
-            characterName?.text = model.characterName
+            val name = model.characterName ?: itemView.resources.getString(R.string.unknown_character)
+            characterName?.text = name
         }
     }
 }

@@ -23,7 +23,6 @@
             android:layout_height="@dimen/icon_size" />
 
         <TextView
-            android:id="@+id/starLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/favorite"
@@ -42,13 +41,11 @@
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/shareIcon"
             app:srcCompat="@drawable/ic_share"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size" />
 
         <TextView
-            android:id="@+id/shareLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/share"
@@ -73,7 +70,6 @@
             android:layout_height="@dimen/icon_size" />
 
         <TextView
-            android:id="@+id/bookmarkLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/watch_later"

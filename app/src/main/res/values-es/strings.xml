@@ -2,23 +2,13 @@
 <resources>
 
     <!-- Main Activity -->
-    <string name="error_message">Error obteniendo data!</string>
     <string name="most_popular">Populares</string>
     <string name="top_rated">Más Votadas</string>
     <string name="now_playing">En Estreno</string>
     <string name="favorites">Favoritos</string>
     <!--Menu-->
-    <string name="sort_menu_title">Ordenar</string>
-    <string name="sort_most_popular">Ordena por Popularidad</string>
-    <string name="sort_top_rated">Ordena por Más Votados</string>
-    <string name="show_favorites">Mostrar Favoritos</string>
 
     <!--Activity Movie Detail -->
-    <string name="movie_detail_activity_title">Detalles de Película</string>
-    <string name="movie_title">Titulo de pelicula</string>
-    <string name="release_date">Fecha de lanzamiento</string>
-    <string name="movie_rating">Valuación</string>
-    <string name="synopsis">Sinopsis</string>
     <string name="favorite">Favorito</string>
     <string name="share">Compartir</string>
     <string name="watch_later">Ver despues</string>
@@ -28,10 +18,8 @@
 
     <!--Error Messages-->
     <string name="generic_error">"Oops! Algo salió horriblemente mal:'("</string>
-    <string name="no_internet">"No coneccion a la ret."</string>
     <string name="retry">Tratar otra vez</string>
     <string name="error_reviews">Error bajando comentarios.</string>
-    <string name="error_trailers">Error bajando videos.</string>
 
     <!--Empty States-->
     <string name="no_trailers">No hay videos disponibles.</string>
@@ -44,17 +32,12 @@
     <!--Search-->
     <string name="search_hint">Buscar peliculas</string>
     <string name="title_activity_search_results">Buscar</string>
-    <string name="action_settings">Ajustes</string>
     <string name="discover">Descubrir</string>
     <string name="my_lists">Mis Peliculas</string>
-    <string name="coming_soon">Próximamente</string>
     <string name="cast">Actores</string>
     <string name="no_cast">No acores.</string>
     <string name="error_cast">Error bajando actores.</string>
     <string name="search">buscar</string>
-    <string name="movies">Peliculas</string>
-    <string name="no_movie_credits">No creditos de pelicular.</string>
-    <string name="error_movie_credits">Error bajando creditos de pelicula.</string>
     <string name="cast_details">Actor Detalles</string>
     <string name="movie_details">Pelicula Detalles</string>
 </resources>

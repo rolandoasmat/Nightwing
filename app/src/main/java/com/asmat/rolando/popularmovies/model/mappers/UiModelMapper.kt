@@ -23,21 +23,18 @@ class UiModelMapper @Inject constructor() {
     }
 
     fun map(data: PersonMovieCredits): PersonMovieCreditsUiModel {
-        val mapped = data.cast.map {
+        val mapped = data.cast?.map {
             val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url) }
             MovieCreditUiModel(posterURL, it.character)
         }
-        val movieCreditsWithBackdropImage = data.cast
-                .filter { it.backdrop_path != null }
+        val movieCreditsWithBackdropImage = data.cast?.filter { it.backdrop_path != null }
 
-        val backdropURL = if (movieCreditsWithBackdropImage.isEmpty()) {
+        val backdropURL = if (movieCreditsWithBackdropImage?.isEmpty() == true) {
             null
         } else {
-            movieCreditsWithBackdropImage
-                    .random().backdrop_path
-                    ?.let { URLUtils.getImageURL780(it) }
+            movieCreditsWithBackdropImage?.random()?.backdrop_path?.let { URLUtils.getImageURL780(it) }
         }
-        return PersonMovieCreditsUiModel(backdropURL, mapped)
+        return PersonMovieCreditsUiModel(backdropURL, mapped ?: emptyList())
     }
 
 }
