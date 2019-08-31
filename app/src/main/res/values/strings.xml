@@ -6,13 +6,12 @@
     <string name="top_rated">Top Rated</string>
     <string name="now_playing">Now Playing</string>
     <string name="upcoming">Upcoming</string>
-
     <string name="favorites">Favorites</string>
+    <string name="watch_later">To Watch</string>
 
     <!--Activity Movie Detail -->
     <string name="favorite">Favorite</string>
     <string name="share">Share</string>
-    <string name="watch_later">To Watch</string>
     <string name="trailers">Trailers</string>
     <string name="reviews">Reviews</string>
     <string name="out_of_ten" translatable="false">%1$s/10.0</string>

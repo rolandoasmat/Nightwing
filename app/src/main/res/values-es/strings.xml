@@ -5,13 +5,13 @@
     <string name="most_popular">Populares</string>
     <string name="top_rated">Más Votadas</string>
     <string name="now_playing">En Estreno</string>
+    <string name="upcoming">Upcoming</string>
     <string name="favorites">Favoritos</string>
-    <!--Menu-->
+    <string name="watch_later">Ver despues</string>
 
     <!--Activity Movie Detail -->
     <string name="favorite">Favorito</string>
     <string name="share">Compartir</string>
-    <string name="watch_later">Ver despues</string>
     <string name="trailers">Videos</string>
     <string name="reviews">Comentarios</string>
     <string name="out_of_ten" translatable="false">%1$s/10.0</string>
@@ -24,9 +24,10 @@
     <!--Empty States-->
     <string name="no_trailers">No hay videos disponibles.</string>
     <string name="no_reviews">No hay comentarios disponibles.</string>
+    <string name="no_movies">No peliculas!</string>
 
     <!--Share-->
-    <string name="share_movie">Compartir pelicula</string>
+    <string name="share_movie">Compartir película</string>
     <string name="check_out_movie">Chequea "%1$s"! %2$s</string>
 
     <!--Search-->
@@ -40,4 +41,10 @@
     <string name="search">buscar</string>
     <string name="cast_details">Actor Detalles</string>
     <string name="movie_details">Pelicula Detalles</string>
+
+    <!--Cast Details-->
+    <string name="info">Informacion</string>
+    <string name="movie_credits">Créditos de películas</string>
+    <string name="loading">Cargando...</string>
+    <string name="unknown_character">Personaje desconocido</string>
 </resources>
