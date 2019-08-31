@@ -17,7 +17,8 @@ import io.reactivex.Single
  */
 class MoviesRepository(private val db: DatabaseManager,
                        private val tmdbClient: TheMovieDBClient,
-                       private val computationScheduler: Scheduler) {
+                       private val computationScheduler: Scheduler,
+                       private val mainThreadScheduler: Scheduler) {
 
     private var movieDetailsData: Movie? = null
 
@@ -73,15 +74,11 @@ class MoviesRepository(private val db: DatabaseManager,
      * Network
      */
 
-    val popularMoviesPaginatedRequest = PopularMoviesPaginatedRequest(tmdbClient, computationScheduler)
-    val topRatedPaginatedRequest = TopRatedPaginatedRequest(tmdbClient, computationScheduler)
-    val nowPlayingPaginatedRequest = NowPlayingPaginatedRequest(tmdbClient, computationScheduler)
-    val upcomingPaginatedRequest = UpcomingPaginatedRequest(tmdbClient, computationScheduler)
-    val searchMoviesPaginatedRequest = SearchMoviesPaginatedRequest(tmdbClient, computationScheduler)
-
-    fun getMovieDetails(movieID: Int): Single<MovieDetailsResponse> {
-        return tmdbClient.getMovieDetails(movieID).subscribeOn(computationScheduler)
-    }
+    val popularMoviesPaginatedRequest = PopularMoviesPaginatedRequest(tmdbClient, computationScheduler, mainThreadScheduler)
+    val topRatedPaginatedRequest = TopRatedPaginatedRequest(tmdbClient, computationScheduler, mainThreadScheduler)
+    val nowPlayingPaginatedRequest = NowPlayingPaginatedRequest(tmdbClient, computationScheduler, mainThreadScheduler)
+    val upcomingPaginatedRequest = UpcomingPaginatedRequest(tmdbClient, computationScheduler, mainThreadScheduler)
+    val searchMoviesPaginatedRequest = SearchMoviesPaginatedRequest(tmdbClient, computationScheduler, mainThreadScheduler)
 
     fun getMovieVideos(movieID: Int): Single<VideosResponse> {
         return tmdbClient.getMovieVideos(movieID).subscribeOn(computationScheduler)
@@ -93,10 +90,6 @@ class MoviesRepository(private val db: DatabaseManager,
 
     fun getMovieCredits(movieID: Int): Single<CreditsResponse> {
         return tmdbClient.getMovieCredits(movieID).subscribeOn(computationScheduler)
-    }
-
-    fun searchMovies(searchTerm: String, page: Int): Single<MoviesResponse> {
-        return tmdbClient.searchMovie(searchTerm, page).subscribeOn(computationScheduler)
     }
 
     /**

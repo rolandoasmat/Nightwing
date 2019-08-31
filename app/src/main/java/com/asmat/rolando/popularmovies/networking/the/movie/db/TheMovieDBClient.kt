@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  *
  * @see <a href="https://developers.themoviedb.org/3"</a>
  */
-class TheMovieDBClient {
+open class TheMovieDBClient {
 
     //region Private
     private val service by lazy { createService() }
@@ -53,10 +53,6 @@ class TheMovieDBClient {
 
     fun getUpcomingMovies(page: Int): Single<MoviesResponse> {
         return service.getUpcomingMovies(page)
-    }
-
-    fun getMovieDetails(movieID: Int): Single<MovieDetailsResponse> {
-        return service.getMovieDetails(movieID)
     }
 
     fun getMovieVideos(movieID: Int): Single<VideosResponse> {

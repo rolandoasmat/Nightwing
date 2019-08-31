@@ -4,10 +4,10 @@ import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
 import io.reactivex.Scheduler
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
 
 data class PopularMoviesPaginatedRequest(private val tmdbClient: TheMovieDBClient,
-                                         private val computationScheduler: Scheduler) : PaginatedRequest<MoviesResponse.Movie>(AndroidSchedulers.mainThread()) {
+                                         private val computationScheduler: Scheduler,
+                                         override val mainThreadScheduler: Scheduler) : PaginatedRequest<MoviesResponse.Movie>(mainThreadScheduler) {
 
     override fun fetchData(pageToLoad: Int): Single<PagedData<MoviesResponse.Movie>> {
         return tmdbClient

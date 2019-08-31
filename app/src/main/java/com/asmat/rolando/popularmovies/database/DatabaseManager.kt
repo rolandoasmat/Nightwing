@@ -7,7 +7,7 @@ import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
 /**
  * Database CRUD operations
  */
-class DatabaseManager(private val dao: MoviesDAO) {
+open class DatabaseManager(private val dao: MoviesDAO) {
 
     /**
      * Favorite movies

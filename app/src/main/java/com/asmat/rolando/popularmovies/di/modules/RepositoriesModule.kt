@@ -5,6 +5,7 @@ import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
 import dagger.Module
 import dagger.Provides
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Singleton
 
@@ -14,6 +15,6 @@ class RepositoriesModule {
     @Provides
     @Singleton
     fun provideMoviesRepository(databaseManager: DatabaseManager, client: TheMovieDBClient): MoviesRepository {
-        return MoviesRepository(databaseManager, client, Schedulers.computation())
+        return MoviesRepository(databaseManager, client, Schedulers.computation(), AndroidSchedulers.mainThread())
     }
 }
