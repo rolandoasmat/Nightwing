@@ -3,6 +3,7 @@ package com.asmat.rolando.popularmovies.repositories
 import com.asmat.rolando.popularmovies.TestObjectsFactory
 import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
+import com.nhaarman.mockitokotlin2.verify
 import io.reactivex.schedulers.Schedulers
 import org.junit.Assert
 import org.junit.Before
@@ -38,6 +39,18 @@ class MoviesRepositoryTest {
         // Assert
         val actual = repository.getMovieDetailsData()
         Assert.assertEquals(data, actual)
+    }
+
+    @Test
+    fun getFavoriteMovie_databaseManagerInvoked() {
+        // Arrange
+        val id = 4444
+
+        // Act
+        repository.getFavoriteMovie(id)
+
+        // Assert
+        verify(mockDatabaseManager).getFavoriteMovie(id)
     }
 
 

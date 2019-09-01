@@ -1,5 +1,6 @@
 package com.asmat.rolando.popularmovies.database
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
@@ -17,7 +18,7 @@ open class DatabaseManager(private val dao: MoviesDAO) {
         dao.insertFavoriteMovie(favoriteMovie)
     }
 
-    fun getFavoriteMovie(id: Int): LiveData<FavoriteMovie> {
+    open fun getFavoriteMovie(id: Int): LiveData<FavoriteMovie> {
         return dao.findFavoriteMovie(id)
     }
 
