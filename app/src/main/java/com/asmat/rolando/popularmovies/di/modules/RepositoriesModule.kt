@@ -15,6 +15,6 @@ class RepositoriesModule {
     @Provides
     @Singleton
     fun provideMoviesRepository(databaseManager: DatabaseManager, client: TheMovieDBClient): MoviesRepository {
-        return MoviesRepository(databaseManager, client, Schedulers.computation(), AndroidSchedulers.mainThread())
+        return MoviesRepository(databaseManager, client, Schedulers.io(), AndroidSchedulers.mainThread())
     }
 }

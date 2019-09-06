@@ -1,7 +1,6 @@
 package com.asmat.rolando.popularmovies.repositories
 
 import androidx.lifecycle.LiveData
-import android.os.AsyncTask
 
 import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
@@ -17,7 +16,7 @@ import io.reactivex.Single
  */
 class MoviesRepository(private val db: DatabaseManager,
                        private val tmdbClient: TheMovieDBClient,
-                       private val computationScheduler: Scheduler,
+                       private val backgroundScheduler: Scheduler,
                        private val mainThreadScheduler: Scheduler) {
 
     private var movieDetailsData: Movie? = null
@@ -42,11 +41,11 @@ class MoviesRepository(private val db: DatabaseManager,
     }
 
     fun removeFavoriteMovie(movieID: Int) {
-        runOnBackground { db.deleteFavoriteMovie(movieID) }
+        db.deleteFavoriteMovie(movieID).subscribe({}, {})
     }
 
     fun insertFavoriteMovie(movie: FavoriteMovie) {
-        runOnBackground { db.addFavoriteMovie(movie) }
+        db.addFavoriteMovie(movie).subscribe({}, {})
     }
 
     fun getAllFavoriteMovies(): LiveData<List<FavoriteMovie>> {
@@ -59,11 +58,11 @@ class MoviesRepository(private val db: DatabaseManager,
     }
 
     fun removeWatchLaterMovie(movieID: Int) {
-        runOnBackground { db.deleteWatchLaterMovie(movieID) }
+        db.deleteWatchLaterMovie(movieID).subscribe({}, {})
     }
 
     fun insertWatchLaterMovie(movie: WatchLaterMovie) {
-        runOnBackground { db.addWatchLaterMovie(movie) }
+        db.addWatchLaterMovie(movie).subscribe({}, {})
     }
 
     fun getAllWatchLaterMovies(): LiveData<List<WatchLaterMovie>> {
@@ -74,29 +73,21 @@ class MoviesRepository(private val db: DatabaseManager,
      * Network
      */
 
-    val popularMoviesPaginatedRequest = PopularMoviesPaginatedRequest(tmdbClient, computationScheduler, mainThreadScheduler)
-    val topRatedPaginatedRequest = TopRatedPaginatedRequest(tmdbClient, computationScheduler, mainThreadScheduler)
-    val nowPlayingPaginatedRequest = NowPlayingPaginatedRequest(tmdbClient, computationScheduler, mainThreadScheduler)
-    val upcomingPaginatedRequest = UpcomingPaginatedRequest(tmdbClient, computationScheduler, mainThreadScheduler)
-    val searchMoviesPaginatedRequest = SearchMoviesPaginatedRequest(tmdbClient, computationScheduler, mainThreadScheduler)
+    val popularMoviesPaginatedRequest = PopularMoviesPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
+    val topRatedPaginatedRequest = TopRatedPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
+    val nowPlayingPaginatedRequest = NowPlayingPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
+    val upcomingPaginatedRequest = UpcomingPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
+    val searchMoviesPaginatedRequest = SearchMoviesPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
 
     fun getMovieVideos(movieID: Int): Single<VideosResponse> {
-        return tmdbClient.getMovieVideos(movieID).subscribeOn(computationScheduler)
+        return tmdbClient.getMovieVideos(movieID).subscribeOn(backgroundScheduler)
     }
 
     fun getMovieReviews(movieID: Int): Single<ReviewsResponse> {
-        return tmdbClient.getMovieReviews(movieID).subscribeOn(computationScheduler)
+        return tmdbClient.getMovieReviews(movieID).subscribeOn(backgroundScheduler)
     }
 
     fun getMovieCredits(movieID: Int): Single<CreditsResponse> {
-        return tmdbClient.getMovieCredits(movieID).subscribeOn(computationScheduler)
-    }
-
-    /**
-     * Private
-     */
-
-    private fun runOnBackground(closure: () -> Unit?) {
-        AsyncTask.execute { closure.invoke() }
+        return tmdbClient.getMovieCredits(movieID).subscribeOn(backgroundScheduler)
     }
 }
