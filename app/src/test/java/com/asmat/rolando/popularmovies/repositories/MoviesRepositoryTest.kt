@@ -7,10 +7,12 @@ import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Completable
 import io.reactivex.Single
+import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.Schedulers
 import org.junit.Assert
 import org.junit.Before
@@ -174,5 +176,21 @@ class MoviesRepositoryTest {
         Assert.assertEquals(expected.value, actual.value)
     }
 
+    // Network
+
+    @Test
+    fun getMovieVideos_successfulResponse() {
+        // Arrange
+        val id = 4444
+        val expected = TestObjectsFactory.videosResponse()
+        whenever(mockTheMovieDBClient.getMovieVideos(id)).thenReturn(Single.just(expected))
+
+        // Act
+        val actual = repository.getMovieVideos(id).test()
+
+        // Assert
+        verify(mockTheMovieDBClient).getMovieVideos(id)
+        actual.assertValue(expected)
+    }
 
 }

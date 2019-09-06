@@ -3,6 +3,7 @@ package com.asmat.rolando.popularmovies
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
 import com.asmat.rolando.popularmovies.model.Movie
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
 
 object TestObjectsFactory {
 
@@ -50,5 +51,18 @@ object TestObjectsFactory {
             list.add(watchLaterMovie(i))
         }
         return list
+    }
+
+    fun videosResponse(): VideosResponse {
+        val video = VideosResponse.Video("test id",
+                "test iso 639",
+                "test iso 3166",
+                "test key",
+                "test name",
+                "test site",
+                300,
+                "test type")
+        return VideosResponse(5555, listOf(video, video, video))
+
     }
 }

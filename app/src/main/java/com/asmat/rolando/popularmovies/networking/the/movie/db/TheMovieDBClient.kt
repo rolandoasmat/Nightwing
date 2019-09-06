@@ -39,43 +39,43 @@ open class TheMovieDBClient {
     //endregion
 
     //region API
-    fun getPopularMovies(page: Int): Single<MoviesResponse> {
+    open fun getPopularMovies(page: Int): Single<MoviesResponse> {
         return service.getPopularMovies(page)
     }
 
-    fun getTopRatedMovies(page: Int): Single<MoviesResponse> {
+    open fun getTopRatedMovies(page: Int): Single<MoviesResponse> {
         return service.getTopRatedMovies(page)
     }
 
-    fun getNowPlayingMovies(page: Int): Single<MoviesResponse> {
+    open fun getNowPlayingMovies(page: Int): Single<MoviesResponse> {
         return service.getNowPlayingMovies(page)
     }
 
-    fun getUpcomingMovies(page: Int): Single<MoviesResponse> {
+    open fun getUpcomingMovies(page: Int): Single<MoviesResponse> {
         return service.getUpcomingMovies(page)
     }
 
-    fun getMovieVideos(movieID: Int): Single<VideosResponse> {
+    open fun getMovieVideos(movieID: Int): Single<VideosResponse> {
         return service.getMovieVideos(movieID)
     }
 
-    fun getMovieReviews(movieID: Int): Single<ReviewsResponse> {
+    open fun getMovieReviews(movieID: Int): Single<ReviewsResponse> {
         return service.getMovieReviews(movieID)
     }
 
-    fun getMovieCredits(movieID: Int): Single<CreditsResponse> {
+    open fun getMovieCredits(movieID: Int): Single<CreditsResponse> {
         return service.getMovieCredits(movieID)
     }
 
-    fun searchMovie(searchString: String, page: Int): Single<MoviesResponse> {
+    open fun searchMovie(searchString: String, page: Int): Single<MoviesResponse> {
         return service.searchMovie(searchString, page)
     }
 
-    fun getPersonDetails(id: Int): Single<PersonDetailsResponse> {
+    open fun getPersonDetails(id: Int): Single<PersonDetailsResponse> {
         return service.getPersonDetails(id)
     }
 
-    fun getPersonMovieCredits(personID: Int): Single<PersonMovieCredits> {
+    open fun getPersonMovieCredits(personID: Int): Single<PersonMovieCredits> {
         return service.getPersonMovieCredits(personID)
     }
     //endregion
