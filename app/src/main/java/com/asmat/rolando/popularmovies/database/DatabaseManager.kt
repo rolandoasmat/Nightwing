@@ -25,7 +25,7 @@ open class DatabaseManager(private val dao: MoviesDAO,
         return dao.findFavoriteMovie(id)
     }
 
-    fun deleteFavoriteMovie(id: Int): Single<Int> {
+    open fun deleteFavoriteMovie(id: Int): Single<Int> {
         return dao.deleteFavoriteMovie(id).subscribeOn(backgroundScheduler)
     }
 

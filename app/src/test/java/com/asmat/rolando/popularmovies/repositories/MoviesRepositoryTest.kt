@@ -4,6 +4,8 @@ import com.asmat.rolando.popularmovies.TestObjectsFactory
 import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
 import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.junit.Assert
 import org.junit.Before
@@ -51,6 +53,19 @@ class MoviesRepositoryTest {
 
         // Assert
         verify(mockDatabaseManager).getFavoriteMovie(id)
+    }
+
+    @Test
+    fun removeFavoriteMovie_databaseManagerInvoked() {
+        // Arrange
+        val id = 4444
+        whenever(mockDatabaseManager.deleteFavoriteMovie(id)).thenReturn(Single.just(1))
+
+        // Act
+        repository.removeFavoriteMovie(id)
+
+        // Assert
+        verify(mockDatabaseManager).deleteFavoriteMovie(id)
     }
 
 
