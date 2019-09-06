@@ -9,6 +9,7 @@ import com.asmat.rolando.popularmovies.database.migrations.Migration_1_2
 import com.asmat.rolando.popularmovies.database.migrations.Migration_2_3
 import dagger.Module
 import dagger.Provides
+import io.reactivex.schedulers.Schedulers
 
 @Module
 class DatabaseModule {
@@ -31,7 +32,7 @@ class DatabaseModule {
 
     @Provides
     fun provideDatabaseManager(dao: MoviesDAO): DatabaseManager {
-        return DatabaseManager(dao)
+        return DatabaseManager(dao, Schedulers.io())
     }
 
 }
