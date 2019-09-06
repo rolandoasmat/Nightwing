@@ -96,6 +96,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     // Room migration testing
     testImplementation 'androidx.room:room-testing:2.1.0'
+    implementation "androidx.room:room-rxjava2:2.1.0"
     // Robolectric environment
     testImplementation 'androidx.test:core:1.2.0'
     // Mockito framework
