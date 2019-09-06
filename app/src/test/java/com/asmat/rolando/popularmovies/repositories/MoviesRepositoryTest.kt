@@ -1,7 +1,11 @@
 package com.asmat.rolando.popularmovies.repositories
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
 import com.asmat.rolando.popularmovies.TestObjectsFactory
 import com.asmat.rolando.popularmovies.database.DatabaseManager
+import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
+import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
@@ -10,11 +14,15 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.junit.Assert
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
 class MoviesRepositoryTest {
+
+    @get:Rule
+    val rule = InstantTaskExecutorRule()
 
     @Mock
     lateinit var mockDatabaseManager: DatabaseManager
@@ -48,16 +56,22 @@ class MoviesRepositoryTest {
 
     // DB tests
 
+    // Favorite movies
+
     @Test
     fun getFavoriteMovie_databaseManagerInvoked() {
         // Arrange
         val id = 4444
+        val expected = MutableLiveData<FavoriteMovie>()
+        expected.value = TestObjectsFactory.favoriteMovie()
+        whenever(mockDatabaseManager.getFavoriteMovie(id)).thenReturn(expected)
 
         // Act
-        repository.getFavoriteMovie(id)
+        val actual = repository.getFavoriteMovie(id)
 
         // Assert
         verify(mockDatabaseManager).getFavoriteMovie(id)
+        Assert.assertEquals(expected.value, actual.value)
     }
 
     @Test
@@ -76,16 +90,89 @@ class MoviesRepositoryTest {
     @Test
     fun insertFavoriteMovie_databaseManagerInvoked() {
         // Arrange
-        val favoriteMovie = TestObjectsFactory.favoriteMovie()
-        whenever(mockDatabaseManager.addFavoriteMovie(favoriteMovie)).thenReturn(Completable.complete())
+        val movie = TestObjectsFactory.favoriteMovie()
+        whenever(mockDatabaseManager.addFavoriteMovie(movie)).thenReturn(Completable.complete())
 
         // Act
-        repository.insertFavoriteMovie(favoriteMovie)
+        repository.insertFavoriteMovie(movie)
 
         // Assert
-        verify(mockDatabaseManager).addFavoriteMovie(favoriteMovie)
+        verify(mockDatabaseManager).addFavoriteMovie(movie)
     }
 
+    @Test
+    fun getAllFavoriteMovies_databaseManagerInvoked() {
+        // Arrange
+        val expected = MutableLiveData<List<FavoriteMovie>>()
+        expected.value = TestObjectsFactory.favoriteMovies()
+        whenever(mockDatabaseManager.getAllFavoriteMovies()).thenReturn(expected)
+
+        // Act
+        val actual = repository.getAllFavoriteMovies()
+
+        // Assert
+        verify(mockDatabaseManager).getAllFavoriteMovies()
+        Assert.assertEquals(expected.value, actual.value)
+    }
+
+    // Watch later movies
+
+    @Test
+    fun getWatchLaterMovie_databaseManagerInvoked() {
+        // Arrange
+        val id = 4444
+        val expected = MutableLiveData<WatchLaterMovie>()
+        expected.value = TestObjectsFactory.watchLaterMovie()
+        whenever(mockDatabaseManager.getWatchLaterMovie(id)).thenReturn(expected)
+
+        // Act
+        val actual = repository.getWatchLaterMovie(id)
+
+        // Assert
+        verify(mockDatabaseManager).getWatchLaterMovie(id)
+        Assert.assertEquals(expected.value, actual.value)
+    }
+
+    @Test
+    fun removeWatchLaterMovie_databaseManagerInvoked() {
+        // Arrange
+        val id = 4444
+        whenever(mockDatabaseManager.deleteWatchLaterMovie(id)).thenReturn(Single.just(1))
+
+        // Act
+        repository.removeWatchLaterMovie(id)
+
+        // Assert
+        verify(mockDatabaseManager).deleteWatchLaterMovie(id)
+    }
+
+    @Test
+    fun insertWatchLaterMovie_databaseManagerInvoked() {
+        // Arrange
+        val movie = TestObjectsFactory.watchLaterMovie()
+        whenever(mockDatabaseManager.addWatchLaterMovie(movie)).thenReturn(Completable.complete())
+
+        // Act
+        repository.insertWatchLaterMovie(movie)
+
+        // Assert
+        verify(mockDatabaseManager).addWatchLaterMovie(movie)
+    }
+
+    @Test
+    fun getAllWatchLaterMovies_databaseManagerInvoked() {
+        // Arrange
+        val expected = MutableLiveData<List<WatchLaterMovie>>()
+        expected.value = TestObjectsFactory.watchLaterMovies()
+        whenever(mockDatabaseManager.getAllWatchLaterMovies()).thenReturn(expected)
+
+        // Act
+        val actual = repository.getAllWatchLaterMovies()
+
+        // Assert
+        verify(mockDatabaseManager).getAllWatchLaterMovies()
+        Assert.assertEquals(expected.value, actual.value)
+    }
 
 
 }
