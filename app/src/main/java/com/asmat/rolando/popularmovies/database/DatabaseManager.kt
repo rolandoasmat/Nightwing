@@ -17,7 +17,7 @@ open class DatabaseManager(private val dao: MoviesDAO,
      * Favorite movies
      */
 
-    fun addFavoriteMovie(favoriteMovie: FavoriteMovie): Completable {
+    open fun addFavoriteMovie(favoriteMovie: FavoriteMovie): Completable {
         return dao.insertFavoriteMovie(favoriteMovie).subscribeOn(backgroundScheduler)
     }
 
@@ -29,7 +29,7 @@ open class DatabaseManager(private val dao: MoviesDAO,
         return dao.deleteFavoriteMovie(id).subscribeOn(backgroundScheduler)
     }
 
-    fun getAllFavoriteMovies(): LiveData<List<FavoriteMovie>> {
+    open fun getAllFavoriteMovies(): LiveData<List<FavoriteMovie>> {
         return dao.loadAllFavoriteMovies()
     }
 
@@ -37,19 +37,19 @@ open class DatabaseManager(private val dao: MoviesDAO,
      * Watch Later movies
      */
 
-    fun addWatchLaterMovie(watchLaterMovie: WatchLaterMovie): Completable {
+    open fun addWatchLaterMovie(watchLaterMovie: WatchLaterMovie): Completable {
         return dao.insertWatchLaterMovie(watchLaterMovie).subscribeOn(backgroundScheduler)
     }
 
-    fun getWatchLaterMovie(id: Int): LiveData<WatchLaterMovie> {
+    open fun getWatchLaterMovie(id: Int): LiveData<WatchLaterMovie> {
         return dao.findWatchLaterMovie(id)
     }
 
-    fun deleteWatchLaterMovie(id: Int): Single<Int> {
+    open fun deleteWatchLaterMovie(id: Int): Single<Int> {
         return dao.deleteWatchLaterMovie(id).subscribeOn(backgroundScheduler)
     }
 
-    fun getAllWatchLaterMovies(): LiveData<List<WatchLaterMovie>> {
+    open fun getAllWatchLaterMovies(): LiveData<List<WatchLaterMovie>> {
         return dao.loadAllWatchLaterMovies()
     }
 

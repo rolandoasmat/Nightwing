@@ -5,6 +5,7 @@ import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
+import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.junit.Assert
@@ -30,6 +31,8 @@ class MoviesRepositoryTest {
         repository = MoviesRepository(mockDatabaseManager, mockTheMovieDBClient, computationScheduler, mainThreadScheduler)
     }
 
+    // Cache tests
+
     @Test
     fun setAndGetMovieDetailsData() {
         // Arrange
@@ -42,6 +45,8 @@ class MoviesRepositoryTest {
         val actual = repository.getMovieDetailsData()
         Assert.assertEquals(data, actual)
     }
+
+    // DB tests
 
     @Test
     fun getFavoriteMovie_databaseManagerInvoked() {
@@ -66,6 +71,19 @@ class MoviesRepositoryTest {
 
         // Assert
         verify(mockDatabaseManager).deleteFavoriteMovie(id)
+    }
+
+    @Test
+    fun insertFavoriteMovie_databaseManagerInvoked() {
+        // Arrange
+        val favoriteMovie = TestObjectsFactory.favoriteMovie()
+        whenever(mockDatabaseManager.addFavoriteMovie(favoriteMovie)).thenReturn(Completable.complete())
+
+        // Act
+        repository.insertFavoriteMovie(favoriteMovie)
+
+        // Assert
+        verify(mockDatabaseManager).addFavoriteMovie(favoriteMovie)
     }
 
 
