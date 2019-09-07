@@ -45,5 +45,19 @@ class PeopleRepositoryTest {
         actual.assertValue(expected)
     }
 
+    @Test
+    fun getPersonMovieCredits_successfulResponse() {
+        // Arrange
+        val id = 4444
+        val expected = TestObjectsFactory.personMovieCredits()
+        whenever(mockTheMovieDBClient.getPersonMovieCredits(id)).thenReturn(Single.just(expected))
+
+        // Act
+        val actual = repository.getPersonMovieCredits(id).test()
+
+        // Assert
+        verify(mockTheMovieDBClient).getPersonMovieCredits(id)
+        actual.assertValue(expected)
+    }
 
 }

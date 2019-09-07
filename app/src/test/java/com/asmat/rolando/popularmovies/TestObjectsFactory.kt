@@ -3,10 +3,7 @@ package com.asmat.rolando.popularmovies
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
 import com.asmat.rolando.popularmovies.model.Movie
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonDetailsResponse
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.ReviewsResponse
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
 
 object TestObjectsFactory {
 
@@ -112,6 +109,25 @@ object TestObjectsFactory {
                 false,
                 "test imdb id",
                 "test homepage")
+    }
 
+    fun personMovieCredits(): PersonMovieCredits {
+        val castCredit = PersonMovieCredits.CastCredit("test character",
+                "test credit id",
+                "test release date",
+                15,
+                true,
+                false,
+                44.44,
+                "test title",
+                listOf(1, 2, 3),
+                "test original language",
+                "test original title",
+                4.4,
+                1234,
+                "test backdrop path",
+                "test overview",
+                "test poster path")
+        return PersonMovieCredits(listOf(castCredit, castCredit, castCredit))
     }
 }
