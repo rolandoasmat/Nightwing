@@ -193,4 +193,34 @@ class MoviesRepositoryTest {
         actual.assertValue(expected)
     }
 
+    @Test
+    fun getMovieReviews_successfulResponse() {
+        // Arrange
+        val id = 4444
+        val expected = TestObjectsFactory.movieReviews()
+        whenever(mockTheMovieDBClient.getMovieReviews(id)).thenReturn(Single.just(expected))
+
+        // Act
+        val actual = repository.getMovieReviews(id).test()
+
+        // Assert
+        verify(mockTheMovieDBClient).getMovieReviews(id)
+        actual.assertValue(expected)
+    }
+
+    @Test
+    fun getMovieCredits_successfulResponse() {
+        // Arrange
+        val id = 4444
+        val expected = TestObjectsFactory.movieCredits()
+        whenever(mockTheMovieDBClient.getMovieCredits(id)).thenReturn(Single.just(expected))
+
+        // Act
+        val actual = repository.getMovieCredits(id).test()
+
+        // Assert
+        verify(mockTheMovieDBClient).getMovieCredits(id)
+        actual.assertValue(expected)
+    }
+
 }

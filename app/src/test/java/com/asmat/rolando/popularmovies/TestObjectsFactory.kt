@@ -3,6 +3,8 @@ package com.asmat.rolando.popularmovies
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
 import com.asmat.rolando.popularmovies.model.Movie
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.ReviewsResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
 
 object TestObjectsFactory {
@@ -63,6 +65,35 @@ object TestObjectsFactory {
                 300,
                 "test type")
         return VideosResponse(5555, listOf(video, video, video))
+    }
 
+    fun movieReviews(): ReviewsResponse {
+        val review = ReviewsResponse.Review("1234",
+                "test author",
+                "test content",
+                "test url")
+        val reviews = listOf(review, review, review)
+        return ReviewsResponse(6666, 1, reviews, 1, 4)
+    }
+
+    fun movieCredits(): CreditsResponse {
+        val cast = CreditsResponse.Cast(1234,
+                "test character",
+                "test credit id",
+                null,
+                5678,
+                "test name",
+                1,
+                "test profile path")
+        val crew = CreditsResponse.Crew("test credit id",
+                "test department",
+                null,
+                5678,
+                "test job",
+                "test name",
+                "test profile path")
+        return CreditsResponse(4444,
+                listOf(cast, cast, cast),
+                listOf(crew))
     }
 }
