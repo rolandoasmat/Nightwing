@@ -9,9 +9,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MovieMapper @Inject constructor() {
+open class MovieMapper @Inject constructor() {
 
-    fun from(data: MovieDetailsResponse): Movie {
+    open fun from(data: MovieDetailsResponse): Movie {
         return Movie(
                 data.poster_path,
                 data.overview ?: "",
@@ -22,7 +22,7 @@ class MovieMapper @Inject constructor() {
                 data.vote_average)
     }
 
-    fun from(data: MoviesResponse.Movie): Movie {
+    open fun from(data: MoviesResponse.Movie): Movie {
         return Movie(
                 data.poster_path,
                 data.overview,
@@ -33,7 +33,7 @@ class MovieMapper @Inject constructor() {
                 data.vote_average)
     }
 
-    fun from(data: FavoriteMovie): Movie {
+    open fun from(data: FavoriteMovie): Movie {
         return Movie(
                 data.posterPath,
                 data.overview,
@@ -44,7 +44,7 @@ class MovieMapper @Inject constructor() {
                 data.voteAverage)
     }
 
-    fun from(data: WatchLaterMovie): Movie {
+    open fun from(data: WatchLaterMovie): Movie {
         return Movie(
                 data.posterPath,
                 data.overview,

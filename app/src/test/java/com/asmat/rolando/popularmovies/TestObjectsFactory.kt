@@ -130,4 +130,20 @@ object TestObjectsFactory {
                 "test poster path")
         return PersonMovieCredits(listOf(castCredit, castCredit, castCredit))
     }
+    fun moviesResponse(): MoviesResponse.Movie {
+        return MoviesResponse.Movie("test poster path",
+                false,
+                "test overview",
+                "test release date",
+                listOf(1, 2, 3),
+                1234,
+                "test original title",
+                "test original language",
+                "test title",
+                "test backdrop path",
+                4.4,
+                44,
+                false,
+                44.44)
+    }
 }

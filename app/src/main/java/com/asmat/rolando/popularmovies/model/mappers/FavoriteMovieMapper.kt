@@ -6,7 +6,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FavoriteMovieMapper @Inject constructor() {
+open class FavoriteMovieMapper @Inject constructor() {
 
     fun from(data: Movie): FavoriteMovie {
         return FavoriteMovie(
