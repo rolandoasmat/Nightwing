@@ -5,6 +5,7 @@ import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonMovi
 import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.MovieCreditUiModel
 import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.PersonMovieCreditsUiModel
 import com.asmat.rolando.popularmovies.ui.moviegrid.MovieGridItemUiModel
+import com.asmat.rolando.popularmovies.utilities.DateUtils
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -23,10 +24,15 @@ class UiModelMapper @Inject constructor() {
     }
 
     fun map(data: PersonMovieCredits): PersonMovieCreditsUiModel {
-        val mapped = data.cast?.map {
+        val mapped = data.cast?.filter {
+            it.release_date?.isEmpty() == false
+        }?.sortedByDescending {
+            DateUtils.transform(it.release_date ?: "")
+        }?.map {
             val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url) }
             MovieCreditUiModel(posterURL, it.character)
         }
+
         val movieCreditsWithBackdropImage = data.cast?.filter { it.backdrop_path != null }
 
         val backdropURL = if (movieCreditsWithBackdropImage?.isEmpty() == true) {
