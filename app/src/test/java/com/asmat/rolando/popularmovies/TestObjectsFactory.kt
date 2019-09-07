@@ -4,6 +4,7 @@ import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
 import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonDetailsResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.ReviewsResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
 
@@ -95,5 +96,22 @@ object TestObjectsFactory {
         return CreditsResponse(4444,
                 listOf(cast, cast, cast),
                 listOf(crew))
+    }
+
+    fun personDetailsResponse(): PersonDetailsResponse {
+        return PersonDetailsResponse("test birthday",
+                "test known for",
+                "test deathday",
+                1234,
+                "test name",
+                listOf("test name 1", "test name 2", "test name 3"),
+                1,"test biography",
+                44.44,
+                "test place of birth",
+                "test profile path",
+                false,
+                "test imdb id",
+                "test homepage")
+
     }
 }
