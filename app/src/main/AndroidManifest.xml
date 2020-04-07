@@ -34,7 +34,7 @@
 
         <!-- Movie Detail -->
         <activity
-            android:name="com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailActivity"
+            android:name="com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsActivity"
             android:parentActivityName="com.asmat.rolando.popularmovies.ui.discover.DiscoverActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -45,11 +45,11 @@
         <!-- Cast Detail -->
         <activity
             android:name="com.asmat.rolando.popularmovies.ui.castdetails.CastDetailsActivity"
-            android:parentActivityName="com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailActivity"
+            android:parentActivityName="com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailActivity" />
+                android:value="com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsActivity" />
         </activity>
 
         <!-- Search -->

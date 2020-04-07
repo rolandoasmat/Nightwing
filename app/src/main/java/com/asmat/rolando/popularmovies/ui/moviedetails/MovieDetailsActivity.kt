@@ -1,5 +1,6 @@
 package com.asmat.rolando.popularmovies.ui.moviedetails
 
+import android.content.Context
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
@@ -29,7 +30,18 @@ import kotlinx.android.synthetic.main.movie_details_user_actions.*
 import kotlinx.android.synthetic.main.primary_details.*
 import javax.inject.Inject
 
-class MovieDetailActivity : AppCompatActivity() {
+class MovieDetailsActivity : AppCompatActivity() {
+
+    companion object {
+        private const val EXTRA_MOVIE_ID = "extra_movie_id"
+
+        fun createIntent(context: Context, movieID: String): Intent {
+            val destinationClass = MovieDetailsActivity::class.java
+            val intentToStartDetailActivity = Intent(context, destinationClass)
+            intentToStartDetailActivity.putExtra(EXTRA_MOVIE_ID, movieID)
+            return intentToStartDetailActivity
+        }
+    }
 
     @Inject
     lateinit var moviesRepository: MoviesRepository
@@ -42,6 +54,9 @@ class MovieDetailActivity : AppCompatActivity() {
 
     @Inject
     lateinit var uiModelMapper: UiModelMapper
+
+    private val movieID: String
+        get() { return intent.getStringExtra(EXTRA_MOVIE_ID) }
 
     // Recycler View Adapters
     private lateinit var trailersLinearAdapter: TrailersLinearAdapter
@@ -61,7 +76,7 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private val castClickCallback = { cast: CreditsResponse.Cast ->
-        val intent = Intent(this@MovieDetailActivity, CastDetailsActivity::class.java)
+        val intent = Intent(this@MovieDetailsActivity, CastDetailsActivity::class.java)
         intent.putExtra(CastDetailsActivity.PERSON_ID_KEY, cast.id)
         intent.resolveActivity(packageManager)?.let {
             startActivity(intent)
@@ -74,6 +89,7 @@ class MovieDetailActivity : AppCompatActivity() {
         (applicationContext as MovieNightApplication).component().inject(this)
         setContentView(R.layout.activity_movie_detail)
         viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository, dataModelMapper, uiModelMapper)).get(MovieDetailsViewModel::class.java)
+        viewModel.init(movieID)
         setupObservers()
         setupUI()
         sendEvents()

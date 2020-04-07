@@ -9,7 +9,7 @@ import com.asmat.rolando.popularmovies.ui.castdetails.CastDetailsActivity
 import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.PersonMovieCreditsFragment
 import com.asmat.rolando.popularmovies.ui.moviegrid.BaseMovieGridFragment
 import com.asmat.rolando.popularmovies.ui.moviegrid.paginated.PaginatedMovieGridFragment
-import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailActivity
+import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsActivity
 import com.asmat.rolando.popularmovies.ui.popularmovies.PopularMoviesFragment
 import dagger.Component
 import javax.inject.Singleton
@@ -20,7 +20,7 @@ interface ApplicationComponent {
 
     fun inject(app: BaseActivity)
     fun inject(fragment: PopularMoviesFragment)
-    fun inject(movieDetailActivity: MovieDetailActivity)
+    fun inject(movieDetailsActivity: MovieDetailsActivity)
     fun inject(castDetailsActivity: CastDetailsActivity)
     fun inject(castDetailsActivity: PersonMovieCreditsFragment)
     fun inject(paginatedMovieGridFragment: PaginatedMovieGridFragment)
