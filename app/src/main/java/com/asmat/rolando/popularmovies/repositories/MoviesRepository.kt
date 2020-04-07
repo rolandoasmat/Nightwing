@@ -19,18 +19,6 @@ class MoviesRepository(private val db: DatabaseManager,
                        private val backgroundScheduler: Scheduler,
                        private val mainThreadScheduler: Scheduler) {
 
-    private var movieDetailsData: Movie? = null
-
-    /**
-     * Cache
-     */
-
-    fun setMovieDetailsData(data: Movie) {
-        movieDetailsData = data
-    }
-
-    fun getMovieDetailsData() = movieDetailsData
-
     /**
      * DB
      */

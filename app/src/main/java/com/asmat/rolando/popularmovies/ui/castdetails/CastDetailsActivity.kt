@@ -105,11 +105,7 @@ class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.List
     }
 
     //region Callbacks
-    override fun onMoviePressed(position: Int) {
-        Log.v("TESTTAG", "Movie credit pressed: $position")
-    }
-
-    override fun backdropURL(url: String?) {
+    override fun setBackdropURL(url: String?) {
         url?.let {
             Picasso.get().load(it).into(toolbarImage)
         }

@@ -50,12 +50,11 @@ abstract class BaseMovieGridViewModel(val moviesRepository: MoviesRepository,
     }
 
     /**
-     * An movie grid item was pressed
+     * A movie grid item was pressed
      */
     fun itemPressed(index: Int) {
         movies.value?.get(index)?.let { data ->
-            moviesRepository.setMovieDetailsData(data)
-            val event = NavigationEvent.ShowMovieDetailScreen
+            val event = NavigationEvent.ShowMovieDetailScreen(data.id.toString())
             navigationEvent.value = event
         }
     }
@@ -65,6 +64,6 @@ abstract class BaseMovieGridViewModel(val moviesRepository: MoviesRepository,
      */
     sealed class NavigationEvent {
         // Navigate to the Movie details screen
-        object ShowMovieDetailScreen: NavigationEvent()
+        data class ShowMovieDetailScreen(val movieID: String): NavigationEvent()
     }
 }

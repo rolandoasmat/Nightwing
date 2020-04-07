@@ -34,7 +34,7 @@ class MovieCreditsAdapter(private val callback: ItemCallback): RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(data[position], position)
+        holder.bind(data[position])
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -42,19 +42,19 @@ class MovieCreditsAdapter(private val callback: ItemCallback): RecyclerView.Adap
         private val poster: ImageView? = itemView.posterImage
         private val characterName: TextView? = itemView.characterNameText
 
-        fun bind(model: MovieCreditUiModel, position: Int) {
+        fun bind(model: MovieCreditUiModel) {
             Picasso.get()
                     .load(model.posterURL)
                     .into(poster)
             val name = model.characterName ?: itemView.resources.getString(R.string.unknown_character)
             characterName?.text = name
             poster?.setOnClickListener {
-                callback.onMovieBannerClicked(position)
+                callback.onMovieBannerClicked(model.id)
             }
         }
     }
 
     interface ItemCallback {
-        fun onMovieBannerClicked(moviePosition: Int)
+        fun onMovieBannerClicked(movieID: String)
     }
 }

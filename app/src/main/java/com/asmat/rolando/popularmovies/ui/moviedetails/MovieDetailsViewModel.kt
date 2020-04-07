@@ -48,30 +48,27 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
         handleUiModel(value)
     }
 
-    private val movieDetailsRawData: Movie? get() { return moviesRepository.getMovieDetailsData() }
-
-    init {
-        movieDetailsRawData?.let { movie ->
-            uiModel = map(movie)
-            fetchData(movie.id)
-        }
-    }
+    private var movieID: Int = 0
 
     //region API
+
+    fun init(movieID: String) {
+        this.movieID = movieID.toInt()
+        fetchData(this.movieID)
+    }
 
     /**
      * User pressed the star, "favorite movie", icon
      */
     fun onStarTapped() {
-        val movie = movieDetailsRawData ?: return
         isFavoriteMovie.value?.let {
             if (it) {
                 // It's a favorite movie, "un-favorite" it
-                moviesRepository.removeFavoriteMovie(movie.id)
+                moviesRepository.removeFavoriteMovie(movieID)
             } else {
                 // It's not a favorite movie, "favorite" it
-                val mapped = dataModelMapper.mapToFavoriteMovie(movie)
-                moviesRepository.insertFavoriteMovie(mapped)
+//                val mapped = dataModelMapper.mapToFavoriteMovie(movie)
+//                moviesRepository.insertFavoriteMovie(mapped)
             }
         }
     }
@@ -80,15 +77,14 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
      * User pressed the bookmark, "watch later movie", icon
      */
     fun onBookmarkTapped() {
-        val movie = movieDetailsRawData ?: return
         isWatchLaterMovie.value?.let {
             if (it) {
                 // It's a watch later movie, "un-watch-later" it
-                moviesRepository.removeWatchLaterMovie(movie.id)
+                moviesRepository.removeWatchLaterMovie(movieID)
             } else {
                 // It's not a watch later movie, "watch-later" it
-                val mapped = dataModelMapper.mapToWatchLaterMovie(movie)
-                moviesRepository.insertWatchLaterMovie(mapped)
+//                val mapped = dataModelMapper.mapToWatchLaterMovie(movie)
+//                moviesRepository.insertWatchLaterMovie(mapped)
             }
         }
     }
@@ -123,8 +119,7 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
     }
 
     // Fetch other movie data from network or db
-    private fun fetchData(movieID: Int?) {
-        movieID ?: return
+    private fun fetchData(movieID: Int) {
         moviesRepository.getFavoriteMovie(movieID).observeForever {
             isFavoriteMovie.value = it != null
         }

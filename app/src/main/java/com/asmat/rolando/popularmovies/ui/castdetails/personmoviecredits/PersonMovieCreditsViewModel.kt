@@ -4,13 +4,15 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
+import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 
 class PersonMovieCreditsViewModel(private val peopleRepository: PeopleRepository,
                                   private val uiModelMapper: UiModelMapper,
-                                  private val mainThreadScheduler: Scheduler): ViewModel() {
+                                  private val mainThreadScheduler: Scheduler,
+                                  private val moviesRepository: MoviesRepository): ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
     val uiModel = MutableLiveData<PersonMovieCreditsUiModel>()
@@ -25,11 +27,6 @@ class PersonMovieCreditsViewModel(private val peopleRepository: PeopleRepository
                     // TODO handle error
                 })
         compositeDisposable.add(disposable)
-    }
-
-    fun onMovieBannerClicked(moviePosition: Int) {
-        // TODO navigate to movie details
-        Log.v("RAA", "Movie clicked $moviePosition")
     }
 
     override fun onCleared() {

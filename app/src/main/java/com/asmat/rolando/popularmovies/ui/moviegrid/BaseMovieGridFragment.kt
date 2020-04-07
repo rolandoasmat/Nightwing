@@ -15,7 +15,7 @@ import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
-import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailActivity
+import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsActivity
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import kotlinx.android.synthetic.main.fragment_movie_grid.*
 import kotlinx.android.synthetic.main.retry_layout.*
@@ -105,17 +105,15 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
         navigationEvent?.let { event ->
             when (event) {
                 is BaseMovieGridViewModel.NavigationEvent.ShowMovieDetailScreen -> {
-                    showMovieDetailScreen()
+                    showMovieDetailScreen(event.movieID)
                 }
             }
         }
     }
 
-    private fun showMovieDetailScreen() {
-        val context = context ?: return
-        val destinationClass = MovieDetailActivity::class.java
-        val intentToStartDetailActivity = Intent(context, destinationClass)
-        startActivity(intentToStartDetailActivity)
+    private fun showMovieDetailScreen(movieID: String) {
+        val intent = MovieDetailsActivity.createIntent(requireContext(), movieID)
+        startActivity(intent)
     }
 
     /**
