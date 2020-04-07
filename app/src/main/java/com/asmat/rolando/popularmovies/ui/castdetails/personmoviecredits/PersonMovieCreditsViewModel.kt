@@ -1,5 +1,6 @@
 package com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
@@ -24,6 +25,11 @@ class PersonMovieCreditsViewModel(private val peopleRepository: PeopleRepository
                     // TODO handle error
                 })
         compositeDisposable.add(disposable)
+    }
+
+    fun onMovieBannerClicked(moviePosition: Int) {
+        // TODO navigate to movie details
+        Log.v("RAA", "Movie clicked $moviePosition")
     }
 
     override fun onCleared() {

@@ -25,7 +25,7 @@ private const val ARG_PERSON_ID = "ARG_PERSON_ID"
 /**
  * Uses the Person ID to retrieve a person's movie credits.
  */
-class PersonMovieCreditsFragment : androidx.fragment.app.Fragment() {
+class PersonMovieCreditsFragment : androidx.fragment.app.Fragment(), MovieCreditsAdapter.ItemCallback {
 
     companion object {
         @JvmStatic
@@ -52,7 +52,7 @@ class PersonMovieCreditsFragment : androidx.fragment.app.Fragment() {
     private lateinit var viewModel: PersonMovieCreditsViewModel
     private var listener: Listener? = null
 
-    val adapter = MovieCreditsAdapter()
+    private val adapter by lazy { MovieCreditsAdapter(this) }
 
     private val personID: Int? by lazy { arguments?.getInt(ARG_PERSON_ID) }
 
@@ -115,6 +115,10 @@ class PersonMovieCreditsFragment : androidx.fragment.app.Fragment() {
     interface Listener {
         fun onMoviePressed(position: Int)
         fun backdropURL(url: String?)
+    }
+
+    override fun onMovieBannerClicked(moviePosition: Int) {
+        viewModel.onMovieBannerClicked(moviePosition)
     }
 
 }
