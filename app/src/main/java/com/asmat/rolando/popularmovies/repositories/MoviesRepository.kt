@@ -67,6 +67,10 @@ class MoviesRepository(private val db: DatabaseManager,
     val upcomingPaginatedRequest = UpcomingPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
     val searchMoviesPaginatedRequest = SearchMoviesPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
 
+    fun getMovieDetails(movieID: Int): Single<MovieDetailsResponse> {
+        return tmdbClient.getMovieDetails(movieID).subscribeOn(backgroundScheduler)
+    }
+
     fun getMovieVideos(movieID: Int): Single<VideosResponse> {
         return tmdbClient.getMovieVideos(movieID).subscribeOn(backgroundScheduler)
     }

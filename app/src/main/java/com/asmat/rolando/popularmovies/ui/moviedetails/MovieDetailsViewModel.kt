@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MovieDetailsResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.ReviewsResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
@@ -99,13 +100,12 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
     }
     //endregion
 
-    private fun map(movie: Movie?): MovieDetailsUIModel? {
-        if (movie == null) return null
-        val posterURL = movie.posterPath?.let { url -> URLUtils.getImageURL342(url)}
-        val backdropURL = movie.backdropPath?.let { url -> URLUtils.getImageURL780(url)}
-        val releaseDate = DateUtils.formatDate(movie.releaseDate)
-        val voteAverage = movie.voteAverage.toString()
-        return MovieDetailsUIModel(posterURL, movie.overview, releaseDate, movie.id, movie.title, backdropURL, voteAverage)
+    private fun map(movie: MovieDetailsResponse): MovieDetailsUIModel? {
+        val posterURL = movie.poster_path?.let { url -> URLUtils.getImageURL342(url)}
+        val backdropURL = movie.backdrop_path?.let { url -> URLUtils.getImageURL780(url)}
+        val releaseDate = DateUtils.formatDate(movie.release_date)
+        val voteAverage = movie.vote_average.toString()
+        return MovieDetailsUIModel(posterURL, movie.overview ?: "", releaseDate, movie.id, movie.title, backdropURL, voteAverage)
     }
 
     // Updates the live data streams with the UI model data
@@ -127,6 +127,13 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
         moviesRepository.getWatchLaterMovie(movieID).observeForever {
             isWatchLaterMovie.value = it != null
         }
+
+        moviesRepository
+                .getMovieDetails(movieID)
+                .observeOn(mainThreadScheduler)
+                .subscribe({
+                    this.uiModel = map(it)
+                }, {})
 
         moviesRepository
                 .getMovieVideos(movieID)

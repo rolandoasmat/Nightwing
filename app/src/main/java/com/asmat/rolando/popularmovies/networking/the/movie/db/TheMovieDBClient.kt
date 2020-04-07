@@ -55,6 +55,10 @@ open class TheMovieDBClient {
         return service.getUpcomingMovies(page)
     }
 
+    open fun getMovieDetails(movieID: Int): Single<MovieDetailsResponse> {
+        return service.getMovieDetails(movieID)
+    }
+
     open fun getMovieVideos(movieID: Int): Single<VideosResponse> {
         return service.getMovieVideos(movieID)
     }
