@@ -7,12 +7,10 @@ import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Completable
 import io.reactivex.Single
-import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.Schedulers
 import org.junit.Assert
 import org.junit.Before
@@ -39,21 +37,6 @@ class MoviesRepositoryTest {
     fun setup() {
         MockitoAnnotations.initMocks(this)
         repository = MoviesRepository(mockDatabaseManager, mockTheMovieDBClient, computationScheduler, mainThreadScheduler)
-    }
-
-    // Cache tests
-
-    @Test
-    fun setAndGetMovieDetailsData() {
-        // Arrange
-        val data = TestObjectsFactory.movie()
-
-        // Act
-        repository.setMovieDetailsData(data)
-
-        // Assert
-        val actual = repository.getMovieDetailsData()
-        Assert.assertEquals(data, actual)
     }
 
     // DB tests
