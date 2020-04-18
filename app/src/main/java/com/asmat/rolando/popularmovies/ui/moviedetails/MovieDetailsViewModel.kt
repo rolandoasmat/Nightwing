@@ -43,10 +43,13 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
     val reviews = MutableLiveData<List<ReviewsResponse.Review>>()
     val reviewsError = MutableLiveData<Throwable>()
 
-    private var uiModel: MovieDetailsUIModel? = null
+    private var data: MovieDetailsResponse? = null
     set(value) {
         field = value
-        handleUiModel(value)
+        value?.let {
+            val uiModel = map(value)
+            handleUiModel(uiModel)
+        }
     }
 
     private var movieID: Int = 0
@@ -68,7 +71,7 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
                 moviesRepository.removeFavoriteMovie(movieID)
             } else {
                 // It's not a favorite movie, "favorite" it
-                uiModel?.let {
+                data?.let {
                     val mapped = dataModelMapper.mapToFavoriteMovie(it)
                     moviesRepository.insertFavoriteMovie(mapped)
                 }
@@ -86,7 +89,7 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
                 moviesRepository.removeWatchLaterMovie(movieID)
             } else {
                 // It's not a watch later movie, "watch-later" it
-                uiModel?.let {
+                data?.let {
                     val mapped = dataModelMapper.mapToWatchLaterMovie(it)
                     moviesRepository.insertWatchLaterMovie(mapped)
                 }
@@ -137,7 +140,7 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
                 .getMovieDetails(movieID)
                 .observeOn(mainThreadScheduler)
                 .subscribe({
-                    this.uiModel = map(it)
+                    data = it
                 }, {})
 
         moviesRepository
