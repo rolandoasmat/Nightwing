@@ -15,22 +15,22 @@ open class MovieMapper @Inject constructor() {
         return Movie(
                 data.poster_path,
                 data.overview ?: "",
-                data.release_date,
-                data.id,
-                data.title,
+                data.release_date ?: "",
+                data.id ?: 0,
+                data.title ?: "",
                 data.backdrop_path,
-                data.vote_average)
+                data.vote_average ?: 0.0)
     }
 
     open fun from(data: MoviesResponse.Movie): Movie {
         return Movie(
                 data.poster_path,
-                data.overview,
-                data.release_date,
-                data.id,
-                data.title,
+                data.overview ?: "",
+                data.release_date ?: "",
+                data.id ?: 0,
+                data.title ?: "",
                 data.backdrop_path,
-                data.vote_average)
+                data.vote_average ?: 0.0)
     }
 
     open fun from(data: FavoriteMovie): Movie {

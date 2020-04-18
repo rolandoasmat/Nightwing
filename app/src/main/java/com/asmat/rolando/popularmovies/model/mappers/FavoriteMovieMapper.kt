@@ -12,12 +12,12 @@ open class FavoriteMovieMapper @Inject constructor() {
 
     fun from(data: MovieDetailsResponse): FavoriteMovie {
         return FavoriteMovie(
-                data.id,
+                data.id ?: 0,
                 data.poster_path,
                 data.overview ?: "",
-                data.release_date,
-                data.title,
-                data.backdrop_path,
-                data.vote_average)
+                data.release_date ?: "",
+                data.title ?: "",
+                data.backdrop_path ?: "",
+                data.vote_average ?: 0.0)
     }
 }

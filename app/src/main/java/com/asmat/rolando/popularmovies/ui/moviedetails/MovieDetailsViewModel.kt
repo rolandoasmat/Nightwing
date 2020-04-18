@@ -111,9 +111,9 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
     private fun map(movie: MovieDetailsResponse): MovieDetailsUIModel? {
         val posterURL = movie.poster_path?.let { url -> URLUtils.getImageURL342(url)}
         val backdropURL = movie.backdrop_path?.let { url -> URLUtils.getImageURL780(url)}
-        val releaseDate = DateUtils.formatDate(movie.release_date)
+        val releaseDate = DateUtils.formatDate(movie.release_date ?: "")
         val voteAverage = movie.vote_average.toString()
-        return MovieDetailsUIModel(posterURL, movie.overview ?: "", releaseDate, movie.id, movie.title, backdropURL, voteAverage)
+        return MovieDetailsUIModel(posterURL, movie.overview ?: "", releaseDate, movie.id ?: 0, movie.title ?: "", backdropURL, voteAverage)
     }
 
     // Updates the live data streams with the UI model data

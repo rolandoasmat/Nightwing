@@ -21,7 +21,7 @@ data class SearchMoviesPaginatedRequest(private val tmdbClient: TheMovieDBClient
         return tmdbClient
                 .searchMovie(searchTerm, pageToLoad)
                 .subscribeOn(computationScheduler)
-                .map { PagedData(it.results, it.total_pages) }
+                .map { PagedData(it.results ?: emptyList(), it.total_pages ?: 0) }
     }
 
     override fun reset() {

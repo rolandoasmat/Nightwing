@@ -13,7 +13,7 @@ data class PopularMoviesPaginatedRequest(private val tmdbClient: TheMovieDBClien
         return tmdbClient
                 .getPopularMovies(pageToLoad)
                 .subscribeOn(computationScheduler)
-                .map { PagedData(it.results, it.total_pages) }
+                .map { PagedData(it.results ?: emptyList(), it.total_pages ?: 0) }
     }
 
 }
