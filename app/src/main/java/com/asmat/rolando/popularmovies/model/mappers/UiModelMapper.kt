@@ -31,7 +31,7 @@ class UiModelMapper @Inject constructor() {
         }?.map {
             val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url) }
             val movieID = it.id?.toString() ?: ""
-            MovieCreditUiModel(movieID, posterURL, it.character)
+            MovieCreditUiModel(movieID, posterURL, it.character, it.title)
         }
 
         val movieCreditsWithBackdropImage = data.cast?.filter { it.backdrop_path != null }

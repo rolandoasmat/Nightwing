@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.asmat.rolando.popularmovies.BuildConfig
 import com.asmat.rolando.popularmovies.MovieNightApplication
-
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper

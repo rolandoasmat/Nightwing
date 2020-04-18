@@ -41,6 +41,7 @@ class MovieCreditsAdapter(private val callback: ItemCallback): RecyclerView.Adap
 
         private val poster: ImageView? = itemView.posterImage
         private val characterName: TextView? = itemView.characterNameText
+        private val movieTitleLabel: TextView? = itemView.movieTitleLabel
 
         fun bind(model: MovieCreditUiModel) {
             Picasso.get()
@@ -48,6 +49,7 @@ class MovieCreditsAdapter(private val callback: ItemCallback): RecyclerView.Adap
                     .into(poster)
             val name = model.characterName ?: itemView.resources.getString(R.string.unknown_character)
             characterName?.text = name
+            movieTitleLabel?.text = model.movieTitle
             poster?.setOnClickListener {
                 callback.onMovieBannerClicked(model.id)
             }
