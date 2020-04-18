@@ -2,13 +2,14 @@ package com.asmat.rolando.popularmovies.model.mappers
 
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.model.Movie
+import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsUIModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 open class FavoriteMovieMapper @Inject constructor() {
 
-    fun from(data: Movie): FavoriteMovie {
+    fun from(data: MovieDetailsUIModel): FavoriteMovie {
         return FavoriteMovie(
                 data.id,
                 data.posterPath,
@@ -16,6 +17,6 @@ open class FavoriteMovieMapper @Inject constructor() {
                 data.releaseDate,
                 data.title,
                 data.backdropPath,
-                data.voteAverage)
+                data.voteAverage.toDouble())
     }
 }

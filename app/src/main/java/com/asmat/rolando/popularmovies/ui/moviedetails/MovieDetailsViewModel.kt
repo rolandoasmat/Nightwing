@@ -1,6 +1,7 @@
 package com.asmat.rolando.popularmovies.ui.moviedetails
 
 import android.annotation.SuppressLint
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.asmat.rolando.popularmovies.model.Movie
@@ -42,10 +43,9 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
     val reviews = MutableLiveData<List<ReviewsResponse.Review>>()
     val reviewsError = MutableLiveData<Throwable>()
 
-
-
     private var uiModel: MovieDetailsUIModel? = null
     set(value) {
+        field = value
         handleUiModel(value)
     }
 
@@ -68,8 +68,10 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
                 moviesRepository.removeFavoriteMovie(movieID)
             } else {
                 // It's not a favorite movie, "favorite" it
-//                val mapped = dataModelMapper.mapToFavoriteMovie(movie)
-//                moviesRepository.insertFavoriteMovie(mapped)
+                uiModel?.let {
+                    val mapped = dataModelMapper.mapToFavoriteMovie(it)
+                    moviesRepository.insertFavoriteMovie(mapped)
+                }
             }
         }
     }
@@ -84,8 +86,11 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
                 moviesRepository.removeWatchLaterMovie(movieID)
             } else {
                 // It's not a watch later movie, "watch-later" it
-//                val mapped = dataModelMapper.mapToWatchLaterMovie(movie)
-//                moviesRepository.insertWatchLaterMovie(mapped)
+                uiModel?.let {
+                    val mapped = dataModelMapper.mapToWatchLaterMovie(it)
+                    moviesRepository.insertWatchLaterMovie(mapped)
+                }
+
             }
         }
     }

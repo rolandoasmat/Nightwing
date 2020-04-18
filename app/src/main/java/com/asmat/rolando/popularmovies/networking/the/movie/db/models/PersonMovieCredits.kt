@@ -14,7 +14,7 @@ data class PersonMovieCredits(val cast: List<CastCredit>?) {
                           val original_language: String?,
                           val original_title: String?,
                           val popularity: Double?,
-                          val id: Int?,
+                          val id: Int?, // TODO is this nullable??
                           val backdrop_path: String?,
                           val overview: String,
                           val poster_path: String?)
