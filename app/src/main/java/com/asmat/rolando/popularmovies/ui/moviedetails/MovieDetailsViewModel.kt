@@ -27,6 +27,7 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
     val movieTitle = MutableLiveData<String>()
     val releaseDate = MutableLiveData<String>()
     val rating = MutableLiveData<String>()
+    val director = MutableLiveData<String>()
     val posterURL = MutableLiveData<String>()
     val summary = MutableLiveData<String>()
 
