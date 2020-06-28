@@ -5,7 +5,7 @@ import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.ui.moviegrid.paginated.PaginatedMovieGridViewModel
 
-class SearchMoviesViewModel(
+class SearchViewModel(
         moviesRepository: MoviesRepository,
         uiModelMapper: UiModelMapper,
         dataModelMapper: DataModelMapper): PaginatedMovieGridViewModel(moviesRepository, uiModelMapper, dataModelMapper) {
