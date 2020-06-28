@@ -1,10 +1,8 @@
 package com.asmat.rolando.popularmovies.ui.moviedetails
 
 import android.annotation.SuppressLint
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MovieDetailsResponse
@@ -28,7 +26,6 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
     val releaseDate = MutableLiveData<String>()
     val rating = MutableLiveData<String>()
     val runtime = MutableLiveData<String>()
-    val director = MutableLiveData<String>()
     val posterURL = MutableLiveData<String>()
     val summary = MutableLiveData<String>()
 
@@ -115,7 +112,20 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
         val backdropURL = movie.backdrop_path?.let { url -> URLUtils.getImageURL780(url)}
         val releaseDate = DateUtils.formatDate(movie.release_date ?: "")
         val voteAverage = movie.vote_average.toString()
-        return MovieDetailsUIModel(posterURL, movie.overview ?: "", releaseDate, movie.id ?: 0, movie.title ?: "", backdropURL, voteAverage)
+        val runtime = movie.runtime?.let { movieRuntime ->
+            "$movieRuntime min"
+        }
+        val productionCompanies = movie.production_companies?.let {
+            it.joinToString(", ")
+        }
+        return MovieDetailsUIModel(posterURL,
+                movie.overview ?: "",
+                releaseDate,
+                movie.id ?: 0,
+                movie.title ?: "",
+                backdropURL,
+                voteAverage,
+                runtime)
     }
 
     // Updates the live data streams with the UI model data
@@ -124,6 +134,7 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
         movieTitle.value = movie?.title
         releaseDate.value = movie?.releaseDate
         rating.value = movie?.voteAverage
+        runtime.value = movie?.runtime
         posterURL.value = movie?.posterPath
         summary.value = movie?.overview
     }

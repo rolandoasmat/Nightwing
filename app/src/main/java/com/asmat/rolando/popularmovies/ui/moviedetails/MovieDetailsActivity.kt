@@ -11,7 +11,6 @@ import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
 import com.asmat.rolando.popularmovies.MovieNightApplication
-
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
@@ -22,7 +21,6 @@ import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.asmat.rolando.popularmovies.ui.castdetails.CastDetailsActivity
 import com.squareup.picasso.Picasso
-
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_movie_detail.*
@@ -56,7 +54,9 @@ class MovieDetailsActivity : AppCompatActivity() {
     lateinit var uiModelMapper: UiModelMapper
 
     private val movieID: String
-        get() { return intent.getStringExtra(EXTRA_MOVIE_ID) }
+        get() {
+            return intent.getStringExtra(EXTRA_MOVIE_ID)
+        }
 
     // Recycler View Adapters
     private lateinit var trailersLinearAdapter: TrailersLinearAdapter
@@ -151,6 +151,10 @@ class MovieDetailsActivity : AppCompatActivity() {
                 .observe(this, Observer { rating ->
                     updateRating(rating)
                 })
+
+        viewModel.runtime.observe(this, Observer { runtime ->
+            updateRuntime(runtime)
+        })
 
         viewModel
                 .posterURL
@@ -281,6 +285,10 @@ class MovieDetailsActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateRuntime(runtime: String?) {
+        runtimeLabel.text = runtime
+    }
+
     private fun updatePoster(url: String?) {
         url?.let {
             Picasso.get().load(it).into(thumbnail)
@@ -330,7 +338,9 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun shareMovie(movieData: Pair<String, String>?) {
-        if (movieData == null) { return }
+        if (movieData == null) {
+            return
+        }
         val movieTitle = movieData.first
         val movieURL = movieData.second
         val mimeType = "text/plain"
