@@ -1,14 +1,14 @@
 package com.asmat.rolando.popularmovies.model
 
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonsResponse
 import io.reactivex.Scheduler
 import io.reactivex.Single
 
-data class SearchMoviesPaginatedRequest(
+data class SearchPersonsPaginatedRequest(
         private val tmdbClient: TheMovieDBClient,
         private val computationScheduler: Scheduler,
-        override val mainThreadScheduler: Scheduler) : PaginatedRequest<MoviesResponse.Movie>(mainThreadScheduler){
+        override val mainThreadScheduler: Scheduler): PaginatedRequest<PersonsResponse.Person>(mainThreadScheduler){
 
     private var searchTerm = ""
 
@@ -18,9 +18,9 @@ data class SearchMoviesPaginatedRequest(
         searchTerm = newSearchTerm
     }
 
-    override fun fetchData(pageToLoad: Int): Single<PagedData<MoviesResponse.Movie>> {
+    override fun fetchData(pageToLoad: Int): Single<PagedData<PersonsResponse.Person>> {
         return tmdbClient
-                .searchMovie(searchTerm, pageToLoad)
+                .searchPerson(searchTerm, pageToLoad)
                 .subscribeOn(computationScheduler)
                 .map { PagedData(it.results ?: emptyList(), it.total_pages ?: 0) }
     }

@@ -75,6 +75,10 @@ open class TheMovieDBClient {
         return service.searchMovie(searchString, page)
     }
 
+    open fun searchPerson(searchString: String, page: Int): Single<PersonsResponse> {
+        return service.searchPerson(searchString, page)
+    }
+
     open fun getPersonDetails(id: Int): Single<PersonDetailsResponse> {
         return service.getPersonDetails(id)
     }

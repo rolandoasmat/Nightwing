@@ -14,10 +14,11 @@ import io.reactivex.Single
 /**
  * Used by ViewModels to access movie related data sources
  */
-class MoviesRepository(private val db: DatabaseManager,
-                       private val tmdbClient: TheMovieDBClient,
-                       private val backgroundScheduler: Scheduler,
-                       private val mainThreadScheduler: Scheduler) {
+class MoviesRepository(
+        private val db: DatabaseManager,
+        private val tmdbClient: TheMovieDBClient,
+        private val backgroundScheduler: Scheduler,
+        mainThreadScheduler: Scheduler) {
 
     /**
      * DB

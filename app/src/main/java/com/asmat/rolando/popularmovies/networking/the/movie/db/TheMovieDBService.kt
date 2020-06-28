@@ -35,15 +35,22 @@ interface TheMovieDBService {
     //endregion
 
     //region search/*
+
     @GET("search/movie")
     fun searchMovie(@Query("query") searchString: String, @Query("page") page: Int): Single<MoviesResponse>
+
+    @GET("search/person")
+    fun searchPerson(@Query("query") searchString: String, @Query("page") page: Int): Single<PersonsResponse>
+
     //endregion
 
     //region people/*
+
     @GET("person/{person_id}")
     fun getPersonDetails(@Path("person_id") id: Int): Single<PersonDetailsResponse>
 
     @GET("person/{person_id}/movie_credits")
     fun getPersonMovieCredits(@Path("person_id") id: Int): Single<PersonMovieCredits>
+
     //endregion
 }
