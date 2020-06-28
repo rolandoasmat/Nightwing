@@ -12,14 +12,12 @@ import android.view.Menu
 import com.asmat.rolando.popularmovies.R
 
 class SearchResultsActivity : AppCompatActivity() {
-    lateinit var resultsGrid: SearchResultsFragment
     lateinit var searchview: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_results)
         setupToolbar()
-        setupFragment()
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -35,17 +33,13 @@ class SearchResultsActivity : AppCompatActivity() {
         bar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun setupFragment() {
-        resultsGrid = supportFragmentManager.findFragmentById(R.id.results_grid) as SearchResultsFragment
-    }
-
     // User entered search term and pressed the search button
     private fun handleIntent(intent: Intent) {
         if (Intent.ACTION_SEARCH == intent.action) {
             val query = intent.getStringExtra(SearchManager.QUERY)
             searchview.setQuery(query, false)
             searchview.clearFocus()
-            resultsGrid.setSearchQuery(query)
+            // TODO search with new search term
         }
     }
 

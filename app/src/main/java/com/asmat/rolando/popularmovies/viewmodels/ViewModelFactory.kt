@@ -34,7 +34,7 @@ class ViewModelFactory(private val moviesRepository: MoviesRepository,
             modelClass.isAssignableFrom(PersonMovieCreditsViewModel::class.java) -> PersonMovieCreditsViewModel(peopleRepository, uiModelMapper, AndroidSchedulers.mainThread(), moviesRepository) as T
             modelClass.isAssignableFrom(FavoriteMoviesViewModel::class.java) -> FavoriteMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
             modelClass.isAssignableFrom(WatchLaterViewModel::class.java) -> WatchLaterViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
-            modelClass.isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
+            modelClass.isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel(moviesRepository, peopleRepository, uiModelMapper, dataModelMapper) as T
             else -> {
                 throw IllegalArgumentException("Unknown ViewModel class")
             }
