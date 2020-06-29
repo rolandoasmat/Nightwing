@@ -9,4 +9,11 @@
         app:showAsAction="always"
         android:title="Search"/>
 
+    <group android:id="@+id/group_search">
+        <item android:id="@+id/search_movies"
+            android:title="Search movies" />
+        <item android:id="@+id/search_people"
+            android:title="Search people" />
+    </group>
+
 </menu>

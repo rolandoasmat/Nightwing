@@ -8,10 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
+import android.view.MenuItem
 
 import com.asmat.rolando.popularmovies.R
 
 class SearchResultsActivity : AppCompatActivity() {
+
+    private var viewModel: SearchViewModel? = null
     lateinit var searchview: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +24,7 @@ class SearchResultsActivity : AppCompatActivity() {
     }
 
     override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
         setIntent(intent)
         handleIntent(intent)
     }
@@ -37,9 +41,7 @@ class SearchResultsActivity : AppCompatActivity() {
     private fun handleIntent(intent: Intent) {
         if (Intent.ACTION_SEARCH == intent.action) {
             val query = intent.getStringExtra(SearchManager.QUERY)
-            searchview.setQuery(query, false)
-            searchview.clearFocus()
-            // TODO search with new search term
+            viewModel?.setSearchTerm(query)
         }
     }
 
@@ -55,7 +57,21 @@ class SearchResultsActivity : AppCompatActivity() {
         searchview.isIconified = false
         searchview.setIconifiedByDefault(true)
         searchview.isSubmitButtonEnabled = true
-        handleIntent(intent)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        item?.let {
+            when(it.itemId) {
+                R.id.search_movies -> {
+                    viewModel?.setSearchMode(SearchViewModel.SearchMode.MOVIES)
+                }
+                R.id.search_people -> {
+                    viewModel?.setSearchMode(SearchViewModel.SearchMode.PEOPLE)
+                }
+                else -> { }
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
