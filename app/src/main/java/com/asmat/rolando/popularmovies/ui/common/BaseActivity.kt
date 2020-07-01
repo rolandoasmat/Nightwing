@@ -15,7 +15,7 @@ import android.view.MenuItem
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.ui.discover.DiscoverActivity
 import com.asmat.rolando.popularmovies.ui.mylists.MyListsActivity
-import com.asmat.rolando.popularmovies.ui.search.SearchResultsActivity
+import com.asmat.rolando.popularmovies.ui.search.SearchActivity
 
 /**
  * Base Activity that contains the following common behavior of:
@@ -58,7 +58,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.search -> {
-                val intent = Intent(this, SearchResultsActivity::class.java)
+                val intent = Intent(this, SearchActivity::class.java)
                 startActivity(intent)
                 return true
             }

@@ -12,7 +12,7 @@ import android.view.MenuItem
 
 import com.asmat.rolando.popularmovies.R
 
-class SearchResultsActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity() {
 
     private var viewModel: SearchViewModel? = null
     lateinit var searchview: SearchView
