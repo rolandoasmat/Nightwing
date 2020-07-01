@@ -9,18 +9,31 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-
+import androidx.lifecycle.Observer
+import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
+import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
+import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
+import com.asmat.rolando.popularmovies.repositories.MoviesRepository
+import com.asmat.rolando.popularmovies.repositories.PeopleRepository
+import javax.inject.Inject
 
 class SearchActivity : AppCompatActivity() {
 
-    private var viewModel: SearchViewModel? = null
+    @Inject lateinit var moviesRepository: MoviesRepository
+    @Inject lateinit var peopleRepository: PeopleRepository
+    @Inject lateinit var uiModelMapper: UiModelMapper
+    @Inject lateinit var dataModelMapper: DataModelMapper
+    lateinit var viewModel: SearchViewModel
     lateinit var searchview: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (applicationContext as MovieNightApplication).component().inject(this)
         setContentView(R.layout.activity_search_results)
+        viewModel = SearchViewModel(moviesRepository, peopleRepository, uiModelMapper, dataModelMapper)
         setupToolbar()
+        observeViewModel()
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -41,8 +54,25 @@ class SearchActivity : AppCompatActivity() {
     private fun handleIntent(intent: Intent) {
         if (Intent.ACTION_SEARCH == intent.action) {
             val query = intent.getStringExtra(SearchManager.QUERY)
-            viewModel?.setSearchTerm(query)
+            viewModel.setSearchTerm(query)
         }
+    }
+
+    private fun observeViewModel() {
+        viewModel.searchHint.observe(this, Observer { hint ->
+            updateSearchHint(hint)
+        })
+        viewModel.results.observe(this, Observer { results ->
+            updateResults(results)
+        })
+    }
+
+    private fun updateSearchHint(hint: String) {
+
+    }
+
+    private fun updateResults(items: List<SearchViewModel.SearchResultUiModel>) {
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -64,10 +94,10 @@ class SearchActivity : AppCompatActivity() {
         item?.let {
             when(it.itemId) {
                 R.id.search_movies -> {
-                    viewModel?.setSearchMode(SearchViewModel.SearchMode.MOVIES)
+                    viewModel.setSearchMode(SearchViewModel.SearchMode.MOVIES)
                 }
                 R.id.search_people -> {
-                    viewModel?.setSearchMode(SearchViewModel.SearchMode.PEOPLE)
+                    viewModel.setSearchMode(SearchViewModel.SearchMode.PEOPLE)
                 }
                 else -> { }
             }

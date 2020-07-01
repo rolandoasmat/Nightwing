@@ -7,10 +7,13 @@ import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 
 class SearchViewModel(
-        val moviesRepository: MoviesRepository,
-        val peopleRepository: PeopleRepository,
-        val uiModelMapper: UiModelMapper,
-        val dataModelMapper: DataModelMapper): ViewModel() {
+        private val moviesRepository: MoviesRepository,
+        private val peopleRepository: PeopleRepository,
+        private val uiModelMapper: UiModelMapper,
+        private val dataModelMapper: DataModelMapper): ViewModel() {
+
+    private val searchMode = MutableLiveData(SearchMode.MOVIES)
+    private val searchTerm = MutableLiveData("")
 
     private val _searchHint = MediatorLiveData<String>().apply {
         addSource(searchMode) {
@@ -41,9 +44,6 @@ class SearchViewModel(
     }
     val results: LiveData<List<SearchResultUiModel>>
         get() { return _results }
-
-    private val searchMode = MutableLiveData<SearchMode>()
-    private val searchTerm = MutableLiveData<String>()
 
     //region Public
 
