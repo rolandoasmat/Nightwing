@@ -1,6 +1,7 @@
 package com.asmat.rolando.popularmovies.repositories
 
 import com.asmat.rolando.popularmovies.model.SearchMoviesPaginatedRequest
+import com.asmat.rolando.popularmovies.model.SearchPersonsPaginatedRequest
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonDetailsResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonMovieCredits
@@ -13,7 +14,7 @@ class PeopleRepository(
         backgroundScheduler: Scheduler,
         mainThreadScheduler: Scheduler) {
 
-    val searchPersonsPaginatedRequest = SearchMoviesPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
+    val searchPersonsPaginatedRequest = SearchPersonsPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
 
     fun getPersonDetails(id: Int): Single<PersonDetailsResponse> {
         return tmdbClient.getPersonDetails(id).subscribeOn(Schedulers.io())

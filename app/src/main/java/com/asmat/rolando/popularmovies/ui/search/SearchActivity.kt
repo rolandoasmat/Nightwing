@@ -10,15 +10,17 @@ import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
+import kotlinx.android.synthetic.main.activity_search_results.*
 import javax.inject.Inject
 
-class SearchActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity(), SearchAdapter.Callbacks {
 
     @Inject lateinit var moviesRepository: MoviesRepository
     @Inject lateinit var peopleRepository: PeopleRepository
@@ -26,6 +28,7 @@ class SearchActivity : AppCompatActivity() {
     @Inject lateinit var dataModelMapper: DataModelMapper
     lateinit var viewModel: SearchViewModel
     lateinit var searchview: SearchView
+    private var adapter: SearchAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +36,14 @@ class SearchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_search_results)
         viewModel = SearchViewModel(moviesRepository, peopleRepository, uiModelMapper, dataModelMapper)
         setupToolbar()
+        setupAdapter()
         observeViewModel()
+    }
+
+    private fun setupAdapter() {
+        adapter = SearchAdapter(this)
+        recyclerView?.adapter = adapter
+        recyclerView?.layoutManager = GridLayoutManager(this, 2)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -72,7 +82,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun updateResults(items: List<SearchViewModel.SearchResultUiModel>) {
-
+        adapter?.setData(items)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -103,5 +113,9 @@ class SearchActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onClick() {
+        // TODO Open corresponding Details Activity
     }
 }

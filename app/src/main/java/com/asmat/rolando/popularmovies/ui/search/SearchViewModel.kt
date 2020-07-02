@@ -31,7 +31,7 @@ class SearchViewModel(
     }
 
     private val _persons: LiveData<List<SearchResultUiModel.Person>> =  Transformations.switchMap(peopleRepository.searchPersonsPaginatedRequest.data) { response ->
-        val uiModels = response.map { SearchResultUiModel.Person(it.poster_path ?: "", it.original_title ?: "") }
+        val uiModels = response.map { SearchResultUiModel.Person(it.profile_path ?: "", it.name ?: "") }
         val liveData = MutableLiveData<List<SearchResultUiModel.Person>>()
         liveData.value = uiModels
         liveData
@@ -41,7 +41,18 @@ class SearchViewModel(
         addSource(searchTerm) {
             searchWithTerm(it)
         }
+        addSource(_movies) {
+            handleResults(it)
+        }
+        addSource(_persons) {
+            handleResults(it)
+        }
     }
+
+    private fun handleResults(results: List<SearchResultUiModel>) {
+        _results.postValue(results)
+    }
+
     val results: LiveData<List<SearchResultUiModel>>
         get() { return _results }
 
@@ -95,8 +106,8 @@ class SearchViewModel(
         MOVIES,
         PEOPLE
     }
-    sealed class SearchResultUiModel {
-        data class Movie(val posterURL: String, val movieTitle: String): SearchResultUiModel()
-        data class Person(val profileURL: String, val personName: String): SearchResultUiModel()
+    sealed class SearchResultUiModel(val imageURL: String, val title: String) {
+        class Movie(posterURL: String, movieTitle: String): SearchResultUiModel(posterURL, movieTitle)
+        class Person(profileURL: String, personName: String): SearchResultUiModel(profileURL, personName)
     }
 }

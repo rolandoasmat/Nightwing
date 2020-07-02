@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.asmat.rolando.popularmovies.R
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.movie_grid_item.view.*
+import kotlinx.android.synthetic.main.poster_grid_item.view.*
 
 private typealias Movies = List<MovieGridItemUiModel>
 
@@ -24,7 +24,7 @@ class BaseMoviesGridAdapter(val callback: Callback? = null) : RecyclerView.Adapt
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.movie_grid_item, parent, false)
+        val view = inflater.inflate(R.layout.poster_grid_item, parent, false)
         return ViewHolder(view)
     }
 
