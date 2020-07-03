@@ -7,6 +7,7 @@ import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResp
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonsResponse
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
+import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Before
 import org.junit.Rule
@@ -38,7 +39,29 @@ class SearchViewModelTests {
 
     @Test
     fun `setSearchTerm then results load`() {
+        // Arrange
+        val searchText = "Jurassic Park"
+        viewModel.results.observeForever {  }
 
+        // Act
+        viewModel.setSearchTerm(searchText)
+
+        // Assert
+        verify(moviesRepository).setMovieSearchQueryText(searchText)
+    }
+
+    @Test
+    fun `setSearchTerm in Persons search mode, then results load`() {
+        // Arrange
+        val searchText = "Andre Asmat"
+        viewModel.results.observeForever {  }
+
+        // Act
+        viewModel.setSearchMode(SearchViewModel.SearchMode.PEOPLE)
+        viewModel.setSearchTerm(searchText)
+
+        // Assert
+        verify(peopleRepository).setPersonsSearchQueryText(searchText)
     }
 
 }

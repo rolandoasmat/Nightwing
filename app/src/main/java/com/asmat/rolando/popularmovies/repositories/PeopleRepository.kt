@@ -16,8 +16,8 @@ open class PeopleRepository(
     private val searchPersonsPaginatedRequest = SearchPersonsPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
 
     open fun personsSearchResultsData() = searchPersonsPaginatedRequest.data
-    fun setPersonsSearchQueryText(query: String) = searchPersonsPaginatedRequest.setSearchTerm(query)
-    fun loadPersonsSearchResults() = searchPersonsPaginatedRequest.load()
+    open fun setPersonsSearchQueryText(query: String) = searchPersonsPaginatedRequest.setSearchTerm(query)
+    open fun loadPersonsSearchResults() = searchPersonsPaginatedRequest.load()
     fun loadMorePersonsSearchResults() = searchPersonsPaginatedRequest.loadMore()
 
     fun getPersonDetails(id: Int): Single<PersonDetailsResponse> {
