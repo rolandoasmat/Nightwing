@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.setNearBottomScrollListener
-import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
@@ -27,8 +26,7 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.Callbacks {
 
     @Inject lateinit var moviesRepository: MoviesRepository
     @Inject lateinit var peopleRepository: PeopleRepository
-    @Inject lateinit var uiModelMapper: UiModelMapper
-    @Inject lateinit var dataModelMapper: DataModelMapper
+    @Inject lateinit var mapper: UiModelMapper
     lateinit var viewModel: SearchViewModel
     private var searchview: SearchView? =null
     private var adapter: SearchAdapter? = null
@@ -37,7 +35,7 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.Callbacks {
         super.onCreate(savedInstanceState)
         (applicationContext as MovieNightApplication).component().inject(this)
         setContentView(R.layout.activity_search_results)
-        viewModel = SearchViewModel(moviesRepository, peopleRepository, uiModelMapper, dataModelMapper)
+        viewModel = SearchViewModel(moviesRepository, peopleRepository, mapper)
         setupToolbar()
         setupRecyclerView()
         observeViewModel()

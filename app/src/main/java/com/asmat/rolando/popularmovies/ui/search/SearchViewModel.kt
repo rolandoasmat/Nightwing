@@ -1,17 +1,14 @@
 package com.asmat.rolando.popularmovies.ui.search
 
 import androidx.lifecycle.*
-import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
-import com.asmat.rolando.popularmovies.utilities.URLUtils
 
 class SearchViewModel(
         private val moviesRepository: MoviesRepository,
         private val peopleRepository: PeopleRepository,
-        private val uiModelMapper: UiModelMapper,
-        private val dataModelMapper: DataModelMapper): ViewModel() {
+        private val mapper: UiModelMapper): ViewModel() {
 
     private val searchMode = MutableLiveData(SearchMode.MOVIES)
     private val searchTerm = MutableLiveData("")
@@ -25,28 +22,12 @@ class SearchViewModel(
         get() { return _searchHint }
 
     private val _movies: LiveData<List<SearchResultUiModel.Movie>> = Transformations.switchMap(moviesRepository.searchMoviesPaginatedRequest.data) { response ->
-        val uiModels = mutableListOf<SearchResultUiModel.Movie>()
-        response.forEach{ data ->
-            val id = data.id
-            val url = data.poster_path?.let { URLUtils.getImageURL342(it) } ?: ""
-            val title = data.original_title
-            if (id != null && url.isNotEmpty() && title != null) {
-                uiModels.add(SearchResultUiModel.Movie(id, url, title))
-            }
-        }
+        val uiModels = mapper.mapMovies(response)
         MutableLiveData<List<SearchResultUiModel.Movie>>(uiModels)
     }
 
     private val _persons: LiveData<List<SearchResultUiModel.Person>> = Transformations.switchMap(peopleRepository.searchPersonsPaginatedRequest.data) { response ->
-        val uiModels = mutableListOf<SearchResultUiModel.Person>()
-        response.forEach{ data ->
-            val id = data.id
-            val url = data.profile_path?.let { URLUtils.getImageURL342(it) } ?: ""
-            val name = data.name
-            if (id != null && url.isNotEmpty() && name.isNotEmpty()) {
-                uiModels.add(SearchResultUiModel.Person(id, url, name))
-            }
-        }
+        val uiModels = mapper.mapPersons(response)
         MutableLiveData<List<SearchResultUiModel.Person>>(uiModels)
     }
 
@@ -85,7 +66,6 @@ class SearchViewModel(
                 }
             }
         }
-
     }
 
     fun setSearchMode(mode: SearchMode) {

@@ -1,10 +1,13 @@
 package com.asmat.rolando.popularmovies.model.mappers
 
 import com.asmat.rolando.popularmovies.model.Movie
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonMovieCredits
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonsResponse
 import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.MovieCreditUiModel
 import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.PersonMovieCreditsUiModel
 import com.asmat.rolando.popularmovies.ui.moviegrid.MovieGridItemUiModel
+import com.asmat.rolando.popularmovies.ui.search.SearchDataModelsMapper
 import com.asmat.rolando.popularmovies.utilities.DateUtils
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import javax.inject.Inject
@@ -14,7 +17,7 @@ import javax.inject.Singleton
  * Maps data objects to UiModel classes.
  */
 @Singleton
-class UiModelMapper @Inject constructor() {
+class UiModelMapper @Inject constructor(private val searchDataModelsMapper: SearchDataModelsMapper) {
 
     fun map(movies: List<Movie>?): List<MovieGridItemUiModel>? {
         return movies?.map {
@@ -43,5 +46,9 @@ class UiModelMapper @Inject constructor() {
         }
         return PersonMovieCreditsUiModel(backdropURL, mapped ?: emptyList())
     }
+
+    fun mapMovies(response: List<MoviesResponse.Movie>) = searchDataModelsMapper.mapMovies(response)
+
+    fun mapPersons(response: List<PersonsResponse.Person>) = searchDataModelsMapper.mapPersons(response)
 
 }

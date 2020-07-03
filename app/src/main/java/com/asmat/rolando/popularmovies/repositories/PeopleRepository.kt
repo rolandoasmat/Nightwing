@@ -1,6 +1,5 @@
 package com.asmat.rolando.popularmovies.repositories
 
-import com.asmat.rolando.popularmovies.model.SearchMoviesPaginatedRequest
 import com.asmat.rolando.popularmovies.model.SearchPersonsPaginatedRequest
 import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonDetailsResponse

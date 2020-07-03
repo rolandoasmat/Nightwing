@@ -18,10 +18,11 @@ import com.asmat.rolando.popularmovies.ui.upcomingmovies.UpcomingMoviesViewModel
 import com.asmat.rolando.popularmovies.ui.watchlatermovies.WatchLaterViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 
-class ViewModelFactory(private val moviesRepository: MoviesRepository,
-                       private val peopleRepository: PeopleRepository,
-                       private val dataModelMapper: DataModelMapper,
-                       private val uiModelMapper: UiModelMapper) : ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory(
+        private val moviesRepository: MoviesRepository,
+        private val peopleRepository: PeopleRepository,
+        private val dataModelMapper: DataModelMapper,
+        private val uiModelMapper: UiModelMapper) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when {
@@ -34,7 +35,7 @@ class ViewModelFactory(private val moviesRepository: MoviesRepository,
             modelClass.isAssignableFrom(PersonMovieCreditsViewModel::class.java) -> PersonMovieCreditsViewModel(peopleRepository, uiModelMapper, AndroidSchedulers.mainThread(), moviesRepository) as T
             modelClass.isAssignableFrom(FavoriteMoviesViewModel::class.java) -> FavoriteMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
             modelClass.isAssignableFrom(WatchLaterViewModel::class.java) -> WatchLaterViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
-            modelClass.isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel(moviesRepository, peopleRepository, uiModelMapper, dataModelMapper) as T
+            modelClass.isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel(moviesRepository, peopleRepository, uiModelMapper) as T
             else -> {
                 throw IllegalArgumentException("Unknown ViewModel class")
             }
