@@ -17,7 +17,7 @@ import javax.inject.Singleton
  * Maps data objects to UiModel classes.
  */
 @Singleton
-class UiModelMapper @Inject constructor(private val searchDataModelsMapper: SearchDataModelsMapper) {
+open class UiModelMapper @Inject constructor(private val searchDataModelsMapper: SearchDataModelsMapper) {
 
     fun map(movies: List<Movie>?): List<MovieGridItemUiModel>? {
         return movies?.map {

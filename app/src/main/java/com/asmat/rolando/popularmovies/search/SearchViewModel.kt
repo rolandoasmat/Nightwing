@@ -21,12 +21,12 @@ class SearchViewModel(
     val searchHint: LiveData<String>
         get() { return _searchHint }
 
-    private val _movies: LiveData<List<SearchResultUiModel.Movie>> = Transformations.switchMap(moviesRepository.searchMoviesPaginatedRequest.data) { response ->
+    private val _movies: LiveData<List<SearchResultUiModel.Movie>> = Transformations.switchMap(moviesRepository.movieSearchResultsData()) { response ->
         val uiModels = mapper.mapMovies(response)
         MutableLiveData<List<SearchResultUiModel.Movie>>(uiModels)
     }
 
-    private val _persons: LiveData<List<SearchResultUiModel.Person>> = Transformations.switchMap(peopleRepository.searchPersonsPaginatedRequest.data) { response ->
+    private val _persons: LiveData<List<SearchResultUiModel.Person>> = Transformations.switchMap(peopleRepository.personsSearchResultsData()) { response ->
         val uiModels = mapper.mapPersons(response)
         MutableLiveData<List<SearchResultUiModel.Person>>(uiModels)
     }
@@ -59,10 +59,10 @@ class SearchViewModel(
         searchMode.value?.let { mode ->
             when (mode) {
                 SearchMode.MOVIES -> {
-                    moviesRepository.searchMoviesPaginatedRequest.loadMore()
+                    moviesRepository.loadMoreMovieSearchResults()
                 }
                 SearchMode.PEOPLE -> {
-                    peopleRepository.searchPersonsPaginatedRequest.loadMore()
+                    peopleRepository.loadMorePersonsSearchResults()
                 }
             }
         }
@@ -80,12 +80,12 @@ class SearchViewModel(
         searchMode.value?.let { mode ->
             when (mode) {
                 SearchMode.MOVIES -> {
-                    moviesRepository.searchMoviesPaginatedRequest.setSearchTerm(term)
-                    moviesRepository.searchMoviesPaginatedRequest.load()
+                    moviesRepository.setMovieSearchQueryText(term)
+                    moviesRepository.loadMovieSearchResults()
                 }
                 SearchMode.PEOPLE -> {
-                    peopleRepository.searchPersonsPaginatedRequest.setSearchTerm(term)
-                    peopleRepository.searchPersonsPaginatedRequest.load()
+                    peopleRepository.setPersonsSearchQueryText(term)
+                    peopleRepository.loadPersonsSearchResults()
                 }
             }
         }

@@ -8,12 +8,17 @@ import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
-class PeopleRepository(
+open class PeopleRepository(
         private val tmdbClient: TheMovieDBClient,
         backgroundScheduler: Scheduler,
         mainThreadScheduler: Scheduler) {
 
-    val searchPersonsPaginatedRequest = SearchPersonsPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
+    private val searchPersonsPaginatedRequest = SearchPersonsPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
+
+    fun personsSearchResultsData() = searchPersonsPaginatedRequest.data
+    fun setPersonsSearchQueryText(query: String) = searchPersonsPaginatedRequest.setSearchTerm(query)
+    fun loadPersonsSearchResults() = searchPersonsPaginatedRequest.load()
+    fun loadMorePersonsSearchResults() = searchPersonsPaginatedRequest.loadMore()
 
     fun getPersonDetails(id: Int): Single<PersonDetailsResponse> {
         return tmdbClient.getPersonDetails(id).subscribeOn(Schedulers.io())

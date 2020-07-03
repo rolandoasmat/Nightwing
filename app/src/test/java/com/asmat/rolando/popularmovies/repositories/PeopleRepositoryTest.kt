@@ -6,6 +6,7 @@ import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -20,12 +21,14 @@ class PeopleRepositoryTest {
     @Mock
     lateinit var mockTheMovieDBClient: TheMovieDBClient
 
+    private val computationScheduler = Schedulers.trampoline()
+
     lateinit var repository: PeopleRepository
 
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        repository = PeopleRepository(mockTheMovieDBClient)
+        repository = PeopleRepository(mockTheMovieDBClient, computationScheduler, computationScheduler)
     }
 
     // Network

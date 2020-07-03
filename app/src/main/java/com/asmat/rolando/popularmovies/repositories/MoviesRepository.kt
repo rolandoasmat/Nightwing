@@ -14,7 +14,7 @@ import io.reactivex.Single
 /**
  * Used by ViewModels to access movie related data sources
  */
-class MoviesRepository(
+open class MoviesRepository(
         private val db: DatabaseManager,
         private val tmdbClient: TheMovieDBClient,
         private val backgroundScheduler: Scheduler,
@@ -66,7 +66,12 @@ class MoviesRepository(
     val topRatedPaginatedRequest = TopRatedPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
     val nowPlayingPaginatedRequest = NowPlayingPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
     val upcomingPaginatedRequest = UpcomingPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
-    val searchMoviesPaginatedRequest = SearchMoviesPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
+    private val searchMoviesPaginatedRequest = SearchMoviesPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
+
+    fun movieSearchResultsData() = searchMoviesPaginatedRequest.data
+    fun setMovieSearchQueryText(query: String) = searchMoviesPaginatedRequest.setSearchTerm(query)
+    fun loadMovieSearchResults() = searchMoviesPaginatedRequest.load()
+    fun loadMoreMovieSearchResults() = searchMoviesPaginatedRequest.loadMore()
 
     fun getMovieDetails(movieID: Int): Single<MovieDetailsResponse> {
         return tmdbClient.getMovieDetails(movieID).subscribeOn(backgroundScheduler)
