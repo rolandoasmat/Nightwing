@@ -11,7 +11,7 @@ class SearchViewModel(
         private val mapper: UiModelMapper): ViewModel() {
 
     private val searchMode = MutableLiveData(SearchMode.MOVIES)
-    private val searchTerm = MutableLiveData("")
+    private val searchTerm = MutableLiveData<String>()
 
     private val _searchHint = MediatorLiveData<String>().apply {
         addSource(searchMode) {

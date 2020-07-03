@@ -48,6 +48,7 @@ class SearchViewModelTests {
 
         // Assert
         verify(moviesRepository).setMovieSearchQueryText(searchText)
+        verify(moviesRepository).loadMovieSearchResults()
     }
 
     @Test
@@ -62,6 +63,7 @@ class SearchViewModelTests {
 
         // Assert
         verify(peopleRepository).setPersonsSearchQueryText(searchText)
+        verify(moviesRepository).loadMovieSearchResults()
     }
 
 }
