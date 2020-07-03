@@ -68,7 +68,7 @@ open class MoviesRepository(
     val upcomingPaginatedRequest = UpcomingPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
     private val searchMoviesPaginatedRequest = SearchMoviesPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
 
-    fun movieSearchResultsData() = searchMoviesPaginatedRequest.data
+    open fun movieSearchResultsData() = searchMoviesPaginatedRequest.data
     fun setMovieSearchQueryText(query: String) = searchMoviesPaginatedRequest.setSearchTerm(query)
     fun loadMovieSearchResults() = searchMoviesPaginatedRequest.load()
     fun loadMoreMovieSearchResults() = searchMoviesPaginatedRequest.loadMore()
