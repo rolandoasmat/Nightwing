@@ -38,6 +38,20 @@ class SearchAdapter(private val callbacks: Callbacks): RecyclerView.Adapter<Sear
         private val poster: ImageView? = view.poster
         private val label: TextView? = view.label
 
+        init {
+            poster?.setOnClickListener {
+                val data = items[adapterPosition]
+                when (data) {
+                    is SearchViewModel.SearchResultUiModel.Movie -> {
+                        callbacks.openMovieDetails(data.id)
+                    }
+                    is SearchViewModel.SearchResultUiModel.Person -> {
+                        callbacks.openActorDetails(data.id)
+                    }
+                }
+            }
+        }
+
         fun bind(data: SearchViewModel.SearchResultUiModel) {
             data.imageURL?.let { imageURL ->
                 if (!imageURL.isBlank()) {
@@ -52,6 +66,7 @@ class SearchAdapter(private val callbacks: Callbacks): RecyclerView.Adapter<Sear
     }
 
     interface Callbacks {
-        fun onClick()
+        fun openMovieDetails(id: Int)
+        fun openActorDetails(id: Int)
     }
 }

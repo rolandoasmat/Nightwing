@@ -24,24 +24,30 @@ class SearchViewModel(
     val searchHint: LiveData<String>
         get() { return _searchHint }
 
-    private val _movies: LiveData<List<SearchResultUiModel.Movie>> =  Transformations.switchMap(moviesRepository.searchMoviesPaginatedRequest.data) { response ->
-        val uiModels = response.map { data ->
-            val url = data.poster_path?.let { URLUtils.getImageURL342(it) }
-            SearchResultUiModel.Movie(url, data.original_title)
+    private val _movies: LiveData<List<SearchResultUiModel.Movie>> = Transformations.switchMap(moviesRepository.searchMoviesPaginatedRequest.data) { response ->
+        val uiModels = mutableListOf<SearchResultUiModel.Movie>()
+        response.forEach{ data ->
+            val id = data.id
+            val url = data.poster_path?.let { URLUtils.getImageURL342(it) } ?: ""
+            val title = data.original_title
+            if (id != null && url.isNotEmpty() && title != null) {
+                uiModels.add(SearchResultUiModel.Movie(id, url, title))
+            }
         }
-        val liveData = MutableLiveData<List<SearchResultUiModel.Movie>>()
-        liveData.value = uiModels
-        liveData
+        MutableLiveData<List<SearchResultUiModel.Movie>>(uiModels)
     }
 
-    private val _persons: LiveData<List<SearchResultUiModel.Person>> =  Transformations.switchMap(peopleRepository.searchPersonsPaginatedRequest.data) { response ->
-        val uiModels = response.map { data ->
-            val url = data.profile_path?.let { URLUtils.getImageURL342(it) }
-            SearchResultUiModel.Person(url, data.name)
+    private val _persons: LiveData<List<SearchResultUiModel.Person>> = Transformations.switchMap(peopleRepository.searchPersonsPaginatedRequest.data) { response ->
+        val uiModels = mutableListOf<SearchResultUiModel.Person>()
+        response.forEach{ data ->
+            val id = data.id
+            val url = data.profile_path?.let { URLUtils.getImageURL342(it) } ?: ""
+            val name = data.name
+            if (id != null && url.isNotEmpty() && name.isNotEmpty()) {
+                uiModels.add(SearchResultUiModel.Person(id, url, name))
+            }
         }
-        val liveData = MutableLiveData<List<SearchResultUiModel.Person>>()
-        liveData.value = uiModels
-        liveData
+        MutableLiveData<List<SearchResultUiModel.Person>>(uiModels)
     }
 
     private val _results = MediatorLiveData<List<SearchResultUiModel>>().apply {
@@ -119,8 +125,8 @@ class SearchViewModel(
         MOVIES,
         PEOPLE
     }
-    sealed class SearchResultUiModel(val imageURL: String?, val title: String?) {
-        class Movie(posterURL: String?, movieTitle: String?): SearchResultUiModel(posterURL, movieTitle)
-        class Person(profileURL: String?, personName: String?): SearchResultUiModel(profileURL, personName)
+    sealed class SearchResultUiModel(val id: Int, val imageURL: String, val title: String) {
+        class Movie(id: Int, posterURL: String, movieTitle: String): SearchResultUiModel(id, posterURL, movieTitle)
+        class Person(id: Int, profileURL: String, personName: String): SearchResultUiModel(id, profileURL, personName)
     }
 }

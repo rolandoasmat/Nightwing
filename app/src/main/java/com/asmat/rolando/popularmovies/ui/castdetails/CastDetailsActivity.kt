@@ -1,5 +1,6 @@
 package com.asmat.rolando.popularmovies.ui.castdetails
 
+import android.content.Context
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -26,6 +27,10 @@ class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.List
 
     companion object {
         const val PERSON_ID_KEY = "PERSON_ID_KEY"
+
+        fun createIntent(context: Context, castID: Int) {
+
+        }
     }
 
     @Inject

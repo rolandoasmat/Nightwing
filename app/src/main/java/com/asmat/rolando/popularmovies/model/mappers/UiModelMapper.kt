@@ -30,7 +30,7 @@ class UiModelMapper @Inject constructor() {
             DateUtils.transform(it.release_date ?: "")
         }?.map {
             val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url) }
-            val movieID = it.id?.toString() ?: ""
+            val movieID = it.id ?: 0
             MovieCreditUiModel(movieID, posterURL, it.character, it.title)
         }
 

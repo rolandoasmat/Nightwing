@@ -111,7 +111,7 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
         }
     }
 
-    private fun showMovieDetailScreen(movieID: String) {
+    private fun showMovieDetailScreen(movieID: Int) {
         val intent = MovieDetailsActivity.createIntent(requireContext(), movieID)
         startActivity(intent)
     }

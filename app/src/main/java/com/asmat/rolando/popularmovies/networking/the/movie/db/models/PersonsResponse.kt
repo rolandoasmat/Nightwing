@@ -10,6 +10,6 @@ data class PersonsResponse(
             val popularity: Double,
             val known_for_department: String?,
             val name: String,
-            val id: Int,
+            val id: Int?,
             val profile_path: String?)
 }

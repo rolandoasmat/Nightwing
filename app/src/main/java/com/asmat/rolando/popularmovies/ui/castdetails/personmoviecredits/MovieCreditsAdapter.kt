@@ -57,6 +57,6 @@ class MovieCreditsAdapter(private val callback: ItemCallback): RecyclerView.Adap
     }
 
     interface ItemCallback {
-        fun onMovieBannerClicked(movieID: String)
+        fun onMovieBannerClicked(movieID: Int)
     }
 }

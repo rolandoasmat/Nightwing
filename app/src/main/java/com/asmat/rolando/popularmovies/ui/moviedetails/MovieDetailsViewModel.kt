@@ -55,8 +55,8 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
 
     //region API
 
-    fun init(movieID: String) {
-        this.movieID = movieID.toInt()
+    fun init(movieID: Int) {
+        this.movieID = movieID
         fetchData(this.movieID)
     }
 

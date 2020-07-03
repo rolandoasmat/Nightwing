@@ -33,7 +33,7 @@ class MovieDetailsActivity : AppCompatActivity() {
     companion object {
         private const val EXTRA_MOVIE_ID = "extra_movie_id"
 
-        fun createIntent(context: Context, movieID: String): Intent {
+        fun createIntent(context: Context, movieID: Int): Intent {
             val destinationClass = MovieDetailsActivity::class.java
             val intentToStartDetailActivity = Intent(context, destinationClass)
             intentToStartDetailActivity.putExtra(EXTRA_MOVIE_ID, movieID)
@@ -53,9 +53,9 @@ class MovieDetailsActivity : AppCompatActivity() {
     @Inject
     lateinit var uiModelMapper: UiModelMapper
 
-    private val movieID: String
+    private val movieID: Int
         get() {
-            return intent.getStringExtra(EXTRA_MOVIE_ID)
+            return intent.getIntExtra(EXTRA_MOVIE_ID, 0)
         }
 
     // Recycler View Adapters

@@ -17,6 +17,8 @@ import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
+import com.asmat.rolando.popularmovies.ui.castdetails.CastDetailsActivity
+import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsActivity
 import kotlinx.android.synthetic.main.activity_search_results.*
 import javax.inject.Inject
 
@@ -115,7 +117,12 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.Callbacks {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onClick() {
-        // TODO Open corresponding Details Activity
+    override fun openMovieDetails(id: Int) {
+        val intent = MovieDetailsActivity.createIntent(this, id)
+        startActivity(intent)
+    }
+
+    override fun openActorDetails(id: Int) {
+        val intent = CastDetailsActivity.createIntent(this, id)
     }
 }

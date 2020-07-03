@@ -112,7 +112,7 @@ class PersonMovieCreditsFragment : androidx.fragment.app.Fragment(), MovieCredit
         fun setBackdropURL(url: String?)
     }
 
-    override fun onMovieBannerClicked(movieID: String) {
+    override fun onMovieBannerClicked(movieID: Int) {
         val intent = MovieDetailsActivity.createIntent(requireContext(), movieID)
         startActivity(intent)
     }
