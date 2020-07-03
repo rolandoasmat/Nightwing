@@ -39,12 +39,13 @@ class SearchAdapter(private val callbacks: Callbacks): RecyclerView.Adapter<Sear
         private val label: TextView? = view.label
 
         fun bind(data: SearchViewModel.SearchResultUiModel) {
-            if (data.imageURL.isNotEmpty()) {
-                Picasso.get()
-                        .load(data.imageURL)
-                        .resize(340, 500)
-                        .into(poster)
-
+            data.imageURL?.let { imageURL ->
+                if (!imageURL.isBlank()) {
+                    Picasso.get()
+                            .load(data.imageURL)
+                            .resize(340, 500)
+                            .into(poster)
+                }
             }
             label?.text = data.title
         }

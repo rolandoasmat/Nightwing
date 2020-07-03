@@ -5,6 +5,7 @@ import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
+import com.asmat.rolando.popularmovies.utilities.URLUtils
 
 class SearchViewModel(
         private val moviesRepository: MoviesRepository,
@@ -24,14 +25,20 @@ class SearchViewModel(
         get() { return _searchHint }
 
     private val _movies: LiveData<List<SearchResultUiModel.Movie>> =  Transformations.switchMap(moviesRepository.searchMoviesPaginatedRequest.data) { response ->
-        val uiModels = response.map { SearchResultUiModel.Movie(it.poster_path ?: "", it.original_title ?: "") }
+        val uiModels = response.map { data ->
+            val url = data.poster_path?.let { URLUtils.getImageURL342(it) }
+            SearchResultUiModel.Movie(url, data.original_title)
+        }
         val liveData = MutableLiveData<List<SearchResultUiModel.Movie>>()
         liveData.value = uiModels
         liveData
     }
 
     private val _persons: LiveData<List<SearchResultUiModel.Person>> =  Transformations.switchMap(peopleRepository.searchPersonsPaginatedRequest.data) { response ->
-        val uiModels = response.map { SearchResultUiModel.Person(it.profile_path ?: "", it.name ?: "") }
+        val uiModels = response.map { data ->
+            val url = data.profile_path?.let { URLUtils.getImageURL342(it) }
+            SearchResultUiModel.Person(url, data.name)
+        }
         val liveData = MutableLiveData<List<SearchResultUiModel.Person>>()
         liveData.value = uiModels
         liveData
@@ -42,15 +49,17 @@ class SearchViewModel(
             searchWithTerm(it)
         }
         addSource(_movies) {
-            handleResults(it)
+            updateResults(it)
         }
         addSource(_persons) {
-            handleResults(it)
+            updateResults(it)
         }
-    }
-
-    private fun handleResults(results: List<SearchResultUiModel>) {
-        _results.postValue(results)
+        addSource(searchMode) {
+            updateResults(emptyList())
+            searchTerm.value?.let {
+                searchWithTerm(it)
+            }
+        }
     }
 
     val results: LiveData<List<SearchResultUiModel>>
@@ -100,14 +109,18 @@ class SearchViewModel(
         }
     }
 
+    private fun updateResults(results: List<SearchResultUiModel>) {
+        _results.postValue(results)
+    }
+
     //endregion
 
     enum class SearchMode {
         MOVIES,
         PEOPLE
     }
-    sealed class SearchResultUiModel(val imageURL: String, val title: String) {
-        class Movie(posterURL: String, movieTitle: String): SearchResultUiModel(posterURL, movieTitle)
-        class Person(profileURL: String, personName: String): SearchResultUiModel(profileURL, personName)
+    sealed class SearchResultUiModel(val imageURL: String?, val title: String?) {
+        class Movie(posterURL: String?, movieTitle: String?): SearchResultUiModel(posterURL, movieTitle)
+        class Person(profileURL: String?, personName: String?): SearchResultUiModel(profileURL, personName)
     }
 }
