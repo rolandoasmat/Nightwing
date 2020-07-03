@@ -62,9 +62,6 @@ class SearchViewModel(
         }
         addSource(searchMode) {
             updateResults(emptyList())
-            searchTerm.value?.let {
-                searchWithTerm(it)
-            }
         }
     }
 

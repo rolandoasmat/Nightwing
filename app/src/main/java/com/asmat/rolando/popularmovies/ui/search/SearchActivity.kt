@@ -124,5 +124,6 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.Callbacks {
 
     override fun openActorDetails(id: Int) {
         val intent = CastDetailsActivity.createIntent(this, id)
+        startActivity(intent)
     }
 }

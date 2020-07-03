@@ -1,6 +1,7 @@
 package com.asmat.rolando.popularmovies.ui.castdetails
 
 import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -26,9 +27,13 @@ import javax.inject.Inject
 class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.Listener {
 
     companion object {
-        const val PERSON_ID_KEY = "PERSON_ID_KEY"
+        const val EXTRA_PERSON_ID = "PERSON_ID_KEY"
 
-        fun createIntent(context: Context, castID: Int) {
+        fun createIntent(context: Context, castID: Int): Intent {
+            val destinationClass = CastDetailsActivity::class.java
+            val intent = Intent(context, destinationClass)
+            intent.putExtra(EXTRA_PERSON_ID, castID)
+            return intent
 
         }
     }
@@ -46,7 +51,7 @@ class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.List
     lateinit var uiModelMapper: UiModelMapper
 
     private val personID: Int
-            get() = intent?.getIntExtra(PERSON_ID_KEY, -1) ?: throw IllegalStateException("No person ID found.")
+            get() = intent?.getIntExtra(EXTRA_PERSON_ID, -1) ?: throw IllegalStateException("No person ID found.")
 
     lateinit var viewModel: CastDetailsViewModel
 
