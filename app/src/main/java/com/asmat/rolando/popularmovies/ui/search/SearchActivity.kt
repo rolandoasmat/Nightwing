@@ -30,7 +30,7 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.Callbacks {
     @Inject lateinit var uiModelMapper: UiModelMapper
     @Inject lateinit var dataModelMapper: DataModelMapper
     lateinit var viewModel: SearchViewModel
-    lateinit var searchview: SearchView
+    private var searchview: SearchView? =null
     private var adapter: SearchAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,7 +84,7 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.Callbacks {
     }
 
     private fun updateSearchHint(hint: String) {
-
+        searchview?.queryHint = hint
     }
 
     private fun updateResults(items: List<SearchViewModel.SearchResultUiModel>) {
@@ -99,10 +99,10 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.Callbacks {
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchview = menu.findItem(R.id.search).actionView as SearchView
         // Assumes current activity is the searchable activity
-        searchview.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        searchview.isIconified = false
-        searchview.setIconifiedByDefault(true)
-        searchview.isSubmitButtonEnabled = true
+        searchview?.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchview?.isIconified = false
+        searchview?.setIconifiedByDefault(true)
+        searchview?.isSubmitButtonEnabled = true
         return true
     }
 
