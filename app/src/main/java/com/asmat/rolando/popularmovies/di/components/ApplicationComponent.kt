@@ -11,7 +11,7 @@ import com.asmat.rolando.popularmovies.ui.moviegrid.BaseMovieGridFragment
 import com.asmat.rolando.popularmovies.ui.moviegrid.paginated.PaginatedMovieGridFragment
 import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsActivity
 import com.asmat.rolando.popularmovies.ui.popularmovies.PopularMoviesFragment
-import com.asmat.rolando.popularmovies.ui.search.SearchActivity
+import com.asmat.rolando.popularmovies.search.SearchActivity
 import dagger.Component
 import javax.inject.Singleton
 

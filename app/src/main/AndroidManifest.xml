@@ -54,7 +54,7 @@
 
         <!-- Search -->
         <activity
-            android:name="com.asmat.rolando.popularmovies.ui.search.SearchActivity"
+            android:name="com.asmat.rolando.popularmovies.search.SearchActivity"
             android:label="@string/title_activity_search_results"
             android:launchMode="singleTop"
             android:parentActivityName="com.asmat.rolando.popularmovies.ui.discover.DiscoverActivity"

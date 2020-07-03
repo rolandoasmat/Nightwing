@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.ui.search
+package com.asmat.rolando.popularmovies.search
 
 import android.app.SearchManager
 import android.content.Context

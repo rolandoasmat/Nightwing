@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.ui.search
+package com.asmat.rolando.popularmovies.search
 
 import androidx.lifecycle.*
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper

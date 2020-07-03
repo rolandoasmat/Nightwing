@@ -15,7 +15,7 @@ import android.view.MenuItem
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.ui.discover.DiscoverActivity
 import com.asmat.rolando.popularmovies.ui.mylists.MyListsActivity
-import com.asmat.rolando.popularmovies.ui.search.SearchActivity
+import com.asmat.rolando.popularmovies.search.SearchActivity
 
 /**
  * Base Activity that contains the following common behavior of:

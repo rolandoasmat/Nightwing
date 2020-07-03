@@ -12,7 +12,7 @@ import com.asmat.rolando.popularmovies.ui.favoritemovies.FavoriteMoviesViewModel
 import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsViewModel
 import com.asmat.rolando.popularmovies.ui.nowplayingmovies.NowPlayingMoviesViewModel
 import com.asmat.rolando.popularmovies.ui.popularmovies.PopularMoviesViewModel
-import com.asmat.rolando.popularmovies.ui.search.SearchViewModel
+import com.asmat.rolando.popularmovies.search.SearchViewModel
 import com.asmat.rolando.popularmovies.ui.topratedmovies.TopRatedMoviesViewModel
 import com.asmat.rolando.popularmovies.ui.upcomingmovies.UpcomingMoviesViewModel
 import com.asmat.rolando.popularmovies.ui.watchlatermovies.WatchLaterViewModel

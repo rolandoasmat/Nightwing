@@ -7,7 +7,7 @@ import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonsRes
 import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.MovieCreditUiModel
 import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.PersonMovieCreditsUiModel
 import com.asmat.rolando.popularmovies.ui.moviegrid.MovieGridItemUiModel
-import com.asmat.rolando.popularmovies.ui.search.SearchDataModelsMapper
+import com.asmat.rolando.popularmovies.search.SearchDataModelsMapper
 import com.asmat.rolando.popularmovies.utilities.DateUtils
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import javax.inject.Inject

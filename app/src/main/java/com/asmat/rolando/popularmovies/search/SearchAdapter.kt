@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.ui.search
+package com.asmat.rolando.popularmovies.search
 
 import android.view.LayoutInflater
 import android.view.View

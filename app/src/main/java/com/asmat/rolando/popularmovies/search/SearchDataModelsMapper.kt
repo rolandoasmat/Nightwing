@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.ui.search
+package com.asmat.rolando.popularmovies.search
 
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonsResponse
