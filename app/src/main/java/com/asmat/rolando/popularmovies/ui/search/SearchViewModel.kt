@@ -75,6 +75,16 @@ class SearchViewModel(
     }
 
     fun loadMore() {
+        searchMode.value?.let { mode ->
+            when (mode) {
+                SearchMode.MOVIES -> {
+                    moviesRepository.searchMoviesPaginatedRequest.loadMore()
+                }
+                SearchMode.PEOPLE -> {
+                    peopleRepository.searchPersonsPaginatedRequest.loadMore()
+                }
+            }
+        }
 
     }
 

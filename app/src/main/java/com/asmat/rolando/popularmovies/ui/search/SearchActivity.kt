@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
+import com.asmat.rolando.popularmovies.extensions.setNearBottomScrollListener
 import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
@@ -38,14 +39,17 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.Callbacks {
         setContentView(R.layout.activity_search_results)
         viewModel = SearchViewModel(moviesRepository, peopleRepository, uiModelMapper, dataModelMapper)
         setupToolbar()
-        setupAdapter()
+        setupRecyclerView()
         observeViewModel()
     }
 
-    private fun setupAdapter() {
+    private fun setupRecyclerView() {
         adapter = SearchAdapter(this)
         recyclerView?.adapter = adapter
         recyclerView?.layoutManager = GridLayoutManager(this, 2)
+        recyclerView?.setNearBottomScrollListener {
+            viewModel.loadMore()
+        }
     }
 
     override fun onNewIntent(intent: Intent) {
