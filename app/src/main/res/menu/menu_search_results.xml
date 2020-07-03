@@ -6,10 +6,11 @@
         android:id="@+id/search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         android:icon="@drawable/ic_search"
-        app:showAsAction="always"
+        app:showAsAction="collapseActionView|always"
         android:title="Search"/>
 
-    <group android:id="@+id/group_search">
+    <group android:id="@+id/group_search"
+        app:showAsAction="always">
         <item android:id="@+id/search_movies"
             android:title="Search movies" />
         <item android:id="@+id/search_people"
