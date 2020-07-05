@@ -19,7 +19,7 @@
 
         <!-- Discover Activity -->
         <activity
-            android:name="com.asmat.rolando.popularmovies.ui.discover.DiscoverActivity"
+            android:name="com.asmat.rolando.popularmovies.ui.discover.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,11 +35,11 @@
         <!-- Movie Detail -->
         <activity
             android:name="com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsActivity"
-            android:parentActivityName="com.asmat.rolando.popularmovies.ui.discover.DiscoverActivity"
+            android:parentActivityName="com.asmat.rolando.popularmovies.ui.discover.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asmat.rolando.popularmovies.ui.discover.DiscoverActivity" />
+                android:value="com.asmat.rolando.popularmovies.ui.discover.MainActivity" />
         </activity>
 
         <!-- Cast Detail -->
@@ -57,7 +57,7 @@
             android:name="com.asmat.rolando.popularmovies.search.SearchActivity"
             android:label="@string/title_activity_search_results"
             android:launchMode="singleTop"
-            android:parentActivityName="com.asmat.rolando.popularmovies.ui.discover.DiscoverActivity"
+            android:parentActivityName="com.asmat.rolando.popularmovies.ui.discover.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -65,7 +65,7 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asmat.rolando.popularmovies.ui.discover.DiscoverActivity" />
+                android:value="com.asmat.rolando.popularmovies.ui.discover.MainActivity" />
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".activities.SearchResultsActivity" />

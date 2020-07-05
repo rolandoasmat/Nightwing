@@ -7,7 +7,7 @@ import com.asmat.rolando.popularmovies.ui.common.BaseActivity
 /**
  * Main screen the user lands on upon launch.
  */
-class DiscoverActivity : BaseActivity() {
+class MainActivity : BaseActivity() {
 
     override val activityTitle: String
         get() = getString(R.string.discover)

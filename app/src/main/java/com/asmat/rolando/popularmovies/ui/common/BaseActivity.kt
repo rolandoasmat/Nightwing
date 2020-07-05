@@ -13,7 +13,7 @@ import android.view.Menu
 import android.view.MenuItem
 
 import com.asmat.rolando.popularmovies.R
-import com.asmat.rolando.popularmovies.ui.discover.DiscoverActivity
+import com.asmat.rolando.popularmovies.ui.discover.MainActivity
 import com.asmat.rolando.popularmovies.ui.mylists.MyListsActivity
 import com.asmat.rolando.popularmovies.search.SearchActivity
 
@@ -95,7 +95,7 @@ abstract class BaseActivity : AppCompatActivity() {
             handleMenuItemClicked(menuItem.itemId)
             true
         }
-        if (this is DiscoverActivity) {
+        if (this is MainActivity) {
             navigationView.setCheckedItem(R.id.discover)
         } else if (this is MyListsActivity) {
             navigationView.setCheckedItem(R.id.my_lists)
@@ -110,10 +110,10 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     private fun launchDiscover() {
-        if (this is DiscoverActivity) {
+        if (this is MainActivity) {
             return
         }
-        launchActivity(DiscoverActivity::class.java)
+        launchActivity(MainActivity::class.java)
     }
 
     private fun launchMyLists() {
