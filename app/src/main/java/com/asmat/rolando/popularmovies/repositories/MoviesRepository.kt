@@ -88,4 +88,6 @@ open class MoviesRepository(
     fun getMovieCredits(movieID: Int): Single<CreditsResponse> {
         return tmdbClient.getMovieCredits(movieID).subscribeOn(backgroundScheduler)
     }
+
+    fun getSimilarMovies(movieID: Int) = tmdbClient.getSimilarMovies(movieID).subscribeOn(backgroundScheduler)
 }

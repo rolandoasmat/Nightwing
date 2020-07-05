@@ -86,5 +86,7 @@ open class TheMovieDBClient {
     open fun getPersonMovieCredits(personID: Int): Single<PersonMovieCredits> {
         return service.getPersonMovieCredits(personID)
     }
+
+    open fun getSimilarMovies(movieID: Int) = service.getSimilarMovies(movieID)
     //endregion
 }

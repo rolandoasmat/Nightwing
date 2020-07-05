@@ -7,48 +7,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/activity_margin_general">
 
+    <ImageView
+        android:id="@+id/thumbnail"
+        android:layout_width="@dimen/poster_width"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_height="120dp"
+        tools:background="@color/colorAccent"/>
+
     <TextView
         android:id="@+id/releaseDateLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toTopOf="@id/thumbnail"
+        app:layout_constraintStart_toEndOf="@id/thumbnail"
         tools:text="April 4, 1992"/>
 
     <TextView
         android:id="@+id/runtimeLabel"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/releaseDateLabel"
+        app:layout_constraintStart_toStartOf="@id/releaseDateLabel"
+        app:layout_constraintTop_toTopOf="@id/thumbnail"
+        app:layout_constraintBottom_toBottomOf="@id/thumbnail"
         tools:text="102 minutes"/>
 
     <TextView
         android:id="@+id/movieRatingLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/releaseDateLabel"
+        app:layout_constraintBottom_toBottomOf="@id/thumbnail"
         tools:text="10.0/10.0" />
-
-    <ImageView
-        android:id="@+id/thumbnail"
-        android:layout_width="@dimen/poster_width"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_margin_general"
-        android:adjustViewBounds="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/runtimeLabel"/>
 
     <TextView
         android:id="@+id/summary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_margin_general"
-        android:layout_marginStart="@dimen/activity_margin_general"
-        app:layout_constraintStart_toEndOf="@id/thumbnail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/thumbnail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thumbnail"
         tools:text="Some very awesome movie about Rolando André and his quest to make a movie app."/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.asmat.rolando.popularmovies.ui.moviedetails
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
@@ -184,6 +185,15 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
                 }, { error ->
                     reviewsError.value = error
                     reviews.value = null
+                })
+        moviesRepository
+                .getSimilarMovies(movieID)
+                .observeOn(mainThreadScheduler)
+                .subscribe({ result ->
+                    Log.v("TAG", result.toString())
+
+                }, { error ->
+
                 })
     }
 }
