@@ -12,6 +12,8 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment: Fragment() {
 
+    val tabName = listOf("Popular", "Top Rated", "Now Playing", "Upcoming")
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
@@ -25,10 +27,9 @@ class HomeFragment: Fragment() {
         activity?.let { activity ->
             val adapter = DiscoverPagerAdapter(this)
             container?.adapter = adapter
-//            tabs?.setupWithViewPager(container)
             TabLayoutMediator(tabs, container) { tab, position ->
-                tab.text = "Tab $position"
-            }
+                tab.text = tabName[position]
+            }.attach()
         }
 
     }
