@@ -17,10 +17,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <!-- Discover Activity -->
+        <!-- Main Activity -->
         <activity
-            android:name="com.asmat.rolando.popularmovies.ui.discover.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name="com.asmat.rolando.popularmovies.ui.discover.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

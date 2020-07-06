@@ -2,20 +2,16 @@ package com.asmat.rolando.popularmovies.ui.common
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
-import androidx.core.view.GravityCompat
 import androidx.viewpager.widget.ViewPager
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.ui.discover.MainActivity
 import com.asmat.rolando.popularmovies.ui.mylists.MyListsActivity
 import com.asmat.rolando.popularmovies.search.SearchActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * Base Activity that contains the following common behavior of:
@@ -38,7 +34,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_base)
+        setContentView(R.layout.activity_main)
         setupToolBar()
         setupViewPager()
         setupDrawer()
@@ -87,19 +83,19 @@ abstract class BaseActivity : AppCompatActivity() {
     //region Private
 
     private fun setupDrawer() {
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
-        val navigationView = findViewById<NavigationView>(R.id.nav_view)
-        navigationView.setNavigationItemSelectedListener { menuItem ->
-            menuItem.isChecked = true
-            drawerLayout.closeDrawers()
-            handleMenuItemClicked(menuItem.itemId)
-            true
-        }
-        if (this is MainActivity) {
-            navigationView.setCheckedItem(R.id.discover)
-        } else if (this is MyListsActivity) {
-            navigationView.setCheckedItem(R.id.my_lists)
-        }
+//        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
+//        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+//        navigationView.setNavigationItemSelectedListener { menuItem ->
+//            menuItem.isChecked = true
+//            drawerLayout.closeDrawers()
+//            handleMenuItemClicked(menuItem.itemId)
+//            true
+//        }
+//        if (this is MainActivity) {
+//            navigationView.setCheckedItem(R.id.discover)
+//        } else if (this is MyListsActivity) {
+//            navigationView.setCheckedItem(R.id.my_lists)
+//        }
     }
 
     private fun handleMenuItemClicked(id: Int) {
@@ -110,10 +106,10 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     private fun launchDiscover() {
-        if (this is MainActivity) {
-            return
-        }
-        launchActivity(MainActivity::class.java)
+//        if (this is MainActivity) {
+//            return
+//        }
+//        launchActivity(MainActivity::class.java)
     }
 
     private fun launchMyLists() {
@@ -129,12 +125,10 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     private fun setupToolBar() {
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        toolbar.title = activityTitle
-        setSupportActionBar(toolbar)
-        val actionbar = supportActionBar
-        actionbar?.setDisplayHomeAsUpEnabled(true)
-        actionbar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+//        toolbar.title = activityTitle
+//        setActionBar(toolbar)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
     }
 
     private fun setupViewPager() {
@@ -146,8 +140,8 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     private fun openDrawer() {
-        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
-        drawer.openDrawer(GravityCompat.START)
+//        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
+//        drawer.openDrawer(GravityCompat.START)
     }
 
 

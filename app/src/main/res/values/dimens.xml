@@ -7,7 +7,7 @@
     <dimen name="activity_horizontal_margin_small">8dp</dimen>
     <dimen name="activity_vertical_margin_small">8dp</dimen>
 
-    <!--activity_base-->
+    <!--activity_main-->
 
     <!--activity_movie_detail-->
     <dimen name="poster_width">80dp</dimen>
