@@ -113,10 +113,10 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     private fun launchMyLists() {
-        if (this is MyListsActivity) {
-            return
-        }
-        launchActivity(MyListsActivity::class.java)
+//        if (this is MyListsActivity) {
+//            return
+//        }
+//        launchActivity(MyListsActivity::class.java)
     }
 
     private fun launchActivity(activity: Class<*>) {
@@ -132,11 +132,11 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     private fun setupViewPager() {
-        val adapter = pagerAdapter
-        val viewPager = findViewById<ViewPager>(R.id.container)
-        viewPager.adapter = adapter
-        tabLayout = findViewById(R.id.tabs)
-        tabLayout?.setupWithViewPager(viewPager)
+//        val adapter = pagerAdapter
+//        val viewPager = findViewById<ViewPager>(R.id.container)
+//        viewPager.adapter = adapter
+//        tabLayout = findViewById(R.id.tabs)
+//        tabLayout?.setupWithViewPager(viewPager)
     }
 
     private fun openDrawer() {

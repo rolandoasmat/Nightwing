@@ -108,9 +108,9 @@ class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.List
     }
 
     private fun setupViewPager(uiModel: CastDetailsUiModel) {
-        val adapter = CastDetailsPagerAdapter(uiModel, supportFragmentManager, this)
-        castDetailsViewPager?.adapter = adapter
-        tabLayout?.setupWithViewPager(castDetailsViewPager)
+//        val adapter = CastDetailsPagerAdapter(uiModel, supportFragmentManager, this)
+//        castDetailsViewPager?.adapter = adapter
+//        tabLayout?.setupWithViewPager(castDetailsViewPager)
     }
 
     //region Callbacks
