@@ -12,13 +12,20 @@ import com.asmat.rolando.popularmovies.ui.moviegrid.paginated.PaginatedMovieGrid
 import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsActivity
 import com.asmat.rolando.popularmovies.ui.popularmovies.PopularMoviesFragment
 import com.asmat.rolando.popularmovies.search.SearchActivity
+import com.asmat.rolando.popularmovies.search.SearchFragment
+import com.asmat.rolando.popularmovies.ui.discover.MainActivity
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ContextModule::class, DatabaseModule::class, NetworkModule::class, RepositoriesModule::class])
+@Component(modules = [
+    ContextModule::class,
+    DatabaseModule::class,
+    NetworkModule::class,
+    RepositoriesModule::class])
 interface ApplicationComponent {
 
+    fun inject(app: MainActivity)
     fun inject(app: BaseActivity)
     fun inject(fragment: PopularMoviesFragment)
     fun inject(movieDetailsActivity: MovieDetailsActivity)
@@ -27,5 +34,7 @@ interface ApplicationComponent {
     fun inject(castDetailsActivity: PersonMovieCreditsFragment)
     fun inject(paginatedMovieGridFragment: PaginatedMovieGridFragment)
     fun inject(baseMovieGridFragment: BaseMovieGridFragment)
+
+    fun inject(searchFragment: SearchFragment)
 
 }

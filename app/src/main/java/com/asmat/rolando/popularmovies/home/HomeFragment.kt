@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment: Fragment() {
 
-    val tabName = listOf("Popular", "Top Rated", "Now Playing", "Upcoming")
+    private val tabName = listOf("Popular", "Top Rated", "Now Playing", "Upcoming")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
@@ -24,14 +24,11 @@ class HomeFragment: Fragment() {
     }
 
     private fun setupViewPager() {
-        activity?.let { activity ->
-            val adapter = DiscoverPagerAdapter(this)
-            container?.adapter = adapter
-            TabLayoutMediator(tabs, container) { tab, position ->
-                tab.text = tabName[position]
-            }.attach()
-        }
-
+        val adapter = DiscoverPagerAdapter(this)
+        container?.adapter = adapter
+        TabLayoutMediator(tabs, container) { tab, position ->
+            tab.text = tabName[position]
+        }.attach()
     }
 
 }

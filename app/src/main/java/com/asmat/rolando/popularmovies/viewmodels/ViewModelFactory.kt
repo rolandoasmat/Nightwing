@@ -17,8 +17,11 @@ import com.asmat.rolando.popularmovies.ui.topratedmovies.TopRatedMoviesViewModel
 import com.asmat.rolando.popularmovies.ui.upcomingmovies.UpcomingMoviesViewModel
 import com.asmat.rolando.popularmovies.ui.watchlatermovies.WatchLaterViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ViewModelFactory(
+@Singleton
+class ViewModelFactory @Inject constructor(
         private val moviesRepository: MoviesRepository,
         private val peopleRepository: PeopleRepository,
         private val dataModelMapper: DataModelMapper,
