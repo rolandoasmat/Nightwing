@@ -8,10 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.asmat.rolando.popularmovies.R
-import com.asmat.rolando.popularmovies.ui.discover.MainActivity
-import com.asmat.rolando.popularmovies.ui.mylists.MyListsActivity
-import com.asmat.rolando.popularmovies.search.SearchActivity
-import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * Base Activity that contains the following common behavior of:
@@ -54,8 +50,8 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.search -> {
-                val intent = Intent(this, SearchActivity::class.java)
-                startActivity(intent)
+//                val intent = Intent(this, SearchActivity::class.java)
+//                startActivity(intent)
                 return true
             }
             android.R.id.home -> {

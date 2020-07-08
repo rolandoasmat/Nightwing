@@ -14,6 +14,6 @@
     <item
         android:id="@+id/navigation_saved"
         android:icon="@drawable/ic_star_filled"
-        android:title="Favorites" />
+        android:title="Saved" />
 
 </menu>
