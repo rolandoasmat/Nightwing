@@ -3,22 +3,18 @@ package com.asmat.rolando.popularmovies.ui.castdetails
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
+import androidx.activity.viewModels
 import com.asmat.rolando.popularmovies.MovieNightApplication
-
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
-import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
-import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
-import com.asmat.rolando.popularmovies.repositories.MoviesRepository
-import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.PersonMovieCreditsFragment
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
+import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_cast_detail.*
 import java.lang.IllegalStateException
@@ -34,32 +30,22 @@ class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.List
             val intent = Intent(context, destinationClass)
             intent.putExtra(EXTRA_PERSON_ID, castID)
             return intent
-
         }
     }
 
     @Inject
-    lateinit var moviesRepository: MoviesRepository
+    lateinit var viewModelFactory: ViewModelFactory
+    val viewModel: CastDetailsViewModel by viewModels{ viewModelFactory }
 
-    @Inject
-    lateinit var peopleRepository: PeopleRepository
-
-    @Inject
-    lateinit var dataModelMapper: DataModelMapper
-
-    @Inject
-    lateinit var uiModelMapper: UiModelMapper
+    private val tabName = listOf("Info", "Movie credits")
 
     private val personID: Int
             get() = intent?.getIntExtra(EXTRA_PERSON_ID, -1) ?: throw IllegalStateException("No person ID found.")
-
-    lateinit var viewModel: CastDetailsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (applicationContext as MovieNightApplication).component().inject(this)
         setContentView(R.layout.activity_cast_detail)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository, dataModelMapper, uiModelMapper)).get(CastDetailsViewModel::class.java)
         viewModel.init(personID)
         setup()
     }
@@ -108,9 +94,11 @@ class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.List
     }
 
     private fun setupViewPager(uiModel: CastDetailsUiModel) {
-//        val adapter = CastDetailsPagerAdapter(uiModel, supportFragmentManager, this)
-//        castDetailsViewPager?.adapter = adapter
-//        tabLayout?.setupWithViewPager(castDetailsViewPager)
+        val adapter = CastDetailsPagerAdapter(uiModel, this)
+        castDetailsViewPager?.adapter = adapter
+        TabLayoutMediator(tabLayout, castDetailsViewPager) { tab, position ->
+            tab.text = tabName[position]
+        }.attach()
     }
 
     //region Callbacks

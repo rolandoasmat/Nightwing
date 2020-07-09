@@ -1,11 +1,12 @@
 package com.asmat.rolando.popularmovies.ui.castdetails
 
 import androidx.fragment.app.Fragment
-import com.asmat.rolando.popularmovies.ui.common.BaseSectionsPagerAdapter
+import androidx.fragment.app.FragmentActivity
 import com.asmat.rolando.popularmovies.ui.castdetails.personinfo.PersonDetailsFragment
 import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.PersonMovieCreditsFragment
+import com.asmat.rolando.popularmovies.ui.common.BaseSectionsPagerAdapterFromActivity
 
-class CastDetailsPagerAdapter(private val uiModel: CastDetailsUiModel, fragment: Fragment) : BaseSectionsPagerAdapter(fragment) {
+class CastDetailsPagerAdapter(private val uiModel: CastDetailsUiModel, fragmentActivity: FragmentActivity) : BaseSectionsPagerAdapterFromActivity(fragmentActivity) {
 
     override val fragments: Array<Fragment>
         get() {
