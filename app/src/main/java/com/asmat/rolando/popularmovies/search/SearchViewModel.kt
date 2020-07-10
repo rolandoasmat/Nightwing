@@ -94,10 +94,10 @@ class SearchViewModel(
     private fun searchModeChanged(mode: SearchMode) {
         when (mode) {
             SearchMode.MOVIES -> {
-                _searchHint.value = "Search movies"
+                _searchHint.value = "Search movie title"
             }
             SearchMode.PEOPLE -> {
-                _searchHint.value = "Search actors"
+                _searchHint.value = "Search actor name"
             }
         }
     }

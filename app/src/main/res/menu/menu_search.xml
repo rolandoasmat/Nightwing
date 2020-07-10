@@ -2,13 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
-    <item
-        android:id="@+id/search"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
-        android:icon="@drawable/ic_search"
-        app:showAsAction="collapseActionView|always"
-        android:title="Search"/>
-
     <group android:id="@+id/group_search"
         app:showAsAction="always">
         <item android:id="@+id/search_movies"

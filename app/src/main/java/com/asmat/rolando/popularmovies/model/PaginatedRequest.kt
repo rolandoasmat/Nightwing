@@ -34,6 +34,7 @@ abstract class PaginatedRequest<T>(open val mainThreadScheduler: Scheduler) {
      * Load first page of data
      */
     fun load() {
+        loadSubscription?.dispose()
         if(!shouldLoad) { return }
         pageToLoad = 1
         error.value = null

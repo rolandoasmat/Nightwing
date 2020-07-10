@@ -1,9 +1,7 @@
 package com.asmat.rolando.popularmovies.search
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,7 +16,6 @@ import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
 
-// TODO update search to look like instagram
 class SearchFragment: Fragment(), SearchAdapter.Callbacks {
 
     @Inject
@@ -30,6 +27,7 @@ class SearchFragment: Fragment(), SearchAdapter.Callbacks {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity?.applicationContext as? MovieNightApplication)?.component()?.inject(this)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -39,7 +37,6 @@ class SearchFragment: Fragment(), SearchAdapter.Callbacks {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
-        searchView?.queryHint = "Search for a movie, actor, tv show, etc."
         searchView?.setIconifiedByDefault(false)
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -55,6 +52,23 @@ class SearchFragment: Fragment(), SearchAdapter.Callbacks {
         setupRecyclerView()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_search, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.search_movies -> {
+                viewModel.setSearchMode(SearchViewModel.SearchMode.MOVIES)
+            }
+            R.id.search_people -> {
+                viewModel.setSearchMode(SearchViewModel.SearchMode.PEOPLE)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun setupRecyclerView() {
         adapter = SearchAdapter(this)
         searchResultsRecyclerView?.adapter = adapter
@@ -67,6 +81,9 @@ class SearchFragment: Fragment(), SearchAdapter.Callbacks {
     private fun observeViewModel() {
         viewModel.results.observe(viewLifecycleOwner, Observer {
             updateResults(it)
+        })
+        viewModel.searchHint.observe(viewLifecycleOwner, Observer {
+            searchView?.queryHint = it
         })
     }
 
