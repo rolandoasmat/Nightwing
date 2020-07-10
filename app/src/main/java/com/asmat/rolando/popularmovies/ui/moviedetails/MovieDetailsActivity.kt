@@ -162,11 +162,13 @@ class MovieDetailsActivity : AppCompatActivity() {
                     updatePoster(url)
                 })
 
-        viewModel
-                .summary
-                .observe(this, Observer { summary ->
-                    updateSummary(summary)
-                })
+        viewModel.summary.observe(this, Observer { summary ->
+            updateSummary(summary)
+        })
+
+        viewModel.tagline.observe(this, Observer { text ->
+            taglineLabel.text = text
+        })
 
         // Movie icons
 
@@ -279,10 +281,7 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun updateRating(rating: String?) {
-        rating?.let {
-            val ratingFormatted = getString(R.string.out_of_ten, it)
-            movieRatingLabel.text = ratingFormatted
-        }
+        movieRatingLabel.text = rating
     }
 
     private fun updateRuntime(runtime: String?) {

@@ -10,7 +10,7 @@
     <!--activity_main-->
 
     <!--activity_movie_detail-->
-    <dimen name="poster_width">80dp</dimen>
+    <dimen name="poster_width">140dp</dimen>
     <dimen name="icon_size">32dp</dimen>
     <dimen name="icon_label_size">16sp</dimen>
 

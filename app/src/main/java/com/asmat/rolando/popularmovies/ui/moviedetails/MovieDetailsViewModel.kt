@@ -17,9 +17,10 @@ import io.reactivex.Scheduler
  * Movie Details Screen view model
  */
 @SuppressLint("CheckResult")
-class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
-                            private val dataModelMapper: DataModelMapper,
-                            private val mainThreadScheduler: Scheduler) : ViewModel() {
+class MovieDetailsViewModel(
+        private val moviesRepository: MoviesRepository,
+        private val dataModelMapper: DataModelMapper,
+        private val mainThreadScheduler: Scheduler) : ViewModel() {
 
     val backdropURL = MutableLiveData<String>()
     val movieTitle = MutableLiveData<String>()
@@ -28,6 +29,7 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
     val runtime = MutableLiveData<String>()
     val posterURL = MutableLiveData<String>()
     val summary = MutableLiveData<String>()
+    val tagline = MutableLiveData<String>()
 
     val isFavoriteMovie = MutableLiveData<Boolean>()
     val isWatchLaterMovie = MutableLiveData<Boolean>()
@@ -111,12 +113,11 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
         val posterURL = movie.poster_path?.let { url -> URLUtils.getImageURL342(url)}
         val backdropURL = movie.backdrop_path?.let { url -> URLUtils.getImageURL780(url)}
         val releaseDate = DateUtils.formatDate(movie.release_date ?: "")
-        val voteAverage = movie.vote_average.toString()
+        val voteAverage = movie.vote_average?.times(10)?.toInt()?.toString()?.let { percent ->
+            "$percent%"
+        }
         val runtime = movie.runtime?.let { movieRuntime ->
             "$movieRuntime min"
-        }
-        val productionCompanies = movie.production_companies?.let {
-            it.joinToString(", ")
         }
         return MovieDetailsUIModel(posterURL,
                 movie.overview ?: "",
@@ -125,7 +126,8 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
                 movie.title ?: "",
                 backdropURL,
                 voteAverage,
-                runtime)
+                runtime,
+                movie.tagline)
     }
 
     // Updates the live data streams with the UI model data
@@ -137,6 +139,7 @@ class MovieDetailsViewModel(private val moviesRepository: MoviesRepository,
         runtime.value = movie?.runtime
         posterURL.value = movie?.posterPath
         summary.value = movie?.overview
+        tagline.value = movie?.tagline
     }
 
     // Fetch other movie data from network or db
