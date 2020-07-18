@@ -6,6 +6,8 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
 
+    <include app:graph="@navigation/movie_details_navigation" />
+
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.asmat.rolando.popularmovies.home.HomeFragment"
@@ -23,4 +25,8 @@
         android:name="com.asmat.rolando.popularmovies.saved.SavedFragment"
         android:label="Saved"
         tools:layout="@layout/fragment_saved" />
+
+    <action
+        android:id="@+id/action_global_to_movie_details"
+        app:destination="@id/movie_details_navigation"/>
 </navigation>

@@ -14,7 +14,7 @@ import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
-import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsActivity
+import com.asmat.rolando.popularmovies.moviedetails.MovieDetailsActivity
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.person_movie_credits.*

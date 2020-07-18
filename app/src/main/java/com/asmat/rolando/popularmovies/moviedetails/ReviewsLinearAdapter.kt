@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.ui.moviedetails
+package com.asmat.rolando.popularmovies.moviedetails
 
 import android.view.View
 import android.widget.TextView

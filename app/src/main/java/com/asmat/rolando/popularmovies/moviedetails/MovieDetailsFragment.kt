@@ -1,84 +1,64 @@
-package com.asmat.rolando.popularmovies.ui.moviedetails
+package com.asmat.rolando.popularmovies.moviedetails
 
-import android.content.Context
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.net.Uri
-import androidx.core.app.ShareCompat
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.widget.Toolbar
+import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.app.ShareCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
-import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
-import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
-import com.asmat.rolando.popularmovies.repositories.MoviesRepository
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
-import com.asmat.rolando.popularmovies.repositories.PeopleRepository
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.ReviewsResponse
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
 import com.asmat.rolando.popularmovies.ui.castdetails.CastDetailsActivity
-import com.squareup.picasso.Picasso
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
-import kotlinx.android.synthetic.main.activity_movie_detail.*
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_movie_details.*
 import kotlinx.android.synthetic.main.movie_details_user_actions.*
 import kotlinx.android.synthetic.main.primary_details.*
 import javax.inject.Inject
 
-class MovieDetailsActivity : AppCompatActivity() {
+class MovieDetailsFragment(val movieID: Int): Fragment() {
 
     companion object {
-        private const val EXTRA_MOVIE_ID = "extra_movie_id"
-
-        fun createIntent(context: Context, movieID: Int): Intent {
-            val destinationClass = MovieDetailsActivity::class.java
-            val intentToStartDetailActivity = Intent(context, destinationClass)
-            intentToStartDetailActivity.putExtra(EXTRA_MOVIE_ID, movieID)
-            return intentToStartDetailActivity
+        fun newInstance(movieID: Int): MovieDetailsFragment {
+            return MovieDetailsFragment(movieID)
         }
     }
 
     @Inject
-    lateinit var moviesRepository: MoviesRepository
+    lateinit var viewModelFactory: ViewModelFactory
+    val viewModel: MovieDetailsViewModel by viewModels{ viewModelFactory }
 
-    @Inject
-    lateinit var peopleRepository: PeopleRepository
-
-    @Inject
-    lateinit var dataModelMapper: DataModelMapper
-
-    @Inject
-    lateinit var uiModelMapper: UiModelMapper
-
-    private val movieID: Int
-        get() {
-            return intent.getIntExtra(EXTRA_MOVIE_ID, 0)
-        }
 
     // Recycler View Adapters
     private lateinit var trailersLinearAdapter: TrailersLinearAdapter
     private lateinit var castLinearAdapter: CastLinearAdapter
     private lateinit var reviewsLinearAdapter: ReviewsLinearAdapter
 
-    // View Model
-    private lateinit var viewModel: MovieDetailsViewModel
 
     //region Callbacks
     private val trailerClickCallback = { trailer: VideosResponse.Video ->
         val url = URLUtils.getYoutubeURL(trailer.key)
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        intent.resolveActivity(packageManager)?.let {
+        intent.resolveActivity(requireActivity().packageManager)?.let {
             startActivity(intent)
         }
     }
 
     private val castClickCallback = { cast: CreditsResponse.Cast ->
-        val intent = Intent(this@MovieDetailsActivity, CastDetailsActivity::class.java)
+        val intent = Intent(requireContext(), CastDetailsActivity::class.java)
         intent.putExtra(CastDetailsActivity.EXTRA_PERSON_ID, cast.id)
-        intent.resolveActivity(packageManager)?.let {
+        intent.resolveActivity(requireActivity().packageManager)?.let {
             startActivity(intent)
         }
     }
@@ -86,9 +66,15 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (applicationContext as MovieNightApplication).component().inject(this)
-        setContentView(R.layout.activity_movie_detail)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository, dataModelMapper, uiModelMapper)).get(MovieDetailsViewModel::class.java)
+        (activity?.applicationContext as? MovieNightApplication)?.component()?.inject(this)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_movie_details, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.init(movieID)
         setupObservers()
         setupUI()
@@ -96,19 +82,19 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                super.onBackPressed()
-                return true
-            }
-        }
+//        when (item.itemId) {
+//            android.R.id.home -> {
+//                super.onBackPressed()
+//                return true
+//            }
+//        }
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        super.onBackPressed()
-        return true
-    }
+//    override fun onSupportNavigateUp(): Boolean {
+//        super.onBackPressed()
+//        return true
+//    }
 
     //region User Actions
     private fun sendEvents() {
@@ -128,87 +114,65 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     private fun setupObservers() {
         // Movie info
-        viewModel
-                .backdropURL
-                .observe(this, Observer { url ->
-                    updateBackdrop(url)
-                })
+        viewModel.backdropURL.observe(viewLifecycleOwner, Observer { url ->
+            updateBackdrop(url)
+        })
 
-        viewModel
-                .movieTitle
-                .observe(this, Observer { title ->
-                    updateTitle(title)
-                })
+        viewModel.movieTitle.observe(viewLifecycleOwner, Observer { title ->
+            updateTitle(title)
+        })
 
-        viewModel
-                .releaseDate
-                .observe(this, Observer { date ->
-                    updateReleaseDate(date)
-                })
+        viewModel.releaseDate.observe(viewLifecycleOwner, Observer { date ->
+            updateReleaseDate(date)
+        })
 
-        viewModel
-                .rating
-                .observe(this, Observer { rating ->
-                    updateRating(rating)
-                })
+        viewModel.rating.observe(viewLifecycleOwner, Observer { rating ->
+            updateRating(rating)
+        })
 
-        viewModel.runtime.observe(this, Observer { runtime ->
+        viewModel.runtime.observe(viewLifecycleOwner, Observer { runtime ->
             updateRuntime(runtime)
         })
 
-        viewModel
-                .posterURL
-                .observe(this, Observer { url ->
-                    updatePoster(url)
-                })
+        viewModel.posterURL.observe(viewLifecycleOwner, Observer { url ->
+            updatePoster(url)
+        })
 
-        viewModel.summary.observe(this, Observer { summary ->
+        viewModel.summary.observe(viewLifecycleOwner, Observer { summary ->
             updateSummary(summary)
         })
 
-        viewModel.tagline.observe(this, Observer { text ->
+        viewModel.tagline.observe(viewLifecycleOwner, Observer { text ->
             taglineLabel.text = text
         })
 
         // Movie icons
 
-        viewModel
-                .isFavoriteMovie
-                .observe(this, Observer { isFavoriteMovie ->
-                    updateStar(isFavoriteMovie == true)
-                })
+        viewModel.isFavoriteMovie.observe(viewLifecycleOwner, Observer { isFavoriteMovie ->
+            updateStar(isFavoriteMovie == true)
+        })
 
-        viewModel
-                .isWatchLaterMovie
-                .observe(this, Observer { isWatchLaterMovie ->
-                    updateBookmark(isWatchLaterMovie == true)
-                })
+        viewModel.isWatchLaterMovie.observe(viewLifecycleOwner, Observer { isWatchLaterMovie ->
+            updateBookmark(isWatchLaterMovie == true)
+        })
 
-        viewModel
-                .shareMovie
-                .observe(this, Observer { movieData ->
-                    shareMovie(movieData)
-                })
+        viewModel.shareMovie.observe(viewLifecycleOwner, Observer { movieData ->
+            shareMovie(movieData)
+        })
 
         // Movie lists
 
-        viewModel
-                .videos
-                .observe(this, Observer { videos ->
-                    updateTrailers(videos)
-                })
+        viewModel.videos.observe(viewLifecycleOwner, Observer { videos ->
+            updateTrailers(videos)
+        })
 
-        viewModel
-                .cast
-                .observe(this, Observer { cast ->
-                    updateCast(cast)
-                })
+        viewModel.cast.observe(viewLifecycleOwner, Observer { cast ->
+            updateCast(cast)
+        })
 
-        viewModel
-                .reviews
-                .observe(this, Observer { reviews ->
-                    updateReviews(reviews)
-                })
+        viewModel.reviews.observe(viewLifecycleOwner, Observer { reviews ->
+            updateReviews(reviews)
+        })
     }
 
     private fun setupUI() {
@@ -219,14 +183,14 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun setupToolbar() {
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+//        setSupportActionBar(toolbar)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun setupTrailersRecyclerView() {
         trailersRecyclerView.setHasFixedSize(true)
-        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
+        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(), androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
         trailersRecyclerView.layoutManager = layoutManager
         trailersLinearAdapter = TrailersLinearAdapter(trailerClickCallback)
         trailersRecyclerView.adapter = trailersLinearAdapter
@@ -235,7 +199,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     private fun setupCastRecyclerView() {
         castRecyclerView.setHasFixedSize(true)
-        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
+        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(), androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
         castRecyclerView.layoutManager = layoutManager
         castLinearAdapter = CastLinearAdapter(castClickCallback)
         castRecyclerView.adapter = castLinearAdapter
@@ -244,7 +208,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     private fun setupReviewsRecyclerView() {
         reviewsRecyclerView.setHasFixedSize(true)
-        val reviewsLayoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL, false)
+        val reviewsLayoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(), androidx.recyclerview.widget.LinearLayoutManager.VERTICAL, false)
         reviewsRecyclerView.layoutManager = reviewsLayoutManager
         reviewsLayoutManager.isSmoothScrollbarEnabled = true
         reviewsLinearAdapter = ReviewsLinearAdapter()
@@ -345,7 +309,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         val mimeType = "text/plain"
         val title = resources.getString(R.string.share_movie)
         val textToShare = resources.getString(R.string.check_out_movie, movieTitle, movieURL)
-        val intent = ShareCompat.IntentBuilder.from(this)
+        val intent = ShareCompat.IntentBuilder.from(requireActivity())
                 .setChooserTitle(title)
                 .setType(mimeType)
                 .setText(textToShare).intent
@@ -363,4 +327,5 @@ class MovieDetailsActivity : AppCompatActivity() {
         bookmarkIcon?.isSelected = enable
     }
     //endregion
+
 }

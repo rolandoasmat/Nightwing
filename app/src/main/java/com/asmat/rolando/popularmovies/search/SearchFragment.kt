@@ -11,7 +11,7 @@ import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.setNearBottomScrollListener
 import com.asmat.rolando.popularmovies.ui.castdetails.CastDetailsActivity
-import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsActivity
+import com.asmat.rolando.popularmovies.moviedetails.MovieDetailsActivity
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject

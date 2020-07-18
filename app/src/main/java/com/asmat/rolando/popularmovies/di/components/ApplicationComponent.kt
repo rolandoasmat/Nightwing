@@ -8,7 +8,8 @@ import com.asmat.rolando.popularmovies.ui.castdetails.CastDetailsActivity
 import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.PersonMovieCreditsFragment
 import com.asmat.rolando.popularmovies.ui.moviegrid.BaseMovieGridFragment
 import com.asmat.rolando.popularmovies.ui.moviegrid.paginated.PaginatedMovieGridFragment
-import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsActivity
+import com.asmat.rolando.popularmovies.moviedetails.MovieDetailsActivity
+import com.asmat.rolando.popularmovies.moviedetails.MovieDetailsFragment
 import com.asmat.rolando.popularmovies.ui.popularmovies.PopularMoviesFragment
 import com.asmat.rolando.popularmovies.search.SearchFragment
 import com.asmat.rolando.popularmovies.ui.discover.MainActivity
@@ -32,5 +33,6 @@ interface ApplicationComponent {
     fun inject(baseMovieGridFragment: BaseMovieGridFragment)
 
     fun inject(searchFragment: SearchFragment)
+    fun inject(movieDetailsFragment: MovieDetailsFragment)
 
 }

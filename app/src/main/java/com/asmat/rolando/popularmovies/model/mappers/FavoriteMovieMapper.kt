@@ -1,9 +1,7 @@
 package com.asmat.rolando.popularmovies.model.mappers
 
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
-import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MovieDetailsResponse
-import com.asmat.rolando.popularmovies.ui.moviedetails.MovieDetailsUIModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
