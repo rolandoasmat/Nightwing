@@ -27,11 +27,13 @@ import kotlinx.android.synthetic.main.movie_details_user_actions.*
 import kotlinx.android.synthetic.main.primary_details.*
 import javax.inject.Inject
 
-class MovieDetailsFragment(val movieID: Int): Fragment() {
+class MovieDetailsFragment: Fragment() {
 
     companion object {
-        fun newInstance(movieID: Int): MovieDetailsFragment {
-            return MovieDetailsFragment(movieID)
+        fun newInstance(extras: Bundle?): MovieDetailsFragment {
+            val fragment = MovieDetailsFragment()
+            fragment.arguments = extras
+            return fragment
         }
     }
 
@@ -44,6 +46,11 @@ class MovieDetailsFragment(val movieID: Int): Fragment() {
     private lateinit var trailersLinearAdapter: TrailersLinearAdapter
     private lateinit var castLinearAdapter: CastLinearAdapter
     private lateinit var reviewsLinearAdapter: ReviewsLinearAdapter
+
+    private val movieID: Int
+        get() {
+            return requireArguments().getInt(MovieDetailsActivity.EXTRA_MOVIE_ID)
+        }
 
 
     //region Callbacks

@@ -11,7 +11,7 @@ import com.asmat.rolando.popularmovies.R
 class MovieDetailsActivity : AppCompatActivity() {
 
     companion object {
-        private const val EXTRA_MOVIE_ID = "extra_movie_id"
+        const val EXTRA_MOVIE_ID = "extra_movie_id"
 
         fun createIntent(context: Context, movieID: Int): Intent {
             val destinationClass = MovieDetailsActivity::class.java
@@ -21,17 +21,12 @@ class MovieDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private val movieID: Int
-        get() {
-            return intent.getIntExtra(EXTRA_MOVIE_ID, 0)
-        }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (applicationContext as MovieNightApplication).component().inject(this)
         setContentView(R.layout.activity_movie_detail)
         if (savedInstanceState == null) {
-            val fragment = MovieDetailsFragment.newInstance(movieID)
+            val fragment = MovieDetailsFragment.newInstance(intent.extras)
             supportFragmentManager
                     .beginTransaction()
                     .add(R.id.movieDetailsContent, fragment)
