@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
@@ -111,8 +112,9 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun showMovieDetailScreen(movieID: Int) {
-        val intent = MovieDetailsActivity.createIntent(requireContext(), movieID)
-        startActivity(intent)
+        val bundle = Bundle()
+        bundle.putInt(MovieDetailsActivity.MOVIE_ID_ARG, movieID)
+        findNavController().navigate(R.id.action_global_to_movie_details, bundle)
     }
 
     /**

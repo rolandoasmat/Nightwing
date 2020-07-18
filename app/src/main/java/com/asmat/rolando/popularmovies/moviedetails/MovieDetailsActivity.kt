@@ -11,12 +11,12 @@ import com.asmat.rolando.popularmovies.R
 class MovieDetailsActivity : AppCompatActivity() {
 
     companion object {
-        const val EXTRA_MOVIE_ID = "extra_movie_id"
+        const val MOVIE_ID_ARG = "movie_id_arg"
 
         fun createIntent(context: Context, movieID: Int): Intent {
             val destinationClass = MovieDetailsActivity::class.java
             val intentToStartDetailActivity = Intent(context, destinationClass)
-            intentToStartDetailActivity.putExtra(EXTRA_MOVIE_ID, movieID)
+            intentToStartDetailActivity.putExtra(MOVIE_ID_ARG, movieID)
             return intentToStartDetailActivity
         }
     }
@@ -25,13 +25,6 @@ class MovieDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         (applicationContext as MovieNightApplication).component().inject(this)
         setContentView(R.layout.activity_movie_detail)
-        if (savedInstanceState == null) {
-            val fragment = MovieDetailsFragment.newInstance(intent.extras)
-            supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.movieDetailsContent, fragment)
-                    .commit()
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

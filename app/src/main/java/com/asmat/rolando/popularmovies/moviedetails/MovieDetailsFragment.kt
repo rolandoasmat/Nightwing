@@ -49,7 +49,7 @@ class MovieDetailsFragment: Fragment() {
 
     private val movieID: Int
         get() {
-            return requireArguments().getInt(MovieDetailsActivity.EXTRA_MOVIE_ID)
+            return requireArguments().getInt(MovieDetailsActivity.MOVIE_ID_ARG)
         }
 
 
