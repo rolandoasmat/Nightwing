@@ -42,7 +42,6 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity?.applicationContext as MovieNightApplication).component().inject(this)
-        observeViewModel()
         viewModel.load()
     }
 
@@ -70,6 +69,8 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
 
         refreshUI()
         viewModel.load()
+        observeViewModel()
+
     }
 
     private fun refreshUI() {
@@ -79,13 +80,13 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.moviesUIModels.observe(this, Observer { movies ->
+        viewModel.moviesUIModels.observe(viewLifecycleOwner, Observer { movies ->
             renderMoviesUIModels(movies)
         })
-        viewModel.error.observe(this, Observer { error ->
+        viewModel.error.observe(viewLifecycleOwner, Observer { error ->
             renderError(error)
         })
-        viewModel.navigationEvent.observe(this, Observer { navigationEvent ->
+        viewModel.navigationEvent.observe(viewLifecycleOwner, Observer { navigationEvent ->
             handleNavigationEvent(navigationEvent)
         })
     }
@@ -105,6 +106,7 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
         navigationEvent?.let { event ->
             when (event) {
                 is BaseMovieGridViewModel.NavigationEvent.ShowMovieDetailScreen -> {
+                    viewModel.navigationEvent.value = null
                     showMovieDetailScreen(event.movieID)
                 }
             }

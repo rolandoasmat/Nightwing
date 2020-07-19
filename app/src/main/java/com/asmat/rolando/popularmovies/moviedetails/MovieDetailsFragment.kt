@@ -92,15 +92,15 @@ class MovieDetailsFragment: Fragment() {
         sendEvents()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            android.R.id.home -> {
-//                super.onBackPressed()
-//                return true
-//            }
-//        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//////        when (item.itemId) {
+//////            android.R.id.home -> {
+//////                super.onBackPressed()
+//////                return true
+//////            }
+//////        }
+////        return super.onOptionsItemSelected(item)
+//    }
 
 //    override fun onSupportNavigateUp(): Boolean {
 //        super.onBackPressed()

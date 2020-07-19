@@ -10,6 +10,20 @@
         android:id="@+id/searchScreen"
         android:name="com.asmat.rolando.popularmovies.search.SearchFragment"
         android:label="Search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchScreen_to_movieDetailsScreen"
+            app:destination="@id/movieDetailsScreen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieDetailsScreen"
+        android:name="com.asmat.rolando.popularmovies.moviedetails.MovieDetailsFragment"
+        android:label="Movie Details"
+        tools:layout="@layout/fragment_movie_details" >
+        <argument
+            android:name="movieIdArg"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

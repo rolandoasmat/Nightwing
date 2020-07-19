@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.ui.discover.DiscoverPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
@@ -35,6 +36,11 @@ class HomeFragment: Fragment() {
         TabLayoutMediator(tabs, container) { tab, position ->
             tab.text = tabName[position]
         }.attach()
+    }
+
+    private fun showMovieDetailScreen(movieID: Int) {
+        val action = HomeFragmentDirections.actionHomeScreenToMovieDetailsScreen(movieID)
+        findNavController().navigate(action)
     }
 
 }

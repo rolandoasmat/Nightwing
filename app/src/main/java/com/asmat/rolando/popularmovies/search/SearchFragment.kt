@@ -20,7 +20,7 @@ class SearchFragment: Fragment(), SearchAdapter.Callbacks {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    val viewModel: SearchViewModel by viewModels{ viewModelFactory }
+    val viewModel: SearchViewModel by viewModels { viewModelFactory }
 
     private var adapter: SearchAdapter? = null
 
@@ -92,8 +92,8 @@ class SearchFragment: Fragment(), SearchAdapter.Callbacks {
     }
 
     override fun openMovieDetails(id: Int) {
-//        val action = MobileNavigationDirections.actionGlobalToMovieDetails(id)
-//        findNavController().navigate(action)
+        val action = SearchFragmentDirections.actionSearchScreenToMovieDetailsScreen(id)
+        findNavController().navigate(action)
     }
 
     override fun openActorDetails(id: Int) {
