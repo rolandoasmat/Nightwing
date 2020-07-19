@@ -11,11 +11,11 @@ import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
+import com.asmat.rolando.popularmovies.home.HomeFragmentDirections
 import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
-import com.asmat.rolando.popularmovies.moviedetails.MovieDetailsActivity
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import kotlinx.android.synthetic.main.fragment_movie_grid.*
 import kotlinx.android.synthetic.main.retry_layout.*
@@ -112,9 +112,8 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun showMovieDetailScreen(movieID: Int) {
-        val bundle = Bundle()
-        bundle.putInt(MovieDetailsActivity.MOVIE_ID_ARG, movieID)
-        findNavController().navigate(R.id.action_global_to_movie_details, bundle)
+        val action = HomeFragmentDirections.actionHomeScreenToMovieDetailsScreen(movieID)
+        findNavController().navigate(action)
     }
 
     /**

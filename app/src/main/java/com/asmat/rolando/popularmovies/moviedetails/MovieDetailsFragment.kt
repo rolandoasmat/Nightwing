@@ -11,6 +11,9 @@ import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.gone
@@ -30,6 +33,7 @@ import javax.inject.Inject
 class MovieDetailsFragment: Fragment() {
 
     companion object {
+        const val MOVIE_ID_ARG = "movieIdArg"
         fun newInstance(extras: Bundle?): MovieDetailsFragment {
             val fragment = MovieDetailsFragment()
             fragment.arguments = extras
@@ -49,7 +53,7 @@ class MovieDetailsFragment: Fragment() {
 
     private val movieID: Int
         get() {
-            return requireArguments().getInt(MovieDetailsActivity.MOVIE_ID_ARG)
+            return requireArguments().getInt(MOVIE_ID_ARG)
         }
 
 
@@ -193,6 +197,8 @@ class MovieDetailsFragment: Fragment() {
 //        val toolbar = findViewById<Toolbar>(R.id.toolbar)
 //        setSupportActionBar(toolbar)
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
+//        collapsingToolbar?.setupWithNavController(toolbar, findNavController(), appBarConfiguration)
     }
 
     private fun setupTrailersRecyclerView() {

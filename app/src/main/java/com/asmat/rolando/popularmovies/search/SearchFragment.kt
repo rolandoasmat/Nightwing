@@ -6,12 +6,12 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.setNearBottomScrollListener
 import com.asmat.rolando.popularmovies.ui.castdetails.CastDetailsActivity
-import com.asmat.rolando.popularmovies.moviedetails.MovieDetailsActivity
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
@@ -92,8 +92,8 @@ class SearchFragment: Fragment(), SearchAdapter.Callbacks {
     }
 
     override fun openMovieDetails(id: Int) {
-        val intent = MovieDetailsActivity.createIntent(requireContext(), id)
-        startActivity(intent)
+//        val action = MobileNavigationDirections.actionGlobalToMovieDetails(id)
+//        findNavController().navigate(action)
     }
 
     override fun openActorDetails(id: Int) {

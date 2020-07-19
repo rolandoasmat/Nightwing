@@ -14,7 +14,6 @@ import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
-import com.asmat.rolando.popularmovies.moviedetails.MovieDetailsActivity
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.person_movie_credits.*
@@ -90,7 +89,7 @@ class PersonMovieCreditsFragment : androidx.fragment.app.Fragment(), MovieCredit
     }
 
     private fun setup() {
-        val numOfColumns = ViewUtils.calculateNumberOfColumns(activity!!)
+        val numOfColumns = ViewUtils.calculateNumberOfColumns(requireActivity())
         movieCreditsRecyclerView?.layoutManager = androidx.recyclerview.widget.GridLayoutManager(context, numOfColumns)
         movieCreditsRecyclerView?.adapter = adapter
         personID?. let { id -> viewModel.init(id) }
@@ -98,7 +97,7 @@ class PersonMovieCreditsFragment : androidx.fragment.app.Fragment(), MovieCredit
     }
 
     private fun observeViewModel() {
-        viewModel.uiModel.observe(this, Observer { uiModel ->
+        viewModel.uiModel.observe(viewLifecycleOwner, Observer { uiModel ->
             uiModel?.let { render(it) }
         })
     }
@@ -113,8 +112,8 @@ class PersonMovieCreditsFragment : androidx.fragment.app.Fragment(), MovieCredit
     }
 
     override fun onMovieBannerClicked(movieID: Int) {
-        val intent = MovieDetailsActivity.createIntent(requireContext(), movieID)
-        startActivity(intent)
+//        val action = MobileNavigationDirections.actionGlobalToMovieDetails(movieID)
+//        findNavController().navigate(action)
     }
 
 }
