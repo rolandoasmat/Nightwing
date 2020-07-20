@@ -7,6 +7,6 @@ import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 class TopRatedMoviesFragment(callbacks: MovieGridCallbacks) : PaginatedMovieGridFragment(callbacks) {
 
     override val viewModel: TopRatedMoviesViewModel
-        get() = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository, dataModelMapper, uiModelMapper)).get(TopRatedMoviesViewModel::class.java)
+        get() = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository, dataModelMapper, uiModelMapper, deepLinksUtils)).get(TopRatedMoviesViewModel::class.java)
 
 }

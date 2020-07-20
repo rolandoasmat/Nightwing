@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_cast_detail.*
 import java.lang.IllegalStateException
 import javax.inject.Inject
-
+// TODO hanlde movie credits poster tap
 class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.Listener {
 
     companion object {

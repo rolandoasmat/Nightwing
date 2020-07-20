@@ -22,29 +22,21 @@
             android:name="com.asmat.rolando.popularmovies.ui.discover.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- This is added to handle a deep link -->
+            <nav-graph android:value="@navigation/home" />
         </activity>
 
-        <!-- Movie Detail -->
+
+        <!-- Cast Detail -->
         <activity
-            android:name="com.asmat.rolando.popularmovies.moviedetails.MovieDetailsActivity"
+            android:name="com.asmat.rolando.popularmovies.ui.castdetails.CastDetailsActivity"
             android:parentActivityName="com.asmat.rolando.popularmovies.ui.discover.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.asmat.rolando.popularmovies.ui.discover.MainActivity" />
-        </activity>
-
-        <!-- Cast Detail -->
-        <activity
-            android:name="com.asmat.rolando.popularmovies.ui.castdetails.CastDetailsActivity"
-            android:parentActivityName="com.asmat.rolando.popularmovies.moviedetails.MovieDetailsActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asmat.rolando.popularmovies.moviedetails.MovieDetailsActivity" />
         </activity>
 
     </application>

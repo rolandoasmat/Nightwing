@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
+import com.asmat.rolando.popularmovies.deep_links.DeepLinksUtils
 import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
 import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
@@ -32,6 +33,9 @@ abstract class BaseMovieGridFragment(private val callbacks: MovieGridCallbacks) 
 
     @Inject
     lateinit var uiModelMapper: UiModelMapper
+
+    @Inject
+    lateinit var deepLinksUtils: DeepLinksUtils
 
     private var moviesGridAdapter: BaseMoviesGridAdapter? = null
 

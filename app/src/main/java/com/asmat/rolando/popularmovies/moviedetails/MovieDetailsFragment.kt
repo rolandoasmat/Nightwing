@@ -45,7 +45,6 @@ class MovieDetailsFragment: Fragment() {
     lateinit var viewModelFactory: ViewModelFactory
     val viewModel: MovieDetailsViewModel by viewModels{ viewModelFactory }
 
-
     // Recycler View Adapters
     private lateinit var trailersLinearAdapter: TrailersLinearAdapter
     private lateinit var castLinearAdapter: CastLinearAdapter
@@ -167,8 +166,10 @@ class MovieDetailsFragment: Fragment() {
             updateBookmark(isWatchLaterMovie == true)
         })
 
-        viewModel.shareMovie.observe(viewLifecycleOwner, Observer { movieData ->
-            shareMovie(movieData)
+        viewModel.shareMovie.observe(viewLifecycleOwner, Observer { textToShare ->
+            textToShare?.let { text ->
+                shareMovie(text)
+            }
         })
 
         // Movie lists
@@ -313,15 +314,9 @@ class MovieDetailsFragment: Fragment() {
         }
     }
 
-    private fun shareMovie(movieData: Pair<String, String>?) {
-        if (movieData == null) {
-            return
-        }
-        val movieTitle = movieData.first
-        val movieURL = movieData.second
+    private fun shareMovie(textToShare: String) {
         val mimeType = "text/plain"
         val title = resources.getString(R.string.share_movie)
-        val textToShare = resources.getString(R.string.check_out_movie, movieTitle, movieURL)
         val intent = ShareCompat.IntentBuilder.from(requireActivity())
                 .setChooserTitle(title)
                 .setType(mimeType)

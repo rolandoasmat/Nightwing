@@ -2,6 +2,7 @@ package com.asmat.rolando.popularmovies.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.asmat.rolando.popularmovies.deep_links.DeepLinksUtils
 import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
@@ -25,7 +26,8 @@ class ViewModelFactory @Inject constructor(
         private val moviesRepository: MoviesRepository,
         private val peopleRepository: PeopleRepository,
         private val dataModelMapper: DataModelMapper,
-        private val uiModelMapper: UiModelMapper) : ViewModelProvider.NewInstanceFactory() {
+        private val uiModelMapper: UiModelMapper,
+        private val deepLinksUtils: DeepLinksUtils) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when {
@@ -33,7 +35,7 @@ class ViewModelFactory @Inject constructor(
             modelClass.isAssignableFrom(TopRatedMoviesViewModel::class.java) -> TopRatedMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
             modelClass.isAssignableFrom(NowPlayingMoviesViewModel::class.java) -> NowPlayingMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
             modelClass.isAssignableFrom(UpcomingMoviesViewModel::class.java) -> UpcomingMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
-            modelClass.isAssignableFrom(MovieDetailsViewModel::class.java) -> MovieDetailsViewModel(moviesRepository, dataModelMapper, AndroidSchedulers.mainThread()) as T
+            modelClass.isAssignableFrom(MovieDetailsViewModel::class.java) -> MovieDetailsViewModel(moviesRepository, dataModelMapper, deepLinksUtils, AndroidSchedulers.mainThread()) as T
             modelClass.isAssignableFrom(CastDetailsViewModel::class.java) -> CastDetailsViewModel(peopleRepository, AndroidSchedulers.mainThread()) as T
             modelClass.isAssignableFrom(PersonMovieCreditsViewModel::class.java) -> PersonMovieCreditsViewModel(peopleRepository, uiModelMapper, AndroidSchedulers.mainThread(), moviesRepository) as T
             modelClass.isAssignableFrom(FavoriteMoviesViewModel::class.java) -> FavoriteMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T

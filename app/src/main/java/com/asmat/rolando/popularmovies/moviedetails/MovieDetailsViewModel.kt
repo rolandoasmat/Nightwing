@@ -3,6 +3,7 @@ package com.asmat.rolando.popularmovies.moviedetails
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.asmat.rolando.popularmovies.deep_links.DeepLinksUtils
 import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MovieDetailsResponse
@@ -20,6 +21,7 @@ import io.reactivex.Scheduler
 class MovieDetailsViewModel(
         private val moviesRepository: MoviesRepository,
         private val dataModelMapper: DataModelMapper,
+        private val deepLinksUtils: DeepLinksUtils,
         private val mainThreadScheduler: Scheduler) : ViewModel() {
 
     val backdropURL = MutableLiveData<String>()
@@ -33,7 +35,7 @@ class MovieDetailsViewModel(
 
     val isFavoriteMovie = MutableLiveData<Boolean>()
     val isWatchLaterMovie = MutableLiveData<Boolean>()
-    val shareMovie = MutableLiveData<Pair<String, String>>()
+    val shareMovie = MutableLiveData<String>()
 
     val videos = MutableLiveData<List<VideosResponse.Video>>()
     val videosError = MutableLiveData<Throwable>()
@@ -104,8 +106,9 @@ class MovieDetailsViewModel(
      */
     fun onShareTapped() {
         val movieTitle = movieTitle.value ?: ""
-        val youtubeURL = videos.value?.firstOrNull()?.key?.let { URLUtils.getYoutubeURL(it) } ?: ""
-        shareMovie.value = Pair(movieTitle, youtubeURL)
+        val deepLink = deepLinksUtils.shareMovieDetailsDeepLink(movieID)
+        val shareText = "Check out $movieTitle! "
+        shareMovie.value = shareText
     }
     //endregion
 
