@@ -10,6 +10,20 @@
         android:id="@+id/savedMoviesScreen"
         android:name="com.asmat.rolando.popularmovies.saved.SavedFragment"
         android:label="Saved"
-        tools:layout="@layout/fragment_saved" />
+        tools:layout="@layout/fragment_saved" >
+        <action
+            android:id="@+id/action_savedMoviesScreen_to_movieDetailsScreen"
+            app:destination="@id/movieDetailsScreen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieDetailsScreen"
+        android:name="com.asmat.rolando.popularmovies.moviedetails.MovieDetailsFragment"
+        android:label="Movie Details"
+        tools:layout="@layout/fragment_movie_details" >
+        <argument
+            android:name="movieIdArg"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

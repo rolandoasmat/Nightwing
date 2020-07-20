@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.ui.discover.DiscoverPagerAdapter
+import com.asmat.rolando.popularmovies.ui.moviegrid.BaseMovieGridFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -31,16 +32,18 @@ class HomeFragment: Fragment() {
     }
 
     private fun setupViewPager() {
-        val adapter = DiscoverPagerAdapter(this)
+        val adapter = DiscoverPagerAdapter(this, callbacks)
         container?.adapter = adapter
         TabLayoutMediator(tabs, container) { tab, position ->
             tab.text = tabName[position]
         }.attach()
     }
 
-    private fun showMovieDetailScreen(movieID: Int) {
-        val action = HomeFragmentDirections.actionHomeScreenToMovieDetailsScreen(movieID)
-        findNavController().navigate(action)
+    private val callbacks = object: BaseMovieGridFragment.MovieGridCallbacks {
+        override fun showMovieDetailScreen(movieID: Int) {
+            val action = HomeFragmentDirections.actionHomeScreenToMovieDetailsScreen(movieID)
+            findNavController().navigate(action)
+        }
     }
 
 }

@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.asmat.rolando.popularmovies.R
+import com.asmat.rolando.popularmovies.home.HomeFragmentDirections
+import com.asmat.rolando.popularmovies.ui.moviegrid.BaseMovieGridFragment
 import com.asmat.rolando.popularmovies.ui.mylists.MyListsPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_saved.*
@@ -24,11 +27,18 @@ class SavedFragment: Fragment() {
     }
 
     private fun setupViewPager() {
-        val adapter = MyListsPagerAdapter(this)
+        val adapter = MyListsPagerAdapter(this, callbacks)
         container?.adapter = adapter
         TabLayoutMediator(tabs, container) { tab, position ->
             tab.text = tabName[position]
         }.attach()
+    }
+
+    private val callbacks = object: BaseMovieGridFragment.MovieGridCallbacks {
+        override fun showMovieDetailScreen(movieID: Int) {
+            val action = SavedFragmentDirections.actionSavedMoviesScreenToMovieDetailsScreen(movieID)
+            findNavController().navigate(action)
+        }
     }
 
 }

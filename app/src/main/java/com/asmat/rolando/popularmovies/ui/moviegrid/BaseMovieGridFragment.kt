@@ -5,13 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
-import com.asmat.rolando.popularmovies.home.HomeFragmentDirections
 import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
@@ -21,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_movie_grid.*
 import kotlinx.android.synthetic.main.retry_layout.*
 import javax.inject.Inject
 
-abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
+abstract class BaseMovieGridFragment(private val callbacks: MovieGridCallbacks) : androidx.fragment.app.Fragment() {
 
     @Inject
     lateinit var moviesRepository: MoviesRepository
@@ -107,15 +105,10 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
             when (event) {
                 is BaseMovieGridViewModel.NavigationEvent.ShowMovieDetailScreen -> {
                     viewModel.navigationEvent.value = null
-                    showMovieDetailScreen(event.movieID)
+                    callbacks.showMovieDetailScreen(event.movieID)
                 }
             }
         }
-    }
-
-    private fun showMovieDetailScreen(movieID: Int) {
-        val action = HomeFragmentDirections.actionHomeScreenToMovieDetailsScreen(movieID)
-        findNavController().navigate(action)
     }
 
     /**
@@ -158,5 +151,9 @@ abstract class BaseMovieGridFragment : androidx.fragment.app.Fragment() {
         GRID,
         RETRY,
         EMPTY
+    }
+
+    interface MovieGridCallbacks {
+        fun showMovieDetailScreen(movieID: Int)
     }
 }
