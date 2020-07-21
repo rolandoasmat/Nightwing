@@ -13,7 +13,7 @@ import com.asmat.rolando.popularmovies.ui.moviegrid.BaseMovieGridFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment: Fragment() {
+class HomeFragment: Fragment(), BaseMovieGridFragment.MovieGridCallbacks {
 
     private val tabName = listOf("Popular", "Top Rated", "Now Playing", "Upcoming")
 
@@ -32,18 +32,16 @@ class HomeFragment: Fragment() {
     }
 
     private fun setupViewPager() {
-        val adapter = DiscoverPagerAdapter(this, callbacks)
+        val adapter = DiscoverPagerAdapter(this)
         container?.adapter = adapter
         TabLayoutMediator(tabs, container) { tab, position ->
             tab.text = tabName[position]
         }.attach()
     }
 
-    private val callbacks = object: BaseMovieGridFragment.MovieGridCallbacks {
-        override fun showMovieDetailScreen(movieID: Int) {
-            val action = HomeFragmentDirections.actionHomeScreenToMovieDetailsScreen(movieID)
-            findNavController().navigate(action)
-        }
+    override fun showMovieDetailScreen(movieID: Int) {
+        val action = HomeFragmentDirections.actionHomeScreenToMovieDetailsScreen(movieID)
+        findNavController().navigate(action)
     }
 
 }

@@ -107,7 +107,7 @@ class MovieDetailsViewModel(
     fun onShareTapped() {
         val movieTitle = movieTitle.value ?: ""
         val deepLink = deepLinksUtils.shareMovieDetailsDeepLink(movieID)
-        val shareText = "Check out $movieTitle! "
+        val shareText = "Check out $movieTitle!\n$deepLink"
         shareMovie.value = shareText
     }
     //endregion

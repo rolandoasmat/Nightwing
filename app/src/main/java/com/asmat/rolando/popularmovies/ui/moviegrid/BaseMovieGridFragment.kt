@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_movie_grid.*
 import kotlinx.android.synthetic.main.retry_layout.*
 import javax.inject.Inject
 
-abstract class BaseMovieGridFragment(private val callbacks: MovieGridCallbacks) : androidx.fragment.app.Fragment() {
+abstract class BaseMovieGridFragment: androidx.fragment.app.Fragment() {
 
     @Inject
     lateinit var moviesRepository: MoviesRepository
@@ -40,6 +40,8 @@ abstract class BaseMovieGridFragment(private val callbacks: MovieGridCallbacks) 
     private var moviesGridAdapter: BaseMoviesGridAdapter? = null
 
     abstract val viewModel: BaseMovieGridViewModel
+
+    private var callbacks: MovieGridCallbacks? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +74,13 @@ abstract class BaseMovieGridFragment(private val callbacks: MovieGridCallbacks) 
         refreshUI()
         viewModel.load()
         observeViewModel()
+        setCallback()
+    }
 
+    private fun setCallback() {
+        (parentFragment as? MovieGridCallbacks)?.let {
+            this.callbacks = it
+        }
     }
 
     private fun refreshUI() {
@@ -109,7 +117,7 @@ abstract class BaseMovieGridFragment(private val callbacks: MovieGridCallbacks) 
             when (event) {
                 is BaseMovieGridViewModel.NavigationEvent.ShowMovieDetailScreen -> {
                     viewModel.navigationEvent.value = null
-                    callbacks.showMovieDetailScreen(event.movieID)
+                    callbacks?.showMovieDetailScreen(event.movieID)
                 }
             }
         }

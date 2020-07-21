@@ -6,12 +6,12 @@ import com.asmat.rolando.popularmovies.ui.favoritemovies.FavoriteMoviesGridFragm
 import com.asmat.rolando.popularmovies.ui.moviegrid.BaseMovieGridFragment
 import com.asmat.rolando.popularmovies.ui.watchlatermovies.WatchLaterMoviesGridFragment
 
-class MyListsPagerAdapter(fragment: Fragment, val callbacks: BaseMovieGridFragment.MovieGridCallbacks) : BaseSectionsPagerAdapter(fragment) {
+class MyListsPagerAdapter(fragment: Fragment) : BaseSectionsPagerAdapter(fragment) {
 
     override val fragments: Array<Fragment>
         get() {
-            val favorites = FavoriteMoviesGridFragment(callbacks)
-            val watchLater = WatchLaterMoviesGridFragment(callbacks)
+            val favorites = FavoriteMoviesGridFragment()
+            val watchLater = WatchLaterMoviesGridFragment()
             return arrayOf(favorites, watchLater)
         }
 }
