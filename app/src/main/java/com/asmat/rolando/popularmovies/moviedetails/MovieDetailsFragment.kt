@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ShareCompat
@@ -91,20 +90,6 @@ class MovieDetailsFragment: Fragment() {
         sendEvents()
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//////        when (item.itemId) {
-//////            android.R.id.home -> {
-//////                super.onBackPressed()
-//////                return true
-//////            }
-//////        }
-////        return super.onOptionsItemSelected(item)
-//    }
-
-//    override fun onSupportNavigateUp(): Boolean {
-//        super.onBackPressed()
-//        return true
-//    }
 
     //region User Actions
     private fun sendEvents() {
@@ -195,11 +180,10 @@ class MovieDetailsFragment: Fragment() {
     }
 
     private fun setupToolbar() {
-//        val toolbar = findViewById<Toolbar>(R.id.toolbar)
 //        setSupportActionBar(toolbar)
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
-//        collapsingToolbar?.setupWithNavController(toolbar, findNavController(), appBarConfiguration)
+        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
+        collapsingToolbar?.setupWithNavController(toolbar, findNavController(), appBarConfiguration)
     }
 
     private fun setupTrailersRecyclerView() {
