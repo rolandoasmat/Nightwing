@@ -10,20 +10,15 @@
         android:id="@+id/savedMoviesScreen"
         android:name="com.asmat.rolando.popularmovies.saved.SavedFragment"
         android:label="Saved"
-        tools:layout="@layout/fragment_saved" >
-        <action
-            android:id="@+id/action_savedMoviesScreen_to_movieDetailsScreen"
-            app:destination="@id/movieDetailsScreen" />
-    </fragment>
+        tools:layout="@layout/fragment_saved" />
 
-    <fragment
-        android:id="@+id/movieDetailsScreen"
-        android:name="com.asmat.rolando.popularmovies.moviedetails.MovieDetailsFragment"
-        android:label="Movie Details"
-        tools:layout="@layout/fragment_movie_details" >
+    <include app:graph="@navigation/movie_details" />
+    <action
+        android:id="@+id/action_globalAction_to_movieDetailsScreen"
+        app:destination="@id/movie_details" >
         <argument
             android:name="movieIdArg"
             app:argType="integer" />
-    </fragment>
+    </action>
 
 </navigation>

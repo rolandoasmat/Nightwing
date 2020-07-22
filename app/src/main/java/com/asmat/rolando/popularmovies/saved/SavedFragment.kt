@@ -34,7 +34,7 @@ class SavedFragment: Fragment(), BaseMovieGridFragment.MovieGridCallbacks {
     }
 
     override fun showMovieDetailScreen(movieID: Int) {
-        val action = SavedFragmentDirections.actionSavedMoviesScreenToMovieDetailsScreen(movieID)
+        val action = SavedFragmentDirections.actionGlobalActionToMovieDetailsScreen(movieID)
         findNavController().navigate(action)
     }
 

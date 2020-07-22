@@ -92,7 +92,7 @@ class SearchFragment: Fragment(), SearchAdapter.Callbacks {
     }
 
     override fun openMovieDetails(id: Int) {
-        val action = SearchFragmentDirections.actionSearchScreenToMovieDetailsScreen(id)
+        val action = SearchFragmentDirections.actionGlobalActionToMovieDetailsScreen(id)
         findNavController().navigate(action)
     }
 

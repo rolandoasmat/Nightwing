@@ -1,7 +1,6 @@
 package com.asmat.rolando.popularmovies.ui.discover
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -52,12 +51,10 @@ class MainActivity : AppCompatActivity() {
         })
         currentNavController = controller
         currentNavController?.value?.addOnDestinationChangedListener { _, destination, _ ->
-            if(destination.id == R.id.movieDetailsScreen) {
+            if (destination.id == R.id.movieDetailsScreen) {
                 supportActionBar?.hide()
-                bottomNavigationView.visibility = View.GONE
             } else {
                 supportActionBar?.show()
-                bottomNavigationView.visibility = View.VISIBLE
             }
         }
     }

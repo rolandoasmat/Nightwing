@@ -40,7 +40,7 @@ class HomeFragment: Fragment(), BaseMovieGridFragment.MovieGridCallbacks {
     }
 
     override fun showMovieDetailScreen(movieID: Int) {
-        val action = HomeFragmentDirections.actionHomeScreenToMovieDetailsScreen(movieID)
+        val action = HomeFragmentDirections.actionGlobalActionToMovieDetailsScreen(movieID)
         findNavController().navigate(action)
     }
 

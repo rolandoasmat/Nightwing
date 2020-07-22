@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/movie_details"
+    app:startDestination="@+id/movieDetailsScreen">
+
+    <fragment
+        android:id="@+id/movieDetailsScreen"
+        android:name="com.asmat.rolando.popularmovies.moviedetails.MovieDetailsFragment"
+        android:label="Movie Details"
+        tools:layout="@layout/fragment_movie_details" >
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="movienight.app/details/{movieIdArg}"/>
+        <argument
+            android:name="movieIdArg"
+            app:argType="integer" />
+    </fragment>
+
+</navigation>
