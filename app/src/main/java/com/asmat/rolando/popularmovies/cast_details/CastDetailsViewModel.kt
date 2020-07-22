@@ -1,9 +1,10 @@
-package com.asmat.rolando.popularmovies.ui.castdetails
+package com.asmat.rolando.popularmovies.cast_details
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.asmat.rolando.popularmovies.cast_details.CastDetailsUiModel
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
-import com.asmat.rolando.popularmovies.ui.castdetails.personinfo.PersonInfoUiModel
+import com.asmat.rolando.popularmovies.cast_details.PersonInfoUiModel
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable

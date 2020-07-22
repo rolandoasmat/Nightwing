@@ -1,8 +1,8 @@
-package com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits
+package com.asmat.rolando.popularmovies.cast_details
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.asmat.rolando.popularmovies.cast_details.PersonMovieCreditsUiModel
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository

@@ -1,36 +1,28 @@
-package com.asmat.rolando.popularmovies.ui.castdetails
+package com.asmat.rolando.popularmovies.cast_details
 
-import android.content.Context
-import android.content.Intent
-import androidx.lifecycle.Observer
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import android.view.LayoutInflater
 import android.view.MenuItem
-import androidx.activity.viewModels
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
-import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.PersonMovieCreditsFragment
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_cast_detail.*
-import java.lang.IllegalStateException
+import kotlinx.android.synthetic.main.fragment_cast_details.*
 import javax.inject.Inject
-// TODO hanlde movie credits poster tap
-class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.Listener {
+
+class CastDetailsFragment: Fragment(), PersonMovieCreditsFragment.Listener {
 
     companion object {
-        const val EXTRA_PERSON_ID = "PERSON_ID_KEY"
-
-        fun createIntent(context: Context, castID: Int): Intent {
-            val destinationClass = CastDetailsActivity::class.java
-            val intent = Intent(context, destinationClass)
-            intent.putExtra(EXTRA_PERSON_ID, castID)
-            return intent
-        }
+        const val CAST_ID_ARG = "castIDArg"
     }
 
     @Inject
@@ -40,12 +32,18 @@ class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.List
     private val tabName = listOf("Info", "Movie credits")
 
     private val personID: Int
-            get() = intent?.getIntExtra(EXTRA_PERSON_ID, -1) ?: throw IllegalStateException("No person ID found.")
+        get() = requireArguments().getInt(CAST_ID_ARG)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (applicationContext as MovieNightApplication).component().inject(this)
-        setContentView(R.layout.activity_cast_detail)
+        (activity?.applicationContext as? MovieNightApplication)?.component()?.inject(this)
+    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_cast_details, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.init(personID)
         setup()
     }
@@ -59,39 +57,39 @@ class CastDetailsActivity : AppCompatActivity(), PersonMovieCreditsFragment.List
     }
 
     private fun setupToolbar() {
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+//        setSupportActionBar(toolbar)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun observeViewModel() {
-        viewModel.name.observe(this, Observer {
+        viewModel.name.observe(viewLifecycleOwner, Observer {
             collapsingToolbar.title = it
         })
-        viewModel.uiModel.observe(this, Observer { uiModel ->
+        viewModel.uiModel.observe(viewLifecycleOwner, Observer { uiModel ->
             uiModel?.let { setupViewPager(uiModel) }
         })
-        viewModel.loading.observe(this, Observer { loading ->
+        viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
             updateLoading(loading == true)
         })
     }
 
     //endregion
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                super.onBackPressed()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            android.R.id.home -> {
+//                super.onBackPressed()
+//                return true
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
+//
+//    override fun onSupportNavigateUp(): Boolean {
+//        onBackPressed()
+//        return true
+//    }
 
     private fun setupViewPager(uiModel: CastDetailsUiModel) {
         val adapter = CastDetailsPagerAdapter(uiModel, this)

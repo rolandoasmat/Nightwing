@@ -20,7 +20,6 @@ import com.asmat.rolando.popularmovies.extensions.visible
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.ReviewsResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
-import com.asmat.rolando.popularmovies.ui.castdetails.CastDetailsActivity
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 import com.squareup.picasso.Picasso
@@ -65,11 +64,8 @@ class MovieDetailsFragment: Fragment() {
     }
 
     private val castClickCallback = { cast: CreditsResponse.Cast ->
-        val intent = Intent(requireContext(), CastDetailsActivity::class.java)
-        intent.putExtra(CastDetailsActivity.EXTRA_PERSON_ID, cast.id)
-        intent.resolveActivity(requireActivity().packageManager)?.let {
-            startActivity(intent)
-        }
+        val action = MovieDetailsFragmentDirections.actionMovieDetailsScreenToCastDetailsScreen(cast.id)
+        findNavController().navigate(action)
     }
     //endregion
 

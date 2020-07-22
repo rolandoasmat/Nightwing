@@ -10,7 +10,7 @@ import com.asmat.rolando.popularmovies.ui.upcomingmovies.UpcomingMoviesFragment
 /**
  * Adapter that shows the Popular, Top Rated, Now Playing, and Coming Soon grids.
  */
-class DiscoverPagerAdapter(fragment: Fragment) : BaseSectionsPagerAdapter(fragment) {
+class DiscoverPagerAdapter(fragment: Fragment): BaseSectionsPagerAdapter(fragment) {
 
     override val fragments: Array<Fragment>
         get() {

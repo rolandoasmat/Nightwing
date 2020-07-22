@@ -1,7 +1,6 @@
-package com.asmat.rolando.popularmovies.ui.castdetails.personinfo
+package com.asmat.rolando.popularmovies.cast_details
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

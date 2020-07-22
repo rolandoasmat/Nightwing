@@ -1,11 +1,11 @@
 package com.asmat.rolando.popularmovies.di.components
 
+import com.asmat.rolando.popularmovies.cast_details.CastDetailsFragment
 import com.asmat.rolando.popularmovies.di.modules.ContextModule
 import com.asmat.rolando.popularmovies.di.modules.DatabaseModule
 import com.asmat.rolando.popularmovies.di.modules.NetworkModule
 import com.asmat.rolando.popularmovies.di.modules.RepositoriesModule
-import com.asmat.rolando.popularmovies.ui.castdetails.CastDetailsActivity
-import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.PersonMovieCreditsFragment
+import com.asmat.rolando.popularmovies.cast_details.PersonMovieCreditsFragment
 import com.asmat.rolando.popularmovies.ui.moviegrid.BaseMovieGridFragment
 import com.asmat.rolando.popularmovies.ui.moviegrid.paginated.PaginatedMovieGridFragment
 import com.asmat.rolando.popularmovies.moviedetails.MovieDetailsFragment
@@ -25,12 +25,12 @@ interface ApplicationComponent {
 
     fun inject(app: MainActivity)
     fun inject(fragment: PopularMoviesFragment)
-    fun inject(castDetailsActivity: CastDetailsActivity)
     fun inject(castDetailsActivity: PersonMovieCreditsFragment)
     fun inject(paginatedMovieGridFragment: PaginatedMovieGridFragment)
     fun inject(baseMovieGridFragment: BaseMovieGridFragment)
 
     fun inject(searchFragment: SearchFragment)
     fun inject(movieDetailsFragment: MovieDetailsFragment)
+    fun inject(castDetailsFragment: CastDetailsFragment)
 
 }

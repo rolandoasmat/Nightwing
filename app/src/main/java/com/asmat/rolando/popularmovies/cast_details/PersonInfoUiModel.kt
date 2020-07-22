@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.ui.castdetails.personinfo
+package com.asmat.rolando.popularmovies.cast_details
 
 data class PersonInfoUiModel(val photoURL: String,
                              val hometown: String,

@@ -7,8 +7,8 @@ import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
-import com.asmat.rolando.popularmovies.ui.castdetails.CastDetailsViewModel
-import com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits.PersonMovieCreditsViewModel
+import com.asmat.rolando.popularmovies.cast_details.CastDetailsViewModel
+import com.asmat.rolando.popularmovies.cast_details.PersonMovieCreditsViewModel
 import com.asmat.rolando.popularmovies.ui.favoritemovies.FavoriteMoviesViewModel
 import com.asmat.rolando.popularmovies.moviedetails.MovieDetailsViewModel
 import com.asmat.rolando.popularmovies.ui.nowplayingmovies.NowPlayingMoviesViewModel

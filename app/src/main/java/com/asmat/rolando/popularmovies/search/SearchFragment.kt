@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.setNearBottomScrollListener
-import com.asmat.rolando.popularmovies.ui.castdetails.CastDetailsActivity
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
@@ -97,7 +96,7 @@ class SearchFragment: Fragment(), SearchAdapter.Callbacks {
     }
 
     override fun openActorDetails(id: Int) {
-        val intent = CastDetailsActivity.createIntent(requireContext(), id)
-        startActivity(intent)
+//        val intent = CastDetailsActivity.createIntent(requireContext(), id)
+//        startActivity(intent)
     }
 }

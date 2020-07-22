@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits
+package com.asmat.rolando.popularmovies.cast_details
 
 data class MovieCreditUiModel(
         val id: Int,

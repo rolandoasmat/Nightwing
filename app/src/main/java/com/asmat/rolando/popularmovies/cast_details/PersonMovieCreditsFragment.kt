@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.ui.castdetails.personmoviecredits
+package com.asmat.rolando.popularmovies.cast_details
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -72,13 +72,9 @@ class PersonMovieCreditsFragment : androidx.fragment.app.Fragment(), MovieCredit
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository, dataModelMapper, uiModelMapper, deepLinksUtils)).get(PersonMovieCreditsViewModel::class.java)
         setup()
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is Listener) {
-            listener = context
-        } else {
+        (parentFragment as? Listener)?.let {
+            listener = it
+        } ?: run {
             if (BuildConfig.DEBUG) {
                 throw RuntimeException(context.toString() + " must implement Listener")
             } else {
