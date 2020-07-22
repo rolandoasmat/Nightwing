@@ -28,17 +28,6 @@
             <nav-graph android:value="@navigation/home" />
         </activity>
 
-
-        <!-- Cast Detail -->
-        <activity
-            android:name="com.asmat.rolando.popularmovies.ui.castdetails.CastDetailsActivity"
-            android:parentActivityName="com.asmat.rolando.popularmovies.ui.discover.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asmat.rolando.popularmovies.ui.discover.MainActivity" />
-        </activity>
-
     </application>
 
 </manifest>

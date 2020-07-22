@@ -13,6 +13,35 @@
         tools:layout="@layout/fragment_home" >
     </fragment>
 
+    <fragment
+        android:id="@+id/movieDetailsScreen"
+        android:name="com.asmat.rolando.popularmovies.moviedetails.MovieDetailsFragment"
+        android:label="Movie Details"
+        tools:layout="@layout/fragment_movie_details" >
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="movienight.app/details/{movieIdArg}"/>
+        <argument
+            android:name="movieIdArg"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_movieDetailsScreen_to_castDetailsScreen"
+            app:destination="@id/castDetailsScreen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/castDetailsScreen"
+        android:name="com.asmat.rolando.popularmovies.cast_details.CastDetailsFragment"
+        android:label="Cast Details"
+        tools:layout="@layout/fragment_cast_details" >
+        <argument
+            android:name="castIDArg"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_castDetailsScreen_to_movieDetailsScreen"
+            app:destination="@id/movieDetailsScreen" />
+    </fragment>
+
     <include app:graph="@navigation/movie_details" />
     <action
         android:id="@+id/action_globalAction_to_movieDetailsScreen"

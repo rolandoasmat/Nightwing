@@ -11,9 +11,6 @@
         android:name="com.asmat.rolando.popularmovies.moviedetails.MovieDetailsFragment"
         android:label="Movie Details"
         tools:layout="@layout/fragment_movie_details" >
-        <deepLink
-            android:id="@+id/deepLink"
-            app:uri="movienight.app/details/{movieIdArg}"/>
         <argument
             android:name="movieIdArg"
             app:argType="integer" />
