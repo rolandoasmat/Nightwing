@@ -48,15 +48,15 @@ class MainActivity : AppCompatActivity() {
         // Whenever the selected controller changes, setup the action bar.
         controller?.observe(this, Observer { navController ->
             setupActionBarWithNavController(navController)
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                if (destination.label == "Movie Details" || destination.label == "Cast Details") {
+                    supportActionBar?.hide()
+                } else {
+                    supportActionBar?.show()
+                }
+            }
         })
         currentNavController = controller
-        currentNavController?.value?.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.movieDetailsScreen) {
-                supportActionBar?.hide()
-            } else {
-                supportActionBar?.show()
-            }
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

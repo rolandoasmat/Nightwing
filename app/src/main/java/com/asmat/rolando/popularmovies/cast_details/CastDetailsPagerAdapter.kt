@@ -8,7 +8,7 @@ class CastDetailsPagerAdapter(private val uiModel: CastDetailsUiModel, fragment:
     override val fragments: Array<Fragment>
         get() {
             val personDetailsFragment = PersonDetailsFragment.newInstance(uiModel.personInfoUiModel)
-            val personMovieCreditsFragment = PersonMovieCreditsFragment.newInstance(uiModel.personID)
+            val personMovieCreditsFragment = CastMovieCreditsFragment.newInstance(uiModel.personID)
             return arrayOf(personDetailsFragment, personMovieCreditsFragment)
         }
 

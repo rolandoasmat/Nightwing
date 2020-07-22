@@ -2,11 +2,12 @@ package com.asmat.rolando.popularmovies.cast_details
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.asmat.rolando.popularmovies.BuildConfig
 import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
@@ -17,7 +18,7 @@ import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.asmat.rolando.popularmovies.utilities.ViewUtils
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
-import kotlinx.android.synthetic.main.person_movie_credits.*
+import kotlinx.android.synthetic.main.fragment_cast_movie_credits.*
 import javax.inject.Inject
 
 private const val ARG_PERSON_ID = "ARG_PERSON_ID"
@@ -25,12 +26,12 @@ private const val ARG_PERSON_ID = "ARG_PERSON_ID"
 /**
  * Uses the Person ID to retrieve a person's movie credits.
  */
-class PersonMovieCreditsFragment : androidx.fragment.app.Fragment(), MovieCreditsAdapter.ItemCallback {
+class CastMovieCreditsFragment: Fragment(), MovieCreditsAdapter.ItemCallback {
 
     companion object {
         @JvmStatic
         fun newInstance(personID: Int) =
-                PersonMovieCreditsFragment().apply {
+                CastMovieCreditsFragment().apply {
                     arguments = Bundle().apply {
                         putInt(ARG_PERSON_ID, personID)
                     }
@@ -65,7 +66,7 @@ class PersonMovieCreditsFragment : androidx.fragment.app.Fragment(), MovieCredit
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.person_movie_credits, container, false)
+        return inflater.inflate(R.layout.fragment_cast_movie_credits, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -112,8 +113,8 @@ class PersonMovieCreditsFragment : androidx.fragment.app.Fragment(), MovieCredit
     }
 
     override fun onMovieBannerClicked(movieID: Int) {
-//        val action = MobileNavigationDirections.actionGlobalToMovieDetails(movieID)
-//        findNavController().navigate(action)
+        val action = CastDetailsFragmentDirections.actionCastDetailsScreenToMovieDetailsScreen(movieID)
+        findNavController().navigate(action)
     }
 
 }
