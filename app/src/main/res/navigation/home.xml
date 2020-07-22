@@ -13,6 +13,7 @@
         tools:layout="@layout/fragment_home" >
     </fragment>
 
+<!--    TODO this is because Navigation component doesn't support deepLink to a nested graph at the moment-->
     <fragment
         android:id="@+id/movieDetailsScreen"
         android:name="com.asmat.rolando.popularmovies.moviedetails.MovieDetailsFragment"
