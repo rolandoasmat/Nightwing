@@ -176,8 +176,6 @@ class MovieDetailsFragment: Fragment() {
     }
 
     private fun setupToolbar() {
-//        setSupportActionBar(toolbar)
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val appBarConfiguration = AppBarConfiguration(findNavController().graph)
         collapsingToolbar?.setupWithNavController(toolbar, findNavController(), appBarConfiguration)
     }

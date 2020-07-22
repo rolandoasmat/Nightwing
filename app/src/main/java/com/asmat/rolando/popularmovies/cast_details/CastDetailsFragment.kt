@@ -7,17 +7,26 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
+import com.asmat.rolando.popularmovies.home.HomeFragmentDirections
+import com.asmat.rolando.popularmovies.moviedetails.MovieDetailsFragmentDirections
+import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
+import com.asmat.rolando.popularmovies.ui.moviegrid.BaseMovieGridFragment
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_cast_details.*
+import kotlinx.android.synthetic.main.fragment_cast_details.collapsingToolbar
+import kotlinx.android.synthetic.main.fragment_cast_details.toolbar
 import javax.inject.Inject
 
-class CastDetailsFragment: Fragment(), CastMovieCreditsFragment.Listener {
+class CastDetailsFragment: Fragment(), CastMovieCreditsFragment.Listener, MovieCreditsAdapter.ItemCallback {
 
     companion object {
         const val CAST_ID_ARG = "castIDArg"
@@ -46,6 +55,10 @@ class CastDetailsFragment: Fragment(), CastMovieCreditsFragment.Listener {
         setup()
     }
 
+    override fun onMovieBannerClicked(movieID: Int) {
+        val action = CastDetailsFragmentDirections.actionCastDetailsScreenToMovieDetailsScreen(movieID)
+        findNavController().navigate(action)
+    }
 
     //region setup
 
@@ -55,9 +68,8 @@ class CastDetailsFragment: Fragment(), CastMovieCreditsFragment.Listener {
     }
 
     private fun setupToolbar() {
-//        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-//        setSupportActionBar(toolbar)
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
+        collapsingToolbar?.setupWithNavController(toolbar, findNavController(), appBarConfiguration)
     }
 
     private fun observeViewModel() {
@@ -73,21 +85,6 @@ class CastDetailsFragment: Fragment(), CastMovieCreditsFragment.Listener {
     }
 
     //endregion
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            android.R.id.home -> {
-//                super.onBackPressed()
-//                return true
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
-//
-//    override fun onSupportNavigateUp(): Boolean {
-//        onBackPressed()
-//        return true
-//    }
 
     private fun setupViewPager(uiModel: CastDetailsUiModel) {
         val adapter = CastDetailsPagerAdapter(uiModel, this)

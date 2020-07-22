@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cast_details"
+    app:startDestination="@+id/castDetailsScreen">
+
+    <fragment
+        android:id="@+id/castDetailsScreen"
+        android:name="com.asmat.rolando.popularmovies.cast_details.CastDetailsFragment"
+        android:label="Cast Details"
+        tools:layout="@layout/fragment_cast_details" >
+        <argument
+            android:name="castIDArg"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_castDetailsScreen_to_movieDetailsScreen"
+            app:destination="@id/movieDetailsScreen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieDetailsScreen"
+        android:name="com.asmat.rolando.popularmovies.moviedetails.MovieDetailsFragment"
+        android:label="Movie Details"
+        tools:layout="@layout/fragment_movie_details" >
+        <argument
+            android:name="movieIdArg"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_movieDetailsScreen_to_castDetailsScreen"
+            app:destination="@id/castDetailsScreen" />
+    </fragment>
+
+</navigation>

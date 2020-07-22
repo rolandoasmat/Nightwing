@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.asmat.rolando.popularmovies.BuildConfig
 import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
@@ -113,8 +112,7 @@ class CastMovieCreditsFragment: Fragment(), MovieCreditsAdapter.ItemCallback {
     }
 
     override fun onMovieBannerClicked(movieID: Int) {
-        val action = CastDetailsFragmentDirections.actionCastDetailsScreenToMovieDetailsScreen(movieID)
-        findNavController().navigate(action)
+        (parentFragment as? MovieCreditsAdapter.ItemCallback)?.onMovieBannerClicked(movieID)
     }
 
 }

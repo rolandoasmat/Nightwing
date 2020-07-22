@@ -96,7 +96,7 @@ class SearchFragment: Fragment(), SearchAdapter.Callbacks {
     }
 
     override fun openActorDetails(id: Int) {
-//        val intent = CastDetailsActivity.createIntent(requireContext(), id)
-//        startActivity(intent)
+        val action = SearchFragmentDirections.actionGlobalActionToCastDetailsScreen(id)
+        findNavController().navigate(action)
     }
 }

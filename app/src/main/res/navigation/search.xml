@@ -21,4 +21,13 @@
             app:argType="integer" />
     </action>
 
+    <include app:graph="@navigation/cast_details" />
+    <action
+        android:id="@+id/action_globalAction_to_castDetailsScreen"
+        app:destination="@id/cast_details" >
+        <argument
+            android:name="castIDArg"
+            app:argType="integer" />
+    </action>
+
 </navigation>
