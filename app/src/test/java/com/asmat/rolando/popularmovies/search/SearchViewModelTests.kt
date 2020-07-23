@@ -63,7 +63,7 @@ class SearchViewModelTests {
 
         // Assert
         verify(peopleRepository).setPersonsSearchQueryText(searchText)
-        verify(moviesRepository).loadMovieSearchResults()
+        verify(peopleRepository).loadPersonsSearchResults()
     }
 
 }
