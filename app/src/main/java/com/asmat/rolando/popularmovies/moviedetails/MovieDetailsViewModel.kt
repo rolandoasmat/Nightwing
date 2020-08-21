@@ -32,6 +32,7 @@ class MovieDetailsViewModel(
     val posterURL = MutableLiveData<String>()
     val summary = MutableLiveData<String>()
     val tagline = MutableLiveData<String>()
+    val director = MutableLiveData<String>()
 
     val isFavoriteMovie = MutableLiveData<Boolean>()
     val isWatchLaterMovie = MutableLiveData<Boolean>()
@@ -177,6 +178,9 @@ class MovieDetailsViewModel(
                 .observeOn(mainThreadScheduler)
                 .subscribe({ result ->
                     cast.value = result.cast
+                    val director = result.crew.find { it.job ==  DIRECTOR }?.name
+                    this.director.value = director
+
                 }, { error ->
                     castError.value = error
                     cast.value = null
@@ -191,5 +195,9 @@ class MovieDetailsViewModel(
                     reviewsError.value = error
                     reviews.value = null
                 })
+    }
+
+    companion object {
+        private const val DIRECTOR = "Director"
     }
 }

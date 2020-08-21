@@ -15,17 +15,18 @@
         android:adjustViewBounds="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/infoContainer"
         tools:background="@color/colorAccent"
         tools:layout_height="200dp"/>
 
     <LinearLayout
+        android:id="@+id/infoContainer"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:orientation="vertical"
         app:layout_constraintStart_toEndOf="@id/thumbnail"
-        app:layout_constraintTop_toTopOf="@id/thumbnail"
-        app:layout_constraintBottom_toBottomOf="@id/thumbnail"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
@@ -78,6 +79,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="You're a wizard Harry!" />
+
+        <TextView
+            android:text="Director"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/directorLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Christopher Nolan" />
     </LinearLayout>
 
     <TextView
@@ -87,7 +101,7 @@
         android:layout_marginTop="@dimen/activity_margin_general"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/thumbnail"
+        app:layout_constraintTop_toBottomOf="@id/infoContainer"
         tools:text="Some very awesome movie about Rolando André and his quest to make a movie app."/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
