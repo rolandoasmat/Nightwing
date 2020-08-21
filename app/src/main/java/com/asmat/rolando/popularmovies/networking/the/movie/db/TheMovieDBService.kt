@@ -32,6 +32,12 @@ interface TheMovieDBService {
 
     @GET("movie/{movie_id}/credits")
     fun getMovieCredits(@Path("movie_id") id: Int): Single<CreditsResponse>
+
+    @GET("movie/{movie_id}/recommendations")
+    fun getMovieRecommendations(@Path("movie_id") id: Int): Single<MoviesResponse>
+
+    @GET("movie/{movie_id}/similar")
+    fun getSimilarMovies(@Path("movie_id") id: Int): Single<MoviesResponse>
     //endregion
 
     //region search/*
