@@ -1,6 +1,7 @@
 package com.asmat.rolando.popularmovies.moviedetails
 
 import android.annotation.SuppressLint
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.asmat.rolando.popularmovies.deep_links.DeepLinksUtils
@@ -43,6 +44,10 @@ class MovieDetailsViewModel(
 
     val cast = MutableLiveData<List<CreditsResponse.Cast>>()
     val castError = MutableLiveData<Throwable>()
+
+    private val _similarMovies = MutableLiveData<List<MovieCardUIModel>>()
+    val similarMovies: LiveData<List<MovieCardUIModel>>
+        get() { return _similarMovies }
 
     val reviews = MutableLiveData<List<ReviewsResponse.Review>>()
     val reviewsError = MutableLiveData<Throwable>()
@@ -184,6 +189,19 @@ class MovieDetailsViewModel(
                 }, { error ->
                     castError.value = error
                     cast.value = null
+                })
+
+        moviesRepository
+                .getSimilarMovies(movieID)
+                .observeOn(mainThreadScheduler)
+                .subscribe({ result ->
+                    val movies = result.results?.map {
+                        val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}
+                        MovieCardUIModel(posterURL ?: "", it.title ?: "")
+                    }
+                    _similarMovies.value = movies
+                }, { error ->
+                    // TODO show error
                 })
 
         moviesRepository

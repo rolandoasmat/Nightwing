@@ -71,6 +71,8 @@ open class TheMovieDBClient {
         return service.getMovieCredits(movieID)
     }
 
+    open fun getSimilarMovies(movieID: Int) = service.getSimilarMovies(movieID)
+
     open fun searchMovie(searchString: String, page: Int): Single<MoviesResponse> {
         return service.searchMovie(searchString, page)
     }
