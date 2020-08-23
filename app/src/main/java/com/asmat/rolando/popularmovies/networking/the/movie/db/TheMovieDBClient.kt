@@ -73,6 +73,8 @@ open class TheMovieDBClient {
 
     open fun getSimilarMovies(movieID: Int) = service.getSimilarMovies(movieID)
 
+    open fun getMovieRecommendations(movieID: Int) = service.getMovieRecommendations(movieID)
+
     open fun searchMovie(searchString: String, page: Int): Single<MoviesResponse> {
         return service.searchMovie(searchString, page)
     }

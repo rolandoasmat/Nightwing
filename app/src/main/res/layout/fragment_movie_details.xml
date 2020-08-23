@@ -136,6 +136,19 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
 
+            <!-- Similar Movies -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_margin_general"
+                android:text="Similar Movies"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/similarMoviesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"/>
+
             <!--Reviews-->
             <TextView
                 android:layout_width="wrap_content"

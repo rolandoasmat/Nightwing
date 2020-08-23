@@ -91,4 +91,6 @@ open class MoviesRepository(
 
     fun getSimilarMovies(movieID: Int) = tmdbClient.getSimilarMovies(movieID).subscribeOn(backgroundScheduler)
 
+    fun getMovieRecommendations(movieID: Int) = tmdbClient.getMovieRecommendations(movieID).subscribeOn(backgroundScheduler)
+
 }

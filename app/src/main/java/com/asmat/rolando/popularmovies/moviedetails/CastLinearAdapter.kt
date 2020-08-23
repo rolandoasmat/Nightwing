@@ -15,8 +15,7 @@ import kotlinx.android.synthetic.main.cast_linear_item.view.*
 private typealias Cast = CreditsResponse.Cast
 private typealias CastViewHolder = CastLinearAdapter.ViewHolder
 
-class CastLinearAdapter(clickHandler: (Cast) -> Unit?) :
-        BaseLinearAdapter<Cast, CastViewHolder>(clickHandler) {
+class CastLinearAdapter(clickHandler: (Cast) -> Unit?): BaseLinearAdapter<Cast, CastViewHolder>(clickHandler) {
 
     override val layoutForLinearItem: Int
         get() = R.layout.cast_linear_item
@@ -25,7 +24,7 @@ class CastLinearAdapter(clickHandler: (Cast) -> Unit?) :
         return ViewHolder(view)
     }
 
-    inner class ViewHolder(val view: View) : BaseLinearAdapter<Cast, CastViewHolder>.ViewHolder(view) {
+    inner class ViewHolder(val view: View): BaseLinearAdapter<Cast, CastViewHolder>.ViewHolder(view) {
 
         private val thumbnail: ImageView = view.thumbnail
         private val name: TextView = view.name

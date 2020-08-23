@@ -48,6 +48,7 @@ class MovieDetailsFragment: Fragment() {
     // Recycler View Adapters
     private lateinit var trailersLinearAdapter: TrailersLinearAdapter
     private lateinit var castLinearAdapter: CastLinearAdapter
+    private lateinit var similarMoviesLinearAdapter: MoviesLinearAdapter
     private lateinit var reviewsLinearAdapter: ReviewsLinearAdapter
 
     private val movieID: Int
@@ -87,7 +88,6 @@ class MovieDetailsFragment: Fragment() {
         setupUI()
         sendEvents()
     }
-
 
     //region User Actions
     private fun sendEvents() {
@@ -169,6 +169,10 @@ class MovieDetailsFragment: Fragment() {
             updateCast(cast)
         })
 
+        viewModel.similarMovies.observe(viewLifecycleOwner) {
+            similarMoviesLinearAdapter.data = it
+        }
+
         viewModel.reviews.observe(viewLifecycleOwner, Observer { reviews ->
             updateReviews(reviews)
         })
@@ -179,6 +183,7 @@ class MovieDetailsFragment: Fragment() {
         setupTrailersRecyclerView()
         setupReviewsRecyclerView()
         setupCastRecyclerView()
+        setupSimilarMoviesRecyclerView()
     }
 
     private fun setupToolbar() {
@@ -202,6 +207,15 @@ class MovieDetailsFragment: Fragment() {
         castLinearAdapter = CastLinearAdapter(castClickCallback)
         castRecyclerView.adapter = castLinearAdapter
         castRecyclerView.isNestedScrollingEnabled = false
+    }
+
+    private fun setupSimilarMoviesRecyclerView() {
+        similarMoviesRecyclerView.setHasFixedSize(true)
+        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(), androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
+        similarMoviesRecyclerView.layoutManager = layoutManager
+        similarMoviesLinearAdapter = MoviesLinearAdapter(){}
+        similarMoviesRecyclerView.adapter = similarMoviesLinearAdapter
+        similarMoviesRecyclerView.isNestedScrollingEnabled = false
     }
 
     private fun setupReviewsRecyclerView() {

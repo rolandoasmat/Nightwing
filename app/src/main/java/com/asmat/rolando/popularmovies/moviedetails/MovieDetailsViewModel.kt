@@ -49,6 +49,10 @@ class MovieDetailsViewModel(
     val similarMovies: LiveData<List<MovieCardUIModel>>
         get() { return _similarMovies }
 
+    private val _recommendedMovies = MutableLiveData<List<MovieCardUIModel>>()
+    val recommendedMovies: LiveData<List<MovieCardUIModel>>
+        get() { return _recommendedMovies }
+
     val reviews = MutableLiveData<List<ReviewsResponse.Review>>()
     val reviewsError = MutableLiveData<Throwable>()
 
@@ -200,6 +204,19 @@ class MovieDetailsViewModel(
                         MovieCardUIModel(posterURL ?: "", it.title ?: "")
                     }
                     _similarMovies.value = movies
+                }, { error ->
+                    // TODO show error
+                })
+
+        moviesRepository
+                .getMovieRecommendations(movieID)
+                .observeOn(mainThreadScheduler)
+                .subscribe({ result ->
+                    val movies = result.results?.map {
+                        val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}
+                        MovieCardUIModel(posterURL ?: "", it.title ?: "")
+                    }
+                    _recommendedMovies.value = movies
                 }, { error ->
                     // TODO show error
                 })
