@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -49,6 +48,7 @@ class MovieDetailsFragment: Fragment() {
     private lateinit var trailersLinearAdapter: TrailersLinearAdapter
     private lateinit var castLinearAdapter: CastLinearAdapter
     private lateinit var similarMoviesLinearAdapter: MoviesLinearAdapter
+    private lateinit var recommendedMoviesLinearAdapter: MoviesLinearAdapter
     private lateinit var reviewsLinearAdapter: ReviewsLinearAdapter
 
     private val movieID: Int
@@ -173,6 +173,10 @@ class MovieDetailsFragment: Fragment() {
             similarMoviesLinearAdapter.data = it
         }
 
+        viewModel.recommendedMovies.observe(viewLifecycleOwner) {
+            recommendedMoviesLinearAdapter.data = it
+        }
+
         viewModel.reviews.observe(viewLifecycleOwner, Observer { reviews ->
             updateReviews(reviews)
         })
@@ -184,6 +188,7 @@ class MovieDetailsFragment: Fragment() {
         setupReviewsRecyclerView()
         setupCastRecyclerView()
         setupSimilarMoviesRecyclerView()
+        setupRecommendedMoviesRecyclerView()
     }
 
     private fun setupToolbar() {
@@ -216,6 +221,15 @@ class MovieDetailsFragment: Fragment() {
         similarMoviesLinearAdapter = MoviesLinearAdapter(){}
         similarMoviesRecyclerView.adapter = similarMoviesLinearAdapter
         similarMoviesRecyclerView.isNestedScrollingEnabled = false
+    }
+
+    private fun setupRecommendedMoviesRecyclerView() {
+        recommendedMoviesRecyclerView.setHasFixedSize(true)
+        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(), androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
+        recommendedMoviesRecyclerView.layoutManager = layoutManager
+        recommendedMoviesLinearAdapter = MoviesLinearAdapter(){}
+        recommendedMoviesRecyclerView.adapter = recommendedMoviesLinearAdapter
+        recommendedMoviesRecyclerView.isNestedScrollingEnabled = false
     }
 
     private fun setupReviewsRecyclerView() {
