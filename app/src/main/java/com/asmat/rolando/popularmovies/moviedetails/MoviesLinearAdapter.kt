@@ -4,6 +4,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.asmat.rolando.popularmovies.R
+import com.asmat.rolando.popularmovies.extensions.invisible
+import com.asmat.rolando.popularmovies.extensions.visible
 import com.asmat.rolando.popularmovies.ui.common.BaseLinearAdapter
 import com.asmat.rolando.popularmovies.ui.transformations.RoundedTransformation
 import com.squareup.picasso.Picasso
@@ -27,13 +29,18 @@ class MoviesLinearAdapter(clickHandler: (MovieCardUIModel)->Unit?): BaseLinearAd
         }
 
         override fun bind(item: MovieCardUIModel) {
-            Picasso.get()
-                    .load(item.url)
-                    .resize(342, 513)
-                    .centerCrop()
-                    .transform(RoundedTransformation(50, 0))
-                    .error(R.drawable.person)
-                    .into(thumbnail)
+            if (item.url.isEmpty()) {
+                thumbnail.invisible()
+            } else {
+                thumbnail.visible()
+                Picasso.get()
+                        .load(item.url)
+                        .resize(342, 513)
+                        .centerCrop()
+                        .transform(RoundedTransformation(50, 0))
+                        .error(R.drawable.person)
+                        .into(thumbnail)
+            }
             title.text = item.title
         }
     }

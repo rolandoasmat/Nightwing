@@ -11,6 +11,7 @@ import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MovieDetai
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.ReviewsResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
+import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.asmat.rolando.popularmovies.utilities.DateUtils
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import io.reactivex.Scheduler
@@ -21,6 +22,7 @@ import io.reactivex.Scheduler
 @SuppressLint("CheckResult")
 class MovieDetailsViewModel(
         private val moviesRepository: MoviesRepository,
+        private val peopleRepository: PeopleRepository,
         private val dataModelMapper: DataModelMapper,
         private val deepLinksUtils: DeepLinksUtils,
         private val mainThreadScheduler: Scheduler) : ViewModel() {
@@ -52,6 +54,10 @@ class MovieDetailsViewModel(
     private val _recommendedMovies = MutableLiveData<List<MovieCardUIModel>>()
     val recommendedMovies: LiveData<List<MovieCardUIModel>>
         get() { return _recommendedMovies }
+
+    private val _directorMovies = MutableLiveData<List<MovieCardUIModel>>()
+    val directorMovies: LiveData<List<MovieCardUIModel>>
+        get() { return _directorMovies }
 
     val reviews = MutableLiveData<List<ReviewsResponse.Review>>()
     val reviewsError = MutableLiveData<Throwable>()
@@ -187,9 +193,10 @@ class MovieDetailsViewModel(
                 .observeOn(mainThreadScheduler)
                 .subscribe({ result ->
                     cast.value = result.cast
-                    val director = result.crew.find { it.job ==  DIRECTOR }?.name
-                    this.director.value = director
-
+                    result.crew.find { it.job ==  DIRECTOR }?.let { director ->
+                        this.director.value = director.name
+                        getDirectorCredits(director.id)
+                    }
                 }, { error ->
                     castError.value = error
                     cast.value = null
@@ -229,6 +236,22 @@ class MovieDetailsViewModel(
                 }, { error ->
                     reviewsError.value = error
                     reviews.value = null
+                })
+    }
+
+    private fun getDirectorCredits(personID: Int) {
+        peopleRepository
+                .getPersonMovieCredits(personID)
+                .observeOn(mainThreadScheduler)
+                .subscribe({ result ->
+                    val directorCredits = result.crew?.filter { it.job == DIRECTOR }
+                    val movies = directorCredits?.map {
+                        val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}
+                        MovieCardUIModel(posterURL ?: "", it.title ?: "")
+                    }
+                    _directorMovies.value = movies
+                }, { error ->
+                    // TODO show error
                 })
     }
 

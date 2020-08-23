@@ -49,6 +49,7 @@ class MovieDetailsFragment: Fragment() {
     private lateinit var castLinearAdapter: CastLinearAdapter
     private lateinit var similarMoviesLinearAdapter: MoviesLinearAdapter
     private lateinit var recommendedMoviesLinearAdapter: MoviesLinearAdapter
+    private lateinit var directorMoviesLinearAdapter: MoviesLinearAdapter
     private lateinit var reviewsLinearAdapter: ReviewsLinearAdapter
 
     private val movieID: Int
@@ -177,6 +178,10 @@ class MovieDetailsFragment: Fragment() {
             recommendedMoviesLinearAdapter.data = it
         }
 
+        viewModel.directorMovies.observe(viewLifecycleOwner) {
+            directorMoviesLinearAdapter.data = it
+        }
+
         viewModel.reviews.observe(viewLifecycleOwner, Observer { reviews ->
             updateReviews(reviews)
         })
@@ -189,6 +194,7 @@ class MovieDetailsFragment: Fragment() {
         setupCastRecyclerView()
         setupSimilarMoviesRecyclerView()
         setupRecommendedMoviesRecyclerView()
+        setupDirectorMoviesRecyclerView()
     }
 
     private fun setupToolbar() {
@@ -230,6 +236,15 @@ class MovieDetailsFragment: Fragment() {
         recommendedMoviesLinearAdapter = MoviesLinearAdapter(){}
         recommendedMoviesRecyclerView.adapter = recommendedMoviesLinearAdapter
         recommendedMoviesRecyclerView.isNestedScrollingEnabled = false
+    }
+
+    private fun setupDirectorMoviesRecyclerView() {
+        directorMoviesRecyclerView.setHasFixedSize(true)
+        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(), androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
+        directorMoviesRecyclerView.layoutManager = layoutManager
+        directorMoviesLinearAdapter = MoviesLinearAdapter(){}
+        directorMoviesRecyclerView.adapter = directorMoviesLinearAdapter
+        directorMoviesRecyclerView.isNestedScrollingEnabled = false
     }
 
     private fun setupReviewsRecyclerView() {
