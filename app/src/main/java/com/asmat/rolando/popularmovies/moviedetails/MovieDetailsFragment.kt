@@ -142,6 +142,7 @@ class MovieDetailsFragment: Fragment() {
 
         viewModel.director.observe(viewLifecycleOwner) {
             directorLabel?.text = it
+            moreFromDirectorLabel?.text = resources.getString(R.string.more_from_director, it)
         }
 
         // Movie icons
@@ -171,10 +172,16 @@ class MovieDetailsFragment: Fragment() {
         })
 
         viewModel.similarMovies.observe(viewLifecycleOwner) {
+            if (it.isEmpty()) {
+                similarMoviesHeaderLabel?.gone()
+            }
             similarMoviesLinearAdapter.data = it
         }
 
         viewModel.recommendedMovies.observe(viewLifecycleOwner) {
+            if (it.isEmpty()) {
+                recommendedMoviesHeaderLabel?.gone()
+            }
             recommendedMoviesLinearAdapter.data = it
         }
 

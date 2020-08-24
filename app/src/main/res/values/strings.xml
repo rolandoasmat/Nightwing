@@ -9,11 +9,12 @@
     <string name="favorites">Favorites</string>
     <string name="watch_later">To Watch</string>
 
-    <!--Activity Movie Detail -->
+    <!-- Movie Detail -->
     <string name="favorite">Favorite</string>
     <string name="share">Share</string>
     <string name="trailers">Trailers</string>
     <string name="reviews">Reviews</string>
+    <string name="more_from_director">More from %1$s</string>
 
     <!--Error Messages-->
     <string name="generic_error">"Error loading data! :("</string>

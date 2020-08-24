@@ -138,6 +138,7 @@
 
             <!-- Similar Movies -->
             <TextView
+                android:id="@+id/similarMoviesHeaderLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_margin_general"
@@ -151,6 +152,7 @@
 
             <!-- Recommended Movies -->
             <TextView
+                android:id="@+id/recommendedMoviesHeaderLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_margin_general"
@@ -164,6 +166,7 @@
 
             <!-- Director Movies -->
             <TextView
+                android:id="@+id/moreFromDirectorLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_margin_general"

@@ -9,7 +9,7 @@
     <string name="favorites">Favoritos</string>
     <string name="watch_later">Ver despues</string>
 
-    <!--Activity Movie Detail -->
+    <!-- Movie Details -->
     <string name="favorite">Favorito</string>
     <string name="share">Compartir</string>
     <string name="trailers">Videos</string>
