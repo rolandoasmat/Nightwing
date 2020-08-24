@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_movieDetailsScreen_to_castDetailsScreen"
             app:destination="@id/castDetailsScreen" />
+        <action
+            android:id="@+id/action_movieDetailsScreen_to_movieDetailsScreen"
+            app:destination="@id/movieDetailsScreen" />
     </fragment>
 
     <fragment

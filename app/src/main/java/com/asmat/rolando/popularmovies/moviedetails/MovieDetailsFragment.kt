@@ -369,7 +369,8 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIMo
 
     override fun cardClicked(item: MovieCardUIModel) {
         val movieID = item.id
-        // TOO add navigate action
+        val action = MovieDetailsFragmentDirections.actionMovieDetailsScreenToMovieDetailsScreen(movieID)
+        findNavController().navigate(action)
     }
     //endregion
 
