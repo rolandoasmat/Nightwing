@@ -12,10 +12,10 @@ import com.asmat.rolando.popularmovies.utilities.URLUtils
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.cast_linear_item.view.*
 
-private typealias Cast = CreditsResponse.Cast
+typealias Cast = CreditsResponse.Cast
 private typealias CastViewHolder = CastLinearAdapter.ViewHolder
 
-class CastLinearAdapter(clickHandler: (Cast) -> Unit?): BaseLinearAdapter<Cast, CastViewHolder>(clickHandler) {
+class CastLinearAdapter(clickHandler: Callback<Cast>): BaseLinearAdapter<Cast, CastViewHolder>(clickHandler) {
 
     override val layoutForLinearItem: Int
         get() = R.layout.cast_linear_item

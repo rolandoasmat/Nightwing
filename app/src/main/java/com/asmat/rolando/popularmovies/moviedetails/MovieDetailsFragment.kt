@@ -21,6 +21,7 @@ import com.asmat.rolando.popularmovies.extensions.visible
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.ReviewsResponse
 import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
+import com.asmat.rolando.popularmovies.ui.common.BaseLinearAdapter
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory
 import com.squareup.picasso.Picasso
@@ -56,22 +57,6 @@ class MovieDetailsFragment: Fragment() {
         get() {
             return requireArguments().getInt(MOVIE_ID_ARG)
         }
-
-
-    //region Callbacks
-    private val trailerClickCallback = { trailer: VideosResponse.Video ->
-        val url = URLUtils.getYoutubeURL(trailer.key)
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        intent.resolveActivity(requireActivity().packageManager)?.let {
-            startActivity(intent)
-        }
-    }
-
-    private val castClickCallback = { cast: CreditsResponse.Cast ->
-        val action = MovieDetailsFragmentDirections.actionMovieDetailsScreenToCastDetailsScreen(cast.id)
-        findNavController().navigate(action)
-    }
-    //endregion
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -213,7 +198,15 @@ class MovieDetailsFragment: Fragment() {
         trailersRecyclerView.setHasFixedSize(true)
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(), androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
         trailersRecyclerView.layoutManager = layoutManager
-        trailersLinearAdapter = TrailersLinearAdapter(trailerClickCallback)
+        trailersLinearAdapter = TrailersLinearAdapter(object: BaseLinearAdapter.Callback<VideosResponse.Video> {
+            override fun cardClicked(item: VideosResponse.Video) {
+                val url = URLUtils.getYoutubeURL(item.key)
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                intent.resolveActivity(requireActivity().packageManager)?.let {
+                    startActivity(intent)
+                }
+            }
+        })
         trailersRecyclerView.adapter = trailersLinearAdapter
         trailersRecyclerView.isNestedScrollingEnabled = false
     }
@@ -222,7 +215,12 @@ class MovieDetailsFragment: Fragment() {
         castRecyclerView.setHasFixedSize(true)
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(), androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
         castRecyclerView.layoutManager = layoutManager
-        castLinearAdapter = CastLinearAdapter(castClickCallback)
+        castLinearAdapter = CastLinearAdapter(object: BaseLinearAdapter.Callback<Cast>{
+            override fun cardClicked(item: Cast) {
+                val action = MovieDetailsFragmentDirections.actionMovieDetailsScreenToCastDetailsScreen(item.id)
+                findNavController().navigate(action)
+            }
+        })
         castRecyclerView.adapter = castLinearAdapter
         castRecyclerView.isNestedScrollingEnabled = false
     }

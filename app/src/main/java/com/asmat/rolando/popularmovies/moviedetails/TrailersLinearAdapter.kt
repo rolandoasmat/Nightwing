@@ -13,8 +13,7 @@ import kotlinx.android.synthetic.main.trailer_linear_item.view.*
 private typealias Video = VideosResponse.Video
 private typealias VideoViewHolder = TrailersLinearAdapter.ViewHolder
 
-class TrailersLinearAdapter(clickHandler: (Video) -> Unit?) :
-        BaseLinearAdapter<Video, VideoViewHolder>(clickHandler) {
+class TrailersLinearAdapter(clickHandler: Callback<Video>?): BaseLinearAdapter<Video, VideoViewHolder>(clickHandler) {
 
     override val layoutForLinearItem: Int
         get() = R.layout.trailer_linear_item
