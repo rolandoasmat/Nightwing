@@ -208,7 +208,7 @@ class MovieDetailsViewModel(
                 .subscribe({ result ->
                     val movies = result.results?.map {
                         val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}
-                        MovieCardUIModel(posterURL ?: "", it.title ?: "")
+                        MovieCardUIModel(it.id ?: 0, posterURL ?: "", it.title ?: "")
                     }
                     _similarMovies.value = movies
                 }, { error ->
@@ -221,7 +221,7 @@ class MovieDetailsViewModel(
                 .subscribe({ result ->
                     val movies = result.results?.map {
                         val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}
-                        MovieCardUIModel(posterURL ?: "", it.title ?: "")
+                        MovieCardUIModel(it.id ?: 0,posterURL ?: "", it.title ?: "")
                     }
                     _recommendedMovies.value = movies
                 }, { error ->
@@ -247,7 +247,7 @@ class MovieDetailsViewModel(
                     val directorCredits = result.crew?.filter { it.job == DIRECTOR }
                     val movies = directorCredits?.map {
                         val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}
-                        MovieCardUIModel(posterURL ?: "", it.title ?: "")
+                        MovieCardUIModel(it.id ?: 0,posterURL ?: "", it.title ?: "")
                     }
                     _directorMovies.value = movies
                 }, { error ->

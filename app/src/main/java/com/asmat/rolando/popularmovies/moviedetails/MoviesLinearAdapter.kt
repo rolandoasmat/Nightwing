@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.item_movie_card.view.*
 
 private typealias MoviesViewHolder = MoviesLinearAdapter.ViewHolder
 
-class MoviesLinearAdapter(clickHandler: (MovieCardUIModel)->Unit?): BaseLinearAdapter<MovieCardUIModel, MoviesViewHolder>() {
+class MoviesLinearAdapter(callback: Callback<MovieCardUIModel>): BaseLinearAdapter<MovieCardUIModel, MoviesViewHolder>(callback) {
 
     override val layoutForLinearItem = R.layout.item_movie_card
 

@@ -30,7 +30,7 @@ import kotlinx.android.synthetic.main.movie_details_user_actions.*
 import kotlinx.android.synthetic.main.primary_details.*
 import javax.inject.Inject
 
-class MovieDetailsFragment: Fragment() {
+class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIModel> {
 
     companion object {
         const val MOVIE_ID_ARG = "movieIdArg"
@@ -229,7 +229,7 @@ class MovieDetailsFragment: Fragment() {
         similarMoviesRecyclerView.setHasFixedSize(true)
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(), androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
         similarMoviesRecyclerView.layoutManager = layoutManager
-        similarMoviesLinearAdapter = MoviesLinearAdapter(){}
+        similarMoviesLinearAdapter = MoviesLinearAdapter(this)
         similarMoviesRecyclerView.adapter = similarMoviesLinearAdapter
         similarMoviesRecyclerView.isNestedScrollingEnabled = false
     }
@@ -238,7 +238,7 @@ class MovieDetailsFragment: Fragment() {
         recommendedMoviesRecyclerView.setHasFixedSize(true)
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(), androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
         recommendedMoviesRecyclerView.layoutManager = layoutManager
-        recommendedMoviesLinearAdapter = MoviesLinearAdapter(){}
+        recommendedMoviesLinearAdapter = MoviesLinearAdapter(this)
         recommendedMoviesRecyclerView.adapter = recommendedMoviesLinearAdapter
         recommendedMoviesRecyclerView.isNestedScrollingEnabled = false
     }
@@ -247,7 +247,7 @@ class MovieDetailsFragment: Fragment() {
         directorMoviesRecyclerView.setHasFixedSize(true)
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(), androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
         directorMoviesRecyclerView.layoutManager = layoutManager
-        directorMoviesLinearAdapter = MoviesLinearAdapter(){}
+        directorMoviesLinearAdapter = MoviesLinearAdapter(this)
         directorMoviesRecyclerView.adapter = directorMoviesLinearAdapter
         directorMoviesRecyclerView.isNestedScrollingEnabled = false
     }
@@ -365,6 +365,11 @@ class MovieDetailsFragment: Fragment() {
 
     private fun updateBookmark(enable: Boolean) {
         bookmarkIcon?.isSelected = enable
+    }
+
+    override fun cardClicked(item: MovieCardUIModel) {
+        val movieID = item.id
+        // TOO add navigate action
     }
     //endregion
 
