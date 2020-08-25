@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/movieDetailsScreen"
-        android:name="com.asmat.rolando.popularmovies.moviedetails.MovieDetailsFragment"
+        android:name="com.asmat.rolando.popularmovies.movie_details.MovieDetailsFragment"
         android:label="Movie Details"
         tools:layout="@layout/fragment_movie_details" >
         <argument

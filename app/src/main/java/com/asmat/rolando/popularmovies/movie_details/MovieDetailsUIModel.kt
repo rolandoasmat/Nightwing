@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.moviedetails
+package com.asmat.rolando.popularmovies.movie_details
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

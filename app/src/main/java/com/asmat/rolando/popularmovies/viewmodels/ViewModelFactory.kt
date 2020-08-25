@@ -10,7 +10,7 @@ import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.asmat.rolando.popularmovies.cast_details.CastDetailsViewModel
 import com.asmat.rolando.popularmovies.cast_details.PersonMovieCreditsViewModel
 import com.asmat.rolando.popularmovies.ui.favoritemovies.FavoriteMoviesViewModel
-import com.asmat.rolando.popularmovies.moviedetails.MovieDetailsViewModel
+import com.asmat.rolando.popularmovies.movie_details.MovieDetailsViewModel
 import com.asmat.rolando.popularmovies.ui.nowplayingmovies.NowPlayingMoviesViewModel
 import com.asmat.rolando.popularmovies.ui.popularmovies.PopularMoviesViewModel
 import com.asmat.rolando.popularmovies.search.SearchViewModel

@@ -8,7 +8,7 @@ import com.asmat.rolando.popularmovies.di.modules.RepositoriesModule
 import com.asmat.rolando.popularmovies.cast_details.CastMovieCreditsFragment
 import com.asmat.rolando.popularmovies.ui.moviegrid.BaseMovieGridFragment
 import com.asmat.rolando.popularmovies.ui.moviegrid.paginated.PaginatedMovieGridFragment
-import com.asmat.rolando.popularmovies.moviedetails.MovieDetailsFragment
+import com.asmat.rolando.popularmovies.movie_details.MovieDetailsFragment
 import com.asmat.rolando.popularmovies.ui.popularmovies.PopularMoviesFragment
 import com.asmat.rolando.popularmovies.search.SearchFragment
 import com.asmat.rolando.popularmovies.ui.discover.MainActivity
