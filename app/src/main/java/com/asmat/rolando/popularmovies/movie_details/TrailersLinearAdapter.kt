@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.asmat.rolando.popularmovies.R
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
+import com.asmat.rolando.popularmovies.networking.models.VideosResponse
 import com.asmat.rolando.popularmovies.ui.common.BaseLinearAdapter
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import com.squareup.picasso.Picasso

@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.networking.the.movie.db.models
+package com.asmat.rolando.popularmovies.networking.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

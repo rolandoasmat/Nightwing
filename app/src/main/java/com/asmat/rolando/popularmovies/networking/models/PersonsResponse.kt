@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.networking.the.movie.db.models
+package com.asmat.rolando.popularmovies.networking.models
 
 data class PersonsResponse(
         val page: Int,

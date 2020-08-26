@@ -1,9 +1,9 @@
 package com.asmat.rolando.popularmovies.model.mappers
 
 import com.asmat.rolando.popularmovies.model.Movie
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonMovieCredits
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonsResponse
+import com.asmat.rolando.popularmovies.networking.models.MoviesResponse
+import com.asmat.rolando.popularmovies.networking.models.PersonMovieCredits
+import com.asmat.rolando.popularmovies.networking.models.PersonsResponse
 import com.asmat.rolando.popularmovies.cast_details.MovieCreditUiModel
 import com.asmat.rolando.popularmovies.cast_details.PersonMovieCreditsUiModel
 import com.asmat.rolando.popularmovies.ui.moviegrid.MovieGridItemUiModel

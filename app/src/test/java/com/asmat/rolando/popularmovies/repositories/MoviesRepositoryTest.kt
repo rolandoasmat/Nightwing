@@ -6,7 +6,7 @@ import com.asmat.rolando.popularmovies.TestObjectsFactory
 import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
-import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
+import com.asmat.rolando.popularmovies.networking.TheMovieDBClient
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Completable

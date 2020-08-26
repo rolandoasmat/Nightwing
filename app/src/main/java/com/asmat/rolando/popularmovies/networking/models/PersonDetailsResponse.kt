@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.networking.the.movie.db.models
+package com.asmat.rolando.popularmovies.networking.models
 
 data class PersonDetailsResponse(val birthday: String?,
                                  val known_for_department: String,

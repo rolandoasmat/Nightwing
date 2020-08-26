@@ -6,10 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.asmat.rolando.popularmovies.deep_links.DeepLinksUtils
 import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MovieDetailsResponse
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.ReviewsResponse
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
+import com.asmat.rolando.popularmovies.networking.models.CreditsResponse
+import com.asmat.rolando.popularmovies.networking.models.MovieDetailsResponse
+import com.asmat.rolando.popularmovies.networking.models.ReviewsResponse
+import com.asmat.rolando.popularmovies.networking.models.VideosResponse
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.asmat.rolando.popularmovies.utilities.DateUtils

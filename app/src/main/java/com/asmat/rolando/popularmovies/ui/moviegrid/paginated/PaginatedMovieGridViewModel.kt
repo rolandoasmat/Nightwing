@@ -5,7 +5,7 @@ import com.asmat.rolando.popularmovies.model.Movie
 import com.asmat.rolando.popularmovies.model.PaginatedRequest
 import com.asmat.rolando.popularmovies.model.mappers.DataModelMapper
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
+import com.asmat.rolando.popularmovies.networking.models.MoviesResponse
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.ui.moviegrid.BaseMovieGridViewModel
 

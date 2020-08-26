@@ -3,7 +3,7 @@ package com.asmat.rolando.popularmovies
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
 import com.asmat.rolando.popularmovies.model.Movie
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
+import com.asmat.rolando.popularmovies.networking.models.*
 
 object TestObjectsFactory {
 

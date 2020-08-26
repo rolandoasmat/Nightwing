@@ -5,7 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 
 import com.asmat.rolando.popularmovies.R
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
+import com.asmat.rolando.popularmovies.networking.models.CreditsResponse
 import com.asmat.rolando.popularmovies.ui.common.BaseLinearAdapter
 import com.asmat.rolando.popularmovies.ui.transformations.RoundedTransformation
 import com.asmat.rolando.popularmovies.utilities.URLUtils

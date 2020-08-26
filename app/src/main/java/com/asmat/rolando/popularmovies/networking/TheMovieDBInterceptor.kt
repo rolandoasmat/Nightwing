@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.networking.the.movie.db
+package com.asmat.rolando.popularmovies.networking
 
 import com.asmat.rolando.popularmovies.BuildConfig
 import okhttp3.Interceptor

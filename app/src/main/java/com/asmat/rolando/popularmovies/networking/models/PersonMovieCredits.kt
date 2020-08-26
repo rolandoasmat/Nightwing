@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.networking.the.movie.db.models
+package com.asmat.rolando.popularmovies.networking.models
 
 // https://developers.themoviedb.org/3/people/get-person-movie-credits
 data class PersonMovieCredits(

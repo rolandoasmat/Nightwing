@@ -1,7 +1,7 @@
 package com.asmat.rolando.popularmovies.model
 
-import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonsResponse
+import com.asmat.rolando.popularmovies.networking.TheMovieDBClient
+import com.asmat.rolando.popularmovies.networking.models.PersonsResponse
 import io.reactivex.Scheduler
 import io.reactivex.Single
 

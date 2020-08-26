@@ -6,8 +6,8 @@ import com.asmat.rolando.popularmovies.database.DatabaseManager
 import com.asmat.rolando.popularmovies.database.entities.FavoriteMovie
 import com.asmat.rolando.popularmovies.database.entities.WatchLaterMovie
 import com.asmat.rolando.popularmovies.model.*
-import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
+import com.asmat.rolando.popularmovies.networking.TheMovieDBClient
+import com.asmat.rolando.popularmovies.networking.models.*
 import io.reactivex.Scheduler
 import io.reactivex.Single
 

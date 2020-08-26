@@ -1,9 +1,9 @@
 package com.asmat.rolando.popularmovies.repositories
 
 import com.asmat.rolando.popularmovies.model.SearchPersonsPaginatedRequest
-import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonDetailsResponse
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonMovieCredits
+import com.asmat.rolando.popularmovies.networking.TheMovieDBClient
+import com.asmat.rolando.popularmovies.networking.models.PersonDetailsResponse
+import com.asmat.rolando.popularmovies.networking.models.PersonMovieCredits
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers

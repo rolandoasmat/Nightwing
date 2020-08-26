@@ -3,7 +3,7 @@ package com.asmat.rolando.popularmovies.movie_details
 import android.view.View
 import android.widget.TextView
 import com.asmat.rolando.popularmovies.R
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.ReviewsResponse
+import com.asmat.rolando.popularmovies.networking.models.ReviewsResponse
 import com.asmat.rolando.popularmovies.ui.common.BaseLinearAdapter
 import kotlinx.android.synthetic.main.review_linear_item.view.*
 

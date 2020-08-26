@@ -1,7 +1,7 @@
 package com.asmat.rolando.popularmovies.search
 
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonsResponse
+import com.asmat.rolando.popularmovies.networking.models.MoviesResponse
+import com.asmat.rolando.popularmovies.networking.models.PersonsResponse
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -18,9 +18,9 @@ import com.asmat.rolando.popularmovies.MovieNightApplication
 import com.asmat.rolando.popularmovies.R
 import com.asmat.rolando.popularmovies.extensions.gone
 import com.asmat.rolando.popularmovies.extensions.visible
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.CreditsResponse
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.ReviewsResponse
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.VideosResponse
+import com.asmat.rolando.popularmovies.networking.models.CreditsResponse
+import com.asmat.rolando.popularmovies.networking.models.ReviewsResponse
+import com.asmat.rolando.popularmovies.networking.models.VideosResponse
 import com.asmat.rolando.popularmovies.ui.common.BaseLinearAdapter
 import com.asmat.rolando.popularmovies.utilities.URLUtils
 import com.asmat.rolando.popularmovies.viewmodels.ViewModelFactory

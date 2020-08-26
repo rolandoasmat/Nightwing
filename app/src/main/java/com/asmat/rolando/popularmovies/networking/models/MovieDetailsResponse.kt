@@ -1,4 +1,4 @@
-package com.asmat.rolando.popularmovies.networking.the.movie.db.models
+package com.asmat.rolando.popularmovies.networking.models
 
 data class MovieDetailsResponse(val adult: Boolean?,
                                 val backdrop_path: String?,

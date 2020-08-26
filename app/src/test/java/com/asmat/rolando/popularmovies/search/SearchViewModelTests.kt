@@ -3,8 +3,8 @@ package com.asmat.rolando.popularmovies.search
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.asmat.rolando.popularmovies.model.mappers.UiModelMapper
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.MoviesResponse
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.PersonsResponse
+import com.asmat.rolando.popularmovies.networking.models.MoviesResponse
+import com.asmat.rolando.popularmovies.networking.models.PersonsResponse
 import com.asmat.rolando.popularmovies.repositories.MoviesRepository
 import com.asmat.rolando.popularmovies.repositories.PeopleRepository
 import com.nhaarman.mockitokotlin2.verify

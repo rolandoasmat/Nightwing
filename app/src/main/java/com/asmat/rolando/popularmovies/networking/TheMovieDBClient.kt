@@ -1,7 +1,7 @@
-package com.asmat.rolando.popularmovies.networking.the.movie.db
+package com.asmat.rolando.popularmovies.networking
 
 import com.asmat.rolando.popularmovies.BuildConfig
-import com.asmat.rolando.popularmovies.networking.the.movie.db.models.*
+import com.asmat.rolando.popularmovies.networking.models.*
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

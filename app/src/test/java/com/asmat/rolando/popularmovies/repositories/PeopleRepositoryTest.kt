@@ -2,7 +2,7 @@ package com.asmat.rolando.popularmovies.repositories
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.asmat.rolando.popularmovies.TestObjectsFactory
-import com.asmat.rolando.popularmovies.networking.the.movie.db.TheMovieDBClient
+import com.asmat.rolando.popularmovies.networking.TheMovieDBClient
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
