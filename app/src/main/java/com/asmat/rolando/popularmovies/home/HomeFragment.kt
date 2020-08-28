@@ -26,11 +26,6 @@ class HomeFragment: Fragment(), BaseMovieGridFragment.MovieGridCallbacks {
         setupViewPager()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        (activity as? AppCompatActivity)?.supportActionBar?.title = "Movie Night"
-    }
-
     private fun setupViewPager() {
         val adapter = DiscoverPagerAdapter(this)
         container?.adapter = adapter
