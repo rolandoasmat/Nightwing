@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.asmat.rolando.popularmovies">
+    package="com.asmat.rolando.nightwing">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -9,7 +9,7 @@
 
     <!--usesCleartextTraffic: https://stackoverflow.com/questions/53139689/picasso-image-loading-issue-with-android-9-0-pie-->
     <application
-        android:name=".MovieNightApplication"
+        android:name="com.asmat.rolando.nightwing.NightwingApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +19,7 @@
 
         <!-- Main Activity -->
         <activity
-            android:name="com.asmat.rolando.popularmovies.ui.discover.MainActivity">
+            android:name="com.asmat.rolando.nightwing.ui.discover.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

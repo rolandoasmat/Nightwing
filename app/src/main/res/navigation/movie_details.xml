@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/movieDetailsScreen"
-        android:name="com.asmat.rolando.popularmovies.movie_details.MovieDetailsFragment"
+        android:name="com.asmat.rolando.nightwing.movie_details.MovieDetailsFragment"
         android:label="Movie Details"
         tools:layout="@layout/fragment_movie_details" >
         <argument
@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/castDetailsScreen"
-        android:name="com.asmat.rolando.popularmovies.cast_details.CastDetailsFragment"
+        android:name="com.asmat.rolando.nightwing.cast_details.CastDetailsFragment"
         android:label="Cast Details"
         tools:layout="@layout/fragment_cast_details" >
         <argument

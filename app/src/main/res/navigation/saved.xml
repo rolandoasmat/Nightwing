@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/savedMoviesScreen"
-        android:name="com.asmat.rolando.popularmovies.saved.SavedFragment"
+        android:name="com.asmat.rolando.nightwing.saved.SavedFragment"
         android:label="Saved"
         tools:layout="@layout/fragment_saved" />
 

@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/homeScreen"
-        android:name="com.asmat.rolando.popularmovies.home.HomeFragment"
+        android:name="com.asmat.rolando.nightwing.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" >
     </fragment>
@@ -17,12 +17,12 @@
 <!--    TODO deepLink also doesn't work if app is already open-->
     <fragment
         android:id="@+id/movieDetailsScreen"
-        android:name="com.asmat.rolando.popularmovies.movie_details.MovieDetailsFragment"
+        android:name="com.asmat.rolando.nightwing.movie_details.MovieDetailsFragment"
         android:label="Movie Details"
         tools:layout="@layout/fragment_movie_details" >
         <deepLink
             android:id="@+id/deepLink"
-            app:uri="movienight.app/details/{movieIdArg}"/>
+            app:uri="nightwing.app/movieDetails/{movieIdArg}"/>
         <argument
             android:name="movieIdArg"
             app:argType="integer" />
@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/castDetailsScreen"
-        android:name="com.asmat.rolando.popularmovies.cast_details.CastDetailsFragment"
+        android:name="com.asmat.rolando.nightwing.cast_details.CastDetailsFragment"
         android:label="Cast Details"
         tools:layout="@layout/fragment_cast_details" >
         <argument
