@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/rolandoasmat/Movie-Night.svg?branch=develop)](https://travis-ci.org/rolandoasmat/Movie-Night)
 
-# Movie Night
-Android application to browse, save and share movies to watch! originally a Udacity Android Nanodegree [project](ProjectRequirements.md).
+# Nightwing
+Android application to browse, save and share movies to watch!
 
 <a href='https://play.google.com/store/apps/details?id=com.asmat.rolando.popularmovies&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 
