@@ -13,7 +13,7 @@ import io.reactivex.schedulers.Schedulers
 class DatabaseModule {
 
     companion object {
-        private const val DATABASE_NAME = "movies-database"
+        private const val DATABASE_NAME = "nightwing-database"
     }
 
     @Provides
