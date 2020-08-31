@@ -59,8 +59,8 @@ abstract class BaseMovieGridFragment: androidx.fragment.app.Fragment() {
         val layoutManager = GridLayoutManager(context, numOfColumns)
         moviesRecyclerView?.layoutManager = layoutManager
         moviesGridAdapter = BaseMoviesGridAdapter(object : BaseMoviesGridAdapter.Callback {
-            override fun itemPressed(index: Int) {
-                viewModel.itemPressed(index)
+            override fun itemPressed(movieID: Int) {
+                callbacks?.showMovieDetailScreen(movieID)
             }
         })
         moviesRecyclerView?.adapter = moviesGridAdapter
@@ -85,7 +85,6 @@ abstract class BaseMovieGridFragment: androidx.fragment.app.Fragment() {
     private fun refreshUI() {
         renderMoviesUIModels(viewModel.uiModels.value)
         renderError(viewModel.error.value)
-        handleNavigationEvent(viewModel.navigationEvent.value)
     }
 
     private fun observeViewModel() {
@@ -94,9 +93,6 @@ abstract class BaseMovieGridFragment: androidx.fragment.app.Fragment() {
         })
         viewModel.error.observe(viewLifecycleOwner, Observer { error ->
             renderError(error)
-        })
-        viewModel.navigationEvent.observe(viewLifecycleOwner, Observer { navigationEvent ->
-            handleNavigationEvent(navigationEvent)
         })
     }
 
@@ -107,17 +103,6 @@ abstract class BaseMovieGridFragment: androidx.fragment.app.Fragment() {
             } else {
                 moviesGridAdapter?.setMovies(it)
                 onlyShow(Layout.GRID)
-            }
-        }
-    }
-
-    private fun handleNavigationEvent(navigationEvent: BaseMovieGridViewModel.NavigationEvent?) {
-        navigationEvent?.let { event ->
-            when (event) {
-                is BaseMovieGridViewModel.NavigationEvent.ShowMovieDetailScreen -> {
-                    viewModel.navigationEvent.value = null
-                    callbacks?.showMovieDetailScreen(event.movieID)
-                }
             }
         }
     }

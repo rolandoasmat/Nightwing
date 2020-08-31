@@ -41,6 +41,14 @@ class BaseMoviesGridAdapter(val callback: Callback? = null) : RecyclerView.Adapt
         private val poster: ImageView? = itemView.poster
         private val label: TextView? = itemView.label
 
+        init {
+            poster?.setOnClickListener {
+                movies.getOrNull(adapterPosition)?.id?.let { id ->
+                    callback?.itemPressed(id)
+                }
+            }
+        }
+
         fun bind(uiModel: MovieGridItemUiModel) {
             uiModel.posterURL?.let { url ->
                 Picasso.get()
@@ -53,14 +61,12 @@ class BaseMoviesGridAdapter(val callback: Callback? = null) : RecyclerView.Adapt
                 poster?.setImageDrawable(image)
             }
             label?.text = uiModel.title
-            poster?.setOnClickListener {
-                callback?.itemPressed(adapterPosition)
-            }
+
         }
     }
 
     interface Callback {
-        fun itemPressed(index: Int)
+        fun itemPressed(movieID: Int)
     }
 
 }
