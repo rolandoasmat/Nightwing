@@ -93,36 +93,15 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIMo
 
     private fun setupObservers() {
         // Movie info
-        viewModel.backdropURL.observe(viewLifecycleOwner, Observer { url ->
-            updateBackdrop(url)
-        })
-
-        viewModel.movieTitle.observe(viewLifecycleOwner, Observer { title ->
-            updateTitle(title)
-        })
-
-        viewModel.releaseDate.observe(viewLifecycleOwner, Observer { date ->
-            updateReleaseDate(date)
-        })
-
-        viewModel.rating.observe(viewLifecycleOwner, Observer { rating ->
-            updateRating(rating)
-        })
-
-        viewModel.runtime.observe(viewLifecycleOwner, Observer { runtime ->
-            updateRuntime(runtime)
-        })
-
-        viewModel.posterURL.observe(viewLifecycleOwner, Observer { url ->
-            updatePoster(url)
-        })
-
-        viewModel.summary.observe(viewLifecycleOwner, Observer { summary ->
-            updateSummary(summary)
-        })
-
-        viewModel.tagline.observe(viewLifecycleOwner) { text ->
-            taglineLabel.text = text
+        viewModel.movieDetailsUIModel.observe(viewLifecycleOwner) {
+            updateBackdrop(it.backdropURL)
+            updateTitle(it.title)
+            updateReleaseDate(it.releaseDate)
+            updateRating(it.voteAverage)
+            updateRuntime(it.runtime)
+            updatePoster(it.posterURL)
+            updateSummary(it.overview)
+            taglineLabel.text = it.tagline
         }
 
         viewModel.director.observe(viewLifecycleOwner) {
