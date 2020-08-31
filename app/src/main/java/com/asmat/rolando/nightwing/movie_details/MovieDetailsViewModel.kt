@@ -29,7 +29,7 @@ class MovieDetailsViewModel(
 
     private val _movieDetailsUIModel = MutableLiveData<MovieDetailsUIModel>()
     val movieDetailsUIModel: LiveData<MovieDetailsUIModel>
-        get() = MutableLiveData<MovieDetailsUIModel>()
+        get() = _movieDetailsUIModel
 
     val director = MutableLiveData<String>()
 
@@ -126,9 +126,10 @@ class MovieDetailsViewModel(
 
         moviesRepository
                 .getMovieDetails(movieID)
+                .observeOn(mainThreadScheduler)
                 .subscribe({
                     val uiModel = uiModelMapper.map(it)
-                    _movieDetailsUIModel.postValue(uiModel)
+                    _movieDetailsUIModel.value = uiModel
                 }, {})
 
         moviesRepository
