@@ -7,9 +7,10 @@ import com.asmat.rolando.nightwing.networking.models.MoviesResponse
 import com.asmat.rolando.nightwing.repositories.MoviesRepository
 import com.asmat.rolando.nightwing.ui.moviegrid.paginated.PaginatedMovieGridViewModel
 
-class NowPlayingMoviesViewModel(moviesRepository: MoviesRepository,
-                                uiModelMapper: UiModelMapper,
-                                dataModelMapper: DataModelMapper) : PaginatedMovieGridViewModel(moviesRepository, uiModelMapper, dataModelMapper) {
+class NowPlayingMoviesViewModel(
+        moviesRepository: MoviesRepository,
+        uiModelMapper: UiModelMapper,
+        dataModelMapper: DataModelMapper) : PaginatedMovieGridViewModel(moviesRepository, uiModelMapper, dataModelMapper) {
 
     override val paginatedRequest: PaginatedRequest<MoviesResponse.Movie>
         get() = moviesRepository.nowPlayingPaginatedRequest

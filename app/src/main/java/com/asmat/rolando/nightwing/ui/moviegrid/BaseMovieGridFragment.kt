@@ -46,7 +46,6 @@ abstract class BaseMovieGridFragment: androidx.fragment.app.Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity?.applicationContext as NightwingApplication).component().inject(this)
-        viewModel.load()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -84,13 +83,13 @@ abstract class BaseMovieGridFragment: androidx.fragment.app.Fragment() {
     }
 
     private fun refreshUI() {
-        renderMoviesUIModels(viewModel.moviesUIModels.value)
+        renderMoviesUIModels(viewModel.uiModels.value)
         renderError(viewModel.error.value)
         handleNavigationEvent(viewModel.navigationEvent.value)
     }
 
     private fun observeViewModel() {
-        viewModel.moviesUIModels.observe(viewLifecycleOwner, Observer { movies ->
+        viewModel.uiModels.observe(viewLifecycleOwner, Observer { movies ->
             renderMoviesUIModels(movies)
         })
         viewModel.error.observe(viewLifecycleOwner, Observer { error ->

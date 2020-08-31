@@ -8,19 +8,24 @@ import com.asmat.rolando.nightwing.model.mappers.DataModelMapper
 import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
 import com.asmat.rolando.nightwing.repositories.MoviesRepository
 import com.asmat.rolando.nightwing.ui.moviegrid.BaseMovieGridViewModel
+import com.asmat.rolando.nightwing.ui.moviegrid.MovieGridItemUiModel
 
 class FavoriteMoviesViewModel(moviesRepository: MoviesRepository,
                               uiModelMapper: UiModelMapper,
                               private val dataModelMapper: DataModelMapper) : BaseMovieGridViewModel(moviesRepository, uiModelMapper) {
 
-    override val movies: LiveData<List<Movie>> by lazy {
-        Transformations.map(moviesRepository.getAllFavoriteMovies()) {
+
+    override val uiModels: LiveData<List<MovieGridItemUiModel>>
+        get() = Transformations.map(moviesRepository.getAllFavoriteMovies()) {
             dataModelMapper.mapFavoriteMovies(it)
         }
-    }
 
     override val loading = MutableLiveData<Boolean>()
 
     override val error = MutableLiveData<Throwable>()
+
+    override fun load() {
+        // no-op
+    }
 
 }

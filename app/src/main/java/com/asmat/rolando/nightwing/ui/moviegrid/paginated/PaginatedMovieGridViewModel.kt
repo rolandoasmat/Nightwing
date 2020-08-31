@@ -1,5 +1,6 @@
 package com.asmat.rolando.nightwing.ui.moviegrid.paginated
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.asmat.rolando.nightwing.model.Movie
 import com.asmat.rolando.nightwing.model.PaginatedRequest
@@ -8,6 +9,7 @@ import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
 import com.asmat.rolando.nightwing.networking.models.MoviesResponse
 import com.asmat.rolando.nightwing.repositories.MoviesRepository
 import com.asmat.rolando.nightwing.ui.moviegrid.BaseMovieGridViewModel
+import com.asmat.rolando.nightwing.ui.moviegrid.MovieGridItemUiModel
 
 /**
  * Paginated movie grid
@@ -16,12 +18,16 @@ abstract class PaginatedMovieGridViewModel(moviesRepository: MoviesRepository,
                                            uiModelMapper: UiModelMapper,
                                            private val dataModelMapper: DataModelMapper) : BaseMovieGridViewModel(moviesRepository, uiModelMapper) {
 
-    override val movies = MutableLiveData<List<Movie>>()
+    private val movies = MutableLiveData<List<Movie>>()
 
     override val loading by lazy { paginatedRequest.loading }
     val loadingMore by lazy { paginatedRequest.loadingMore }
     override val error by lazy { paginatedRequest.error }
     val errorLoadingMore by lazy { paginatedRequest.errorLoadingMore }
+
+    private val _uiModels = MutableLiveData<List<MovieGridItemUiModel>>()
+    override val uiModels: LiveData<List<MovieGridItemUiModel>>
+        get() = _uiModels
 
     open val onlyLoadIfDataIsNull = true
 
@@ -34,7 +40,6 @@ abstract class PaginatedMovieGridViewModel(moviesRepository: MoviesRepository,
      * Load first page of movies
      */
     override fun load() {
-        super.load()
         init()
         if (onlyLoadIfDataIsNull) {
             if (paginatedRequest.data.value == null) {
