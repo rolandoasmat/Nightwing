@@ -5,6 +5,7 @@ import com.asmat.rolando.nightwing.database.entities.WatchLaterMovie
 import com.asmat.rolando.nightwing.model.Movie
 import com.asmat.rolando.nightwing.networking.models.MovieDetailsResponse
 import com.asmat.rolando.nightwing.networking.models.MoviesResponse
+import com.asmat.rolando.nightwing.ui.moviegrid.MovieGridItemUiModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -33,25 +34,17 @@ open class MovieMapper @Inject constructor() {
                 data.vote_average ?: 0.0)
     }
 
-    open fun from(data: FavoriteMovie): Movie {
-        return Movie(
-                data.posterPath,
-                data.overview,
-                data.releaseDate,
+    open fun from(data: FavoriteMovie): MovieGridItemUiModel {
+        return MovieGridItemUiModel(
                 data.id,
                 data.title,
-                data.backdropPath,
-                data.voteAverage)
+                data.posterURL)
     }
 
-    open fun from(data: WatchLaterMovie): Movie {
-        return Movie(
-                data.posterPath,
-                data.overview,
-                data.releaseDate,
+    open fun from(data: WatchLaterMovie): MovieGridItemUiModel {
+        return MovieGridItemUiModel(
                 data.id,
                 data.title,
-                data.backdropPath,
-                data.voteAverage)
+                data.posterURL)
     }
 }

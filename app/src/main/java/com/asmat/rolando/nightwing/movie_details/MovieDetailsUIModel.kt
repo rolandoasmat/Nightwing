@@ -10,7 +10,7 @@ data class MovieDetailsUIModel(
         val releaseDate: String,
         val id: Int,
         val title: String,
-        val backdropPath: String?,
+        val backdropURL: String?,
         val voteAverage: String?,
         val runtime: String?,
         val tagline: String?) : Parcelable
