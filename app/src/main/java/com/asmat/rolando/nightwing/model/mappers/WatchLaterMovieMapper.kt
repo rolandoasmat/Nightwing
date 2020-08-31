@@ -1,21 +1,18 @@
 package com.asmat.rolando.nightwing.model.mappers
 
 import com.asmat.rolando.nightwing.database.entities.WatchLaterMovie
-import com.asmat.rolando.nightwing.networking.models.MovieDetailsResponse
+import com.asmat.rolando.nightwing.movie_details.MovieDetailsUIModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 open class WatchLaterMovieMapper @Inject constructor() {
 
-    fun from(data: MovieDetailsResponse): WatchLaterMovie {
+    fun from(data: MovieDetailsUIModel): WatchLaterMovie {
         return WatchLaterMovie(
-                data.id ?: 0,
-                data.poster_path,
-                data.overview ?: "",
-                data.release_date ?: "",
-                data.title ?: "",
-                data.backdrop_path,
-                data.vote_average ?: 0.0)
+                data.id,
+                data.posterURL,
+                data.releaseDate,
+                data.title)
     }
 }

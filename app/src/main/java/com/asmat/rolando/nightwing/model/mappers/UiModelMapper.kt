@@ -6,6 +6,8 @@ import com.asmat.rolando.nightwing.networking.models.PersonMovieCredits
 import com.asmat.rolando.nightwing.networking.models.PersonsResponse
 import com.asmat.rolando.nightwing.cast_details.MovieCreditUiModel
 import com.asmat.rolando.nightwing.cast_details.PersonMovieCreditsUiModel
+import com.asmat.rolando.nightwing.movie_details.MovieDetailsUIModel
+import com.asmat.rolando.nightwing.networking.models.MovieDetailsResponse
 import com.asmat.rolando.nightwing.ui.moviegrid.MovieGridItemUiModel
 import com.asmat.rolando.nightwing.search.SearchDataModelsMapper
 import com.asmat.rolando.nightwing.utilities.DateUtils
@@ -51,5 +53,26 @@ open class UiModelMapper @Inject constructor(private val searchDataModelsMapper:
     fun mapMovies(response: List<MoviesResponse.Movie>) = searchDataModelsMapper.mapMovies(response)
 
     fun mapPersons(response: List<PersonsResponse.Person>) = searchDataModelsMapper.mapPersons(response)
+
+    fun map(movie: MovieDetailsResponse): MovieDetailsUIModel? {
+        val posterURL = movie.poster_path?.let { url -> URLUtils.getImageURL342(url)}
+        val backdropURL = movie.backdrop_path?.let { url -> URLUtils.getImageURL780(url)}
+        val releaseDate = DateUtils.formatDate(movie.release_date ?: "")
+        val voteAverage = movie.vote_average?.times(10)?.toInt()?.toString()?.let { percent ->
+            "$percent%"
+        }
+        val runtime = movie.runtime?.let { movieRuntime ->
+            "$movieRuntime min"
+        }
+        return MovieDetailsUIModel(posterURL,
+                movie.overview ?: "",
+                releaseDate,
+                movie.id ?: 0,
+                movie.title ?: "",
+                backdropURL,
+                voteAverage,
+                runtime,
+                movie.tagline)
+    }
 
 }
