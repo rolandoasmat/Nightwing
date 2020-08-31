@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.asmat.rolando.nightwing.ui.moviegrid.BaseMovieGridFragment
 import kotlinx.android.synthetic.main.fragment_movie_grid.*
 
-abstract class PaginatedMovieGridFragment() : BaseMovieGridFragment() {
+abstract class PaginatedMovieGridFragment: BaseMovieGridFragment() {
 
     abstract override val viewModel: PaginatedMovieGridViewModel
 

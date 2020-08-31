@@ -2,6 +2,7 @@ package com.asmat.rolando.nightwing.ui.moviegrid.paginated
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.asmat.rolando.nightwing.model.Movie
 import com.asmat.rolando.nightwing.model.PaginatedRequest
 import com.asmat.rolando.nightwing.model.mappers.DataModelMapper
@@ -15,7 +16,7 @@ import com.asmat.rolando.nightwing.ui.moviegrid.MovieGridItemUiModel
  * Paginated movie grid
  */
 abstract class PaginatedMovieGridViewModel(moviesRepository: MoviesRepository,
-                                           uiModelMapper: UiModelMapper,
+                                           private val uiModelMapper: UiModelMapper,
                                            private val dataModelMapper: DataModelMapper) : BaseMovieGridViewModel(moviesRepository, uiModelMapper) {
 
     private val movies = MutableLiveData<List<Movie>>()
@@ -25,9 +26,10 @@ abstract class PaginatedMovieGridViewModel(moviesRepository: MoviesRepository,
     override val error by lazy { paginatedRequest.error }
     val errorLoadingMore by lazy { paginatedRequest.errorLoadingMore }
 
-    private val _uiModels = MutableLiveData<List<MovieGridItemUiModel>>()
     override val uiModels: LiveData<List<MovieGridItemUiModel>>
-        get() = _uiModels
+        get() = Transformations.map(paginatedRequest.data) {
+            uiModelMapper.mapToGridUiModels(it)
+        }
 
     open val onlyLoadIfDataIsNull = true
 
