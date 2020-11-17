@@ -22,7 +22,7 @@ class MoviesLinearAdapter(callback: Callback<MovieCardUIModel>): BaseLinearAdapt
     inner class ViewHolder(val view: View): BaseLinearAdapter<MovieCardUIModel, MoviesViewHolder>.ViewHolder(view) {
 
         private val thumbnail: ImageView = view.thumbnail
-        private val title: TextView = view.title
+        private val title: TextView = view.movieTitleLabel
 
         init {
             thumbnail.setOnClickListener(this)

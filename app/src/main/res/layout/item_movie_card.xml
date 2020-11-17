@@ -15,7 +15,7 @@
         tools:src="@drawable/person"/>
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/movieTitleLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="2"

@@ -143,9 +143,6 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIMo
         }
 
         viewModel.recommendedMovies.observe(viewLifecycleOwner) {
-            if (it.isEmpty()) {
-                recommendedMoviesHeaderLabel?.gone()
-            }
             recommendedMoviesLinearAdapter.data = it
         }
 
@@ -164,7 +161,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIMo
         setupReviewsRecyclerView()
         setupCastRecyclerView()
         setupSimilarMoviesRecyclerView()
-        setupRecommendedMoviesRecyclerView()
+        setupRecommendedMoviesRow()
         setupDirectorMoviesRecyclerView()
     }
 
@@ -213,13 +210,10 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIMo
         similarMoviesRecyclerView.isNestedScrollingEnabled = false
     }
 
-    private fun setupRecommendedMoviesRecyclerView() {
-        recommendedMoviesRecyclerView.setHasFixedSize(true)
-        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(), androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
-        recommendedMoviesRecyclerView.layoutManager = layoutManager
+    private fun setupRecommendedMoviesRow() {
         recommendedMoviesLinearAdapter = MoviesLinearAdapter(this)
-        recommendedMoviesRecyclerView.adapter = recommendedMoviesLinearAdapter
-        recommendedMoviesRecyclerView.isNestedScrollingEnabled = false
+        recommendedMoviesRow.setAdapter(recommendedMoviesLinearAdapter)
+        recommendedMoviesRow.setTitle("Recommended movies")
     }
 
     private fun setupDirectorMoviesRecyclerView() {
