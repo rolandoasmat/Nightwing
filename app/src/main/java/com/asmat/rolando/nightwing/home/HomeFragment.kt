@@ -28,6 +28,7 @@ class HomeFragment: Fragment(), BaseMovieGridFragment.MovieGridCallbacks {
     private fun setupViewPager() {
         val adapter = DiscoverPagerAdapter(this)
         container?.adapter = adapter
+        container?.isUserInputEnabled = false
         TabLayoutMediator(tabs, container) { tab, position ->
             tab.text = tabName[position]
         }.attach()
