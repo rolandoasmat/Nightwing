@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Popular Movies -->
+    <com.asmat.rolando.nightwing.ui.movie_row.MovieRowView
+        android:id="@+id/popularMoviesRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Top Rated Movies -->
+    <com.asmat.rolando.nightwing.ui.movie_row.MovieRowView
+        android:id="@+id/topRatedMoviesRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Now Playing Movies -->
+    <com.asmat.rolando.nightwing.ui.movie_row.MovieRowView
+        android:id="@+id/nowPlayingMoviesRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Upcoming Movies -->
+    <com.asmat.rolando.nightwing.ui.movie_row.MovieRowView
+        android:id="@+id/upcomingMoviesRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

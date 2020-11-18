@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment: Fragment(), BaseMovieGridFragment.MovieGridCallbacks {
 
-    private val tabName = listOf("Popular", "Top Rated", "Now Playing", "Upcoming")
+    private val tabName = listOf("Movies", "TV Shows", "Actors")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)

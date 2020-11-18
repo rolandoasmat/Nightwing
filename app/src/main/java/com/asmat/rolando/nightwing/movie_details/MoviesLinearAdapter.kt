@@ -29,7 +29,7 @@ class MoviesLinearAdapter(callback: Callback<MovieCardUIModel>): BaseLinearAdapt
         }
 
         override fun bind(item: MovieCardUIModel) {
-            if (item.url.isEmpty()) {
+            if (item.url?.isEmpty() == true) {
                 thumbnail.invisible()
             } else {
                 thumbnail.visible()
