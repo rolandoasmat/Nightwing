@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
+import com.asmat.rolando.nightwing.home.HomeFragmentDirections
 import com.asmat.rolando.nightwing.movie_details.MovieCardUIModel
 import com.asmat.rolando.nightwing.movie_details.MoviesLinearAdapter
 import com.asmat.rolando.nightwing.ui.common.BaseLinearAdapter
@@ -84,7 +86,8 @@ class MoviesTabFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIModel
     }
 
     override fun cardClicked(item: MovieCardUIModel) {
-        // TODO navigate to movie details
+        val action = HomeFragmentDirections.actionGlobalActionToMovieDetailsScreen(item.id)
+        findNavController().navigate(action)
     }
 
 
