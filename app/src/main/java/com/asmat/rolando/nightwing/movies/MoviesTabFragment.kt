@@ -14,6 +14,7 @@ import com.asmat.rolando.nightwing.home.HomeFragmentDirections
 import com.asmat.rolando.nightwing.movie_details.MovieCardUIModel
 import com.asmat.rolando.nightwing.movie_details.MoviesLinearAdapter
 import com.asmat.rolando.nightwing.ui.common.BaseLinearAdapter
+import com.asmat.rolando.nightwing.ui.movie_row.MovieRowView
 import com.asmat.rolando.nightwing.ui.nowplayingmovies.NowPlayingMoviesViewModel
 import com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesViewModel
 import com.asmat.rolando.nightwing.ui.topratedmovies.TopRatedMoviesViewModel
@@ -55,18 +56,27 @@ class MoviesTabFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIModel
     private fun setUpRows() {
         popularMoviesRow.setTitle("Popular")
         popularMoviesRow.setAdapter(popularMoviesAdapter)
+        popularMoviesRow.setCallback(object: MovieRowView.Callback {
+            override fun onSeeAllClicked() {
+                val action = HomeFragmentDirections.actionGlobalActionToPopularMoviesGrid()
+                findNavController().navigate(action)
+            }
+        })
         popularMoviesViewModel.load()
 
         topRatedMoviesRow.setTitle("Top Rated")
         topRatedMoviesRow.setAdapter(topRatedMoviesAdapter)
+//        popularMoviesRow.setCallback(this)
         topRatedMoviesViewModel.load()
 
         nowPlayingMoviesRow.setTitle("Now Playing")
         nowPlayingMoviesRow.setAdapter(nowPlayingMoviesAdapter)
+//        popularMoviesRow.setCallback(this)
         nowPlayingMoviesViewModel.load()
 
         upcomingMoviesRow.setTitle("Upcoming")
         upcomingMoviesRow.setAdapter(upcomingMoviesAdapter)
+//        popularMoviesRow.setCallback(this)
         upcomingMoviesViewModel.load()
     }
 

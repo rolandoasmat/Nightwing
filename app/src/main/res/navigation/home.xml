@@ -44,6 +44,18 @@
             app:destination="@id/movieDetailsScreen" />
     </fragment>
 
+
+
+    <fragment
+        android:id="@+id/popularMoviesGrid"
+        android:name="com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesFragment"
+        android:label="Popular Movies Grid"
+        tools:layout="@layout/fragment_movie_grid" >
+        <action
+            android:id="@+id/action_popularMoviesGrid_to_movieDetailsScreen"
+            app:destination="@id/movieDetailsScreen" />
+    </fragment>
+
     <include app:graph="@navigation/movie_details" />
     <action
         android:id="@+id/action_globalAction_to_movieDetailsScreen"
@@ -52,5 +64,9 @@
             android:name="movieIdArg"
             app:argType="integer" />
     </action>
+
+    <action
+        android:id="@+id/action_globalAction_to_popularMoviesGrid"
+        app:destination="@id/popularMoviesGrid" />
 
 </navigation>
