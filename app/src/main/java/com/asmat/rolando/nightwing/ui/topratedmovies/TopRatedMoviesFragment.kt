@@ -4,9 +4,13 @@ import androidx.lifecycle.ViewModelProviders
 import com.asmat.rolando.nightwing.ui.moviegrid.paginated.PaginatedMovieGridFragment
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 
-class TopRatedMoviesFragment(): PaginatedMovieGridFragment() {
+class TopRatedMoviesFragment: PaginatedMovieGridFragment() {
 
     override val viewModel: TopRatedMoviesViewModel
         get() = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository, dataModelMapper, uiModelMapper, deepLinksUtils)).get(TopRatedMoviesViewModel::class.java)
+
+    override fun goToMovieDetailsScreen(movieID: Int) {
+        TODO("Not yet implemented")
+    }
 
 }

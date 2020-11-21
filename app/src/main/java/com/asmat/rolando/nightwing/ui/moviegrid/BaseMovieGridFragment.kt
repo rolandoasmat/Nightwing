@@ -41,7 +41,7 @@ abstract class BaseMovieGridFragment: androidx.fragment.app.Fragment() {
 
     abstract val viewModel: BaseMovieGridViewModel
 
-    private var callbacks: MovieGridCallbacks? = null
+    abstract fun goToMovieDetailsScreen(movieID: Int)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +60,7 @@ abstract class BaseMovieGridFragment: androidx.fragment.app.Fragment() {
         moviesRecyclerView?.layoutManager = layoutManager
         moviesGridAdapter = BaseMoviesGridAdapter(object : BaseMoviesGridAdapter.Callback {
             override fun itemPressed(movieID: Int) {
-                callbacks?.showMovieDetailScreen(movieID)
+                goToMovieDetailsScreen(movieID)
             }
         })
         moviesRecyclerView?.adapter = moviesGridAdapter
@@ -73,13 +73,6 @@ abstract class BaseMovieGridFragment: androidx.fragment.app.Fragment() {
         refreshUI()
         viewModel.load()
         observeViewModel()
-        setCallback()
-    }
-
-    private fun setCallback() {
-        (parentFragment as? MovieGridCallbacks)?.let {
-            this.callbacks = it
-        }
     }
 
     private fun refreshUI() {

@@ -9,4 +9,8 @@ class UpcomingMoviesFragment: PaginatedMovieGridFragment() {
     override val viewModel: UpcomingMoviesViewModel
         get() = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository, dataModelMapper, uiModelMapper, deepLinksUtils)).get(UpcomingMoviesViewModel::class.java)
 
+    override fun goToMovieDetailsScreen(movieID: Int) {
+        TODO("Not yet implemented")
+    }
+
 }
