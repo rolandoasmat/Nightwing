@@ -66,17 +66,32 @@ class MoviesTabFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIModel
 
         topRatedMoviesRow.setTitle("Top Rated")
         topRatedMoviesRow.setAdapter(topRatedMoviesAdapter)
-//        popularMoviesRow.setCallback(this)
+        topRatedMoviesRow.setCallback(object: MovieRowView.Callback {
+            override fun onSeeAllClicked() {
+                val action = HomeFragmentDirections.actionGlobalActionToTopRatedMoviesGrid()
+                findNavController().navigate(action)
+            }
+        })
         topRatedMoviesViewModel.load()
 
         nowPlayingMoviesRow.setTitle("Now Playing")
         nowPlayingMoviesRow.setAdapter(nowPlayingMoviesAdapter)
-//        popularMoviesRow.setCallback(this)
+        nowPlayingMoviesRow.setCallback(object: MovieRowView.Callback {
+            override fun onSeeAllClicked() {
+                val action = HomeFragmentDirections.actionGlobalActionToNowPlayingMoviesGrid()
+                findNavController().navigate(action)
+            }
+        })
         nowPlayingMoviesViewModel.load()
 
         upcomingMoviesRow.setTitle("Upcoming")
         upcomingMoviesRow.setAdapter(upcomingMoviesAdapter)
-//        popularMoviesRow.setCallback(this)
+        upcomingMoviesRow.setCallback(object: MovieRowView.Callback {
+            override fun onSeeAllClicked() {
+                val action = HomeFragmentDirections.actionGlobalActionToUpcomingMoviesGrid()
+                findNavController().navigate(action)
+            }
+        })
         upcomingMoviesViewModel.load()
     }
 
@@ -99,7 +114,4 @@ class MoviesTabFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIModel
         val action = HomeFragmentDirections.actionGlobalActionToMovieDetailsScreen(item.id)
         findNavController().navigate(action)
     }
-
-
-
 }

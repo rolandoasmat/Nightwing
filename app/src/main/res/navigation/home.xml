@@ -45,18 +45,47 @@
     </fragment>
 
 
-
+    <!-- GRIDS -->
     <fragment
         android:id="@+id/popularMoviesGrid"
         android:name="com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesFragment"
-        android:label="Popular Movies Grid"
+        android:label="Popular Movies"
         tools:layout="@layout/fragment_movie_grid" >
         <action
             android:id="@+id/action_popularMoviesGrid_to_movieDetailsScreen"
             app:destination="@id/movieDetailsScreen" />
     </fragment>
+    <fragment
+        android:id="@+id/topRatedMoviesGrid"
+        android:name="com.asmat.rolando.nightwing.ui.topratedmovies.TopRatedMoviesFragment"
+        android:label="Top Rated Movies"
+        tools:layout="@layout/fragment_movie_grid" >
+        <action
+            android:id="@+id/action_topRatedMoviesGrid_to_movieDetailsScreen"
+            app:destination="@id/movieDetailsScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/nowPlayingMoviesGrid"
+        android:name="com.asmat.rolando.nightwing.ui.nowplayingmovies.NowPlayingMoviesFragment"
+        android:label="Now Playing Movies"
+        tools:layout="@layout/fragment_movie_grid" >
+        <action
+            android:id="@+id/action_nowPlayingMoviesGrid_to_movieDetailsScreen"
+            app:destination="@id/movieDetailsScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/upcomingMoviesGrid"
+        android:name="com.asmat.rolando.nightwing.ui.upcomingmovies.UpcomingMoviesFragment"
+        android:label="Upcoming Movies"
+        tools:layout="@layout/fragment_movie_grid" >
+        <action
+            android:id="@+id/action_upcomingMoviesGrid_to_movieDetailsScreen"
+            app:destination="@id/movieDetailsScreen" />
+    </fragment>
 
     <include app:graph="@navigation/movie_details" />
+
+    <!-- GLOBAL ACTION -->
     <action
         android:id="@+id/action_globalAction_to_movieDetailsScreen"
         app:destination="@id/movie_details" >
@@ -68,5 +97,14 @@
     <action
         android:id="@+id/action_globalAction_to_popularMoviesGrid"
         app:destination="@id/popularMoviesGrid" />
+    <action
+        android:id="@+id/action_globalAction_to_topRatedMoviesGrid"
+        app:destination="@id/topRatedMoviesGrid" />
+    <action
+        android:id="@+id/action_globalAction_to_nowPlayingMoviesGrid"
+        app:destination="@id/nowPlayingMoviesGrid" />
+    <action
+        android:id="@+id/action_globalAction_to_upcomingMoviesGrid"
+        app:destination="@id/upcomingMoviesGrid" />
 
 </navigation>
