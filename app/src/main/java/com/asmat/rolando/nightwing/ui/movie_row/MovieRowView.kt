@@ -22,15 +22,9 @@ class MovieRowView @JvmOverloads constructor(
         }
     }
 
-    fun setTitle(title: String) {
+    fun configure(title: String, adapter: MoviesLinearAdapter, callback: Callback) {
         movieTitleLabel.text = title
-    }
-
-    fun setAdapter(adapter: MoviesLinearAdapter) {
         movieRowRecyclerView.adapter = adapter
-    }
-
-    fun setCallback(callback: Callback) {
         this.callback = callback
     }
 

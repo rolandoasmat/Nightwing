@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_movieDetailsScreen_to_movieDetailsScreen"
             app:destination="@id/movieDetailsScreen" />
+        <action
+            android:id="@+id/action_movieDetailsScreen_to_recommendedMoviesGrid"
+            app:destination="@id/recommendedMoviesGrid" />
     </fragment>
 
     <fragment
@@ -32,6 +35,19 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_castDetailsScreen_to_movieDetailsScreen"
+            app:destination="@id/movieDetailsScreen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recommendedMoviesGrid"
+        android:name="com.asmat.rolando.nightwing.ui.recommended_movies.RecommendedMoviesFragment"
+        android:label="Recommended Movies"
+        tools:layout="@layout/fragment_movie_grid" >
+        <argument
+            android:name="movieIdArg"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_recommendedMoviesGrid_to_movieDetailsScreen"
             app:destination="@id/movieDetailsScreen" />
     </fragment>
 

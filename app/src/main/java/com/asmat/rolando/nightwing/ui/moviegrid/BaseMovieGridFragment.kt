@@ -16,6 +16,7 @@ import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
 import com.asmat.rolando.nightwing.repositories.MoviesRepository
 import com.asmat.rolando.nightwing.repositories.PeopleRepository
 import com.asmat.rolando.nightwing.utilities.ViewUtils
+import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_movie_grid.*
 import kotlinx.android.synthetic.main.retry_layout.*
 import javax.inject.Inject
@@ -36,6 +37,9 @@ abstract class BaseMovieGridFragment: androidx.fragment.app.Fragment() {
 
     @Inject
     lateinit var deepLinksUtils: DeepLinksUtils
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     private var moviesGridAdapter: BaseMoviesGridAdapter? = null
 

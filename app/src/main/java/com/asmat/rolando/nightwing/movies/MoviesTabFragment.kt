@@ -54,9 +54,7 @@ class MoviesTabFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIModel
     }
 
     private fun setUpRows() {
-        popularMoviesRow.setTitle("Popular")
-        popularMoviesRow.setAdapter(popularMoviesAdapter)
-        popularMoviesRow.setCallback(object: MovieRowView.Callback {
+        popularMoviesRow.configure("Popular", popularMoviesAdapter, object: MovieRowView.Callback {
             override fun onSeeAllClicked() {
                 val action = HomeFragmentDirections.actionGlobalActionToPopularMoviesGrid()
                 findNavController().navigate(action)
@@ -64,9 +62,7 @@ class MoviesTabFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIModel
         })
         popularMoviesViewModel.load()
 
-        topRatedMoviesRow.setTitle("Top Rated")
-        topRatedMoviesRow.setAdapter(topRatedMoviesAdapter)
-        topRatedMoviesRow.setCallback(object: MovieRowView.Callback {
+        topRatedMoviesRow.configure("Top Rated", topRatedMoviesAdapter, object: MovieRowView.Callback {
             override fun onSeeAllClicked() {
                 val action = HomeFragmentDirections.actionGlobalActionToTopRatedMoviesGrid()
                 findNavController().navigate(action)
@@ -74,9 +70,7 @@ class MoviesTabFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIModel
         })
         topRatedMoviesViewModel.load()
 
-        nowPlayingMoviesRow.setTitle("Now Playing")
-        nowPlayingMoviesRow.setAdapter(nowPlayingMoviesAdapter)
-        nowPlayingMoviesRow.setCallback(object: MovieRowView.Callback {
+        nowPlayingMoviesRow.configure("Now Playing", nowPlayingMoviesAdapter, object: MovieRowView.Callback {
             override fun onSeeAllClicked() {
                 val action = HomeFragmentDirections.actionGlobalActionToNowPlayingMoviesGrid()
                 findNavController().navigate(action)
@@ -84,9 +78,7 @@ class MoviesTabFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIModel
         })
         nowPlayingMoviesViewModel.load()
 
-        upcomingMoviesRow.setTitle("Upcoming")
-        upcomingMoviesRow.setAdapter(upcomingMoviesAdapter)
-        upcomingMoviesRow.setCallback(object: MovieRowView.Callback {
+        upcomingMoviesRow.configure("Upcoming", upcomingMoviesAdapter, object: MovieRowView.Callback {
             override fun onSeeAllClicked() {
                 val action = HomeFragmentDirections.actionGlobalActionToUpcomingMoviesGrid()
                 findNavController().navigate(action)
