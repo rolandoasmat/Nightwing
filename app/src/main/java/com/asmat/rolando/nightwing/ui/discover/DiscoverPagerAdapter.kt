@@ -2,8 +2,8 @@ package com.asmat.rolando.nightwing.ui.discover
 
 import androidx.fragment.app.Fragment
 import com.asmat.rolando.nightwing.movies.MoviesTabFragment
+import com.asmat.rolando.nightwing.popular_people.PopularPeopleGridFragment
 import com.asmat.rolando.nightwing.ui.common.BaseSectionsPagerAdapter
-import com.asmat.rolando.nightwing.ui.nowplayingmovies.NowPlayingMoviesFragment
 import com.asmat.rolando.nightwing.ui.topratedmovies.TopRatedMoviesFragment
 
 class DiscoverPagerAdapter(fragment: Fragment): BaseSectionsPagerAdapter(fragment) {
@@ -12,7 +12,7 @@ class DiscoverPagerAdapter(fragment: Fragment): BaseSectionsPagerAdapter(fragmen
         get() {
             val moviesFragment = MoviesTabFragment()
             val topRatedMoviesFragment = TopRatedMoviesFragment()
-            val nowPlayingMoviesFragment = NowPlayingMoviesFragment()
-            return arrayOf(moviesFragment, topRatedMoviesFragment, nowPlayingMoviesFragment)
+            val popularPeopleGridFragment = PopularPeopleGridFragment()
+            return arrayOf(moviesFragment, topRatedMoviesFragment, popularPeopleGridFragment)
         }
 }
