@@ -10,7 +10,7 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
-import com.asmat.rolando.nightwing.home.HomeFragmentDirections
+import com.asmat.rolando.nightwing.home_tab.HomeFragmentDirections
 import com.asmat.rolando.nightwing.movie_details.MovieCardUIModel
 import com.asmat.rolando.nightwing.movie_details.MoviesLinearAdapter
 import com.asmat.rolando.nightwing.ui.common.BaseLinearAdapter
