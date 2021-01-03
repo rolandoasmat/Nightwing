@@ -10,6 +10,7 @@ import com.asmat.rolando.nightwing.ui.moviegrid.BaseMovieGridFragment
 import com.asmat.rolando.nightwing.ui.moviegrid.paginated.PaginatedMovieGridFragment
 import com.asmat.rolando.nightwing.movie_details.MovieDetailsFragment
 import com.asmat.rolando.nightwing.movies.MoviesTabFragment
+import com.asmat.rolando.nightwing.popular_people.PopularPeopleGridFragment
 import com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesFragment
 import com.asmat.rolando.nightwing.search.SearchFragment
 import com.asmat.rolando.nightwing.ui.discover.MainActivity
@@ -34,5 +35,6 @@ interface ApplicationComponent {
     fun inject(movieDetailsFragment: MovieDetailsFragment)
     fun inject(castDetailsFragment: CastDetailsFragment)
     fun inject(moviesTabFragment: MoviesTabFragment)
+    fun inject(fragment: PopularPeopleGridFragment)
 
 }

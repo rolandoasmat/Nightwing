@@ -1,13 +1,11 @@
 package com.asmat.rolando.nightwing.model.mappers
 
 import com.asmat.rolando.nightwing.model.Movie
-import com.asmat.rolando.nightwing.networking.models.MoviesResponse
-import com.asmat.rolando.nightwing.networking.models.PersonMovieCredits
-import com.asmat.rolando.nightwing.networking.models.PersonsResponse
 import com.asmat.rolando.nightwing.cast_details.MovieCreditUiModel
 import com.asmat.rolando.nightwing.cast_details.PersonMovieCreditsUiModel
 import com.asmat.rolando.nightwing.movie_details.MovieDetailsUIModel
-import com.asmat.rolando.nightwing.networking.models.MovieDetailsResponse
+import com.asmat.rolando.nightwing.networking.models.*
+import com.asmat.rolando.nightwing.popular_people.PopularPersonUiModel
 import com.asmat.rolando.nightwing.ui.moviegrid.MovieGridItemUiModel
 import com.asmat.rolando.nightwing.search.SearchDataModelsMapper
 import com.asmat.rolando.nightwing.utilities.DateUtils
@@ -80,6 +78,21 @@ open class UiModelMapper @Inject constructor(private val searchDataModelsMapper:
                 voteAverage,
                 runtime,
                 movie.tagline)
+    }
+
+    fun map(data: PopularPeopleResponse): List<PopularPersonUiModel> {
+        return data.results.map {
+            val url = it.profile_path?.let { path ->
+                URLUtils.getImageURL342(path)
+            }
+            val titles = it.known_for.mapNotNull { it.title }
+            val subtitle = if (titles.isEmpty()) {
+                ""
+            } else {
+                titles.reduce { acc, s -> "$acc, $s" }
+            }
+            PopularPersonUiModel(url, it.name, subtitle ?: "")
+        }
     }
 
 }
