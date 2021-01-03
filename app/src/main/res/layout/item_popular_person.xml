@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:orientation="vertical"
+    tools:background="@color/colorAccent">
+
+    <ImageView
+        android:id="@+id/personThumbnail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="250dp"
+        tools:src="@drawable/person"/>
+
+    <TextView
+        android:id="@+id/personName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="Jim Carrey Super Duper Long Ass Name "/>
+
+    <TextView
+        android:id="@+id/personSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:layout_marginTop="2dp"
+        tools:text="The Mask and another super duper long ass des"/>
+
+</LinearLayout>
