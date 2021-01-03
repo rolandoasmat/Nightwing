@@ -50,9 +50,6 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
     // Recycler View Adapters
     private lateinit var trailersLinearAdapter: TrailersLinearAdapter
     private lateinit var castLinearAdapter: CastLinearAdapter
-    private lateinit var similarMoviesLinearAdapter: MoviesLinearAdapter
-    private lateinit var recommendedMoviesLinearAdapter: MoviesLinearAdapter
-    private lateinit var directorMoviesLinearAdapter: MoviesLinearAdapter
     private lateinit var reviewsLinearAdapter: ReviewsLinearAdapter
 
     private val movieID: Int
@@ -108,7 +105,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
 
         viewModel.director.observe(viewLifecycleOwner) {
             directorLabel?.text = it
-            moreFromDirectorLabel?.text = resources.getString(R.string.more_from_director, it)
+            moreFromDirectorMoviesRow?.setTitle(resources.getString(R.string.more_from_director, it))
         }
 
         // Movie icons
@@ -138,18 +135,15 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
         })
 
         viewModel.similarMovies.observe(viewLifecycleOwner) {
-            if (it.isEmpty()) {
-                similarMoviesHeaderLabel?.gone()
-            }
-            similarMoviesLinearAdapter.data = it
+            similarMoviesRow.setData(it)
         }
 
         viewModel.recommendedMovies.observe(viewLifecycleOwner) {
-            recommendedMoviesLinearAdapter.data = it
+            recommendedMoviesRow.setData(it)
         }
 
         viewModel.directorMovies.observe(viewLifecycleOwner) {
-            directorMoviesLinearAdapter.data = it
+            moreFromDirectorMoviesRow.setData(it)
         }
 
         viewModel.reviews.observe(viewLifecycleOwner, Observer { reviews ->
@@ -162,9 +156,9 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
         setupTrailersRecyclerView()
         setupReviewsRecyclerView()
         setupCastRecyclerView()
-        setupSimilarMoviesRecyclerView()
+        setupSimilarMoviesRow()
         setupRecommendedMoviesRow()
-        setupDirectorMoviesRecyclerView()
+        setupDirectorMoviesRow()
     }
 
     private fun setupToolbar() {
@@ -203,32 +197,38 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
         castRecyclerView.isNestedScrollingEnabled = false
     }
 
-    private fun setupSimilarMoviesRecyclerView() {
-        similarMoviesRecyclerView.setHasFixedSize(true)
-        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(), androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
-        similarMoviesRecyclerView.layoutManager = layoutManager
-        similarMoviesLinearAdapter = MoviesLinearAdapter(this)
-        similarMoviesRecyclerView.adapter = similarMoviesLinearAdapter
-        similarMoviesRecyclerView.isNestedScrollingEnabled = false
-    }
+    private fun setupSimilarMoviesRow() {
+        similarMoviesRow.configure("Similar Movies", false, object : RowView.Callback {
+            override fun onSeeAllClicked() { }
 
-    private fun setupRecommendedMoviesRow() {
-        recommendedMoviesLinearAdapter = MoviesLinearAdapter(this)
-        recommendedMoviesRow.configure("Recommended movies", recommendedMoviesLinearAdapter, object: RowView.Callback {
-            override fun onSeeAllClicked() {
-                val action = MovieDetailsFragmentDirections.actionMovieDetailsScreenToRecommendedMoviesGrid(movieID)
-                findNavController().navigate(action)
+            override fun onCardClicked(id: Int) {
+                TODO("Not yet implemented")
             }
         })
     }
 
-    private fun setupDirectorMoviesRecyclerView() {
-        directorMoviesRecyclerView.setHasFixedSize(true)
-        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(), androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
-        directorMoviesRecyclerView.layoutManager = layoutManager
-        directorMoviesLinearAdapter = MoviesLinearAdapter(this)
-        directorMoviesRecyclerView.adapter = directorMoviesLinearAdapter
-        directorMoviesRecyclerView.isNestedScrollingEnabled = false
+    private fun setupRecommendedMoviesRow() {
+        recommendedMoviesRow.configure("Recommended movies", true, object: RowView.Callback {
+            override fun onSeeAllClicked() {
+                val action = MovieDetailsFragmentDirections.actionMovieDetailsScreenToRecommendedMoviesGrid(movieID)
+                findNavController().navigate(action)
+            }
+
+            override fun onCardClicked(id: Int) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    private fun setupDirectorMoviesRow() {
+        moreFromDirectorMoviesRow.configure(null, false, object: RowView.Callback {
+            override fun onSeeAllClicked() { }
+
+            override fun onCardClicked(id: Int) {
+                TODO("Not yet implemented")
+            }
+        })
+
     }
 
     private fun setupReviewsRecyclerView() {
@@ -352,5 +352,4 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
         findNavController().navigate(action)
     }
     //endregion
-
 }

@@ -137,38 +137,22 @@
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
 
             <!-- Similar Movies -->
-            <TextView
-                android:id="@+id/similarMoviesHeaderLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_margin_general"
-                android:text="Similar Movies"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/similarMoviesRecyclerView"
+            <com.asmat.rolando.nightwing.ui.row_view.RowView
+                android:id="@+id/similarMoviesRow"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"/>
+                android:layout_height="wrap_content"/>
 
             <!-- Recommended Movies -->
             <com.asmat.rolando.nightwing.ui.row_view.RowView
                 android:id="@+id/recommendedMoviesRow"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
-            <!-- Director Movies -->
-            <TextView
-                android:id="@+id/moreFromDirectorLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_margin_general"
-                android:text="More from "
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/directorMoviesRecyclerView"
+            <!-- More From Director Movies -->
+            <com.asmat.rolando.nightwing.ui.row_view.RowView
+                android:id="@+id/moreFromDirectorMoviesRow"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"/>
+                android:layout_height="wrap_content"/>
 
             <!--Reviews-->
             <TextView
