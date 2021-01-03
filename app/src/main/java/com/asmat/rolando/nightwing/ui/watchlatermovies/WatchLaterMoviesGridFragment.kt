@@ -10,5 +10,4 @@ class WatchLaterMoviesGridFragment: BaseMovieGridFragment() {
     override fun goToMovieDetailsScreen(movieID: Int) {
         TODO("Not yet implemented")
     }
-
 }

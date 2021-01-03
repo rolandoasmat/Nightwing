@@ -11,5 +11,4 @@ class TopRatedMoviesFragment: PaginatedMovieGridFragment() {
         val action = TopRatedMoviesFragmentDirections.actionTopRatedMoviesGridToMovieDetailsScreen(movieID)
         findNavController().navigate(action)
     }
-
 }

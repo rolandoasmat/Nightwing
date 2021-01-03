@@ -12,5 +12,4 @@ class UpcomingMoviesFragment: PaginatedMovieGridFragment() {
         val action = UpcomingMoviesFragmentDirections.actionUpcomingMoviesGridToMovieDetailsScreen(movieID)
         findNavController().navigate(action)
     }
-
 }

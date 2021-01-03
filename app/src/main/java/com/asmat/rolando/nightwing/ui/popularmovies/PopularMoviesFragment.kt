@@ -12,5 +12,4 @@ class PopularMoviesFragment: PaginatedMovieGridFragment() {
         val action = PopularMoviesFragmentDirections.actionPopularMoviesGridToMovieDetailsScreen(movieID)
         findNavController().navigate(action)
     }
-
 }

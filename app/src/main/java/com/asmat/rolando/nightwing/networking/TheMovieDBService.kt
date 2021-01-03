@@ -41,17 +41,14 @@ interface TheMovieDBService {
     //endregion
 
     //region search/*
-
     @GET("search/movie")
     fun searchMovie(@Query("query") searchString: String, @Query("page") page: Int): Single<MoviesResponse>
 
     @GET("search/person")
     fun searchPerson(@Query("query") searchString: String, @Query("page") page: Int): Single<PersonsResponse>
-
     //endregion
 
     //region people/*
-
     @GET("person/popular")
     fun getPopularPeople(@Query("page") page: Int): Single<PopularPeopleResponse>
 
@@ -60,6 +57,16 @@ interface TheMovieDBService {
 
     @GET("person/{person_id}/movie_credits")
     fun getPersonMovieCredits(@Path("person_id") id: Int): Single<PersonMovieCredits>
+    //endregion
 
+    //region TV Shows
+    @GET("tv/popular")
+    fun getPopularTvShows(@Query("page") page: Int): Single<TvShowsResponse>
+
+    @GET("tv/top_rated")
+    fun getTopRatedTvShows(@Query("page") page: Int): Single<TvShowsResponse>
+
+    @GET("tv/on_the_air")
+    fun getOnTheAirTvShows(@Query("page") page: Int): Single<TvShowsResponse>
     //endregion
 }

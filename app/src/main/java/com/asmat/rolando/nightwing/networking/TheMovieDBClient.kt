@@ -15,7 +15,6 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 open class TheMovieDBClient {
 
-    //region Private
     private val service by lazy { createService() }
 
     /**
@@ -36,9 +35,7 @@ open class TheMovieDBClient {
                 .build()
                 .create(TheMovieDBService::class.java)
     }
-    //endregion
 
-    //region API
     open fun getPopularMovies(page: Int): Single<MoviesResponse> {
         return service.getPopularMovies(page)
     }
@@ -92,5 +89,10 @@ open class TheMovieDBClient {
     open fun getPersonMovieCredits(personID: Int): Single<PersonMovieCredits> {
         return service.getPersonMovieCredits(personID)
     }
+
+    //region TV Shows
+    fun getPopularTvShows(page: Int) = service.getPopularTvShows(page)
+    fun getTopRatedTvShows(page: Int) = service.getTopRatedTvShows(page)
+    fun getOnTheAirTvShows(page: Int) = service.getOnTheAirTvShows(page)
     //endregion
 }
