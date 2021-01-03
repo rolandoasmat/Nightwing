@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Popular TV Shows -->
+        <com.asmat.rolando.nightwing.ui.row_view.RowView
+            android:id="@+id/popularTvShowsRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Top Rated TV Shows -->
+        <com.asmat.rolando.nightwing.ui.row_view.RowView
+            android:id="@+id/topRatedTvShowsRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- On The Air TV Shows -->
+        <com.asmat.rolando.nightwing.ui.row_view.RowView
+            android:id="@+id/onTheAirTvShowsRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
