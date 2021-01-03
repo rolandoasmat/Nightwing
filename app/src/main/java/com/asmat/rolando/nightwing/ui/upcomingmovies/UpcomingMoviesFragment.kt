@@ -1,14 +1,12 @@
 package com.asmat.rolando.nightwing.ui.upcomingmovies
 
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.asmat.rolando.nightwing.ui.moviegrid.paginated.PaginatedMovieGridFragment
-import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 
 class UpcomingMoviesFragment: PaginatedMovieGridFragment() {
 
-    override val viewModel: UpcomingMoviesViewModel
-        get() = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository, dataModelMapper, uiModelMapper, deepLinksUtils)).get(UpcomingMoviesViewModel::class.java)
+    override val viewModel: UpcomingMoviesViewModel by viewModels { viewModelFactory }
 
     override fun goToMovieDetailsScreen(movieID: Int) {
         val action = UpcomingMoviesFragmentDirections.actionUpcomingMoviesGridToMovieDetailsScreen(movieID)

@@ -24,21 +24,6 @@ import javax.inject.Inject
 abstract class BaseMovieGridFragment: androidx.fragment.app.Fragment() {
 
     @Inject
-    lateinit var moviesRepository: MoviesRepository
-
-    @Inject
-    lateinit var peopleRepository: PeopleRepository
-
-    @Inject
-    lateinit var dataModelMapper: DataModelMapper
-
-    @Inject
-    lateinit var uiModelMapper: UiModelMapper
-
-    @Inject
-    lateinit var deepLinksUtils: DeepLinksUtils
-
-    @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
     private var moviesGridAdapter: BaseMoviesGridAdapter? = null

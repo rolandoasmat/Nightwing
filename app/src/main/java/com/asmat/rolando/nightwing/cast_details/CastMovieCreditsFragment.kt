@@ -1,20 +1,15 @@
 package com.asmat.rolando.nightwing.cast_details
 
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.asmat.rolando.nightwing.BuildConfig
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
-import com.asmat.rolando.nightwing.deep_links.DeepLinksUtils
-import com.asmat.rolando.nightwing.model.mappers.DataModelMapper
-import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
-import com.asmat.rolando.nightwing.repositories.MoviesRepository
-import com.asmat.rolando.nightwing.repositories.PeopleRepository
 import com.asmat.rolando.nightwing.utilities.ViewUtils
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_cast_movie_credits.*
@@ -38,21 +33,9 @@ class CastMovieCreditsFragment: Fragment(), MovieCreditsAdapter.ItemCallback {
     }
 
     @Inject
-    lateinit var moviesRepository: MoviesRepository
+    lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel: PersonMovieCreditsViewModel by viewModels { viewModelFactory }
 
-    @Inject
-    lateinit var peopleRepository: PeopleRepository
-
-    @Inject
-    lateinit var dataModelMapper: DataModelMapper
-
-    @Inject
-    lateinit var uiModelMapper: UiModelMapper
-
-    @Inject
-    lateinit var deepLinksUtils: DeepLinksUtils
-
-    private lateinit var viewModel: PersonMovieCreditsViewModel
     private var listener: Listener? = null
 
     private val adapter by lazy { MovieCreditsAdapter(this) }
@@ -70,7 +53,6 @@ class CastMovieCreditsFragment: Fragment(), MovieCreditsAdapter.ItemCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(moviesRepository, peopleRepository, dataModelMapper, uiModelMapper, deepLinksUtils)).get(PersonMovieCreditsViewModel::class.java)
         setup()
         (parentFragment as? Listener)?.let {
             listener = it
