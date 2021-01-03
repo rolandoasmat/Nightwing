@@ -20,11 +20,21 @@ class PopularPeopleViewModel(
     private val compositeDisposable = CompositeDisposable()
 
     init {
+        fetch()
+    }
+
+    fun loadMore() {
+        page += 1
+        fetch()
+    }
+
+    private fun fetch() {
         val disposable = peopleRepository
                 .getPopularPeople(page)
                 .subscribe({ result ->
                     val mapped = uiModelMapper.map(result)
-                    _data.postValue(mapped)
+                    val currentList = _data.value ?: emptyList()
+                    _data.postValue(currentList + mapped)
                 }, {})
         compositeDisposable.add(disposable)
     }

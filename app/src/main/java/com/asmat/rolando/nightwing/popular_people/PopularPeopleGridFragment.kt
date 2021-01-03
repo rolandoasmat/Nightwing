@@ -10,6 +10,7 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
+import com.asmat.rolando.nightwing.extensions.setNearBottomScrollListener
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_popular_people.*
 import javax.inject.Inject
@@ -29,8 +30,7 @@ class PopularPeopleGridFragment: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view =  inflater.inflate(R.layout.fragment_popular_people, container, false)
-        return view
+        return inflater.inflate(R.layout.fragment_popular_people, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,5 +54,8 @@ class PopularPeopleGridFragment: Fragment() {
         val layoutManager = GridLayoutManager(requireContext(), 2)
         popularPeopleRecyclerView?.adapter = adapter
         popularPeopleRecyclerView?.layoutManager = layoutManager
+        popularPeopleRecyclerView?.setNearBottomScrollListener {
+            viewModel.loadMore()
+        }
     }
 }
