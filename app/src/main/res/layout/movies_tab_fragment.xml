@@ -9,25 +9,25 @@
         android:orientation="vertical">
 
         <!-- Popular Movies -->
-        <com.asmat.rolando.nightwing.ui.movie_row.MovieRowView
+        <com.asmat.rolando.nightwing.ui.row_view.RowView
             android:id="@+id/popularMoviesRow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <!-- Top Rated Movies -->
-        <com.asmat.rolando.nightwing.ui.movie_row.MovieRowView
+        <com.asmat.rolando.nightwing.ui.row_view.RowView
             android:id="@+id/topRatedMoviesRow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <!-- Now Playing Movies -->
-        <com.asmat.rolando.nightwing.ui.movie_row.MovieRowView
+        <com.asmat.rolando.nightwing.ui.row_view.RowView
             android:id="@+id/nowPlayingMoviesRow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <!-- Upcoming Movies -->
-        <com.asmat.rolando.nightwing.ui.movie_row.MovieRowView
+        <com.asmat.rolando.nightwing.ui.row_view.RowView
             android:id="@+id/upcomingMoviesRow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

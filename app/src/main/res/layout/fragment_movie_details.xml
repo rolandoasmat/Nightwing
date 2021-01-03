@@ -151,7 +151,7 @@
                 android:layout_marginStart="@dimen/activity_horizontal_margin"/>
 
             <!-- Recommended Movies -->
-            <com.asmat.rolando.nightwing.ui.movie_row.MovieRowView
+            <com.asmat.rolando.nightwing.ui.row_view.RowView
                 android:id="@+id/recommendedMoviesRow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

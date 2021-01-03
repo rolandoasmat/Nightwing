@@ -22,7 +22,7 @@ import com.asmat.rolando.nightwing.networking.models.CreditsResponse
 import com.asmat.rolando.nightwing.networking.models.ReviewsResponse
 import com.asmat.rolando.nightwing.networking.models.VideosResponse
 import com.asmat.rolando.nightwing.ui.common.BaseLinearAdapter
-import com.asmat.rolando.nightwing.ui.movie_row.MovieRowView
+import com.asmat.rolando.nightwing.ui.row_view.RowView
 import com.asmat.rolando.nightwing.utilities.URLUtils
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import com.squareup.picasso.Picasso
@@ -213,7 +213,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIMo
 
     private fun setupRecommendedMoviesRow() {
         recommendedMoviesLinearAdapter = MoviesLinearAdapter(this)
-        recommendedMoviesRow.configure("Recommended movies", recommendedMoviesLinearAdapter, object: MovieRowView.Callback {
+        recommendedMoviesRow.configure("Recommended movies", recommendedMoviesLinearAdapter, object: RowView.Callback {
             override fun onSeeAllClicked() {
                 val action = MovieDetailsFragmentDirections.actionMovieDetailsScreenToRecommendedMoviesGrid(movieID)
                 findNavController().navigate(action)

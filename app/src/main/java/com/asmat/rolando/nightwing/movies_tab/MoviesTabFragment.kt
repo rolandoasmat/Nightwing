@@ -14,7 +14,7 @@ import com.asmat.rolando.nightwing.home_tab.HomeTabFragmentDirections
 import com.asmat.rolando.nightwing.movie_details.MovieCardUIModel
 import com.asmat.rolando.nightwing.movie_details.MoviesLinearAdapter
 import com.asmat.rolando.nightwing.ui.common.BaseLinearAdapter
-import com.asmat.rolando.nightwing.ui.movie_row.MovieRowView
+import com.asmat.rolando.nightwing.ui.row_view.RowView
 import com.asmat.rolando.nightwing.ui.nowplayingmovies.NowPlayingMoviesViewModel
 import com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesViewModel
 import com.asmat.rolando.nightwing.ui.topratedmovies.TopRatedMoviesViewModel
@@ -54,7 +54,7 @@ class MoviesTabFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIModel
     }
 
     private fun setUpRows() {
-        popularMoviesRow.configure("Popular", popularMoviesAdapter, object: MovieRowView.Callback {
+        popularMoviesRow.configure("Popular", popularMoviesAdapter, object: RowView.Callback {
             override fun onSeeAllClicked() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToPopularMoviesGrid()
                 findNavController().navigate(action)
@@ -62,7 +62,7 @@ class MoviesTabFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIModel
         })
         popularMoviesViewModel.load()
 
-        topRatedMoviesRow.configure("Top Rated", topRatedMoviesAdapter, object: MovieRowView.Callback {
+        topRatedMoviesRow.configure("Top Rated", topRatedMoviesAdapter, object: RowView.Callback {
             override fun onSeeAllClicked() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToTopRatedMoviesGrid()
                 findNavController().navigate(action)
@@ -70,7 +70,7 @@ class MoviesTabFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIModel
         })
         topRatedMoviesViewModel.load()
 
-        nowPlayingMoviesRow.configure("Now Playing", nowPlayingMoviesAdapter, object: MovieRowView.Callback {
+        nowPlayingMoviesRow.configure("Now Playing", nowPlayingMoviesAdapter, object: RowView.Callback {
             override fun onSeeAllClicked() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToNowPlayingMoviesGrid()
                 findNavController().navigate(action)
@@ -78,7 +78,7 @@ class MoviesTabFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIModel
         })
         nowPlayingMoviesViewModel.load()
 
-        upcomingMoviesRow.configure("Upcoming", upcomingMoviesAdapter, object: MovieRowView.Callback {
+        upcomingMoviesRow.configure("Upcoming", upcomingMoviesAdapter, object: RowView.Callback {
             override fun onSeeAllClicked() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToUpcomingMoviesGrid()
                 findNavController().navigate(action)
