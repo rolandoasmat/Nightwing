@@ -11,7 +11,7 @@ import com.asmat.rolando.nightwing.cast_details.CastDetailsViewModel
 import com.asmat.rolando.nightwing.cast_details.PersonMovieCreditsViewModel
 import com.asmat.rolando.nightwing.ui.favoritemovies.FavoriteMoviesViewModel
 import com.asmat.rolando.nightwing.movie_details.MovieDetailsViewModel
-import com.asmat.rolando.nightwing.popular_people.PopularPeopleViewModel
+import com.asmat.rolando.nightwing.popular_people_tab.PopularPeopleViewModel
 import com.asmat.rolando.nightwing.ui.nowplayingmovies.NowPlayingMoviesViewModel
 import com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesViewModel
 import com.asmat.rolando.nightwing.search.SearchViewModel

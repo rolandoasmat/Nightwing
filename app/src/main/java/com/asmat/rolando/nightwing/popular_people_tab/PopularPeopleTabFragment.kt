@@ -1,4 +1,4 @@
-package com.asmat.rolando.nightwing.popular_people
+package com.asmat.rolando.nightwing.popular_people_tab
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,7 +17,7 @@ import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_popular_people.*
 import javax.inject.Inject
 
-class PopularPeopleGridFragment: Fragment(), PopularPeopleAdapter.Callback {
+class PopularPeopleTabFragment: Fragment(), PopularPeopleAdapter.Callback {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory

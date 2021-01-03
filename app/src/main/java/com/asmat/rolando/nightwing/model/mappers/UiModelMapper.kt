@@ -5,7 +5,7 @@ import com.asmat.rolando.nightwing.cast_details.MovieCreditUiModel
 import com.asmat.rolando.nightwing.cast_details.PersonMovieCreditsUiModel
 import com.asmat.rolando.nightwing.movie_details.MovieDetailsUIModel
 import com.asmat.rolando.nightwing.networking.models.*
-import com.asmat.rolando.nightwing.popular_people.PopularPersonUiModel
+import com.asmat.rolando.nightwing.popular_people_tab.PopularPersonUiModel
 import com.asmat.rolando.nightwing.ui.moviegrid.MovieGridItemUiModel
 import com.asmat.rolando.nightwing.search.SearchDataModelsMapper
 import com.asmat.rolando.nightwing.utilities.DateUtils

@@ -4,7 +4,6 @@ import com.asmat.rolando.nightwing.model.SearchPersonsPaginatedRequest
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 import com.asmat.rolando.nightwing.networking.models.PersonDetailsResponse
 import com.asmat.rolando.nightwing.networking.models.PersonMovieCredits
-import com.asmat.rolando.nightwing.popular_people.PopularPersonUiModel
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers

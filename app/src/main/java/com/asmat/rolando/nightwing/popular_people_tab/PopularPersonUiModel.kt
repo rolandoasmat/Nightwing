@@ -1,4 +1,4 @@
-package com.asmat.rolando.nightwing.popular_people
+package com.asmat.rolando.nightwing.popular_people_tab
 
 data class PopularPersonUiModel(
         val id: Int,
