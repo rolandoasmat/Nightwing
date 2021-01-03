@@ -12,7 +12,7 @@ import com.asmat.rolando.nightwing.ui.moviegrid.BaseMovieGridFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment: Fragment(), BaseMovieGridFragment.MovieGridCallbacks {
+class HomeTabFragment: Fragment(), BaseMovieGridFragment.MovieGridCallbacks {
 
     private val tabName = listOf("Movies", "TV Shows", "Popular People")
 

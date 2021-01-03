@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/homeScreen"
-        android:name="com.asmat.rolando.nightwing.home_tab.HomeFragment"
+        android:name="com.asmat.rolando.nightwing.home_tab.HomeTabFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" >
     </fragment>
