@@ -1,4 +1,4 @@
-package com.asmat.rolando.nightwing.movie_details
+package com.asmat.rolando.nightwing.ui.row_view
 
 import android.view.View
 import android.widget.ImageView
@@ -13,13 +13,13 @@ import kotlinx.android.synthetic.main.item_movie_card.view.*
 
 private typealias MoviesViewHolder = MoviesLinearAdapter.ViewHolder
 
-class MoviesLinearAdapter(callback: Callback<MovieCardUIModel>): BaseLinearAdapter<MovieCardUIModel, MoviesViewHolder>(callback) {
+class MoviesLinearAdapter(callback: Callback<RowViewItemUiModel>): BaseLinearAdapter<RowViewItemUiModel, MoviesViewHolder>(callback) {
 
     override val layoutForLinearItem = R.layout.item_movie_card
 
     override fun createViewHolder(view: View) = ViewHolder(view)
 
-    inner class ViewHolder(val view: View): BaseLinearAdapter<MovieCardUIModel, MoviesViewHolder>.ViewHolder(view) {
+    inner class ViewHolder(val view: View): BaseLinearAdapter<RowViewItemUiModel, MoviesViewHolder>.ViewHolder(view) {
 
         private val thumbnail: ImageView = view.thumbnail
         private val title: TextView = view.movieTitleLabel
@@ -28,7 +28,7 @@ class MoviesLinearAdapter(callback: Callback<MovieCardUIModel>): BaseLinearAdapt
             thumbnail.setOnClickListener(this)
         }
 
-        override fun bind(item: MovieCardUIModel) {
+        override fun bind(item: RowViewItemUiModel) {
             if (item.url?.isEmpty() == true) {
                 thumbnail.invisible()
             } else {

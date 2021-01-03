@@ -12,6 +12,7 @@ import com.asmat.rolando.nightwing.networking.models.ReviewsResponse
 import com.asmat.rolando.nightwing.networking.models.VideosResponse
 import com.asmat.rolando.nightwing.repositories.MoviesRepository
 import com.asmat.rolando.nightwing.repositories.PeopleRepository
+import com.asmat.rolando.nightwing.ui.row_view.RowViewItemUiModel
 import com.asmat.rolando.nightwing.utilities.URLUtils
 import io.reactivex.Scheduler
 
@@ -43,16 +44,16 @@ class MovieDetailsViewModel(
     val cast = MutableLiveData<List<CreditsResponse.Cast>>()
     val castError = MutableLiveData<Throwable>()
 
-    private val _similarMovies = MutableLiveData<List<MovieCardUIModel>>()
-    val similarMovies: LiveData<List<MovieCardUIModel>>
+    private val _similarMovies = MutableLiveData<List<RowViewItemUiModel>>()
+    val similarMovies: LiveData<List<RowViewItemUiModel>>
         get() { return _similarMovies }
 
-    private val _recommendedMovies = MutableLiveData<List<MovieCardUIModel>>()
-    val recommendedMovies: LiveData<List<MovieCardUIModel>>
+    private val _recommendedMovies = MutableLiveData<List<RowViewItemUiModel>>()
+    val recommendedMovies: LiveData<List<RowViewItemUiModel>>
         get() { return _recommendedMovies }
 
-    private val _directorMovies = MutableLiveData<List<MovieCardUIModel>>()
-    val directorMovies: LiveData<List<MovieCardUIModel>>
+    private val _directorMovies = MutableLiveData<List<RowViewItemUiModel>>()
+    val directorMovies: LiveData<List<RowViewItemUiModel>>
         get() { return _directorMovies }
 
     val reviews = MutableLiveData<List<ReviewsResponse.Review>>()
@@ -162,7 +163,7 @@ class MovieDetailsViewModel(
                 .subscribe({ result ->
                     val movies = result.results?.map {
                         val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}
-                        MovieCardUIModel(it.id ?: 0, posterURL ?: "", it.title ?: "")
+                        RowViewItemUiModel(it.id ?: 0, posterURL ?: "", it.title ?: "")
                     }
                     _similarMovies.value = movies
                 }, { error ->
@@ -175,7 +176,7 @@ class MovieDetailsViewModel(
                 .subscribe({ result ->
                     val movies = result.results?.map {
                         val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}
-                        MovieCardUIModel(it.id ?: 0,posterURL ?: "", it.title ?: "")
+                        RowViewItemUiModel(it.id ?: 0,posterURL ?: "", it.title ?: "")
                     }
                     _recommendedMovies.value = movies
                 }, { error ->
@@ -201,7 +202,7 @@ class MovieDetailsViewModel(
                     val directorCredits = result.crew?.filter { it.job == DIRECTOR }
                     val movies = directorCredits?.map {
                         val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}
-                        MovieCardUIModel(it.id ?: 0,posterURL ?: "", it.title ?: "")
+                        RowViewItemUiModel(it.id ?: 0,posterURL ?: "", it.title ?: "")
                     }
                     _directorMovies.value = movies
                 }, { error ->

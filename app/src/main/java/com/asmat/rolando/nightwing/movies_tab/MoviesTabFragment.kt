@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
 import com.asmat.rolando.nightwing.home_tab.HomeTabFragmentDirections
-import com.asmat.rolando.nightwing.movie_details.MovieCardUIModel
+import com.asmat.rolando.nightwing.ui.row_view.RowViewItemUiModel
 import com.asmat.rolando.nightwing.movie_details.MoviesLinearAdapter
 import com.asmat.rolando.nightwing.ui.common.BaseLinearAdapter
 import com.asmat.rolando.nightwing.ui.row_view.RowView
@@ -23,7 +23,7 @@ import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.movies_tab_fragment.*
 import javax.inject.Inject
 
-class MoviesTabFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIModel> {
+class MoviesTabFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUiModel> {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -89,20 +89,20 @@ class MoviesTabFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIModel
 
     private fun observeLiveData() {
         popularMoviesViewModel.uiModels.observe(viewLifecycleOwner) {
-            popularMoviesAdapter.data = it.map { movieGridItem -> MovieCardUIModel(movieGridItem.id, movieGridItem.posterURL, movieGridItem.title) }
+            popularMoviesAdapter.data = it.map { movieGridItem -> RowViewItemUiModel(movieGridItem.id, movieGridItem.posterURL, movieGridItem.title) }
         }
         topRatedMoviesViewModel.uiModels.observe(viewLifecycleOwner) {
-            topRatedMoviesAdapter.data = it.map { movieGridItem -> MovieCardUIModel(movieGridItem.id, movieGridItem.posterURL, movieGridItem.title) }
+            topRatedMoviesAdapter.data = it.map { movieGridItem -> RowViewItemUiModel(movieGridItem.id, movieGridItem.posterURL, movieGridItem.title) }
         }
         nowPlayingMoviesViewModel.uiModels.observe(viewLifecycleOwner) {
-            nowPlayingMoviesAdapter.data = it.map { movieGridItem -> MovieCardUIModel(movieGridItem.id, movieGridItem.posterURL, movieGridItem.title) }
+            nowPlayingMoviesAdapter.data = it.map { movieGridItem -> RowViewItemUiModel(movieGridItem.id, movieGridItem.posterURL, movieGridItem.title) }
         }
         upcomingMoviesViewModel.uiModels.observe(viewLifecycleOwner) {
-            upcomingMoviesAdapter.data = it.map { movieGridItem -> MovieCardUIModel(movieGridItem.id, movieGridItem.posterURL, movieGridItem.title) }
+            upcomingMoviesAdapter.data = it.map { movieGridItem -> RowViewItemUiModel(movieGridItem.id, movieGridItem.posterURL, movieGridItem.title) }
         }
     }
 
-    override fun cardClicked(item: MovieCardUIModel) {
+    override fun cardClicked(item: RowViewItemUiModel) {
         val action = HomeTabFragmentDirections.actionGlobalActionToMovieDetailsScreen(item.id)
         findNavController().navigate(action)
     }

@@ -22,6 +22,7 @@ import com.asmat.rolando.nightwing.networking.models.CreditsResponse
 import com.asmat.rolando.nightwing.networking.models.ReviewsResponse
 import com.asmat.rolando.nightwing.networking.models.VideosResponse
 import com.asmat.rolando.nightwing.ui.common.BaseLinearAdapter
+import com.asmat.rolando.nightwing.ui.row_view.RowViewItemUiModel
 import com.asmat.rolando.nightwing.ui.row_view.RowView
 import com.asmat.rolando.nightwing.utilities.URLUtils
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
@@ -31,7 +32,7 @@ import kotlinx.android.synthetic.main.movie_details_user_actions.*
 import kotlinx.android.synthetic.main.primary_details.*
 import javax.inject.Inject
 
-class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIModel> {
+class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUiModel> {
 
     companion object {
         const val MOVIE_ID_ARG = "movieIdArg"
@@ -345,7 +346,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<MovieCardUIMo
         bookmarkIcon?.isSelected = enable
     }
 
-    override fun cardClicked(item: MovieCardUIModel) {
+    override fun cardClicked(item: RowViewItemUiModel) {
         val movieID = item.id
         val action = MovieDetailsFragmentDirections.actionMovieDetailsScreenToMovieDetailsScreen(movieID)
         findNavController().navigate(action)
