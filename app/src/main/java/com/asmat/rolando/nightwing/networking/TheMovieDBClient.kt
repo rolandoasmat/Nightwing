@@ -83,6 +83,8 @@ open class TheMovieDBClient {
         return service.searchPerson(searchString, page)
     }
 
+    open fun getPopularPeople(page: Int) = service.getPopularPeople(page)
+
     open fun getPersonDetails(id: Int): Single<PersonDetailsResponse> {
         return service.getPersonDetails(id)
     }

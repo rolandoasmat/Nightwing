@@ -52,6 +52,9 @@ interface TheMovieDBService {
 
     //region people/*
 
+    @GET("person/popular")
+    fun getPopularPeople(@Query("page") page: Int): Single<PopularPeopleResponse>
+
     @GET("person/{person_id}")
     fun getPersonDetails(@Path("person_id") id: Int): Single<PersonDetailsResponse>
 
