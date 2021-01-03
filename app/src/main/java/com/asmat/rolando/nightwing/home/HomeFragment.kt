@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.asmat.rolando.nightwing.R
-import com.asmat.rolando.nightwing.ui.discover.DiscoverPagerAdapter
+import com.asmat.rolando.nightwing.ui.discover.HomeTabPagerAdapter
 import com.asmat.rolando.nightwing.ui.moviegrid.BaseMovieGridFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -26,7 +26,7 @@ class HomeFragment: Fragment(), BaseMovieGridFragment.MovieGridCallbacks {
     }
 
     private fun setupViewPager() {
-        val adapter = DiscoverPagerAdapter(this)
+        val adapter = HomeTabPagerAdapter(this)
         container?.adapter = adapter
         container?.isUserInputEnabled = false
         TabLayoutMediator(tabs, container) { tab, position ->

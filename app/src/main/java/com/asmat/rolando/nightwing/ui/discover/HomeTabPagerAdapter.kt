@@ -7,7 +7,7 @@ import com.asmat.rolando.nightwing.tv_shows_tab.TvShowsTabFragment
 import com.asmat.rolando.nightwing.ui.common.BaseSectionsPagerAdapter
 import com.asmat.rolando.nightwing.ui.topratedmovies.TopRatedMoviesFragment
 
-class DiscoverPagerAdapter(fragment: Fragment): BaseSectionsPagerAdapter(fragment) {
+class HomeTabPagerAdapter(fragment: Fragment): BaseSectionsPagerAdapter(fragment) {
 
     override val fragments: Array<Fragment>
         get() {
