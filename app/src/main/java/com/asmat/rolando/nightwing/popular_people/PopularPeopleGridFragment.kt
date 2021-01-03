@@ -7,15 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
 import com.asmat.rolando.nightwing.extensions.setNearBottomScrollListener
+import com.asmat.rolando.nightwing.home.HomeFragmentDirections
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_popular_people.*
 import javax.inject.Inject
 
-class PopularPeopleGridFragment: Fragment() {
+class PopularPeopleGridFragment: Fragment(), PopularPeopleAdapter.Callback {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -50,12 +52,17 @@ class PopularPeopleGridFragment: Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = PopularPeopleAdapter()
+        adapter = PopularPeopleAdapter(this)
         val layoutManager = GridLayoutManager(requireContext(), 2)
         popularPeopleRecyclerView?.adapter = adapter
         popularPeopleRecyclerView?.layoutManager = layoutManager
         popularPeopleRecyclerView?.setNearBottomScrollListener {
             viewModel.loadMore()
         }
+    }
+
+    override fun onImageClicked(personId: Int) {
+        val direction = HomeFragmentDirections.actionGlobalActionToPersonDetailsScreen(personId)
+        findNavController().navigate(direction)
     }
 }

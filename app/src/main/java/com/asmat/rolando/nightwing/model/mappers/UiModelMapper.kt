@@ -91,7 +91,7 @@ open class UiModelMapper @Inject constructor(private val searchDataModelsMapper:
             } else {
                 titles.reduce { acc, s -> "$acc, $s" }
             }
-            PopularPersonUiModel(url, it.name, subtitle ?: "")
+            PopularPersonUiModel(it.id, url, it.name, subtitle ?: "")
         }
     }
 

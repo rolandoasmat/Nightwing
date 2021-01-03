@@ -40,7 +40,7 @@
         android:label="Cast Details"
         tools:layout="@layout/fragment_cast_details" >
         <argument
-            android:name="castIDArg"
+            android:name="castIdArg"
             app:argType="integer" />
         <action
             android:id="@+id/action_castDetailsScreen_to_movieDetailsScreen"
@@ -122,5 +122,13 @@
     <action
         android:id="@+id/action_globalAction_to_upcomingMoviesGrid"
         app:destination="@id/upcomingMoviesGrid" />
+
+    <action
+        android:id="@+id/action_globalAction_to_personDetailsScreen"
+        app:destination="@id/castDetailsScreen" >
+        <argument
+            android:name="castIdArg"
+            app:argType="integer" />
+    </action>
 
 </navigation>

@@ -10,7 +10,7 @@ import com.asmat.rolando.nightwing.ui.transformations.RoundedTransformation
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_popular_person.view.*
 
-class PopularPeopleAdapter: RecyclerView.Adapter<PopularPeopleAdapter.ViewHolder>() {
+class PopularPeopleAdapter(private val callback: Callback): RecyclerView.Adapter<PopularPeopleAdapter.ViewHolder>() {
 
     private var data = listOf<PopularPersonUiModel>()
 
@@ -34,6 +34,13 @@ class PopularPeopleAdapter: RecyclerView.Adapter<PopularPeopleAdapter.ViewHolder
         private val personName = view.personName
         private val personSubtitle = view.personSubtitle
 
+        init {
+            personThumbnail.setOnClickListener {
+                val personId = data[adapterPosition].id
+                callback.onImageClicked(personId)
+            }
+        }
+
         fun bind(data: PopularPersonUiModel) {
             data.posterURL?.let { url ->
                 Picasso.get()
@@ -50,8 +57,9 @@ class PopularPeopleAdapter: RecyclerView.Adapter<PopularPeopleAdapter.ViewHolder
             personName.text = data.name
             personSubtitle.text = data.subtitle
         }
-
     }
 
-
+    interface Callback {
+        fun onImageClicked(personId: Int)
+    }
 }

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.asmat.rolando.nightwing.NightwingApplication
@@ -24,18 +25,15 @@ import javax.inject.Inject
 
 class CastDetailsFragment: Fragment(), CastMovieCreditsFragment.Listener, MovieCreditsAdapter.ItemCallback {
 
-    companion object {
-        const val CAST_ID_ARG = "castIDArg"
-    }
-
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     val viewModel: CastDetailsViewModel by viewModels{ viewModelFactory }
 
     private val tabName = listOf("Info", "Movie credits")
 
+    val args by navArgs<CastDetailsFragmentArgs>()
     private val personID: Int
-        get() = requireArguments().getInt(CAST_ID_ARG)
+        get() { return args.castIdArg }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
