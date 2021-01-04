@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
+import com.asmat.rolando.nightwing.home_tab.HomeTabFragmentDirections
 import com.asmat.rolando.nightwing.ui.row_view.RowView
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_tv_shows_tab.*
@@ -41,8 +43,10 @@ class TvShowsTabFragment: Fragment() {
     }
 
     private fun setupRows() {
-        popularTvShowsRow.configure(title = "Popular", callback = object: RowView.Callback{
+        popularTvShowsRow.configure(title = "Popular", seeAllButtonEnabled = true, callback = object: RowView.Callback{
             override fun onSeeAllClicked() {
+                val action = HomeTabFragmentDirections.actionGlobalActionToPopularTvShowsFragment()
+                findNavController().navigate(action)
             }
             override fun onCardClicked(id: Int) {
             }

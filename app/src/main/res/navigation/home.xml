@@ -101,6 +101,13 @@
             app:destination="@id/movieDetailsScreen" />
     </fragment>
 
+    <fragment
+        android:id="@+id/popularTvShowsFragment"
+        android:name="com.asmat.rolando.nightwing.tv_shows_tab.popular.PopularTvShowsFragment"
+        android:label="Popular TV Shows"
+        tools:layout="@layout/fragment_grid" >
+    </fragment>
+
     <!-- GLOBAL ACTION -->
     <action
         android:id="@+id/action_globalAction_to_movieDetailsScreen"
@@ -122,6 +129,10 @@
     <action
         android:id="@+id/action_globalAction_to_upcomingMoviesGrid"
         app:destination="@id/upcomingMoviesGrid" />
+
+    <action
+        android:id="@+id/action_globalAction_to_popularTvShowsFragment"
+        app:destination="@id/popularTvShowsFragment" />
 
     <action
         android:id="@+id/action_globalAction_to_personDetailsScreen"

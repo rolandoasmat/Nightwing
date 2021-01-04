@@ -8,6 +8,7 @@ import com.asmat.rolando.nightwing.networking.models.*
 import com.asmat.rolando.nightwing.popular_people_tab.PopularPersonUiModel
 import com.asmat.rolando.nightwing.ui.moviegrid.MovieGridItemUiModel
 import com.asmat.rolando.nightwing.search.SearchDataModelsMapper
+import com.asmat.rolando.nightwing.ui.grid.GridItemUiModel
 import com.asmat.rolando.nightwing.ui.row_view.RowViewItemUiModel
 import com.asmat.rolando.nightwing.utilities.DateUtils
 import com.asmat.rolando.nightwing.utilities.URLUtils
@@ -102,6 +103,15 @@ open class UiModelMapper @Inject constructor(private val searchDataModelsMapper:
                 URLUtils.getImageURL342(path)
             }
             RowViewItemUiModel(it.id, url, it.name ?: "")
+        }
+    }
+
+    fun mapToGridItems(data: TvShowsResponse): List<GridItemUiModel> {
+        return data.results.map {
+            val url = it.poster_path?.let { path ->
+                URLUtils.getImageURL342(path)
+            }
+            GridItemUiModel(it.id, url, it.name ?: "")
         }
     }
 }
