@@ -107,6 +107,12 @@
         android:label="Popular TV Shows"
         tools:layout="@layout/fragment_grid" >
     </fragment>
+    <fragment
+        android:id="@+id/topRatedTvShowsFragment"
+        android:name="com.asmat.rolando.nightwing.tv_shows_tab.top_rated.TopRatedTvShowsFragment"
+        android:label="Top Rated TV Shows"
+        tools:layout="@layout/fragment_grid" >
+    </fragment>
 
     <!-- GLOBAL ACTION -->
     <action
@@ -129,10 +135,12 @@
     <action
         android:id="@+id/action_globalAction_to_upcomingMoviesGrid"
         app:destination="@id/upcomingMoviesGrid" />
-
     <action
         android:id="@+id/action_globalAction_to_popularTvShowsFragment"
         app:destination="@id/popularTvShowsFragment" />
+    <action
+        android:id="@+id/action_globalAction_to_topRatedTvShowsFragment"
+        app:destination="@id/topRatedTvShowsFragment" />
 
     <action
         android:id="@+id/action_globalAction_to_personDetailsScreen"

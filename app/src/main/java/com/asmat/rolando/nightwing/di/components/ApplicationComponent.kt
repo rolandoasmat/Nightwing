@@ -15,6 +15,7 @@ import com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesFragment
 import com.asmat.rolando.nightwing.search.SearchFragment
 import com.asmat.rolando.nightwing.tv_shows_tab.TvShowsTabFragment
 import com.asmat.rolando.nightwing.tv_shows_tab.popular.PopularTvShowsFragment
+import com.asmat.rolando.nightwing.tv_shows_tab.top_rated.TopRatedTvShowsFragment
 import com.asmat.rolando.nightwing.ui.discover.MainActivity
 import dagger.Component
 import javax.inject.Singleton
@@ -40,4 +41,5 @@ interface ApplicationComponent {
     fun inject(fragment: PopularPeopleTabFragment)
     fun inject(fragment: TvShowsTabFragment)
     fun inject(fragment: PopularTvShowsFragment)
+    fun inject(fragment: TopRatedTvShowsFragment)
 }
