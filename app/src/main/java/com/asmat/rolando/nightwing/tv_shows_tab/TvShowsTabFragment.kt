@@ -59,8 +59,10 @@ class TvShowsTabFragment: Fragment() {
             override fun onCardClicked(id: Int) {
             }
         })
-        onTheAirTvShowsRow.configure(title = "On The Air", callback = object: RowView.Callback{
+        onTheAirTvShowsRow.configure(title = "On The Air", seeAllButtonEnabled = true, callback = object: RowView.Callback{
             override fun onSeeAllClicked() {
+                val action = HomeTabFragmentDirections.actionGlobalActionToOnTheAirTvShowsFragment()
+                findNavController().navigate(action)
             }
             override fun onCardClicked(id: Int) {
             }

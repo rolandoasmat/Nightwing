@@ -49,7 +49,7 @@ class TvShowsTabViewModel(
         compositeDisposable.add(disposable2)
 
         val disposable3 = tvShowsRepository
-                .onTheAirTvShows(1)
+                .getOnTheAirTvShows(1)
                 .subscribe({
                     val mapped = uiModelMapper.map(it)
                     _onTheAirTvShows.postValue(mapped)
