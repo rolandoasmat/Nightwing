@@ -68,5 +68,9 @@ interface TheMovieDBService {
 
     @GET("tv/on_the_air")
     fun getOnTheAirTvShows(@Query("page") page: Int): Single<TvShowsResponse>
+
+    @GET("tv/{tv_id}")
+    fun getTvShowDetails(@Path("tv_id") id: Int): Single<TvShowDetailsResponse>
+
     //endregion
 }

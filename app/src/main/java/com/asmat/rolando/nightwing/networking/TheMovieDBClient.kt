@@ -92,7 +92,11 @@ open class TheMovieDBClient {
 
     //region TV Shows
     fun getPopularTvShows(page: Int) = service.getPopularTvShows(page)
+
     fun getTopRatedTvShows(page: Int) = service.getTopRatedTvShows(page)
+
     fun getOnTheAirTvShows(page: Int) = service.getOnTheAirTvShows(page)
+
+    fun getTvShowDetails(id: Int) = service.getTvShowDetails(id)
     //endregion
 }

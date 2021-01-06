@@ -14,4 +14,6 @@ class TvShowsRepository @Inject constructor(
     fun getTopRatedTvShows(page: Int) = tmdbClient.getTopRatedTvShows(page).subscribeOn(schedulersProvider.ioScheduler)
 
     fun getOnTheAirTvShows(page: Int) = tmdbClient.getOnTheAirTvShows(page).subscribeOn(schedulersProvider.ioScheduler)
+
+    fun getTvShowDetails(id: Int) = tmdbClient.getTvShowDetails(id).subscribeOn(schedulersProvider.ioScheduler)
 }
