@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import com.asmat.rolando.nightwing.HomeDirections
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
 import com.asmat.rolando.nightwing.home_tab.HomeTabFragmentDirections
@@ -48,25 +49,27 @@ class TvShowsTabFragment: Fragment() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToPopularTvShowsFragment()
                 findNavController().navigate(action)
             }
-            override fun onCardClicked(id: Int) {
-            }
+            override fun onCardClicked(id: Int) = navigateToTvShowDetails(id)
         })
         topRatedTvShowsRow.configure(title = "Top Rated", seeAllButtonEnabled = true, callback = object: RowView.Callback{
             override fun onSeeAllClicked() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToTopRatedTvShowsFragment()
                 findNavController().navigate(action)
             }
-            override fun onCardClicked(id: Int) {
-            }
+            override fun onCardClicked(id: Int) = navigateToTvShowDetails(id)
         })
         onTheAirTvShowsRow.configure(title = "On The Air", seeAllButtonEnabled = true, callback = object: RowView.Callback{
             override fun onSeeAllClicked() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToOnTheAirTvShowsFragment()
                 findNavController().navigate(action)
             }
-            override fun onCardClicked(id: Int) {
-            }
+            override fun onCardClicked(id: Int) = navigateToTvShowDetails(id)
         })
+    }
+
+    private fun navigateToTvShowDetails(id: Int) {
+        val action = HomeTabFragmentDirections.actionHomeScreenToTvShowDetailsFragment(id)
+        findNavController().navigate(action)
     }
 
     private fun observeViewModel() {

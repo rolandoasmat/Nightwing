@@ -11,6 +11,9 @@
         android:name="com.asmat.rolando.nightwing.home_tab.HomeTabFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeScreen_to_tvShowDetailsFragment"
+            app:destination="@id/tvShowDetailsFragment"/>
     </fragment>
 
 <!--    TODO this is because Navigation component doesn't support deepLink to a nested graph at the moment-->
@@ -101,6 +104,16 @@
             app:destination="@id/movieDetailsScreen" />
     </fragment>
 
+    <!-- TV SHOWS -->
+    <fragment
+        android:id="@+id/tvShowDetailsFragment"
+        android:name="com.asmat.rolando.nightwing.tv_show_details.TvShowDetailsFragment"
+        android:label="Tv Show Details" >
+        <argument
+            android:name="tvShowIdArg"
+            app:argType="integer" />
+    </fragment>
+
     <fragment
         android:id="@+id/popularTvShowsFragment"
         android:name="com.asmat.rolando.nightwing.tv_shows_tab.popular.PopularTvShowsFragment"
@@ -122,7 +135,7 @@
         tools:layout="@layout/fragment_grid" >
     </fragment>
 
-    <!-- GLOBAL ACTION -->
+    <!-- GLOBAL ACTIONS -->
     <action
         android:id="@+id/action_globalAction_to_movieDetailsScreen"
         app:destination="@id/movie_details" >
