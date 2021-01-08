@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
+import kotlinx.android.synthetic.main.fragment_tv_show_details.*
 import javax.inject.Inject
 
 class TvShowDetailsFragment: Fragment() {
@@ -39,7 +40,14 @@ class TvShowDetailsFragment: Fragment() {
 
     private fun observeViewModel() {
         viewModel.uiModel.observe(viewLifecycleOwner) {
-            Log.v("RAA", it.toString())
+            createdByLabel?.text = it.createdBy
+            firstAirDateLabel?.text = it.firstAirDate
+            lastAirDateLabel?.text = it.lastAirDate
+            networksLabel?.text = it.networks
+            overviewLabel?.text = it.overview
+            numberOfEpisodesLabel?.text = it.numberOfEpisodes
+            numberOfSeasonsLabel?.text = it.numberOfSeasons
+            taglineLabel?.text = it.tagline
         }
 
     }
