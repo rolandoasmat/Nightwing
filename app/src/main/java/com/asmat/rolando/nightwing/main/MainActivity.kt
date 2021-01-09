@@ -1,4 +1,4 @@
-package com.asmat.rolando.nightwing.ui.discover
+package com.asmat.rolando.nightwing.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

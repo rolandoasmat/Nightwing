@@ -19,7 +19,7 @@
 
         <!-- Main Activity -->
         <activity
-            android:name="com.asmat.rolando.nightwing.ui.discover.MainActivity">
+            android:name="com.asmat.rolando.nightwing.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

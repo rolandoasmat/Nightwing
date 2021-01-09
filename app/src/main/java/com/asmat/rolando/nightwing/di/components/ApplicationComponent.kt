@@ -18,7 +18,7 @@ import com.asmat.rolando.nightwing.tv_shows_tab.TvShowsTabFragment
 import com.asmat.rolando.nightwing.tv_shows_tab.on_the_air.OnTheAirTvShowsFragment
 import com.asmat.rolando.nightwing.tv_shows_tab.popular.PopularTvShowsFragment
 import com.asmat.rolando.nightwing.tv_shows_tab.top_rated.TopRatedTvShowsFragment
-import com.asmat.rolando.nightwing.ui.discover.MainActivity
+import com.asmat.rolando.nightwing.main.MainActivity
 import dagger.Component
 import javax.inject.Singleton
 

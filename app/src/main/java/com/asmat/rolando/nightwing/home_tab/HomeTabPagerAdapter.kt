@@ -1,4 +1,4 @@
-package com.asmat.rolando.nightwing.ui.discover
+package com.asmat.rolando.nightwing.home_tab
 
 import androidx.fragment.app.Fragment
 import com.asmat.rolando.nightwing.movies_tab.MoviesTabFragment

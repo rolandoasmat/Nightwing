@@ -18,7 +18,7 @@ import com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesViewModel
 import com.asmat.rolando.nightwing.ui.topratedmovies.TopRatedMoviesViewModel
 import com.asmat.rolando.nightwing.ui.upcomingmovies.UpcomingMoviesViewModel
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
-import kotlinx.android.synthetic.main.movies_tab_fragment.*
+import kotlinx.android.synthetic.main.fragment_movies_tab.*
 import javax.inject.Inject
 
 class MoviesTabFragment: Fragment() {
@@ -37,7 +37,7 @@ class MoviesTabFragment: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.movies_tab_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_movies_tab, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
