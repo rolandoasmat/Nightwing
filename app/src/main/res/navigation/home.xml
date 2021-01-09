@@ -108,7 +108,7 @@
     <fragment
         android:id="@+id/tvShowDetailsFragment"
         android:name="com.asmat.rolando.nightwing.tv_show_details.TvShowDetailsFragment"
-        android:label="Tv Show Details" >
+        android:label="TV Show Details" >
         <argument
             android:name="tvShowIdArg"
             app:argType="integer" />

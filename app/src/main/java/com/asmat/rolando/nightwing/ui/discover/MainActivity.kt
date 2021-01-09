@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         controller?.observe(this, Observer { navController ->
             setupActionBarWithNavController(navController)
             navController.addOnDestinationChangedListener { _, destination, _ ->
-                if (destination.label == "Movie Details" || destination.label == "Cast Details") {
+                if (destination.label == "Movie Details" || destination.label == "Cast Details" || destination.label == "TV Show Details") {
                     supportActionBar?.hide()
                 } else {
                     supportActionBar?.show()
