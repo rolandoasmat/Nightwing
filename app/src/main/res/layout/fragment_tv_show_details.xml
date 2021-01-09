@@ -157,6 +157,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"/>
+
+        <!-- SEASONS -->
+            <com.asmat.rolando.nightwing.ui.row_view.RowView
+                android:id="@+id/seasonsRowView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

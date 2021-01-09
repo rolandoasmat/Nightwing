@@ -42,7 +42,7 @@ class RowView @JvmOverloads constructor(
     }
 
     interface Callback {
-        fun onSeeAllClicked()
+        fun onSeeAllClicked() { }
         fun onCardClicked(id: Int)
     }
 

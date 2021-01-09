@@ -9,20 +9,26 @@ import com.asmat.rolando.nightwing.extensions.visible
 import com.asmat.rolando.nightwing.ui.common.BaseLinearAdapter
 import com.asmat.rolando.nightwing.ui.transformations.RoundedTransformation
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_movie_card.view.*
+import kotlinx.android.synthetic.main.item_row_card_wide.view.*
 
 private typealias MoviesViewHolder = MoviesLinearAdapter.ViewHolder
 
-class MoviesLinearAdapter(callback: Callback<RowViewItemUiModel>): BaseLinearAdapter<RowViewItemUiModel, MoviesViewHolder>(callback) {
+class MoviesLinearAdapter(
+        callback: Callback<RowViewItemUiModel>,
+        cardType: CardType = CardType.TALL) : BaseLinearAdapter<RowViewItemUiModel, MoviesViewHolder>(callback) {
 
-    override val layoutForLinearItem = R.layout.item_movie_card
+    override val layoutForLinearItem = when (cardType) {
+        CardType.TALL -> R.layout.item_row_card_tall
+        CardType.WIDE -> R.layout.item_row_card_wide
+    }
+
 
     override fun createViewHolder(view: View) = ViewHolder(view)
 
-    inner class ViewHolder(val view: View): BaseLinearAdapter<RowViewItemUiModel, MoviesViewHolder>.ViewHolder(view) {
+    inner class ViewHolder(val view: View) : BaseLinearAdapter<RowViewItemUiModel, MoviesViewHolder>.ViewHolder(view) {
 
-        private val thumbnail: ImageView = view.thumbnail
-        private val title: TextView = view.movieTitleLabel
+        private val thumbnail: ImageView = view.itemRowCardImage
+        private val title: TextView = view.itemRowCardImageCaption
 
         init {
             thumbnail.setOnClickListener(this)
@@ -43,5 +49,10 @@ class MoviesLinearAdapter(callback: Callback<RowViewItemUiModel>): BaseLinearAda
             }
             title.text = item.title
         }
+    }
+
+    enum class CardType {
+        TALL,
+        WIDE
     }
 }

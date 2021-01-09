@@ -13,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
+import com.asmat.rolando.nightwing.ui.row_view.RowView
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_tv_show_details.*
@@ -43,6 +44,15 @@ class TvShowDetailsFragment: Fragment() {
         setupToolbar()
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        seasonsRowView?.configure(title = "Seasons", seeAllButtonEnabled = false, callback = object : RowView.Callback {
+            override fun onCardClicked(id: Int) {
+                // TODO navigate to season details
+            }
+        })
+    }
+
     private fun observeViewModel() {
         viewModel.uiModel.observe(viewLifecycleOwner) {
             createdByLabel?.text = it.createdBy
@@ -60,6 +70,9 @@ class TvShowDetailsFragment: Fragment() {
                         .into(tvShowBackdrop)
             }
             tvShowCollapsingToolbar?.title = it.name
+        }
+        viewModel.seasons.observe(viewLifecycleOwner) {
+            seasonsRowView?.setData(it)
         }
     }
 

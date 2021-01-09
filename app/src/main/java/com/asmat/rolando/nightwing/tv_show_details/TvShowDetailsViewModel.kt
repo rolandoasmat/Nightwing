@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
 import com.asmat.rolando.nightwing.repositories.TvShowsRepository
+import com.asmat.rolando.nightwing.ui.row_view.RowViewItemUiModel
 import io.reactivex.disposables.CompositeDisposable
 
 class TvShowDetailsViewModel(
@@ -15,6 +16,10 @@ class TvShowDetailsViewModel(
     val uiModel: LiveData<TvShowDetailsUiModel>
         get() = _uiModel
 
+    private val _seasons = MutableLiveData<List<RowViewItemUiModel>>()
+    val seasons: LiveData<List<RowViewItemUiModel>>
+        get() = _seasons
+
     private val compositeDisposable = CompositeDisposable()
 
 
@@ -22,8 +27,13 @@ class TvShowDetailsViewModel(
         val disposable = tvShowsRepository
                 .getTvShowDetails(tvShowId)
                 .subscribe({
-                    val mapped = TvShowDetailsUiModel.from(it)
-                    _uiModel.postValue(mapped)
+                    val uiModel = TvShowDetailsUiModel.from(it)
+                    _uiModel.postValue(uiModel)
+
+                    val seasonsUiModels = uiModel.seasons.map { season ->
+                        RowViewItemUiModel(season.id, season.posterUrl, season.name)
+                    }
+                    _seasons.postValue(seasonsUiModels)
                 }, {})
         compositeDisposable.add(disposable)
     }

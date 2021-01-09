@@ -20,6 +20,7 @@ data class TvShowDetailsUiModel(
         val seasons: List<Season>) {
 
     data class Season(
+            val id: Int,
             val name: String,
             val posterUrl: String?,
             val seasonNumber: String,
@@ -56,7 +57,7 @@ data class TvShowDetailsUiModel(
                 }
                 val seasonNumber = it.season_number?.toString() ?: "--"
                 val episodeCount = it.episode_count?.toString() ?: "--"
-                Season(seasonName, url, seasonNumber, episodeCount)
+                Season(it.id, seasonName, url, seasonNumber, episodeCount)
             }
             return TvShowDetailsUiModel(backdropUrl, createdBy, firstAirDate, lastAirDate, name,
                     networks, overview, posterUrl, numberOfEpisodes, numberOfSeasons, status,
