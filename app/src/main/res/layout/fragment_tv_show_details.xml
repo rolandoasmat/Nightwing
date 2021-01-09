@@ -11,7 +11,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsingToolbar"
+            android:id="@+id/tvShowCollapsingToolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -132,6 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"/>
+
 
             <TextView
                 android:text="Last Air Date"

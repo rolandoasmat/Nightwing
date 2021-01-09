@@ -16,7 +16,6 @@ import com.asmat.rolando.nightwing.R
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_tv_show_details.*
-import kotlinx.android.synthetic.main.fragment_tv_show_details.collapsingToolbar
 import kotlinx.android.synthetic.main.fragment_tv_show_details.toolbar
 import javax.inject.Inject
 
@@ -60,12 +59,12 @@ class TvShowDetailsFragment: Fragment() {
                         .load(url)
                         .into(tvShowBackdrop)
             }
-            toolbar?.title = it.name
+            tvShowCollapsingToolbar?.title = it.name
         }
     }
 
     private fun setupToolbar() {
         val appBarConfiguration = AppBarConfiguration(findNavController().graph)
-        collapsingToolbar?.setupWithNavController(toolbar, findNavController(), appBarConfiguration)
+        tvShowCollapsingToolbar?.setupWithNavController(toolbar, findNavController(), appBarConfiguration)
     }
 }
