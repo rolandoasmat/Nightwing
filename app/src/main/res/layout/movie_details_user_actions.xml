@@ -7,7 +7,7 @@
     android:orientation="horizontal">
 
     <LinearLayout
-        android:id="@+id/starContainer"
+        android:id="@+id/heartContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,15 +17,15 @@
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/starIcon"
-            app:srcCompat="@drawable/ic_star"
+            android:id="@+id/heartIcon"
+            app:srcCompat="@drawable/ic_heart"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/favorite"
+            android:text="@string/save"
             android:textSize="@dimen/icon_label_size"
             android:layout_marginTop="@dimen/activity_vertical_margin_small" />
     </LinearLayout>
@@ -34,7 +34,7 @@
         android:id="@+id/shareContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/heartContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"
@@ -49,30 +49,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/share"
-            android:textSize="@dimen/icon_label_size"
-            android:layout_marginTop="@dimen/activity_vertical_margin_small" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/toWatchContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/shareContainer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical"
-        android:gravity="center">
-
-        <ImageView
-            android:id="@+id/bookmarkIcon"
-            app:srcCompat="@drawable/ic_bookmark"
-            android:layout_width="@dimen/icon_size"
-            android:layout_height="@dimen/icon_size" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/watch_later"
             android:textSize="@dimen/icon_label_size"
             android:layout_marginTop="@dimen/activity_vertical_margin_small" />
     </LinearLayout>

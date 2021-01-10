@@ -11,7 +11,7 @@
     <string name="watch_later">To Watch</string>
 
     <!-- Movie Detail -->
-    <string name="favorite">Favorite</string>
+    <string name="save">Save</string>
     <string name="share">Share</string>
     <string name="trailers">Trailers</string>
     <string name="reviews">Reviews</string>

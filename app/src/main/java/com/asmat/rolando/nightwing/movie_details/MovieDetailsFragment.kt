@@ -76,7 +76,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
 
     //region User Actions
     private fun sendEvents() {
-        starContainer?.setOnClickListener {
+        heartContainer?.setOnClickListener {
             viewModel.onSaveTapped()
         }
         shareContainer?.setOnClickListener {
@@ -108,11 +108,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
         // Movie icons
 
         viewModel.isFavoriteMovie.observe(viewLifecycleOwner, Observer { isFavoriteMovie ->
-            updateStar(isFavoriteMovie == true)
-        })
-
-        viewModel.isWatchLaterMovie.observe(viewLifecycleOwner, Observer { isWatchLaterMovie ->
-            updateBookmark(isWatchLaterMovie == true)
+            updateHeart(isFavoriteMovie == true)
         })
 
         viewModel.shareMovie.observe(viewLifecycleOwner, Observer { textToShare ->
@@ -335,12 +331,8 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
     //endregion
 
     //region Icons
-    private fun updateStar(enable: Boolean) {
-        starIcon?.isSelected = enable
-    }
-
-    private fun updateBookmark(enable: Boolean) {
-        bookmarkIcon?.isSelected = enable
+    private fun updateHeart(enable: Boolean) {
+        heartIcon?.isSelected = enable
     }
 
     override fun cardClicked(item: RowViewItemUiModel) {
