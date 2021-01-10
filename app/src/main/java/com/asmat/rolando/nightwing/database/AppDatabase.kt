@@ -2,10 +2,9 @@ package com.asmat.rolando.nightwing.database
 
 import androidx.room.*
 
-import com.asmat.rolando.nightwing.database.entities.FavoriteMovie
-import com.asmat.rolando.nightwing.database.entities.WatchLaterMovie
+import com.asmat.rolando.nightwing.database.entities.SavedMovie
 
-@Database(entities = [FavoriteMovie::class, WatchLaterMovie::class], version = 1)
+@Database(entities = [SavedMovie::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun moviesDAO(): MoviesDAO
 }

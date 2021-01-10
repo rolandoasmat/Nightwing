@@ -77,13 +77,10 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
     //region User Actions
     private fun sendEvents() {
         starContainer?.setOnClickListener {
-            viewModel.onStarTapped()
+            viewModel.onSaveTapped()
         }
         shareContainer?.setOnClickListener {
             viewModel.onShareTapped()
-        }
-        toWatchContainer?.setOnClickListener {
-            viewModel.onBookmarkTapped()
         }
     }
     //endregion

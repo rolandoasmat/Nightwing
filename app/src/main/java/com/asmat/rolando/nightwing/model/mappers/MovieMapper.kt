@@ -1,7 +1,5 @@
 package com.asmat.rolando.nightwing.model.mappers
 
-import com.asmat.rolando.nightwing.database.entities.FavoriteMovie
-import com.asmat.rolando.nightwing.database.entities.WatchLaterMovie
 import com.asmat.rolando.nightwing.model.Movie
 import com.asmat.rolando.nightwing.networking.models.MovieDetailsResponse
 import com.asmat.rolando.nightwing.networking.models.MoviesResponse
@@ -32,19 +30,5 @@ open class MovieMapper @Inject constructor() {
                 data.title ?: "",
                 data.backdrop_path,
                 data.vote_average ?: 0.0)
-    }
-
-    open fun from(data: FavoriteMovie): MovieGridItemUiModel {
-        return MovieGridItemUiModel(
-                data.id,
-                data.title,
-                data.posterURL)
-    }
-
-    open fun from(data: WatchLaterMovie): MovieGridItemUiModel {
-        return MovieGridItemUiModel(
-                data.id,
-                data.title,
-                data.posterURL)
     }
 }

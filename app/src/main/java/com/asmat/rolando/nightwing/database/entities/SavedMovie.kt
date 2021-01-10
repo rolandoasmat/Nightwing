@@ -1,13 +1,13 @@
 package com.asmat.rolando.nightwing.database.entities
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-@Entity(tableName = "watch_later_movies")
-data class WatchLaterMovie(
+@Entity(tableName = "saved_movies")
+data class SavedMovie(
         @PrimaryKey
         val id: Int,
         @ColumnInfo(name = "poster_url")
         val posterURL: String?,
-        @ColumnInfo(name = "release_date")
-        val releaseDate: String,
         val title: String)

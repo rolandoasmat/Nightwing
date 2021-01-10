@@ -4,7 +4,6 @@ import com.asmat.rolando.nightwing.cast_details.CastDetailsFragment
 import com.asmat.rolando.nightwing.di.modules.ContextModule
 import com.asmat.rolando.nightwing.di.modules.DatabaseModule
 import com.asmat.rolando.nightwing.di.modules.NetworkModule
-import com.asmat.rolando.nightwing.di.modules.RepositoriesModule
 import com.asmat.rolando.nightwing.cast_details.CastMovieCreditsFragment
 import com.asmat.rolando.nightwing.ui.moviegrid.BaseMovieGridFragment
 import com.asmat.rolando.nightwing.ui.moviegrid.paginated.PaginatedMovieGridFragment
@@ -26,8 +25,7 @@ import javax.inject.Singleton
 @Component(modules = [
     ContextModule::class,
     DatabaseModule::class,
-    NetworkModule::class,
-    RepositoriesModule::class])
+    NetworkModule::class])
 interface ApplicationComponent {
 
     fun inject(app: MainActivity)

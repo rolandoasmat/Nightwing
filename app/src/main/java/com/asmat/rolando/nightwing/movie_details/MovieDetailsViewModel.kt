@@ -69,39 +69,21 @@ class MovieDetailsViewModel(
     }
 
     /**
-     * User pressed the star, "favorite movie", icon
+     * User pressed the heart
      */
-    fun onStarTapped() {
-        isFavoriteMovie.value?.let {
-            if (it) {
-                // It's a favorite movie, "un-favorite" it
-                moviesRepository.removeFavoriteMovie(movieID)
-            } else {
-                // It's not a favorite movie, "favorite" it
-                _movieDetailsUIModel.value?.let {
-                    val mapped = dataModelMapper.mapToFavoriteMovie(it)
-                    moviesRepository.insertFavoriteMovie(mapped)
-                }
-            }
-        }
-    }
-
-    /**
-     * User pressed the bookmark, "watch later movie", icon
-     */
-    fun onBookmarkTapped() {
-        isWatchLaterMovie.value?.let {
-            if (it) {
-                // It's a watch later movie, "un-watch-later" it
-                moviesRepository.removeWatchLaterMovie(movieID)
-            } else {
-                // It's not a watch later movie, "watch-later" it
-                _movieDetailsUIModel.value?.let { uiModel ->
-                    val mapped = dataModelMapper.mapToWatchLaterMovie(uiModel)
-                    moviesRepository.insertWatchLaterMovie(mapped)
-                }
-            }
-        }
+    fun onSaveTapped() {
+//        isFavoriteMovie.value?.let {
+//            if (it) {
+//                // It's a favorite movie, "un-favorite" it
+//                moviesRepository.removeFavoriteMovie(movieID)
+//            } else {
+//                // It's not a favorite movie, "favorite" it
+//                _movieDetailsUIModel.value?.let {
+//                    val mapped = dataModelMapper.mapToFavoriteMovie(it)
+//                    moviesRepository.insertFavoriteMovie(mapped)
+//                }
+//            }
+//        }
     }
 
     /**
@@ -117,13 +99,6 @@ class MovieDetailsViewModel(
 
     // Fetch other movie data from network or db
     private fun fetchData(movieID: Int) {
-        moviesRepository.getFavoriteMovie(movieID).observeForever {
-            isFavoriteMovie.value = it != null
-        }
-
-        moviesRepository.getWatchLaterMovie(movieID).observeForever {
-            isWatchLaterMovie.value = it != null
-        }
 
         moviesRepository
                 .getMovieDetails(movieID)

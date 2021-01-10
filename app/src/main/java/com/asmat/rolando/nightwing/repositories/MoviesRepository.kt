@@ -1,72 +1,40 @@
 package com.asmat.rolando.nightwing.repositories
 
-import androidx.lifecycle.LiveData
 
-import com.asmat.rolando.nightwing.database.DatabaseManager
-import com.asmat.rolando.nightwing.database.entities.FavoriteMovie
-import com.asmat.rolando.nightwing.database.entities.WatchLaterMovie
+import com.asmat.rolando.nightwing.database.DatabaseRepository
 import com.asmat.rolando.nightwing.model.*
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 import com.asmat.rolando.nightwing.networking.models.*
-import io.reactivex.Scheduler
 import io.reactivex.Single
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Used by ViewModels to access movie related data sources
  */
-open class MoviesRepository(
-        private val db: DatabaseManager,
+@Singleton
+open class MoviesRepository @Inject constructor(
+        private val databaseRepository: DatabaseRepository,
         private val tmdbClient: TheMovieDBClient,
-        private val backgroundScheduler: Scheduler,
-        mainThreadScheduler: Scheduler) {
+        private val schedulersProvider: SchedulersProvider) {
 
     /**
      * DB
      */
 
-    // Favorite Movie
-    fun getFavoriteMovie(movieID: Int): LiveData<FavoriteMovie> {
-        return db.getFavoriteMovie(movieID)
-    }
+    fun getSavedMovies() = databaseRepository.getMovies()
 
-    fun removeFavoriteMovie(movieID: Int) {
-        db.deleteFavoriteMovie(movieID).subscribe({}, {})
-    }
 
-    fun insertFavoriteMovie(movie: FavoriteMovie) {
-        db.addFavoriteMovie(movie).subscribe({}, {})
-    }
-
-    fun getAllFavoriteMovies(): LiveData<List<FavoriteMovie>> {
-        return db.getAllFavoriteMovies()
-    }
-
-    // Watch Later Movie
-    fun getWatchLaterMovie(movieID: Int): LiveData<WatchLaterMovie> {
-        return db.getWatchLaterMovie(movieID)
-    }
-
-    fun removeWatchLaterMovie(movieID: Int) {
-        db.deleteWatchLaterMovie(movieID).subscribe({}, {})
-    }
-
-    fun insertWatchLaterMovie(movie: WatchLaterMovie) {
-        db.addWatchLaterMovie(movie).subscribe({}, {})
-    }
-
-    fun getAllWatchLaterMovies(): LiveData<List<WatchLaterMovie>> {
-        return db.getAllWatchLaterMovies()
-    }
 
     /**
      * Network
      */
 
-    val popularMoviesPaginatedRequest = PopularMoviesPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
-    val topRatedPaginatedRequest = TopRatedPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
-    val nowPlayingPaginatedRequest = NowPlayingPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
-    val upcomingPaginatedRequest = UpcomingPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
-    private val searchMoviesPaginatedRequest = SearchMoviesPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
+    val popularMoviesPaginatedRequest = PopularMoviesPaginatedRequest(tmdbClient, schedulersProvider.ioScheduler, schedulersProvider.mainScheduler)
+    val topRatedPaginatedRequest = TopRatedPaginatedRequest(tmdbClient, schedulersProvider.ioScheduler, schedulersProvider.mainScheduler)
+    val nowPlayingPaginatedRequest = NowPlayingPaginatedRequest(tmdbClient, schedulersProvider.ioScheduler, schedulersProvider.mainScheduler)
+    val upcomingPaginatedRequest = UpcomingPaginatedRequest(tmdbClient, schedulersProvider.ioScheduler, schedulersProvider.mainScheduler)
+    private val searchMoviesPaginatedRequest = SearchMoviesPaginatedRequest(tmdbClient, schedulersProvider.ioScheduler, schedulersProvider.mainScheduler)
 
     open fun movieSearchResultsData() = searchMoviesPaginatedRequest.data
     open fun setMovieSearchQueryText(query: String) = searchMoviesPaginatedRequest.setSearchTerm(query)
@@ -74,23 +42,23 @@ open class MoviesRepository(
     open fun loadMoreMovieSearchResults() = searchMoviesPaginatedRequest.loadMore()
 
     fun getMovieDetails(movieID: Int): Single<MovieDetailsResponse> {
-        return tmdbClient.getMovieDetails(movieID).subscribeOn(backgroundScheduler)
+        return tmdbClient.getMovieDetails(movieID).subscribeOn(schedulersProvider.ioScheduler)
     }
 
     fun getMovieVideos(movieID: Int): Single<VideosResponse> {
-        return tmdbClient.getMovieVideos(movieID).subscribeOn(backgroundScheduler)
+        return tmdbClient.getMovieVideos(movieID).subscribeOn(schedulersProvider.ioScheduler)
     }
 
     fun getMovieReviews(movieID: Int): Single<ReviewsResponse> {
-        return tmdbClient.getMovieReviews(movieID).subscribeOn(backgroundScheduler)
+        return tmdbClient.getMovieReviews(movieID).subscribeOn(schedulersProvider.ioScheduler)
     }
 
     fun getMovieCredits(movieID: Int): Single<CreditsResponse> {
-        return tmdbClient.getMovieCredits(movieID).subscribeOn(backgroundScheduler)
+        return tmdbClient.getMovieCredits(movieID).subscribeOn(schedulersProvider.ioScheduler)
     }
 
-    fun getSimilarMovies(movieID: Int) = tmdbClient.getSimilarMovies(movieID).subscribeOn(backgroundScheduler)
+    fun getSimilarMovies(movieID: Int) = tmdbClient.getSimilarMovies(movieID).subscribeOn(schedulersProvider.ioScheduler)
 
-    fun getMovieRecommendations(movieID: Int) = tmdbClient.getMovieRecommendations(movieID).subscribeOn(backgroundScheduler)
+    fun getMovieRecommendations(movieID: Int) = tmdbClient.getMovieRecommendations(movieID).subscribeOn(schedulersProvider.ioScheduler)
 
 }

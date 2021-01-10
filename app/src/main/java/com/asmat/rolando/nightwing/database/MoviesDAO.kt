@@ -1,41 +1,21 @@
 package com.asmat.rolando.nightwing.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.asmat.rolando.nightwing.database.entities.FavoriteMovie
-import com.asmat.rolando.nightwing.database.entities.WatchLaterMovie
-import io.reactivex.Completable
-import io.reactivex.Single
+import com.asmat.rolando.nightwing.database.entities.SavedMovie
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MoviesDAO {
 
-    // Favorite
+    // Saved movies
+
+    @Query("SELECT * FROM saved_movies")
+    fun getAllSavedMovies(): Flow<List<SavedMovie>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertFavoriteMovie(movie: FavoriteMovie): Completable
+    suspend fun insertSavedMovie(movie: SavedMovie)
 
-    @Query("SELECT * FROM favorite_movies WHERE id LIKE :id")
-    fun findFavoriteMovie(id: Int): LiveData<FavoriteMovie>
-
-    @Query("DELETE FROM favorite_movies WHERE id LIKE :id ")
-    fun deleteFavoriteMovie(id: Int): Single<Int>
-
-    @Query("SELECT * FROM favorite_movies")
-    fun loadAllFavoriteMovies(): LiveData<List<FavoriteMovie>>
-
-    // Watch Later
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertWatchLaterMovie(movie: WatchLaterMovie): Completable
-
-    @Query("SELECT * FROM watch_later_movies WHERE id LIKE :id")
-    fun findWatchLaterMovie(id: Int): LiveData<WatchLaterMovie>
-
-    @Query("DELETE FROM watch_later_movies WHERE id LIKE :id ")
-    fun deleteWatchLaterMovie(id: Int): Single<Int>
-
-    @Query("SELECT * FROM watch_later_movies")
-    fun loadAllWatchLaterMovies(): LiveData<List<WatchLaterMovie>>
+    @Query("DELETE FROM saved_movies WHERE id LIKE :id ")
+    suspend fun deleteSavedMovie(id: Int)
 
 }

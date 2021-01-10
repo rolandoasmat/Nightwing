@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_saved.*
 
 class SavedFragment: Fragment(), BaseMovieGridFragment.MovieGridCallbacks {
 
-    private val tabName = listOf("Favorites", "To Watch")
+    private val tabName = listOf("Movies", "TV Shows")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_saved, container, false)

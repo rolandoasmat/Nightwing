@@ -4,16 +4,17 @@ import com.asmat.rolando.nightwing.model.SearchPersonsPaginatedRequest
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 import com.asmat.rolando.nightwing.networking.models.PersonDetailsResponse
 import com.asmat.rolando.nightwing.networking.models.PersonMovieCredits
-import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
+import javax.inject.Singleton
 
-open class PeopleRepository(
+@Singleton
+open class PeopleRepository @Inject constructor(
         private val tmdbClient: TheMovieDBClient,
-        private val backgroundScheduler: Scheduler,
-        private val mainThreadScheduler: Scheduler) {
+        private val schedulersProvider: SchedulersProvider) {
 
-    private val searchPersonsPaginatedRequest = SearchPersonsPaginatedRequest(tmdbClient, backgroundScheduler, mainThreadScheduler)
+    private val searchPersonsPaginatedRequest = SearchPersonsPaginatedRequest(tmdbClient, schedulersProvider.ioScheduler, schedulersProvider.mainScheduler)
 
     open fun personsSearchResultsData() = searchPersonsPaginatedRequest.data
     open fun setPersonsSearchQueryText(query: String) = searchPersonsPaginatedRequest.setSearchTerm(query)
@@ -22,7 +23,7 @@ open class PeopleRepository(
 
     fun getPopularPeople(page: Int) = tmdbClient
                 .getPopularPeople(page)
-                .subscribeOn(backgroundScheduler)
+                .subscribeOn(schedulersProvider.ioScheduler)
 
     fun getPersonDetails(id: Int): Single<PersonDetailsResponse> {
         return tmdbClient.getPersonDetails(id).subscribeOn(Schedulers.io())
