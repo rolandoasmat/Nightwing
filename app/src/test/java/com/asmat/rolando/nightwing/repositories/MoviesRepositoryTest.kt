@@ -3,9 +3,6 @@ package com.asmat.rolando.nightwing.repositories
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.asmat.rolando.nightwing.TestObjectsFactory
-import com.asmat.rolando.nightwing.database.DatabaseManager
-import com.asmat.rolando.nightwing.database.entities.FavoriteMovie
-import com.asmat.rolando.nightwing.database.entities.WatchLaterMovie
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever

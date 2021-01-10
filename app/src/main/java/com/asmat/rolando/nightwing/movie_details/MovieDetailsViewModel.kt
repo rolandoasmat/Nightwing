@@ -1,9 +1,8 @@
 package com.asmat.rolando.nightwing.movie_details
 
 import android.annotation.SuppressLint
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.asmat.rolando.nightwing.database.entities.SavedMovie
 import com.asmat.rolando.nightwing.deep_links.DeepLinksUtils
 import com.asmat.rolando.nightwing.model.mappers.DataModelMapper
 import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
@@ -15,6 +14,7 @@ import com.asmat.rolando.nightwing.repositories.PeopleRepository
 import com.asmat.rolando.nightwing.ui.row_view.RowViewItemUiModel
 import com.asmat.rolando.nightwing.utilities.URLUtils
 import io.reactivex.Scheduler
+import kotlinx.coroutines.launch
 
 /**
  * Movie Details Screen view model
@@ -34,8 +34,10 @@ class MovieDetailsViewModel(
 
     val director = MutableLiveData<String>()
 
-    val isFavoriteMovie = MutableLiveData<Boolean>()
-    val isWatchLaterMovie = MutableLiveData<Boolean>()
+    private val _isSavedMovie = MediatorLiveData<Boolean>()
+    val isSavedMovie: LiveData<Boolean>
+        get() = _isSavedMovie
+
     val shareMovie = MutableLiveData<String>()
 
     val videos = MutableLiveData<List<VideosResponse.Video>>()
@@ -59,41 +61,50 @@ class MovieDetailsViewModel(
     val reviews = MutableLiveData<List<ReviewsResponse.Review>>()
     val reviewsError = MutableLiveData<Throwable>()
 
-    private var movieID: Int = 0
+    private var movieID: Int? = null
 
     //region API
 
     fun init(movieID: Int) {
         this.movieID = movieID
-        fetchData(this.movieID)
+        fetchData(movieID)
+        _isSavedMovie.addSource(moviesRepository.isSavedMovie(movieID).asLiveData()) {
+            _isSavedMovie.postValue(it)
+        }
     }
 
     /**
      * User pressed the heart
      */
     fun onSaveTapped() {
-//        isFavoriteMovie.value?.let {
-//            if (it) {
-//                // It's a favorite movie, "un-favorite" it
-//                moviesRepository.removeFavoriteMovie(movieID)
-//            } else {
-//                // It's not a favorite movie, "favorite" it
-//                _movieDetailsUIModel.value?.let {
-//                    val mapped = dataModelMapper.mapToFavoriteMovie(it)
-//                    moviesRepository.insertFavoriteMovie(mapped)
-//                }
-//            }
-//        }
+        _movieDetailsUIModel.value?.let { uiModel ->
+            val isSaved = isSavedMovie.value == true
+            if (isSaved) {
+                viewModelScope.launch {
+                    moviesRepository.clearSavedMovie(uiModel.id)
+                }
+            } else {
+                viewModelScope.launch {
+                    val id = uiModel.id
+                    val url = uiModel.posterURL
+                    val title = uiModel.title
+                    val data = SavedMovie(id, url, title)
+                    moviesRepository.setSavedMovie(data)
+                }
+            }
+        }
     }
 
     /**
      * User pressed the share button
      */
     fun onShareTapped() {
-        val movieTitle = _movieDetailsUIModel.value?.title ?: ""
-        val deepLink = deepLinksUtils.shareMovieDetailsDeepLink(movieID)
-        val shareText = "Check out $movieTitle!\n$deepLink"
-        shareMovie.value = shareText
+        movieID?.let { id ->
+            val movieTitle = _movieDetailsUIModel.value?.title ?: ""
+            val deepLink = deepLinksUtils.shareMovieDetailsDeepLink(id)
+            val shareText = "Check out $movieTitle!\n$deepLink"
+            shareMovie.value = shareText
+        }
     }
     //endregion
 

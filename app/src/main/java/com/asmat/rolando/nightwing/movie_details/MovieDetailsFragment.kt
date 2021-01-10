@@ -107,8 +107,8 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
 
         // Movie icons
 
-        viewModel.isFavoriteMovie.observe(viewLifecycleOwner, Observer { isFavoriteMovie ->
-            updateHeart(isFavoriteMovie == true)
+        viewModel.isSavedMovie.observe(viewLifecycleOwner, Observer { isSavedMovie ->
+            updateHeart(isSavedMovie == true)
         })
 
         viewModel.shareMovie.observe(viewLifecycleOwner, Observer { textToShare ->

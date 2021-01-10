@@ -2,10 +2,13 @@ package com.asmat.rolando.nightwing.repositories
 
 
 import com.asmat.rolando.nightwing.database.DatabaseRepository
+import com.asmat.rolando.nightwing.database.entities.SavedMovie
 import com.asmat.rolando.nightwing.model.*
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 import com.asmat.rolando.nightwing.networking.models.*
 import io.reactivex.Single
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,12 +21,13 @@ open class MoviesRepository @Inject constructor(
         private val tmdbClient: TheMovieDBClient,
         private val schedulersProvider: SchedulersProvider) {
 
-    /**
-     * DB
-     */
+    fun isSavedMovie(id: Int): Flow<Boolean> = databaseRepository.getSavedMovie(id).map { it != null }
 
-    fun getSavedMovies() = databaseRepository.getMovies()
+    suspend fun setSavedMovie(movie: SavedMovie) = databaseRepository.insertSavedMovie(movie)
 
+    suspend fun clearSavedMovie(id: Int) = databaseRepository.deleteSavedMovie(id)
+
+    fun getSavedMovies() = databaseRepository.getSavedMovies()
 
 
     /**
