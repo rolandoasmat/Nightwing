@@ -2,6 +2,7 @@ package com.asmat.rolando.nightwing.tv_shows_tab.popular
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.ui.grid.GridFragment
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
@@ -20,6 +21,7 @@ class PopularTvShowsFragment: GridFragment() {
     }
 
     override fun onItemClicked(id: Int) {
-        // TODO navigate to TV show details
+        val action = PopularTvShowsFragmentDirections.actionPopularTvShowsToTvShowDetailsFragment(id)
+        findNavController().navigate(action)
     }
 }
