@@ -10,11 +10,14 @@ class SearchViewModel(
         private val peopleRepository: PeopleRepository,
         private val mapper: UiModelMapper): ViewModel() {
 
-    private val searchMode = MutableLiveData(SearchMode.MOVIES)
+    private val _searchMode = MutableLiveData(SearchMode.MOVIES)
+    val searchMode: LiveData<SearchMode>
+            get() = _searchMode
+
     private val searchTerm = MutableLiveData<String>()
 
     private val _searchHint = MediatorLiveData<String>().apply {
-        addSource(searchMode) {
+        addSource(_searchMode) {
             searchModeChanged(it)
         }
     }
@@ -41,7 +44,7 @@ class SearchViewModel(
         addSource(_persons) {
             updateResults(it)
         }
-        addSource(searchMode) {
+        addSource(_searchMode) {
             updateResults(emptyList())
         }
     }
@@ -56,7 +59,7 @@ class SearchViewModel(
     }
 
     fun loadMore() {
-        searchMode.value?.let { mode ->
+        _searchMode.value?.let { mode ->
             when (mode) {
                 SearchMode.MOVIES -> {
                     moviesRepository.loadMoreMovieSearchResults()
@@ -69,7 +72,7 @@ class SearchViewModel(
     }
 
     fun setSearchMode(mode: SearchMode) {
-        searchMode.value = mode
+        _searchMode.value = mode
     }
 
     //endregion
@@ -77,7 +80,7 @@ class SearchViewModel(
     //region Private
 
     private fun searchWithTerm(term: String) {
-        searchMode.value?.let { mode ->
+        _searchMode.value?.let { mode ->
             when (mode) {
                 SearchMode.MOVIES -> {
                     moviesRepository.setMovieSearchQueryText(term)

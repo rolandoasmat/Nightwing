@@ -1,7 +1,9 @@
 package com.asmat.rolando.nightwing.search
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -53,19 +55,38 @@ class SearchFragment: Fragment(), SearchAdapter.Callbacks {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_search, menu)
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.search_movies -> {
-                viewModel.setSearchMode(SearchViewModel.SearchMode.MOVIES)
-            }
-            R.id.search_people -> {
-                viewModel.setSearchMode(SearchViewModel.SearchMode.PEOPLE)
+            R.id.configure_search -> {
+                showConfigureSearchDialog()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun showConfigureSearchDialog() {
+        val currentlySelectedIndex: Int? = viewModel.searchMode.value?.let { mode ->
+            when (mode) {
+                SearchViewModel.SearchMode.MOVIES -> 0
+                SearchViewModel.SearchMode.PEOPLE -> 1
+            }
+        }
+        val builder: AlertDialog.Builder? = activity?.let {
+            AlertDialog.Builder(it)
+        }
+
+        val items: Array<CharSequence> = arrayOf("Movies", "People")
+        builder?.setSingleChoiceItems(items, currentlySelectedIndex ?: 0) { p0, p1 ->
+            when (p1) {
+                0 -> viewModel.setSearchMode(SearchViewModel.SearchMode.MOVIES)
+                1 -> viewModel.setSearchMode(SearchViewModel.SearchMode.PEOPLE)
+            }
+        }?.setTitle("Search settings")
+
+        val dialog: AlertDialog? = builder?.create()
+        dialog?.show()
     }
 
     private fun setupRecyclerView() {

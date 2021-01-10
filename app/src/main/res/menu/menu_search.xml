@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
-
-    <group android:id="@+id/group_search"
-        app:showAsAction="always">
-        <item android:id="@+id/search_movies"
-            android:title="Search movies" />
-        <item android:id="@+id/search_people"
-            android:title="Search people" />
-    </group>
+    <item
+        android:id="@+id/configure_search"
+        android:title="Configure"
+        android:icon="@drawable/ic_configure"
+        app:showAsAction="always"/>
 
 </menu>
