@@ -110,7 +110,6 @@ class MovieDetailsViewModel(
 
     // Fetch other movie data from network or db
     private fun fetchData(movieID: Int) {
-
         moviesRepository
                 .getMovieDetails(movieID)
                 .observeOn(mainThreadScheduler)
