@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
+import com.asmat.rolando.nightwing.saved.SavedFragmentDirections
 import com.asmat.rolando.nightwing.ui.grid.GridAdapter
 import com.asmat.rolando.nightwing.utilities.ViewUtils
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
@@ -52,7 +54,8 @@ class SavedMoviesFragment: Fragment() {
     private fun setup() {
         adapter = GridAdapter(object : GridAdapter.Callback{
             override fun cardClicked(id: Int) {
-                // TODO navigate to movie details
+                val action = SavedFragmentDirections.actionGlobalActionToMovieDetailsScreen(id)
+                findNavController().navigate(action)
             }
         })
         savedMoviesRecyclerView.adapter = adapter
