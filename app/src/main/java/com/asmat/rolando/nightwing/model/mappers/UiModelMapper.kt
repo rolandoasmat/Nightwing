@@ -122,4 +122,5 @@ open class UiModelMapper @Inject constructor(private val searchDataModelsMapper:
             GridItemUiModel(movie.id, url, movie.title)
         }
     }
+
 }
