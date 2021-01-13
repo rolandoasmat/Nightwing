@@ -16,6 +16,7 @@ import com.asmat.rolando.nightwing.R
 import com.asmat.rolando.nightwing.ui.row_view.RowView
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.details_screen_user_actions.*
 import kotlinx.android.synthetic.main.fragment_tv_show_details.*
 import kotlinx.android.synthetic.main.fragment_tv_show_details.toolbar
 import javax.inject.Inject
@@ -51,6 +52,9 @@ class TvShowDetailsFragment: Fragment() {
                 // TODO navigate to season details
             }
         })
+        heartContainer?.setOnClickListener {
+            viewModel.heartIconTapped()
+        }
     }
 
     private fun observeViewModel() {
@@ -73,6 +77,9 @@ class TvShowDetailsFragment: Fragment() {
         }
         viewModel.seasons.observe(viewLifecycleOwner) {
             seasonsRowView?.setData(it)
+        }
+        viewModel.isSaved.observe(viewLifecycleOwner) {
+            heartIcon?.isSelected = it == true
         }
     }
 

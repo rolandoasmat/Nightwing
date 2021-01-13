@@ -20,6 +20,10 @@ class TvShowDetailsViewModel(
     val seasons: LiveData<List<RowViewItemUiModel>>
         get() = _seasons
 
+    private val _isSaved = MutableLiveData<Boolean>()
+    val isSaved: LiveData<Boolean>
+        get() = _isSaved
+
     private val compositeDisposable = CompositeDisposable()
 
 
@@ -36,6 +40,10 @@ class TvShowDetailsViewModel(
                     _seasons.postValue(seasonsUiModels)
                 }, {})
         compositeDisposable.add(disposable)
+    }
+
+    fun heartIconTapped() {
+
     }
 
     override fun onCleared() {
