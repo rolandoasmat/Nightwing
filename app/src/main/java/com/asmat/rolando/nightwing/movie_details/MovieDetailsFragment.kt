@@ -27,8 +27,8 @@ import com.asmat.rolando.nightwing.ui.row_view.RowView
 import com.asmat.rolando.nightwing.utilities.URLUtils
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.details_screen_user_actions.*
 import kotlinx.android.synthetic.main.fragment_movie_details.*
-import kotlinx.android.synthetic.main.movie_details_user_actions.*
 import kotlinx.android.synthetic.main.primary_details.*
 import javax.inject.Inject
 

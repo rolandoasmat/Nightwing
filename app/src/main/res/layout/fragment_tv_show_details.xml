@@ -158,7 +158,13 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"/>
 
-        <!-- SEASONS -->
+            <!-- USER ACTION -->
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/details_screen_user_actions"/>
+
+            <!-- SEASONS -->
             <com.asmat.rolando.nightwing.ui.row_view.RowView
                 android:id="@+id/seasonsRowView"
                 android:layout_width="match_parent"
