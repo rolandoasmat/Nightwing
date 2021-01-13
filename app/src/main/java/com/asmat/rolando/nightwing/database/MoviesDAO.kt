@@ -7,8 +7,6 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MoviesDAO {
 
-    // Saved movies
-
     @Query("SELECT * FROM saved_movies WHERE id LIKE :id")
     fun getSavedMovie(id: Int): Flow<SavedMovie?>
 
