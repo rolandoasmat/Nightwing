@@ -5,6 +5,7 @@ import com.asmat.rolando.nightwing.utilities.DateUtils
 import com.asmat.rolando.nightwing.utilities.URLUtils
 
 data class TvShowDetailsUiModel(
+        val id: Int,
         val backdropUrl: String?,
         val createdBy: String,
         val firstAirDate: String,
@@ -28,6 +29,7 @@ data class TvShowDetailsUiModel(
 
     companion object {
         fun from(data: TvShowDetailsResponse): TvShowDetailsUiModel {
+            val id = data.id
             val backdropUrl = data.backdrop_path?.let { URLUtils.getImageURL780(it) }
             val createdByItems = data.created_by.mapNotNull { it.name }
             val createdBy = if(createdByItems.isNotEmpty()) {
@@ -59,7 +61,7 @@ data class TvShowDetailsUiModel(
                 val episodeCount = it.episode_count?.toString() ?: "--"
                 Season(it.id, seasonName, url, seasonNumber, episodeCount)
             }
-            return TvShowDetailsUiModel(backdropUrl, createdBy, firstAirDate, lastAirDate, name,
+            return TvShowDetailsUiModel(id, backdropUrl, createdBy, firstAirDate, lastAirDate, name,
                     networks, overview, posterUrl, numberOfEpisodes, numberOfSeasons, status,
                     tagline, seasons)
         }

@@ -29,7 +29,6 @@ open class MoviesRepository @Inject constructor(
 
     fun getSavedMovies() = databaseRepository.getSavedMovies()
 
-
     /**
      * Network
      */
