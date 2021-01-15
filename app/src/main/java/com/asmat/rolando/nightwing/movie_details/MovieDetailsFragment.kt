@@ -194,9 +194,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
         similarMoviesRow.configure("Similar Movies", false, object : RowView.Callback {
             override fun onSeeAllClicked() { }
 
-            override fun onCardClicked(id: Int) {
-                TODO("Not yet implemented")
-            }
+            override fun onCardClicked(id: Int) = navigateToMovieDetails(id)
         })
     }
 
@@ -207,9 +205,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
                 findNavController().navigate(action)
             }
 
-            override fun onCardClicked(id: Int) {
-                TODO("Not yet implemented")
-            }
+            override fun onCardClicked(id: Int) = navigateToMovieDetails(id)
         })
     }
 
@@ -217,11 +213,13 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
         moreFromDirectorMoviesRow.configure(null, false, object: RowView.Callback {
             override fun onSeeAllClicked() { }
 
-            override fun onCardClicked(id: Int) {
-                TODO("Not yet implemented")
-            }
+            override fun onCardClicked(id: Int) = navigateToMovieDetails(id)
         })
+    }
 
+    private fun navigateToMovieDetails(id: Int) {
+        val action = MovieDetailsFragmentDirections.actionMovieDetailsScreenToMovieDetailsScreen(id)
+        findNavController().navigate(action)
     }
 
     private fun setupReviewsRecyclerView() {

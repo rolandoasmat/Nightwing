@@ -56,7 +56,7 @@ class SavedTvShowsFragment: Fragment() {
     private fun setup() {
         adapter = GridAdapter(object : GridAdapter.Callback{
             override fun cardClicked(id: Int) {
-                val action = SavedFragmentDirections.actionGlobalActionToMovieDetailsScreen(id)
+                val action = SavedFragmentDirections.actionGlobalActionToTvShowDetailsScreen(id)
                 findNavController().navigate(action)
             }
         })
