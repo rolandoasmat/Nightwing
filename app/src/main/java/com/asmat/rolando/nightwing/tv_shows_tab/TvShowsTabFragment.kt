@@ -68,7 +68,7 @@ class TvShowsTabFragment: Fragment() {
     }
 
     private fun navigateToTvShowDetails(id: Int) {
-        val action = HomeDirections.actionGlobalActionToMovieDetailsScreen(id)
+        val action = HomeDirections.actionGlobalActionToTvShowDetailsScreen(id)
         findNavController().navigate(action)
     }
 
