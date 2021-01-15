@@ -6,16 +6,18 @@
     android:id="@+id/home"
     app:startDestination="@+id/homeScreen">
 
+    <include app:graph="@navigation/movie_details" />
+    <include app:graph="@navigation/tv_show_details" />
+    <include app:graph="@navigation/cast_details" />
+
     <fragment
         android:id="@+id/homeScreen"
         android:name="com.asmat.rolando.nightwing.home_tab.HomeTabFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeScreen_to_tvShowDetailsFragment"
-            app:destination="@id/tvShowDetailsFragment"/>
     </fragment>
 
+    <!-- MOVIE DETAILS DEEP LINK -->
 <!--    TODO this is because Navigation component doesn't support deepLink to a nested graph at the moment-->
 <!--    TODO deepLink also doesn't work if app is already open-->
     <fragment
@@ -38,17 +40,18 @@
     </fragment>
 
     <fragment
-        android:id="@+id/castDetailsScreen"
-        android:name="com.asmat.rolando.nightwing.cast_details.CastDetailsFragment"
-        android:label="Cast Details"
-        tools:layout="@layout/fragment_cast_details" >
+        android:id="@+id/recommendedMoviesGrid"
+        android:name="com.asmat.rolando.nightwing.ui.recommended_movies.RecommendedMoviesFragment"
+        android:label="Recommended Movies"
+        tools:layout="@layout/fragment_movie_grid" >
         <argument
-            android:name="castIdArg"
+            android:name="movieIdArg"
             app:argType="integer" />
         <action
-            android:id="@+id/action_castDetailsScreen_to_movieDetailsScreen"
+            android:id="@+id/action_recommendedMoviesGrid_to_movieDetailsScreen"
             app:destination="@id/movieDetailsScreen" />
     </fragment>
+    <!-- -->
 
 
     <!-- GRIDS -->
@@ -88,31 +91,10 @@
             android:id="@+id/action_upcomingMoviesGrid_to_movieDetailsScreen"
             app:destination="@id/movieDetailsScreen" />
     </fragment>
+    <!-- -->
 
-    <include app:graph="@navigation/movie_details" />
-
-    <fragment
-        android:id="@+id/recommendedMoviesGrid"
-        android:name="com.asmat.rolando.nightwing.ui.recommended_movies.RecommendedMoviesFragment"
-        android:label="Recommended Movies"
-        tools:layout="@layout/fragment_movie_grid" >
-        <argument
-            android:name="movieIdArg"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_recommendedMoviesGrid_to_movieDetailsScreen"
-            app:destination="@id/movieDetailsScreen" />
-    </fragment>
 
     <!-- TV SHOWS -->
-    <fragment
-        android:id="@+id/tvShowDetailsFragment"
-        android:name="com.asmat.rolando.nightwing.tv_show_details.TvShowDetailsFragment"
-        android:label="TV Show Details" >
-        <argument
-            android:name="tvShowIdArg"
-            app:argType="integer" />
-    </fragment>
 
     <fragment
         android:id="@+id/popularTvShowsFragment"
@@ -121,7 +103,11 @@
         tools:layout="@layout/fragment_grid" >
         <action
             android:id="@+id/action_popularTvShows_to_tvShowDetailsFragment"
-            app:destination="@id/tvShowDetailsFragment"/>
+            app:destination="@id/tv_show_details">
+            <argument
+                android:name="tvShowIdArg"
+                app:argType="integer" />
+        </action>
     </fragment>
 
     <fragment
@@ -131,7 +117,11 @@
         tools:layout="@layout/fragment_grid" >
         <action
             android:id="@+id/action_topRatedTvShows_to_tvShowDetailsFragment"
-            app:destination="@id/tvShowDetailsFragment"/>
+            app:destination="@id/tv_show_details">
+            <argument
+                android:name="tvShowIdArg"
+                app:argType="integer" />
+        </action>
     </fragment>
 
     <fragment
@@ -141,7 +131,11 @@
         tools:layout="@layout/fragment_grid" >
         <action
             android:id="@+id/action_onTheAirTvShows_to_tvShowDetailsFragment"
-            app:destination="@id/tvShowDetailsFragment"/>
+            app:destination="@id/tv_show_details">
+            <argument
+                android:name="tvShowIdArg"
+                app:argType="integer" />
+        </action>
     </fragment>
 
     <!-- GLOBAL ACTIONS -->
@@ -150,6 +144,14 @@
         app:destination="@id/movie_details" >
         <argument
             android:name="movieIdArg"
+            app:argType="integer" />
+    </action>
+
+    <action
+        android:id="@+id/action_globalAction_to_tvShowDetailsScreen"
+        app:destination="@id/tv_show_details" >
+        <argument
+            android:name="tvShowIdArg"
             app:argType="integer" />
     </action>
 
