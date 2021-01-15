@@ -4,6 +4,7 @@ import com.asmat.rolando.nightwing.model.Movie
 import com.asmat.rolando.nightwing.cast_details.MovieCreditUiModel
 import com.asmat.rolando.nightwing.cast_details.PersonMovieCreditsUiModel
 import com.asmat.rolando.nightwing.database.entities.SavedMovie
+import com.asmat.rolando.nightwing.database.entities.SavedTvShow
 import com.asmat.rolando.nightwing.movie_details.MovieDetailsUIModel
 import com.asmat.rolando.nightwing.networking.models.*
 import com.asmat.rolando.nightwing.popular_people_tab.PopularPersonUiModel
@@ -116,7 +117,13 @@ open class UiModelMapper @Inject constructor(private val searchDataModelsMapper:
         }
     }
 
-    fun mapToGridItems(data: List<SavedMovie>): List<GridItemUiModel> {
+    fun mapSavedMoviesToGridItems(data: List<SavedMovie>): List<GridItemUiModel> {
+        return data.map { movie ->
+            GridItemUiModel(movie.id, movie.posterURL, movie.title)
+        }
+    }
+
+    fun mapSavedTvShowsToGridItems(data: List<SavedTvShow>): List<GridItemUiModel> {
         return data.map { movie ->
             GridItemUiModel(movie.id, movie.posterURL, movie.title)
         }

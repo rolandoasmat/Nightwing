@@ -8,13 +8,13 @@ import kotlinx.coroutines.flow.Flow
 interface TvShowsDAO {
 
     @Query("SELECT * FROM saved_tv_shows WHERE id LIKE :id")
-    fun getSavedMovie(id: Int): Flow<SavedTvShow?>
+    fun getSavedTvShow(id: Int): Flow<SavedTvShow?>
 
     @Query("SELECT * FROM saved_tv_shows")
     fun getAllSavedTvShows(): Flow<List<SavedTvShow>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSavedTvShow(movie: SavedTvShow)
+    suspend fun insertSavedTvShow(tvShow: SavedTvShow)
 
     @Query("DELETE FROM saved_tv_shows WHERE id LIKE :id ")
     suspend fun deleteSavedTvShow(id: Int)

@@ -63,5 +63,4 @@ class SavedMoviesFragment: Fragment() {
         savedMoviesRecyclerView?.layoutManager = GridLayoutManager(requireContext(), numOfColumns)
     }
 
-
 }

@@ -28,4 +28,6 @@ class TvShowsRepository @Inject constructor(
 
     fun isSavedTvShow(id: Int): Flow<Boolean> = databaseRepository.getSavedTvShow(id).map { it != null }
 
+    fun getAllSavedTvShows() = databaseRepository.getAllSavedTvShows()
+
 }

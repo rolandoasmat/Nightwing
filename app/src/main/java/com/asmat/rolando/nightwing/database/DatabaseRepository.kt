@@ -8,17 +8,24 @@ import javax.inject.Singleton
 @Singleton
 class DatabaseRepository @Inject constructor(private val db: AppDatabase) {
 
+    // Movies
+
     fun getSavedMovie(id: Int) = db.moviesDAO().getSavedMovie(id)
 
     fun getSavedMovies() = db.moviesDAO().getAllSavedMovies()
-
-    fun getSavedTvShow(id: Int) = db.tvShowsDAO().getSavedMovie(id)
 
     suspend fun insertSavedMovie(movie: SavedMovie) = db.moviesDAO().insertSavedMovie(movie)
 
     suspend fun deleteSavedMovie(id: Int) = db.moviesDAO().deleteSavedMovie(id)
 
-    suspend fun deleteSavedTvShow(id: Int) = db.tvShowsDAO().deleteSavedTvShow(id)
+    // Tv Shows
+
+    fun getSavedTvShow(id: Int) = db.tvShowsDAO().getSavedTvShow(id)
+
+    fun getAllSavedTvShows() = db.tvShowsDAO().getAllSavedTvShows()
 
     suspend fun insertSavedTvShow(data: SavedTvShow) = db.tvShowsDAO().insertSavedTvShow(data)
+
+    suspend fun deleteSavedTvShow(id: Int) = db.tvShowsDAO().deleteSavedTvShow(id)
+
 }

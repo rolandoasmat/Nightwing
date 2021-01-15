@@ -13,6 +13,6 @@ class SavedMoviesViewModel(
     val movies = moviesRepository
             .getSavedMovies()
             .map {
-                uiModelMapper.mapToGridItems(it)
+                uiModelMapper.mapSavedMoviesToGridItems(it)
             }.asLiveData()
 }
