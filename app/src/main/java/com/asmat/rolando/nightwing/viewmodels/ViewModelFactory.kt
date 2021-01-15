@@ -54,7 +54,7 @@ class ViewModelFactory @Inject constructor(
             modelClass.isAssignableFrom(PopularTvShowsViewModel::class.java) -> PopularTvShowsViewModel(tvShowsRepository, uiModelMapper) as T
             modelClass.isAssignableFrom(TopRatedTvShowsViewModel::class.java) -> TopRatedTvShowsViewModel(tvShowsRepository, uiModelMapper) as T
             modelClass.isAssignableFrom(OnTheAirTvShowsViewModel::class.java) -> OnTheAirTvShowsViewModel(tvShowsRepository, uiModelMapper) as T
-            modelClass.isAssignableFrom(TvShowDetailsViewModel::class.java) -> TvShowDetailsViewModel(tvShowsRepository, uiModelMapper) as T
+            modelClass.isAssignableFrom(TvShowDetailsViewModel::class.java) -> TvShowDetailsViewModel(tvShowsRepository, uiModelMapper, deepLinksUtils) as T
             modelClass.isAssignableFrom(SavedMoviesViewModel::class.java) -> SavedMoviesViewModel(moviesRepository, uiModelMapper) as T
             modelClass.isAssignableFrom(SavedTvShowsViewModel::class.java) -> SavedTvShowsViewModel(tvShowsRepository, uiModelMapper) as T
             else -> {

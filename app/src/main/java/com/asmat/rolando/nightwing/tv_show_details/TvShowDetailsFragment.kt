@@ -1,9 +1,11 @@
 package com.asmat.rolando.nightwing.tv_show_details
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
@@ -13,6 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
+import com.asmat.rolando.nightwing.share.ShareData
 import com.asmat.rolando.nightwing.ui.row_view.RowView
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import com.squareup.picasso.Picasso
@@ -55,6 +58,9 @@ class TvShowDetailsFragment: Fragment() {
         heartContainer?.setOnClickListener {
             viewModel.heartIconTapped()
         }
+        shareContainer?.setOnClickListener {
+            viewModel.shareIconTapped()
+        }
     }
 
     private fun observeViewModel() {
@@ -81,10 +87,24 @@ class TvShowDetailsFragment: Fragment() {
         viewModel.isSaved.observe(viewLifecycleOwner) {
             heartIcon?.isSelected = it == true
         }
+        viewModel.share.observe(viewLifecycleOwner) {
+            shareTvShow(it)
+        }
     }
 
     private fun setupToolbar() {
         val appBarConfiguration = AppBarConfiguration(findNavController().graph)
         tvShowCollapsingToolbar?.setupWithNavController(toolbar, findNavController(), appBarConfiguration)
+    }
+
+    private fun shareTvShow(data: ShareData?) {
+        data?.let {
+            val mimeType = "text/plain"
+            val intent = ShareCompat.IntentBuilder.from(requireActivity())
+                    .setChooserTitle(it.title)
+                    .setType(mimeType)
+                    .setText(it.message).intent
+            startActivity(Intent.createChooser(intent, it.title))
+        }
     }
 }

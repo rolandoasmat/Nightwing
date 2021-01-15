@@ -104,6 +104,7 @@ class MovieDetailsViewModel(
             val deepLink = deepLinksUtils.shareMovieDetailsDeepLink(id)
             val shareText = "Check out $movieTitle!\n$deepLink"
             shareMovie.value = shareText
+            shareMovie.value = null
         }
     }
     //endregion
