@@ -1,6 +1,5 @@
 package com.asmat.rolando.nightwing.search
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AlertDialog
