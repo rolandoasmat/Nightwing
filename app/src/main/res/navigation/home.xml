@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_home" >
     </fragment>
 
-    <!-- MOVIE DETAILS DEEP LINK -->
+    <!-- MOVIE / TV SHOWS DETAILS DEEP LINKS -->
 <!--    TODO this is because Navigation component doesn't support deepLink to a nested graph at the moment-->
 <!--    TODO deepLink also doesn't work if app is already open-->
     <fragment
@@ -26,7 +26,7 @@
         android:label="Movie Details"
         tools:layout="@layout/fragment_movie_details" >
         <deepLink
-            android:id="@+id/deepLink"
+            android:id="@+id/movieDeepLink"
             app:uri="nightwing.app/movieDetails/{movieIdArg}"/>
         <argument
             android:name="movieIdArg"
@@ -38,7 +38,6 @@
             android:id="@+id/action_movieDetailsScreen_to_recommendedMoviesGrid"
             app:destination="@id/recommendedMoviesGrid" />
     </fragment>
-
     <fragment
         android:id="@+id/recommendedMoviesGrid"
         android:name="com.asmat.rolando.nightwing.ui.recommended_movies.RecommendedMoviesFragment"
@@ -50,6 +49,18 @@
         <action
             android:id="@+id/action_recommendedMoviesGrid_to_movieDetailsScreen"
             app:destination="@id/movieDetailsScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/tvShowDetailsScreen"
+        android:name="com.asmat.rolando.nightwing.tv_show_details.TvShowDetailsFragment"
+        android:label="TV Show Details"
+        tools:layout="@layout/fragment_tv_show_details" >
+        <deepLink
+            android:id="@+id/tvShowDeepLink"
+            app:uri="nightwing.app/tvShowDetails/{tvShowIdArg}"/>
+        <argument
+            android:name="tvShowIdArg"
+            app:argType="integer" />
     </fragment>
     <!-- -->
 
