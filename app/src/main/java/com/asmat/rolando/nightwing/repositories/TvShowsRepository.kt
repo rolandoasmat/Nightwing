@@ -3,6 +3,7 @@ package com.asmat.rolando.nightwing.repositories
 import com.asmat.rolando.nightwing.database.DatabaseRepository
 import com.asmat.rolando.nightwing.database.entities.SavedTvShow
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
+import com.asmat.rolando.nightwing.search.SearchTvShowsPaginatedRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -13,6 +14,8 @@ class TvShowsRepository @Inject constructor(
         private val tmdbClient: TheMovieDBClient,
         private val schedulersProvider: SchedulersProvider,
         private val databaseRepository: DatabaseRepository) {
+
+    val searchTvShowsPaginatedRequest = SearchTvShowsPaginatedRequest(tmdbClient, schedulersProvider )
 
     fun getPopularTvShows(page: Int) = tmdbClient.getPopularTvShows(page).subscribeOn(schedulersProvider.ioScheduler)
 

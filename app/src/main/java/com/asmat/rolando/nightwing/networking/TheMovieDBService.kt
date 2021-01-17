@@ -46,6 +46,9 @@ interface TheMovieDBService {
 
     @GET("search/person")
     fun searchPerson(@Query("query") searchString: String, @Query("page") page: Int): Single<PersonsResponse>
+
+    @GET("search/tv")
+    fun searchTvShow(@Query("query") searchString: String, @Query("page") page: Int): Single<TvShowsResponse>
     //endregion
 
     //region people/*

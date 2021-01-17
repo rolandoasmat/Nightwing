@@ -63,6 +63,8 @@ open class UiModelMapper @Inject constructor(private val searchDataModelsMapper:
 
     fun mapPersons(response: List<PersonsResponse.Person>) = searchDataModelsMapper.mapPersons(response)
 
+    fun mapTvShows(response: List<TvShowsResponse.Item>) = searchDataModelsMapper.mapTvShows(response)
+
     fun map(movie: MovieDetailsResponse): MovieDetailsUIModel? {
         val posterURL = movie.poster_path?.let { url -> URLUtils.getImageURL342(url)}
         val backdropURL = movie.backdrop_path?.let { url -> URLUtils.getImageURL780(url)}

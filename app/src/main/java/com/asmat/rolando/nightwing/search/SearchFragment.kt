@@ -70,17 +70,19 @@ class SearchFragment: Fragment(), SearchAdapter.Callbacks {
             when (mode) {
                 SearchViewModel.SearchMode.MOVIES -> 0
                 SearchViewModel.SearchMode.PEOPLE -> 1
+                SearchViewModel.SearchMode.TV_SHOWS -> 2
             }
         }
         val builder: AlertDialog.Builder? = activity?.let {
             AlertDialog.Builder(it)
         }
 
-        val items: Array<CharSequence> = arrayOf("Movies", "People")
+        val items: Array<CharSequence> = arrayOf("Movies", "People", "Tv Shows")
         builder?.setSingleChoiceItems(items, currentlySelectedIndex ?: 0) { p0, p1 ->
             when (p1) {
                 0 -> viewModel.setSearchMode(SearchViewModel.SearchMode.MOVIES)
                 1 -> viewModel.setSearchMode(SearchViewModel.SearchMode.PEOPLE)
+                2 -> viewModel.setSearchMode(SearchViewModel.SearchMode.TV_SHOWS)
             }
         }?.setTitle("Search settings")
 

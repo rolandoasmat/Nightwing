@@ -72,6 +72,7 @@ open class TheMovieDBClient {
 
     open fun getMovieRecommendations(movieID: Int) = service.getMovieRecommendations(movieID)
 
+    // region Search
     open fun searchMovie(searchString: String, page: Int): Single<MoviesResponse> {
         return service.searchMovie(searchString, page)
     }
@@ -79,6 +80,9 @@ open class TheMovieDBClient {
     open fun searchPerson(searchString: String, page: Int): Single<PersonsResponse> {
         return service.searchPerson(searchString, page)
     }
+
+    open fun searchTvShow(searchString: String, page: Int) = service.searchTvShow(searchString, page)
+    //endregion
 
     open fun getPopularPeople(page: Int) = service.getPopularPeople(page)
 

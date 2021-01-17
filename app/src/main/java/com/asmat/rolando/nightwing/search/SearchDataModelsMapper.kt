@@ -2,6 +2,7 @@ package com.asmat.rolando.nightwing.search
 
 import com.asmat.rolando.nightwing.networking.models.MoviesResponse
 import com.asmat.rolando.nightwing.networking.models.PersonsResponse
+import com.asmat.rolando.nightwing.networking.models.TvShowsResponse
 import com.asmat.rolando.nightwing.utilities.URLUtils
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,6 +31,19 @@ class SearchDataModelsMapper @Inject constructor() {
             val name = data.name
             if (id != null && url.isNotEmpty() && name.isNotEmpty()) {
                 uiModels.add(SearchViewModel.SearchResultUiModel.Person(id, url, name))
+            }
+        }
+        return uiModels
+    }
+
+    fun mapTvShows(response: List<TvShowsResponse.Item>): List<SearchViewModel.SearchResultUiModel.TvShow> {
+        val uiModels = mutableListOf<SearchViewModel.SearchResultUiModel.TvShow>()
+        response.forEach{ data ->
+            val id = data.id
+            val url = data.poster_path?.let { URLUtils.getImageURL342(it) } ?: ""
+            val name = data.name ?: ""
+            if (url.isNotEmpty() && name.isNotEmpty()) {
+                uiModels.add(SearchViewModel.SearchResultUiModel.TvShow(id, url, name))
             }
         }
         return uiModels
