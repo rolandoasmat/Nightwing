@@ -30,4 +30,13 @@
             app:argType="integer" />
     </action>
 
+    <include app:graph="@navigation/tv_show_details" />
+    <action
+        android:id="@+id/action_globalAction_to_tvShowDetailsScreen"
+        app:destination="@id/tv_show_details" >
+        <argument
+            android:name="tvShowIdArg"
+            app:argType="integer" />
+    </action>
+
 </navigation>

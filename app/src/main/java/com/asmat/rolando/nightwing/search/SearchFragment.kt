@@ -121,4 +121,9 @@ class SearchFragment: Fragment(), SearchAdapter.Callbacks {
         val action = SearchFragmentDirections.actionGlobalActionToCastDetailsScreen(id)
         findNavController().navigate(action)
     }
+
+    override fun tvShowcardClicked(id: Int) {
+        val action = SearchFragmentDirections.actionGlobalActionToTvShowDetailsScreen(id)
+        findNavController().navigate(action)
+    }
 }

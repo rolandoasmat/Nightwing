@@ -48,6 +48,9 @@ class SearchAdapter(private val callbacks: Callbacks): RecyclerView.Adapter<Sear
                     is SearchViewModel.SearchResultUiModel.Person -> {
                         callbacks.openActorDetails(data.id)
                     }
+                    is SearchViewModel.SearchResultUiModel.TvShow -> {
+                        callbacks.tvShowcardClicked(data.id)
+                    }
                 }
             }
         }
@@ -68,5 +71,6 @@ class SearchAdapter(private val callbacks: Callbacks): RecyclerView.Adapter<Sear
     interface Callbacks {
         fun openMovieDetails(id: Int)
         fun openActorDetails(id: Int)
+        fun tvShowcardClicked(id: Int)
     }
 }
