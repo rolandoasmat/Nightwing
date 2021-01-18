@@ -3,7 +3,9 @@ package com.asmat.rolando.nightwing.tv_shows_tab.popular
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.asmat.rolando.nightwing.HomeDirections
 import com.asmat.rolando.nightwing.NightwingApplication
+import com.asmat.rolando.nightwing.home_tab.HomeTabFragmentDirections
 import com.asmat.rolando.nightwing.ui.grid.GridFragment
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import javax.inject.Inject
@@ -21,7 +23,7 @@ class PopularTvShowsFragment: GridFragment() {
     }
 
     override fun onItemClicked(id: Int) {
-        val action = PopularTvShowsFragmentDirections.actionPopularTvShowsToTvShowDetailsFragment(id)
+        val action = HomeTabFragmentDirections.actionGlobalActionToTvShowDetailsScreen(id)
         findNavController().navigate(action)
     }
 }

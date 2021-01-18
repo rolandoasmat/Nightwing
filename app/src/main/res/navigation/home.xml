@@ -20,6 +20,7 @@
     <!-- MOVIE / TV SHOWS DETAILS DEEP LINKS -->
 <!--    TODO this is because Navigation component doesn't support deepLink to a nested graph at the moment-->
 <!--    TODO deepLink also doesn't work if app is already open-->
+    <!--    MOVIE DETAILS-->
     <fragment
         android:id="@+id/movieDetailsScreen"
         android:name="com.asmat.rolando.nightwing.movie_details.MovieDetailsFragment"
@@ -35,8 +36,23 @@
             android:id="@+id/action_movieDetailsScreen_to_castDetailsScreen"
             app:destination="@id/castDetailsScreen" />
         <action
+            android:id="@+id/action_movieDetailsScreen_to_movieDetailsScreen"
+            app:destination="@id/movieDetailsScreen" />
+        <action
             android:id="@+id/action_movieDetailsScreen_to_recommendedMoviesGrid"
             app:destination="@id/recommendedMoviesGrid" />
+    </fragment>
+    <fragment
+        android:id="@+id/castDetailsScreen"
+        android:name="com.asmat.rolando.nightwing.cast_details.CastDetailsFragment"
+        android:label="Cast Details"
+        tools:layout="@layout/fragment_cast_details" >
+        <argument
+            android:name="castIdArg"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_castDetailsScreen_to_movieDetailsScreen"
+            app:destination="@id/movieDetailsScreen" />
     </fragment>
     <fragment
         android:id="@+id/recommendedMoviesGrid"
@@ -50,19 +66,7 @@
             android:id="@+id/action_recommendedMoviesGrid_to_movieDetailsScreen"
             app:destination="@id/movieDetailsScreen" />
     </fragment>
-    <fragment
-        android:id="@+id/tvShowDetailsScreen"
-        android:name="com.asmat.rolando.nightwing.tv_show_details.TvShowDetailsFragment"
-        android:label="TV Show Details"
-        tools:layout="@layout/fragment_tv_show_details" >
-        <deepLink
-            android:id="@+id/tvShowDeepLink"
-            app:uri="nightwing.app/tvShowDetails/{tvShowIdArg}"/>
-        <argument
-            android:name="tvShowIdArg"
-            app:argType="integer" />
-    </fragment>
-    <!-- -->
+    <!--    MOVIE DETAILS-->
 
 
     <!-- GRIDS -->
@@ -73,7 +77,11 @@
         tools:layout="@layout/fragment_movie_grid" >
         <action
             android:id="@+id/action_popularMoviesGrid_to_movieDetailsScreen"
-            app:destination="@id/movieDetailsScreen" />
+            app:destination="@id/movie_details" >
+            <argument
+                android:name="movieIdArg"
+                app:argType="integer" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/topRatedMoviesGrid"
@@ -82,7 +90,11 @@
         tools:layout="@layout/fragment_movie_grid" >
         <action
             android:id="@+id/action_topRatedMoviesGrid_to_movieDetailsScreen"
-            app:destination="@id/movieDetailsScreen" />
+            app:destination="@id/movie_details">
+            <argument
+                android:name="movieIdArg"
+                app:argType="integer" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/nowPlayingMoviesGrid"
@@ -91,7 +103,11 @@
         tools:layout="@layout/fragment_movie_grid" >
         <action
             android:id="@+id/action_nowPlayingMoviesGrid_to_movieDetailsScreen"
-            app:destination="@id/movieDetailsScreen" />
+            app:destination="@id/movie_details">
+            <argument
+                android:name="movieIdArg"
+                app:argType="integer" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/upcomingMoviesGrid"
@@ -100,7 +116,11 @@
         tools:layout="@layout/fragment_movie_grid" >
         <action
             android:id="@+id/action_upcomingMoviesGrid_to_movieDetailsScreen"
-            app:destination="@id/movieDetailsScreen" />
+            app:destination="@id/movie_details">
+            <argument
+                android:name="movieIdArg"
+                app:argType="integer" />
+        </action>
     </fragment>
     <!-- -->
 
@@ -190,7 +210,7 @@
 
     <action
         android:id="@+id/action_globalAction_to_personDetailsScreen"
-        app:destination="@id/castDetailsScreen" >
+        app:destination="@id/cast_details" >
         <argument
             android:name="castIdArg"
             app:argType="integer" />

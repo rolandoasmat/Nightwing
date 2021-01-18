@@ -6,6 +6,26 @@
     android:id="@+id/cast_details"
     app:startDestination="@+id/castDetailsScreen">
 
+
+<!--    MOVIE DETAILS-->
+    <fragment
+        android:id="@+id/movieDetailsScreen"
+        android:name="com.asmat.rolando.nightwing.movie_details.MovieDetailsFragment"
+        android:label="Movie Details"
+        tools:layout="@layout/fragment_movie_details" >
+        <argument
+            android:name="movieIdArg"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_movieDetailsScreen_to_castDetailsScreen"
+            app:destination="@id/castDetailsScreen" />
+        <action
+            android:id="@+id/action_movieDetailsScreen_to_movieDetailsScreen"
+            app:destination="@id/movieDetailsScreen" />
+        <action
+            android:id="@+id/action_movieDetailsScreen_to_recommendedMoviesGrid"
+            app:destination="@id/recommendedMoviesGrid" />
+    </fragment>
     <fragment
         android:id="@+id/castDetailsScreen"
         android:name="com.asmat.rolando.nightwing.cast_details.CastDetailsFragment"
@@ -18,18 +38,18 @@
             android:id="@+id/action_castDetailsScreen_to_movieDetailsScreen"
             app:destination="@id/movieDetailsScreen" />
     </fragment>
-
     <fragment
-        android:id="@+id/movieDetailsScreen"
-        android:name="com.asmat.rolando.nightwing.movie_details.MovieDetailsFragment"
-        android:label="Movie Details"
-        tools:layout="@layout/fragment_movie_details" >
+        android:id="@+id/recommendedMoviesGrid"
+        android:name="com.asmat.rolando.nightwing.ui.recommended_movies.RecommendedMoviesFragment"
+        android:label="Recommended Movies"
+        tools:layout="@layout/fragment_movie_grid" >
         <argument
             android:name="movieIdArg"
             app:argType="integer" />
         <action
-            android:id="@+id/action_movieDetailsScreen_to_castDetailsScreen"
-            app:destination="@id/castDetailsScreen" />
+            android:id="@+id/action_recommendedMoviesGrid_to_movieDetailsScreen"
+            app:destination="@id/movieDetailsScreen" />
     </fragment>
+<!--    MOVIE DETAILS-->
 
 </navigation>
