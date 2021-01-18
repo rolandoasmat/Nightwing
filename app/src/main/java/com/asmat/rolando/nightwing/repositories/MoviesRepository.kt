@@ -6,6 +6,7 @@ import com.asmat.rolando.nightwing.database.entities.SavedMovie
 import com.asmat.rolando.nightwing.model.*
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 import com.asmat.rolando.nightwing.networking.models.*
+import com.asmat.rolando.nightwing.ui.recommended_movies.RecommendedMoviesPaginatedRequest
 import io.reactivex.Single
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -38,6 +39,7 @@ open class MoviesRepository @Inject constructor(
     val nowPlayingPaginatedRequest = NowPlayingPaginatedRequest(tmdbClient, schedulersProvider.ioScheduler, schedulersProvider.mainScheduler)
     val upcomingPaginatedRequest = UpcomingPaginatedRequest(tmdbClient, schedulersProvider.ioScheduler, schedulersProvider.mainScheduler)
     private val searchMoviesPaginatedRequest = SearchMoviesPaginatedRequest(tmdbClient, schedulersProvider.ioScheduler, schedulersProvider.mainScheduler)
+    val recommendedMoviesPaginatedRequest = RecommendedMoviesPaginatedRequest(tmdbClient, schedulersProvider)
 
     open fun movieSearchResultsData() = searchMoviesPaginatedRequest.data
     open fun setMovieSearchQueryText(query: String) = searchMoviesPaginatedRequest.setSearchTerm(query)

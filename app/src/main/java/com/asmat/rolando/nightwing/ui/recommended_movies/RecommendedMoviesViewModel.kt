@@ -10,6 +10,12 @@ class RecommendedMoviesViewModel(
         uiModelMapper: UiModelMapper,
         dataModelMapper: DataModelMapper) : PaginatedMovieGridViewModel(moviesRepository, uiModelMapper, dataModelMapper) {
 
-    override val paginatedRequest by lazy { moviesRepository.popularMoviesPaginatedRequest }
+    override val paginatedRequest by lazy { moviesRepository.recommendedMoviesPaginatedRequest }
+
+
+    fun setMovieId(id: Int) {
+        paginatedRequest.setMovieId(id)
+        paginatedRequest.load()
+    }
 
 }

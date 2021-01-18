@@ -14,9 +14,9 @@ class RecommendedMoviesFragment: PaginatedMovieGridFragment() {
 
     val args: RecommendedMoviesFragmentArgs by navArgs()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.setMovieId(args.movieIdArg)
     }
 
     override fun goToMovieDetailsScreen(movieID: Int) {
