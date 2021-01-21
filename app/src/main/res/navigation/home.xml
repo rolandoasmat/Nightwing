@@ -67,6 +67,20 @@
             app:destination="@id/movieDetailsScreen" />
     </fragment>
     <!--    MOVIE DETAILS-->
+    <!--    TV SHOW DETAILS-->
+    <fragment
+        android:id="@+id/tvShowDetailsScreen"
+        android:name="com.asmat.rolando.nightwing.tv_show_details.TvShowDetailsFragment"
+        android:label="TV Show Details"
+        tools:layout="@layout/fragment_tv_show_details" >
+        <deepLink
+            android:id="@+id/tvShowDeepLink"
+            app:uri="nightwing.app/tvShowDetails/{tvShowIdArg}"/>
+        <argument
+            android:name="tvShowIdArg"
+            app:argType="integer" />
+    </fragment>
+    <!--    TV SHOW DETAILS-->
 
 
     <!-- GRIDS -->

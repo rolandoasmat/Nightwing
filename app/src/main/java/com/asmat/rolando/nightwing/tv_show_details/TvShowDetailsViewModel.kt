@@ -65,9 +65,10 @@ class TvShowDetailsViewModel(
     }
 
     fun shareIconTapped() {
-        _uiModel.value?.let {
+        _uiModel.value?.let { uiModel ->
             val title = "Share TV Show"
-            val message = deepLinksUtils.shareTvShowDetailsDeepLink(it.id)
+            val deepLinkStr = deepLinksUtils.shareTvShowDetailsDeepLink(uiModel.id)
+            val message = "Check out ${uiModel.name}!\n${deepLinkStr}"
             val shareData = ShareData(title, message)
             _share.value = shareData
             _share.value = null
