@@ -8,7 +8,8 @@ data class TvShowDetailsUiModel(
         val id: Int,
         val backdropUrl: String?,
         val createdBy: String,
-        val firstAirDate: String,
+        val firstAirDateText: String,
+        val firstAirDate: Long?,
         val lastAirDate: String,
         val name: String,
         val networks: String,
@@ -37,7 +38,8 @@ data class TvShowDetailsUiModel(
                     "$acc, $createdBy"
                 }
             } else "--"
-            val firstAirDate = data.first_air_date?.let { DateUtils.formatDate(it) } ?: ""
+            val firstAirDateText = data.first_air_date?.let { DateUtils.formatDate(it) } ?: ""
+            val firstAirDate = DateUtils.transform(data.first_air_date)?.time
             val lastAirDate = data.last_air_date?.let { DateUtils.formatDate(it) } ?: ""
             val name = data.name ?: "--"
             val networkItems = data.networks.mapNotNull { it.name }
@@ -61,7 +63,7 @@ data class TvShowDetailsUiModel(
                 val episodeCount = it.episode_count?.toString() ?: "--"
                 Season(it.id, seasonName, url, seasonNumber, episodeCount)
             }
-            return TvShowDetailsUiModel(id, backdropUrl, createdBy, firstAirDate, lastAirDate, name,
+            return TvShowDetailsUiModel(id, backdropUrl, createdBy, firstAirDateText, firstAirDate, lastAirDate, name,
                     networks, overview, posterUrl, numberOfEpisodes, numberOfSeasons, status,
                     tagline, seasons)
         }

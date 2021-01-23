@@ -7,7 +7,8 @@ import kotlinx.android.parcel.Parcelize
 data class MovieDetailsUIModel(
         val posterURL: String?,
         val overview: String,
-        val releaseDate: String,
+        val releaseDateText: String,
+        val releaseDate: Long?,
         val id: Int,
         val title: String,
         val backdropURL: String?,

@@ -66,7 +66,7 @@ class TvShowDetailsFragment: Fragment() {
     private fun observeViewModel() {
         viewModel.uiModel.observe(viewLifecycleOwner) {
             createdByLabel?.text = it.createdBy
-            firstAirDateLabel?.text = it.firstAirDate
+            firstAirDateLabel?.text = it.firstAirDateText
             lastAirDateLabel?.text = it.lastAirDate
             networksLabel?.text = it.networks
             overviewLabel?.text = it.overview

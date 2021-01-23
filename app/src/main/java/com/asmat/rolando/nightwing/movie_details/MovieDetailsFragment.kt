@@ -92,7 +92,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
         viewModel.movieDetailsUIModel.observe(viewLifecycleOwner) {
             updateBackdrop(it.backdropURL)
             updateTitle(it.title)
-            updateReleaseDate(it.releaseDate)
+            updateReleaseDate(it.releaseDateText)
             updateRating(it.voteAverage)
             updateRuntime(it.runtime)
             updatePoster(it.posterURL)

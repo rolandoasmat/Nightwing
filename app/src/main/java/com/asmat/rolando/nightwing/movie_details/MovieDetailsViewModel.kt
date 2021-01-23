@@ -88,7 +88,8 @@ class MovieDetailsViewModel(
                     val id = uiModel.id
                     val url = uiModel.posterURL
                     val title = uiModel.title
-                    val data = SavedMovie(id, url, title)
+                    val releaseDate = uiModel.releaseDate
+                    val data = SavedMovie(id, url, title, releaseDate)
                     moviesRepository.setSavedMovie(data)
                 }
             }

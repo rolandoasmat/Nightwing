@@ -58,7 +58,7 @@ class TvShowDetailsViewModel(
             }
         } else {
             viewModelScope.launch {
-                val savedTvShow = SavedTvShow(uiModel.id, uiModel.posterUrl, uiModel.name)
+                val savedTvShow = SavedTvShow(uiModel.id, uiModel.posterUrl, uiModel.name, uiModel.firstAirDate)
                 tvShowsRepository.insertSavedTvShow(savedTvShow)
             }
         }

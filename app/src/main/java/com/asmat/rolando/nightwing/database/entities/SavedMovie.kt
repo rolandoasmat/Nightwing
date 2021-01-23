@@ -1,6 +1,5 @@
 package com.asmat.rolando.nightwing.database.entities
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -8,6 +7,6 @@ import androidx.room.PrimaryKey
 data class SavedMovie(
         @PrimaryKey
         val id: Int,
-        @ColumnInfo(name = "poster_url")
         val posterURL: String?,
-        val title: String)
+        val title: String,
+        val releaseDate: Long?)

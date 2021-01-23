@@ -68,15 +68,18 @@ open class UiModelMapper @Inject constructor(private val searchDataModelsMapper:
     fun map(movie: MovieDetailsResponse): MovieDetailsUIModel? {
         val posterURL = movie.poster_path?.let { url -> URLUtils.getImageURL342(url)}
         val backdropURL = movie.backdrop_path?.let { url -> URLUtils.getImageURL780(url)}
-        val releaseDate = DateUtils.formatDate(movie.release_date ?: "")
+        val releaseDateText = DateUtils.formatDate(movie.release_date)
+        val releaseDate = DateUtils.transform(movie.release_date)?.time
         val voteAverage = movie.vote_average?.times(10)?.toInt()?.toString()?.let { percent ->
             "$percent%"
         }
         val runtime = movie.runtime?.let { movieRuntime ->
             "$movieRuntime min"
         }
-        return MovieDetailsUIModel(posterURL,
+        return MovieDetailsUIModel(
+                posterURL,
                 movie.overview ?: "",
+                releaseDateText,
                 releaseDate,
                 movie.id ?: 0,
                 movie.title ?: "",

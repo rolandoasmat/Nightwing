@@ -12,23 +12,30 @@ object DateUtils {
     /**
      * Formats a date from 'yyyy-MM-dd' to 'MMMM dd, yyyy' format.
      */
-    fun formatDate(rawDate: String): String {
-        return try {
-            val date = transform(rawDate)
-            val sdf = SimpleDateFormat(DATE_FORMAT_DESIRED)
-            val formatted = sdf.format(date)
-            formatted.substring(0, 1).toUpperCase() + formatted.substring(1)
-        } catch (e: ParseException) {
-            "Unable to parse date."
-        }
-
+    fun formatDate(rawDate: String?): String {
+        return rawDate?.let { rawDateString ->
+            try {
+                val date = transform(rawDateString)
+                val sdf = SimpleDateFormat(DATE_FORMAT_DESIRED)
+                val formatted = sdf.format(date)
+                formatted.substring(0, 1).toUpperCase() + formatted.substring(1)
+            } catch (e: Exception) {
+                "Unable to parse date."
+            }
+        } ?: "Unable to parse date."
     }
 
     /**
      * Transforms a string in the format 'yyyy-MM-dd' into a [Date] object
      */
-    fun transform(rawDate: String): Date {
-        val sdf = SimpleDateFormat(DATE_FORMAT_ORIGINAL)
-        return sdf.parse(rawDate)
+    fun transform(rawDate: String?): Date? {
+        return rawDate?.let {
+            val sdf = SimpleDateFormat(DATE_FORMAT_ORIGINAL)
+            return try{
+                sdf.parse(rawDate)
+            } catch (e: Exception) {
+                null
+            }
+        }
     }
 }
