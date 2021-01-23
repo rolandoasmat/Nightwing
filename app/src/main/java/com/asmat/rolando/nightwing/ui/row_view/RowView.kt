@@ -4,8 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isGone
-import androidx.recyclerview.widget.RecyclerView
 import com.asmat.rolando.nightwing.R
+import com.asmat.rolando.nightwing.extensions.gone
+import com.asmat.rolando.nightwing.extensions.visible
 import com.asmat.rolando.nightwing.ui.common.BaseLinearAdapter
 import kotlinx.android.synthetic.main.row_view.view.*
 
@@ -15,7 +16,7 @@ class RowView @JvmOverloads constructor(
         defStyleAttr: Int = 0): ConstraintLayout(context, attrs, defStyleAttr), BaseLinearAdapter.Callback<RowViewItemUiModel> {
 
     private var callback: Callback? = null
-    private var rowAdapter = MoviesLinearAdapter(this)
+    private var rowAdapter = RowViewLinearAdapter(this)
 
     init {
         inflate(context, R.layout.row_view, this)
@@ -38,7 +39,12 @@ class RowView @JvmOverloads constructor(
     }
 
     fun setData(data: List<RowViewItemUiModel>) {
-        rowAdapter.data = data
+        if (data.isEmpty()) {
+            this.gone()
+        } else {
+            this.visible()
+            rowAdapter.data = data
+        }
     }
 
     interface Callback {

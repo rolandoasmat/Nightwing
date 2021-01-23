@@ -11,9 +11,9 @@ import com.asmat.rolando.nightwing.ui.transformations.RoundedTransformation
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_row_card_wide.view.*
 
-private typealias MoviesViewHolder = MoviesLinearAdapter.ViewHolder
+private typealias MoviesViewHolder = RowViewLinearAdapter.ViewHolder
 
-class MoviesLinearAdapter(
+class RowViewLinearAdapter(
         callback: Callback<RowViewItemUiModel>,
         cardType: CardType = CardType.TALL) : BaseLinearAdapter<RowViewItemUiModel, MoviesViewHolder>(callback) {
 
