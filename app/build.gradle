@@ -10,8 +10,8 @@ android {
         applicationId "com.asmat.rolando.nightwing"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 38
-        versionName "2.0.9"
+        versionCode 39
+        versionName "2.0.10"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "THE_MOVIE_DB_API_KEY", THE_MOVIE_DB_API_KEY)

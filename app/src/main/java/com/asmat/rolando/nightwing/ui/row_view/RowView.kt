@@ -69,7 +69,7 @@ class RowView @JvmOverloads constructor(
     interface Callback {
         fun onSeeAllClicked() { }
         fun onCardClicked(id: Int)
-        fun onRetry()
+        fun onRetry() { }
     }
 
     override fun cardClicked(item: RowViewItemUiModel) {

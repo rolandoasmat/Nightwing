@@ -192,8 +192,6 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
 
     private fun setupSimilarMoviesRow() {
         similarMoviesRow.configure("Similar Movies", false, object : RowView.Callback {
-            override fun onSeeAllClicked() { }
-
             override fun onCardClicked(id: Int) = navigateToMovieDetails(id)
         })
     }
@@ -204,15 +202,12 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
                 val action = MovieDetailsFragmentDirections.actionMovieDetailsScreenToRecommendedMoviesGrid(movieID)
                 findNavController().navigate(action)
             }
-
             override fun onCardClicked(id: Int) = navigateToMovieDetails(id)
         })
     }
 
     private fun setupDirectorMoviesRow() {
         moreFromDirectorMoviesRow.configure(null, false, object: RowView.Callback {
-            override fun onSeeAllClicked() { }
-
             override fun onCardClicked(id: Int) = navigateToMovieDetails(id)
         })
     }

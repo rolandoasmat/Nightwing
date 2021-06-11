@@ -34,7 +34,7 @@ class TvShowsTabViewModel(
                     val mapped = uiModelMapper.map(it)
                     _popularTvShows.postValue(mapped)
                 }, { error ->
-                    Log.e("RAA", error.message)
+                    Log.e("RAA", error.message ?: "error message")
                 })
         compositeDisposable.add(disposable1)
 
@@ -44,7 +44,7 @@ class TvShowsTabViewModel(
                     val mapped = uiModelMapper.map(it)
                     _topRatedTvShows.postValue(mapped)
                 }, { error ->
-                    Log.e("RAA", error.message)
+                    Log.e("RAA", error.message ?: "error message")
                 })
         compositeDisposable.add(disposable2)
 
@@ -54,7 +54,7 @@ class TvShowsTabViewModel(
                     val mapped = uiModelMapper.map(it)
                     _onTheAirTvShows.postValue(mapped)
                 }, { error ->
-                    Log.e("RAA", error.message)
+                    Log.e("RAA", error.message ?: "error message")
                 })
         compositeDisposable.add(disposable3)
     }
