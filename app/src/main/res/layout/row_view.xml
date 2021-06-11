@@ -38,6 +38,7 @@
         android:id="@+id/retryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="40dp"
         android:visibility="gone"
         android:text="@string/retry"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +47,7 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ProgressBar
+        android:id="@+id/loadingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"

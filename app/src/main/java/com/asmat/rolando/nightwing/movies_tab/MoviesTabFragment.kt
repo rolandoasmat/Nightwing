@@ -56,6 +56,7 @@ class MoviesTabFragment: Fragment() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToMovieDetailsScreen(id)
                 findNavController().navigate(action)
             }
+            override fun onRetry() = popularMoviesViewModel.load()
         })
         popularMoviesViewModel.load()
 
@@ -68,6 +69,7 @@ class MoviesTabFragment: Fragment() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToMovieDetailsScreen(id)
                 findNavController().navigate(action)
             }
+            override fun onRetry() = topRatedMoviesViewModel.load()
         })
         topRatedMoviesViewModel.load()
 
@@ -80,6 +82,7 @@ class MoviesTabFragment: Fragment() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToMovieDetailsScreen(id)
                 findNavController().navigate(action)
             }
+            override fun onRetry() = nowPlayingMoviesViewModel.load()
         })
         nowPlayingMoviesViewModel.load()
 
@@ -92,26 +95,67 @@ class MoviesTabFragment: Fragment() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToMovieDetailsScreen(id)
                 findNavController().navigate(action)
             }
+            override fun onRetry() = upcomingMoviesViewModel.load()
         })
         upcomingMoviesViewModel.load()
     }
 
     private fun observeLiveData() {
+        observePopularMoviesViewModel()
+        observeTopRatedMoviesViewModel()
+        observeNowPlayingMoviesViewModel()
+        observeUpcomingMoviesViewModel()
+    }
+
+    private fun observePopularMoviesViewModel() {
         popularMoviesViewModel.uiModels.observe(viewLifecycleOwner) {
             val data = it.map { movieGridItem -> RowViewItemUiModel(movieGridItem.id, movieGridItem.posterURL, movieGridItem.title) }
             popularMoviesRow.setData(data)
         }
+        popularMoviesViewModel.loading.observe(viewLifecycleOwner) {
+            popularMoviesRow.setLoading(it == true)
+        }
+        popularMoviesViewModel.error.observe(viewLifecycleOwner) {
+            popularMoviesRow.setRetry(it != null)
+        }
+    }
+
+    private fun observeTopRatedMoviesViewModel() {
         topRatedMoviesViewModel.uiModels.observe(viewLifecycleOwner) {
             val data = it.map { movieGridItem -> RowViewItemUiModel(movieGridItem.id, movieGridItem.posterURL, movieGridItem.title) }
             topRatedMoviesRow.setData(data)
         }
+        topRatedMoviesViewModel.loading.observe(viewLifecycleOwner) {
+            topRatedMoviesRow.setLoading(it == true)
+        }
+        topRatedMoviesViewModel.error.observe(viewLifecycleOwner) {
+            topRatedMoviesRow.setRetry(it != null)
+        }
+    }
+
+    private fun observeNowPlayingMoviesViewModel() {
         nowPlayingMoviesViewModel.uiModels.observe(viewLifecycleOwner) {
             val data = it.map { movieGridItem -> RowViewItemUiModel(movieGridItem.id, movieGridItem.posterURL, movieGridItem.title) }
             nowPlayingMoviesRow.setData(data)
         }
+        nowPlayingMoviesViewModel.loading.observe(viewLifecycleOwner) {
+            nowPlayingMoviesRow.setLoading(it == true)
+        }
+        nowPlayingMoviesViewModel.error.observe(viewLifecycleOwner) {
+            nowPlayingMoviesRow.setRetry(it != null)
+        }
+    }
+
+    private fun observeUpcomingMoviesViewModel() {
         upcomingMoviesViewModel.uiModels.observe(viewLifecycleOwner) {
             val data = it.map { movieGridItem -> RowViewItemUiModel(movieGridItem.id, movieGridItem.posterURL, movieGridItem.title) }
             upcomingMoviesRow.setData(data)
+        }
+        upcomingMoviesViewModel.loading.observe(viewLifecycleOwner) {
+            upcomingMoviesRow.setLoading(it == true)
+        }
+        upcomingMoviesViewModel.error.observe(viewLifecycleOwner) {
+            upcomingMoviesRow.setRetry(it != null)
         }
     }
 }

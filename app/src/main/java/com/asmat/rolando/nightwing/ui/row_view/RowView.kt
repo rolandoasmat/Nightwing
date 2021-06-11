@@ -25,6 +25,9 @@ class RowView @JvmOverloads constructor(
         seeAllLabel?.setOnClickListener {
             callback?.onSeeAllClicked()
         }
+        retryButton?.setOnClickListener {
+            callback?.onRetry()
+        }
         movieRowRecyclerView.adapter = rowAdapter
     }
 
@@ -47,9 +50,26 @@ class RowView @JvmOverloads constructor(
         }
     }
 
+    fun setLoading(isLoading: Boolean) {
+        if (isLoading) {
+            loadingBar?.visible()
+        } else {
+            loadingBar?.gone()
+        }
+    }
+
+    fun setRetry(showRetry: Boolean) {
+        if (showRetry) {
+            retryButton?.visible()
+        } else {
+            retryButton?.gone()
+        }
+    }
+
     interface Callback {
         fun onSeeAllClicked() { }
         fun onCardClicked(id: Int)
+        fun onRetry()
     }
 
     override fun cardClicked(item: RowViewItemUiModel) {
