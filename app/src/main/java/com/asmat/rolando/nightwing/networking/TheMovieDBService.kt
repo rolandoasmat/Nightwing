@@ -74,6 +74,12 @@ interface TheMovieDBService {
 
     @GET("tv/{tv_id}")
     fun getTvShowDetails(@Path("tv_id") id: Int): Single<TvShowDetailsResponse>
+    //endregion
 
+    //region TV SEASONS
+    @GET("/tv/{tv_id}/season/{season_number}")
+    fun getTvSeasonDetails(
+        @Path("tv_id") id: Int,
+        @Path("season_number") season_number: Int): Single<TvSeasonDetailsResponse>
     //endregion
 }
