@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/episodeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Vegeta's Pride"/>
+
+    <TextView
+        android:id="@+id/episodeOverview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/episodeTitle"
+        tools:text="Everyone is still in shock at what Majin Vegeta has done, all eyes are now on him. All the spectators now look to Mr. Satan to help. He dares Majin Vegeta to a fight, but then allows him to continue to fight Goku, knowing he has no chance of winning. "/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
