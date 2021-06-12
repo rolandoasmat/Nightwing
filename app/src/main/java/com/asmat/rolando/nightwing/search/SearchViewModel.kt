@@ -55,7 +55,9 @@ class SearchViewModel(
             updateResults(it)
         }
         addSource(_searchMode) {
-            updateResults(emptyList())
+            searchTerm.value?.let { searchTerm ->
+                searchWithTerm(searchTerm)
+            }
         }
     }
 
