@@ -1,7 +1,9 @@
 package com.asmat.rolando.nightwing.networking
 
 import com.asmat.rolando.nightwing.networking.models.*
+import com.asmat.rolando.nightwing.tv_season_details.network.TvSeasonDetailsResponse
 import io.reactivex.Single
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -77,9 +79,9 @@ interface TheMovieDBService {
     //endregion
 
     //region TV SEASONS
-    @GET("/tv/{tv_id}/season/{season_number}")
-    fun getTvSeasonDetails(
+    @GET("tv/{tv_id}/season/{season_number}")
+    suspend fun getTvSeasonDetails(
         @Path("tv_id") id: Int,
-        @Path("season_number") season_number: Int): Single<TvSeasonDetailsResponse>
+        @Path("season_number") season_number: Int): Response<TvSeasonDetailsResponse>
     //endregion
 }

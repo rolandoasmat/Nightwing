@@ -1,4 +1,4 @@
-package com.asmat.rolando.nightwing.networking.models
+package com.asmat.rolando.nightwing.tv_season_details.network
 
 class TvSeasonDetailsResponse(
     val name: String,
@@ -9,5 +9,5 @@ class TvSeasonDetailsResponse(
         val episode_number: Int,
         val name: String,
         val overview: String,
-        val still_path: String)
+        val still_path: String?)
 }

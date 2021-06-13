@@ -2,8 +2,13 @@ package com.asmat.rolando.nightwing.repositories
 
 import com.asmat.rolando.nightwing.database.DatabaseRepository
 import com.asmat.rolando.nightwing.database.entities.SavedTvShow
+import com.asmat.rolando.nightwing.model.Resource
+import com.asmat.rolando.nightwing.networking.NetworkBoundResource
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 import com.asmat.rolando.nightwing.search.SearchTvShowsPaginatedRequest
+import com.asmat.rolando.nightwing.tv_season_details.domain.TvShowSeason
+import com.asmat.rolando.nightwing.tv_season_details.domain.toTvShowSeason
+import com.asmat.rolando.nightwing.tv_season_details.network.TvSeasonDetailsResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -32,5 +37,20 @@ class TvShowsRepository @Inject constructor(
     fun isSavedTvShow(id: Int): Flow<Boolean> = databaseRepository.getSavedTvShow(id).map { it != null }
 
     fun getAllSavedTvShows() = databaseRepository.getAllSavedTvShows()
+
+    fun getTvShowSeasonDetails(
+        tvShowId: Int,
+        seasonNumber: Int): Flow<Resource<TvShowSeason>> {
+        return object: NetworkBoundResource<TvShowSeason>(null) {
+            override suspend fun fetchData(): NetworkResponse<TvShowSeason> {
+                val response = tmdbClient.getTvSeasonDetails(tvShowId, seasonNumber)
+                return response.body()?.toTvShowSeason()?.let { data ->
+                    NetworkResponse.Success(data)
+                } ?: run {
+                    NetworkResponse.Failure<TvShowSeason>(response.message())
+                }
+            }
+        }.load()
+    }
 
 }

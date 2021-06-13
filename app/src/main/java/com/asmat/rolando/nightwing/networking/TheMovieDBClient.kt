@@ -2,8 +2,10 @@ package com.asmat.rolando.nightwing.networking
 
 import com.asmat.rolando.nightwing.BuildConfig
 import com.asmat.rolando.nightwing.networking.models.*
+import com.asmat.rolando.nightwing.tv_season_details.network.TvSeasonDetailsResponse
 import io.reactivex.Single
 import okhttp3.OkHttpClient
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -102,5 +104,13 @@ open class TheMovieDBClient {
     fun getOnTheAirTvShows(page: Int) = service.getOnTheAirTvShows(page)
 
     fun getTvShowDetails(id: Int) = service.getTvShowDetails(id)
+    //endregion
+
+    //region TV Season
+    suspend fun getTvSeasonDetails(
+        showId: Int,
+        seasonNumber: Int): Response<TvSeasonDetailsResponse> {
+        return service.getTvSeasonDetails(showId, seasonNumber)
+    }
     //endregion
 }

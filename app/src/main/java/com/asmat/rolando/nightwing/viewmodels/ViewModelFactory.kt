@@ -17,6 +17,7 @@ import com.asmat.rolando.nightwing.saved_tv_shows.SavedTvShowsViewModel
 import com.asmat.rolando.nightwing.ui.nowplayingmovies.NowPlayingMoviesViewModel
 import com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesViewModel
 import com.asmat.rolando.nightwing.search.SearchViewModel
+import com.asmat.rolando.nightwing.tv_season_details.TvSeasonDetailsViewModel
 import com.asmat.rolando.nightwing.tv_show_details.TvShowDetailsViewModel
 import com.asmat.rolando.nightwing.tv_shows_tab.TvShowsTabViewModel
 import com.asmat.rolando.nightwing.tv_shows_tab.on_the_air.OnTheAirTvShowsViewModel
@@ -57,6 +58,7 @@ class ViewModelFactory @Inject constructor(
             modelClass.isAssignableFrom(TvShowDetailsViewModel::class.java) -> TvShowDetailsViewModel(tvShowsRepository, uiModelMapper, deepLinksUtils) as T
             modelClass.isAssignableFrom(SavedMoviesViewModel::class.java) -> SavedMoviesViewModel(moviesRepository, uiModelMapper) as T
             modelClass.isAssignableFrom(SavedTvShowsViewModel::class.java) -> SavedTvShowsViewModel(tvShowsRepository, uiModelMapper) as T
+            modelClass.isAssignableFrom(TvSeasonDetailsViewModel::class.java) -> TvSeasonDetailsViewModel(tvShowsRepository, uiModelMapper) as T
             else -> {
                 throw IllegalArgumentException("Unknown ViewModel class")
             }

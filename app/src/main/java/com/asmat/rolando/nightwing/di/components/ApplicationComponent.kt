@@ -20,6 +20,7 @@ import com.asmat.rolando.nightwing.tv_shows_tab.top_rated.TopRatedTvShowsFragmen
 import com.asmat.rolando.nightwing.main.MainActivity
 import com.asmat.rolando.nightwing.saved_movies.SavedMoviesFragment
 import com.asmat.rolando.nightwing.saved_tv_shows.SavedTvShowsFragment
+import com.asmat.rolando.nightwing.tv_season_details.TvSeasonDetailsFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -48,4 +49,5 @@ interface ApplicationComponent {
     fun inject(fragment: TvShowDetailsFragment)
     fun inject(fragment: SavedMoviesFragment)
     fun inject(fragment: SavedTvShowsFragment)
+    fun inject(fragment: TvSeasonDetailsFragment)
 }

@@ -25,7 +25,7 @@ data class TvShowDetailsUiModel(
             val id: Int,
             val name: String,
             val posterUrl: String?,
-            val seasonNumber: String,
+            val seasonNumber: Int?,
             val episodeCount: String)
 
     companion object {
@@ -59,7 +59,7 @@ data class TvShowDetailsUiModel(
                 val url = it.poster_path?.let { posterPath ->
                     URLUtils.getImageURL342(posterPath)
                 }
-                val seasonNumber = it.season_number?.toString() ?: "--"
+                val seasonNumber = it.season_number
                 val episodeCount = it.episode_count?.toString() ?: "--"
                 Season(it.id, seasonName, url, seasonNumber, episodeCount)
             }

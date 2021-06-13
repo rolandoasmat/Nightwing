@@ -14,6 +14,22 @@
         <argument
             android:name="tvShowIdArg"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_tvShowDetails_to_tvSeasonDetails"
+            app:destination="@+id/tvSeasonDetailsScreen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/tvSeasonDetailsScreen"
+        android:name="com.asmat.rolando.nightwing.tv_season_details.TvSeasonDetailsFragment"
+        android:label="TV Season Details"
+        tools:layout="@layout/fragment_tv_season_details" >
+        <argument
+            android:name="tvShowIdArg"
+            app:argType="integer" />
+        <argument
+            android:name="tvShowSeasonNumberArg"
+            app:argType="integer" />
     </fragment>
 
 </navigation>

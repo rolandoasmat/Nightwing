@@ -329,9 +329,10 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
     }
 
     override fun cardClicked(item: RowViewItemUiModel) {
-        val movieID = item.id
-        val action = MovieDetailsFragmentDirections.actionMovieDetailsScreenToMovieDetailsScreen(movieID)
-        findNavController().navigate(action)
+        item.id?.let { movieID ->
+            val action = MovieDetailsFragmentDirections.actionMovieDetailsScreenToMovieDetailsScreen(movieID)
+            findNavController().navigate(action)
+        }
     }
     //endregion
 }

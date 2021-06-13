@@ -40,7 +40,10 @@ class TvShowDetailsViewModel(
                     val uiModel = TvShowDetailsUiModel.from(it)
                     _uiModel.postValue(uiModel)
                     val seasonsUiModels = uiModel.seasons.map { season ->
-                        RowViewItemUiModel(season.id, season.posterUrl, season.name)
+                        RowViewItemUiModel(
+                            season.seasonNumber, // We use season number as ID
+                            season.posterUrl,
+                            season.name)
                     }
                     _seasons.postValue(seasonsUiModels)
                 }, {})

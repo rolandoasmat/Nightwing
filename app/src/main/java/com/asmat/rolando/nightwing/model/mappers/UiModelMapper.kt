@@ -10,6 +10,8 @@ import com.asmat.rolando.nightwing.networking.models.*
 import com.asmat.rolando.nightwing.popular_people_tab.PopularPersonUiModel
 import com.asmat.rolando.nightwing.ui.moviegrid.MovieGridItemUiModel
 import com.asmat.rolando.nightwing.search.SearchDataModelsMapper
+import com.asmat.rolando.nightwing.tv_season_details.TvSeasonEpisodesUiModel
+import com.asmat.rolando.nightwing.tv_season_details.domain.TvShowSeason
 import com.asmat.rolando.nightwing.ui.grid.GridItemUiModel
 import com.asmat.rolando.nightwing.ui.row_view.RowViewItemUiModel
 import com.asmat.rolando.nightwing.utilities.DateUtils
@@ -132,6 +134,17 @@ open class UiModelMapper @Inject constructor(private val searchDataModelsMapper:
         return data.map { movie ->
             GridItemUiModel(movie.id, movie.posterURL, movie.title)
         }
+    }
+
+    fun mapTvShowSeason(data: TvShowSeason): TvSeasonEpisodesUiModel {
+        return TvSeasonEpisodesUiModel(
+            episodes = data.episodes.map { episode ->
+                TvSeasonEpisodesUiModel.Item(
+                    title = episode.name,
+                    body = episode.overview
+                )
+            }
+        )
     }
 
 }

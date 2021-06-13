@@ -73,6 +73,8 @@ class RowView @JvmOverloads constructor(
     }
 
     override fun cardClicked(item: RowViewItemUiModel) {
-        this.callback?.onCardClicked(item.id)
+        item.id?.let { id ->
+            this.callback?.onCardClicked(id)
+        }
     }
 }

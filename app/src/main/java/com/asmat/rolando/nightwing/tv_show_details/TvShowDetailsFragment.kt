@@ -52,7 +52,9 @@ class TvShowDetailsFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         seasonsRowView?.configure(title = "Seasons", seeAllButtonEnabled = false, callback = object : RowView.Callback {
             override fun onCardClicked(id: Int) {
-                // TODO navigate to season details
+                val action = TvShowDetailsFragmentDirections
+                    .actionTvShowDetailsToTvSeasonDetails(args.tvShowIdArg, id)
+                findNavController().navigate(action)
             }
         })
         heartContainer?.setOnClickListener {
