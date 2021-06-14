@@ -47,5 +47,4 @@ class TvSeasonDetailsViewModel(
     private class Request(
         val tvShowId: Int,
         val seasonNumber: Int)
-
 }

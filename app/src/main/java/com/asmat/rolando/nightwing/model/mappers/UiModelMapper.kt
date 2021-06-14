@@ -140,7 +140,7 @@ open class UiModelMapper @Inject constructor(private val searchDataModelsMapper:
         return TvSeasonEpisodesUiModel(
             episodes = data.episodes.map { episode ->
                 TvSeasonEpisodesUiModel.Item(
-                    title = episode.name,
+                    title = "${episode.episodeNumber}. ${episode.name}",
                     body = episode.overview
                 )
             }
