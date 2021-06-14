@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
@@ -54,6 +54,9 @@ class TvSeasonDetailsFragment: Fragment() {
     private fun observeViewModel() {
         viewModel.episodes.observe(viewLifecycleOwner) {
             tvSeasonEpisodesAdapter?.data = it
+        }
+        viewModel.seasonTitle.observe(viewLifecycleOwner) {
+            (activity as? AppCompatActivity)?.supportActionBar?.title = it
         }
     }
 

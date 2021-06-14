@@ -30,6 +30,10 @@ class TvSeasonDetailsViewModel(
     val episodes: LiveData<TvSeasonEpisodesUiModel>
         get() = _episodes
 
+    private val _seasonTitle = MutableLiveData<String>()
+    val seasonTitle: LiveData<String>
+        get() = _seasonTitle
+
     fun fetchEpisodes(
         tvShowId: Int,
         seasonNumber: Int) {
@@ -41,6 +45,7 @@ class TvSeasonDetailsViewModel(
         resource.data?.let { data ->
             val uiModel = uiModelMapper.mapTvShowSeason(data)
             _episodes.value = uiModel
+            _seasonTitle.value = data.name
         }
     }
 
