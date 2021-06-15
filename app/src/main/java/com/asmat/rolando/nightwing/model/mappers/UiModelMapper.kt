@@ -139,7 +139,11 @@ open class UiModelMapper @Inject constructor(private val searchDataModelsMapper:
     fun mapTvShowSeason(data: TvShowSeason): TvSeasonEpisodesUiModel {
         return TvSeasonEpisodesUiModel(
             episodes = data.episodes.map { episode ->
+                val backdropURL = episode.imageURL?.let { url ->
+                    URLUtils.getImageURL780(url)
+                }
                 TvSeasonEpisodesUiModel.Item(
+                    backdropURL = backdropURL,
                     title = "${episode.episodeNumber}. ${episode.name}",
                     body = episode.overview
                 )
