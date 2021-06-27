@@ -9,28 +9,23 @@ import androidx.paging.map
 import com.asmat.rolando.nightwing.model.mappers.DataModelMapper
 import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
+import com.asmat.rolando.nightwing.repositories.MoviesRepository
 import kotlinx.coroutines.flow.map
 
 class PopularMoviesViewModel(
-    private val theMovieDBClient: TheMovieDBClient,
+    moviesRepository: MoviesRepository,
     uiModelMapper: UiModelMapper,
     dataModelMapper: DataModelMapper
 ) : ViewModel() {
 
-    val flow = Pager(
-        // Configure how data is loaded by passing additional properties to
-        // PagingConfig, such as prefetchDistance.
-        PagingConfig(pageSize = POPULAR_MOVIES_PAGE_SIZE)
-    ) {
-        PopularMoviesPagingSource(theMovieDBClient)
-    }.flow
+    val flow = moviesRepository
+        .popularMoviesPager()
+        .flow
         .map { pagingData ->
             pagingData.map { movie ->
                 uiModelMapper.mapToGridUiModel(movie)
             }
         }.cachedIn(viewModelScope)
 
-    companion object {
-        private const val POPULAR_MOVIES_PAGE_SIZE = 20
-    }
+
 }

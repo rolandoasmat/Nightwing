@@ -9,16 +9,15 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.asmat.rolando.nightwing.R
-import com.asmat.rolando.nightwing.networking.models.MoviesResponse
 import com.asmat.rolando.nightwing.ui.moviegrid.BaseMoviesGridAdapter
 import com.asmat.rolando.nightwing.ui.moviegrid.MovieGridItemUiModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.poster_grid_item.view.*
 
-class PopularMoviesPagingDataAdapter(
+class MoviesPagingDataAdapter(
     private val callback: BaseMoviesGridAdapter.Callback? = null,
     diffCallback: DiffUtil.ItemCallback<MovieGridItemUiModel>
-) : PagingDataAdapter<MovieGridItemUiModel, PopularMoviesPagingDataAdapter.ViewHolder>(diffCallback) {
+) : PagingDataAdapter<MovieGridItemUiModel, MoviesPagingDataAdapter.ViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
@@ -56,7 +55,7 @@ class PopularMoviesPagingDataAdapter(
                 val image = resources.getDrawable(R.drawable.ic_photo_default, null)
                 poster?.setImageDrawable(image)
             }
-            label?.text = uiModel?.title
+            label?.text = uiModel?.title ?: "Loading..."
         }
     }
 

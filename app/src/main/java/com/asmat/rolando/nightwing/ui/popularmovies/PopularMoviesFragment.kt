@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
-import com.asmat.rolando.nightwing.ui.moviegrid.paginated.PaginatedMovieGridFragment
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_popular_movies.*
 import kotlinx.coroutines.flow.collectLatest
@@ -24,7 +23,7 @@ class PopularMoviesFragment: Fragment() {
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel: PopularMoviesViewModel by viewModels { viewModelFactory }
 
-    val pagingAdapter = PopularMoviesPagingDataAdapter(null, MovieGridItemComparator)
+    val pagingAdapter = MoviesPagingDataAdapter(null, MovieGridItemComparator)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

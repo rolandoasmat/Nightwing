@@ -1,11 +1,15 @@
 package com.asmat.rolando.nightwing.repositories
 
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.asmat.rolando.nightwing.database.DatabaseRepository
 import com.asmat.rolando.nightwing.database.entities.SavedMovie
 import com.asmat.rolando.nightwing.model.*
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 import com.asmat.rolando.nightwing.networking.models.*
+import com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesPagingSource
+import com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesViewModel
 import com.asmat.rolando.nightwing.ui.recommended_movies.RecommendedMoviesPaginatedRequest
 import io.reactivex.Single
 import kotlinx.coroutines.flow.Flow
@@ -66,4 +70,19 @@ open class MoviesRepository @Inject constructor(
 
     fun getMovieRecommendations(movieID: Int) = tmdbClient.getMovieRecommendations(movieID).subscribeOn(schedulersProvider.ioScheduler)
 
+    fun popularMoviesPager(): Pager<Int, MoviesResponse.Movie> {
+        return Pager(
+            // Configure how data is loaded by passing additional properties to
+            // PagingConfig, such as prefetchDistance.
+            PagingConfig(
+                pageSize = POPULAR_MOVIES_PAGE_SIZE,
+                enablePlaceholders = true)
+        ) {
+            PopularMoviesPagingSource(tmdbClient)
+        }
+    }
+
+    companion object {
+        private const val POPULAR_MOVIES_PAGE_SIZE = 20
+    }
 }
