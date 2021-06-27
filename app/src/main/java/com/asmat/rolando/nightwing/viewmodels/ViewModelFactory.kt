@@ -10,6 +10,7 @@ import com.asmat.rolando.nightwing.repositories.PeopleRepository
 import com.asmat.rolando.nightwing.cast_details.CastDetailsViewModel
 import com.asmat.rolando.nightwing.cast_details.PersonMovieCreditsViewModel
 import com.asmat.rolando.nightwing.movie_details.MovieDetailsViewModel
+import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 import com.asmat.rolando.nightwing.popular_people_tab.PopularPeopleViewModel
 import com.asmat.rolando.nightwing.repositories.TvShowsRepository
 import com.asmat.rolando.nightwing.saved_movies.SavedMoviesViewModel
@@ -37,11 +38,13 @@ class ViewModelFactory @Inject constructor(
         private val tvShowsRepository: TvShowsRepository,
         private val dataModelMapper: DataModelMapper,
         private val uiModelMapper: UiModelMapper,
-        private val deepLinksUtils: DeepLinksUtils) : ViewModelProvider.NewInstanceFactory() {
+        private val deepLinksUtils: DeepLinksUtils,
+        private val tmdbClient: TheMovieDBClient
+) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when {
-            modelClass.isAssignableFrom(PopularMoviesViewModel::class.java) -> PopularMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
+            modelClass.isAssignableFrom(PopularMoviesViewModel::class.java) -> PopularMoviesViewModel(tmdbClient, uiModelMapper, dataModelMapper) as T
             modelClass.isAssignableFrom(TopRatedMoviesViewModel::class.java) -> TopRatedMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
             modelClass.isAssignableFrom(NowPlayingMoviesViewModel::class.java) -> NowPlayingMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
             modelClass.isAssignableFrom(UpcomingMoviesViewModel::class.java) -> UpcomingMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T

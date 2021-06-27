@@ -32,6 +32,13 @@ open class UiModelMapper @Inject constructor(private val searchDataModelsMapper:
         }
     }
 
+    fun mapToGridUiModel(data: MoviesResponse.Movie): MovieGridItemUiModel {
+        val posterURL = data.poster_path?.let { url ->
+            URLUtils.getImageURL342(url)
+        }
+        return MovieGridItemUiModel(data.id ?: 0, data.title ?: "", posterURL)
+    }
+
     fun mapToGridUiModels(data: List<MoviesResponse.Movie>?): List<MovieGridItemUiModel>? {
         return data?.map {
             val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}

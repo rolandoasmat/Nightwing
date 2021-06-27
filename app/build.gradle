@@ -136,4 +136,10 @@ dependencies {
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
     testImplementation 'android.arch.core:core-testing:1.1.1'
 
+    // Paging library
+    def paging_version = "3.0.0"
+    implementation "androidx.paging:paging-runtime:$paging_version"
+    // alternatively - without Android dependencies for tests
+    testImplementation "androidx.paging:paging-common:$paging_version"
+
 }

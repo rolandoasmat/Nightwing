@@ -56,9 +56,11 @@ class MoviesTabFragment: Fragment() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToMovieDetailsScreen(id)
                 findNavController().navigate(action)
             }
-            override fun onRetry() = popularMoviesViewModel.load()
+            override fun onRetry() {
+//                popularMoviesViewModel.load()
+            }
         })
-        popularMoviesViewModel.load()
+//        popularMoviesViewModel.load()
 
         topRatedMoviesRow.configure(title = "Top Rated", callback = object: RowView.Callback {
             override fun onSeeAllClicked() {
@@ -108,16 +110,16 @@ class MoviesTabFragment: Fragment() {
     }
 
     private fun observePopularMoviesViewModel() {
-        popularMoviesViewModel.uiModels.observe(viewLifecycleOwner) {
-            val data = it.map { movieGridItem -> RowViewItemUiModel(movieGridItem.id, movieGridItem.posterURL, movieGridItem.title) }
-            popularMoviesRow.setData(data)
-        }
-        popularMoviesViewModel.loading.observe(viewLifecycleOwner) {
-            popularMoviesRow.setLoading(it == true)
-        }
-        popularMoviesViewModel.error.observe(viewLifecycleOwner) {
-            popularMoviesRow.setRetry(it != null)
-        }
+//        popularMoviesViewModel.uiModels.observe(viewLifecycleOwner) {
+//            val data = it.map { movieGridItem -> RowViewItemUiModel(movieGridItem.id, movieGridItem.posterURL, movieGridItem.title) }
+//            popularMoviesRow.setData(data)
+//        }
+//        popularMoviesViewModel.loading.observe(viewLifecycleOwner) {
+//            popularMoviesRow.setLoading(it == true)
+//        }
+//        popularMoviesViewModel.error.observe(viewLifecycleOwner) {
+//            popularMoviesRow.setRetry(it != null)
+//        }
     }
 
     private fun observeTopRatedMoviesViewModel() {

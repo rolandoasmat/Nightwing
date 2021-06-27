@@ -42,6 +42,8 @@ open class TheMovieDBClient {
         return service.getPopularMovies(page)
     }
 
+    suspend fun getPopularMoviesSuspend(page: Int) = service.getPopularMoviesSuspend(page)
+
     open fun getTopRatedMovies(page: Int): Single<MoviesResponse> {
         return service.getTopRatedMovies(page)
     }

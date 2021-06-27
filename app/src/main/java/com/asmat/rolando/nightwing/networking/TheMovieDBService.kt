@@ -14,6 +14,9 @@ interface TheMovieDBService {
     @GET("movie/popular")
     fun getPopularMovies(@Query("page") page: Int): Single<MoviesResponse>
 
+    @GET("movie/popular")
+    suspend fun getPopularMoviesSuspend(@Query("page") page: Int): Response<MoviesResponse>
+
     @GET("movie/top_rated")
     fun getTopRatedMovies(@Query("page") page: Int): Single<MoviesResponse>
 
