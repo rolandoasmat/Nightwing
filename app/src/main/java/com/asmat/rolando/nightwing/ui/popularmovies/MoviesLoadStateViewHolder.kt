@@ -2,11 +2,14 @@ package com.asmat.rolando.nightwing.ui.popularmovies
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
+import com.asmat.rolando.nightwing.R
+import com.asmat.rolando.nightwing.databinding.MoviesLoadStateFooterViewItemBinding
 
 class MoviesLoadStateViewHolder(
-    private val binding: ReposLoadStateFooterViewItemBinding,
+    private val binding: MoviesLoadStateFooterViewItemBinding,
     retry: () -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -24,11 +27,11 @@ class MoviesLoadStateViewHolder(
     }
 
     companion object {
-        fun create(parent: ViewGroup, retry: () -> Unit): ReposLoadStateViewHolder {
+        fun create(parent: ViewGroup, retry: () -> Unit): MoviesLoadStateViewHolder {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.repos_load_state_footer_view_item, parent, false)
-            val binding = ReposLoadStateFooterViewItemBinding.bind(view)
-            return ReposLoadStateViewHolder(binding, retry)
+                .inflate(R.layout.movies_load_state_footer_view_item, parent, false)
+            val binding = MoviesLoadStateFooterViewItemBinding.bind(view)
+            return MoviesLoadStateViewHolder(binding, retry)
         }
     }
 }
