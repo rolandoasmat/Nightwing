@@ -1,5 +1,6 @@
 package com.asmat.rolando.nightwing.database
 
+import com.asmat.rolando.nightwing.database.entities.PopularMovie
 import com.asmat.rolando.nightwing.database.entities.SavedMovie
 import com.asmat.rolando.nightwing.database.entities.SavedTvShow
 import javax.inject.Inject
@@ -14,9 +15,13 @@ class DatabaseRepository @Inject constructor(private val db: AppDatabase) {
 
     fun getSavedMovies() = db.moviesDAO().getAllSavedMovies()
 
+    fun popularMoviesPagingSource() = db.moviesDAO().getPopularMovies()
+
     suspend fun insertSavedMovie(movie: SavedMovie) = db.moviesDAO().insertSavedMovie(movie)
 
     suspend fun deleteSavedMovie(id: Int) = db.moviesDAO().deleteSavedMovie(id)
+
+    suspend fun insertPopularMovies(movies: List<PopularMovie>) = db.moviesDAO().insertPopularMovies(movies)
 
     // Tv Shows
 

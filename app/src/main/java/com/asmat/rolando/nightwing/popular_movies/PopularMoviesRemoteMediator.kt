@@ -6,6 +6,8 @@ import androidx.paging.LoadType.*
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.asmat.rolando.nightwing.database.DatabaseRepository
+import com.asmat.rolando.nightwing.database.entities.PopularMovie
+import com.asmat.rolando.nightwing.database.entities.toPopularMovie
 import com.asmat.rolando.nightwing.model.Movie
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 
@@ -13,26 +15,17 @@ import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 class PopularMoviesRemoteMediator(
     private val database: DatabaseRepository,
     private val theMovieDBClient: TheMovieDBClient
-) : RemoteMediator<Int, Movie>() {
+) : RemoteMediator<Int, PopularMovie>() {
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, Movie>
+        state: PagingState<Int, PopularMovie>
     ): MediatorResult {
-        val page = when (loadType) {
-            REFRESH -> {
-                // initial load
-
-            }
-            PREPEND -> {
-                // scroll up
-
-            }
-            APPEND -> {
-                // scroll down
-
-            }
-
+        val page = state.pages.size
+        val popularMovies = theMovieDBClient.getPopularMoviesSuspend(page).body()?.results?.map {
+            it.toPopularMovie()
         }
+        database.insertPopularMovies(popularMovies ?: emptyList())
+        return MediatorResult.Success(endOfPaginationReached = false)
     }
 }

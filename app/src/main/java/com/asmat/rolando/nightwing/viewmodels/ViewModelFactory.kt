@@ -9,6 +9,7 @@ import com.asmat.rolando.nightwing.repositories.MoviesRepository
 import com.asmat.rolando.nightwing.repositories.PeopleRepository
 import com.asmat.rolando.nightwing.cast_details.CastDetailsViewModel
 import com.asmat.rolando.nightwing.cast_details.PersonMovieCreditsViewModel
+import com.asmat.rolando.nightwing.database.DatabaseRepository
 import com.asmat.rolando.nightwing.movie_details.MovieDetailsViewModel
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 import com.asmat.rolando.nightwing.popular_people_tab.PopularPeopleViewModel
@@ -33,18 +34,19 @@ import javax.inject.Singleton
 
 @Singleton
 class ViewModelFactory @Inject constructor(
-        private val moviesRepository: MoviesRepository,
-        private val peopleRepository: PeopleRepository,
-        private val tvShowsRepository: TvShowsRepository,
-        private val dataModelMapper: DataModelMapper,
-        private val uiModelMapper: UiModelMapper,
-        private val deepLinksUtils: DeepLinksUtils,
-        private val tmdbClient: TheMovieDBClient
+    private val moviesRepository: MoviesRepository,
+    private val peopleRepository: PeopleRepository,
+    private val tvShowsRepository: TvShowsRepository,
+    private val dataModelMapper: DataModelMapper,
+    private val uiModelMapper: UiModelMapper,
+    private val deepLinksUtils: DeepLinksUtils,
+    private val tmdbClient: TheMovieDBClient,
+    private val databaseRepository: DatabaseRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when {
-            modelClass.isAssignableFrom(PopularMoviesViewModel::class.java) -> PopularMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
+            modelClass.isAssignableFrom(PopularMoviesViewModel::class.java) -> PopularMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper, databaseRepository, tmdbClient) as T
             modelClass.isAssignableFrom(TopRatedMoviesViewModel::class.java) -> TopRatedMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
             modelClass.isAssignableFrom(NowPlayingMoviesViewModel::class.java) -> NowPlayingMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
             modelClass.isAssignableFrom(UpcomingMoviesViewModel::class.java) -> UpcomingMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T

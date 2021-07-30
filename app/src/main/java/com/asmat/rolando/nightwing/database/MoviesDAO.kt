@@ -12,6 +12,9 @@ interface MoviesDAO {
     @Query("SELECT * FROM popular_movies")
     fun getPopularMovies(): PagingSource<Int, PopularMovie>
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPopularMovies(movies: List<PopularMovie>)
+
     @Query("SELECT * FROM saved_movies WHERE id LIKE :id")
     fun getSavedMovie(id: Int): Flow<SavedMovie?>
 
