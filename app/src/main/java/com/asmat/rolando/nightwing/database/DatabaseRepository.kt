@@ -15,13 +15,20 @@ class DatabaseRepository @Inject constructor(private val db: AppDatabase) {
 
     fun getSavedMovies() = db.moviesDAO().getAllSavedMovies()
 
-    fun popularMoviesPagingSource() = db.moviesDAO().getPopularMovies()
+    //region Popular Movies
+
+    suspend fun insertAllPopularMovies(movies: List<PopularMovie>) = db.moviesDAO().insertAllPopularMovies(movies)
+
+    fun popularMoviesPagingSource() = db.moviesDAO().popularMoviesPagingSource()
+
+    suspend fun clearAllPopularMovies() = db.moviesDAO().clearAllPopularMovies()
+
+    //endregion
 
     suspend fun insertSavedMovie(movie: SavedMovie) = db.moviesDAO().insertSavedMovie(movie)
 
     suspend fun deleteSavedMovie(id: Int) = db.moviesDAO().deleteSavedMovie(id)
 
-    suspend fun insertPopularMovies(movies: List<PopularMovie>) = db.moviesDAO().insertPopularMovies(movies)
 
     // Tv Shows
 

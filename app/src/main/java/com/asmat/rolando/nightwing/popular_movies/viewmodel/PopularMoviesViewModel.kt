@@ -26,9 +26,7 @@ class PopularMoviesViewModel(
         return Pager(
             // Configure how data is loaded by passing additional properties to
             // PagingConfig, such as prefetchDistance.
-            config = PagingConfig(
-                pageSize = 20,
-                enablePlaceholders = true),
+            config = PagingConfig(pageSize = 20),
             remoteMediator = PopularMoviesRemoteMediator(databaseRepository, tmdbClient)
         ) {
             databaseRepository.popularMoviesPagingSource()
@@ -40,7 +38,7 @@ class PopularMoviesViewModel(
             pagingData.map { movie ->
                 movie.toMovieGridItemUiModel()
             }
-        }.cachedIn(viewModelScope)
+        }
 
 
 }

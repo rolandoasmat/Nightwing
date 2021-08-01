@@ -9,11 +9,16 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MoviesDAO {
 
-    @Query("SELECT * FROM popular_movies")
-    fun getPopularMovies(): PagingSource<Int, PopularMovie>
-
+    //region Popular Movies
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPopularMovies(movies: List<PopularMovie>)
+    suspend fun insertAllPopularMovies(movies: List<PopularMovie>)
+
+    @Query("SELECT * FROM popular_movies")
+    fun popularMoviesPagingSource(): PagingSource<Int, PopularMovie>
+
+    @Query("DELETE FROM popular_movies")
+    suspend fun clearAllPopularMovies()
+    //endregion
 
     @Query("SELECT * FROM saved_movies WHERE id LIKE :id")
     fun getSavedMovie(id: Int): Flow<SavedMovie?>
