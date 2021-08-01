@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class DatabaseRepository @Inject constructor(private val db: AppDatabase) {
+class DatabaseRepository @Inject constructor(private val db: NightwingDatabase) {
 
     // Movies
 

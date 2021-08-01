@@ -2,7 +2,7 @@ package com.asmat.rolando.nightwing.di.modules
 
 import androidx.room.Room
 import android.content.Context
-import com.asmat.rolando.nightwing.database.AppDatabase
+import com.asmat.rolando.nightwing.database.NightwingDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -16,9 +16,9 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideAppDatabase(context: Context): AppDatabase {
+    fun provideAppDatabase(context: Context): NightwingDatabase {
         return Room.databaseBuilder(context,
-                AppDatabase::class.java, DATABASE_NAME)
+                NightwingDatabase::class.java, DATABASE_NAME)
                 .fallbackToDestructiveMigration()
                 .build()
     }

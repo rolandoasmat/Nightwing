@@ -11,7 +11,7 @@ import com.asmat.rolando.nightwing.database.entities.SavedTvShow
         SavedMovie::class,
         SavedTvShow::class,
         PopularMovie::class], version = 3)
-abstract class AppDatabase : RoomDatabase() {
+abstract class NightwingDatabase : RoomDatabase() {
     abstract fun moviesDAO(): MoviesDAO
     abstract fun tvShowsDAO(): TvShowsDAO
 }

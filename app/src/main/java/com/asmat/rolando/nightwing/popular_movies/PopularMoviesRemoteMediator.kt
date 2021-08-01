@@ -4,16 +4,19 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import com.asmat.rolando.nightwing.database.DatabaseRepository
+import androidx.room.withTransaction
+import com.asmat.rolando.nightwing.database.NightwingDatabase
 import com.asmat.rolando.nightwing.database.entities.PopularMovie
 import com.asmat.rolando.nightwing.database.entities.toPopularMovie
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 
 @OptIn(ExperimentalPagingApi::class)
 class PopularMoviesRemoteMediator(
-    private val database: DatabaseRepository,
+    private val database: NightwingDatabase,
     private val theMovieDBClient: TheMovieDBClient
 ) : RemoteMediator<Int, PopularMovie>() {
+
+    val moviesDao = database.moviesDAO()
 
     override suspend fun load(
         loadType: LoadType,
@@ -25,8 +28,10 @@ class PopularMoviesRemoteMediator(
                 // will always load the first page in the list. Immediately
                 // return, reporting end of pagination.
                 fetchPage(1)?.let { movies ->
-                    database.clearAllPopularMovies()
-                    database.insertAllPopularMovies(movies)
+                    database.withTransaction {
+                        moviesDao.clearAllPopularMovies()
+                        moviesDao.insertAllPopularMovies(movies)
+                    }
                     MediatorResult.Success(endOfPaginationReached = false)
                 } ?: run {
                     MediatorResult.Error(Throwable("Something went wrong."))
@@ -47,7 +52,7 @@ class PopularMoviesRemoteMediator(
                 } else {
                     val nextPage = state.pages.count() + 1
                     fetchPage(nextPage)?.let { movies ->
-                        database.insertAllPopularMovies(movies)
+                        moviesDao.insertAllPopularMovies(movies)
                         MediatorResult.Success(endOfPaginationReached = false)
                     } ?: run {
                         MediatorResult.Error(Throwable("Something went wrong."))
