@@ -17,7 +17,7 @@ import com.asmat.rolando.nightwing.repositories.TvShowsRepository
 import com.asmat.rolando.nightwing.saved_movies.SavedMoviesViewModel
 import com.asmat.rolando.nightwing.saved_tv_shows.SavedTvShowsViewModel
 import com.asmat.rolando.nightwing.ui.nowplayingmovies.NowPlayingMoviesViewModel
-import com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesViewModel
+import com.asmat.rolando.nightwing.popular_movies.viewmodel.PopularMoviesViewModel
 import com.asmat.rolando.nightwing.search.SearchViewModel
 import com.asmat.rolando.nightwing.tv_season_details.TvSeasonDetailsViewModel
 import com.asmat.rolando.nightwing.tv_show_details.TvShowDetailsViewModel

@@ -1,4 +1,4 @@
-package com.asmat.rolando.nightwing.ui.popularmovies
+package com.asmat.rolando.nightwing.popular_movies.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
+import com.asmat.rolando.nightwing.popular_movies.viewmodel.PopularMoviesViewModel
+import com.asmat.rolando.nightwing.movies.MovieGridItemComparator
+import com.asmat.rolando.nightwing.movies.MoviesPagingDataAdapter
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_popular_movies.*
 import kotlinx.coroutines.flow.collectLatest

@@ -1,12 +1,11 @@
 package com.asmat.rolando.nightwing.ui.recommended_movies
 
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.asmat.rolando.nightwing.ui.moviegrid.paginated.PaginatedMovieGridFragment
-import com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesFragmentDirections
+//import com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesFragmentDirections
 
 class RecommendedMoviesFragment: PaginatedMovieGridFragment() {
 

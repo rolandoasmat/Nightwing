@@ -1,18 +1,11 @@
 package com.asmat.rolando.nightwing.repositories
 
 
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import com.asmat.rolando.nightwing.database.DatabaseRepository
-import com.asmat.rolando.nightwing.database.entities.PopularMovie
 import com.asmat.rolando.nightwing.database.entities.SavedMovie
 import com.asmat.rolando.nightwing.model.*
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 import com.asmat.rolando.nightwing.networking.models.*
-import com.asmat.rolando.nightwing.popular_movies.PopularMoviesRemoteMediator
-import com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesPagingSource
-import com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesViewModel
 import com.asmat.rolando.nightwing.ui.recommended_movies.RecommendedMoviesPaginatedRequest
 import io.reactivex.Single
 import kotlinx.coroutines.flow.Flow

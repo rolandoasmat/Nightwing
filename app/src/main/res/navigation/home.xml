@@ -86,7 +86,7 @@
     <!-- GRIDS -->
     <fragment
         android:id="@+id/popularMoviesGrid"
-        android:name="com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesFragment"
+        android:name="com.asmat.rolando.nightwing.popular_movies.view.PopularMoviesFragment"
         android:label="Popular Movies"
         tools:layout="@layout/fragment_movie_grid" >
         <action

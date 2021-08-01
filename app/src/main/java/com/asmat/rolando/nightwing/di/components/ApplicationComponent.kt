@@ -10,7 +10,7 @@ import com.asmat.rolando.nightwing.ui.moviegrid.paginated.PaginatedMovieGridFrag
 import com.asmat.rolando.nightwing.movie_details.MovieDetailsFragment
 import com.asmat.rolando.nightwing.movies_tab.MoviesTabFragment
 import com.asmat.rolando.nightwing.popular_people_tab.PopularPeopleTabFragment
-import com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesFragment
+import com.asmat.rolando.nightwing.popular_movies.view.PopularMoviesFragment
 import com.asmat.rolando.nightwing.search.SearchFragment
 import com.asmat.rolando.nightwing.tv_show_details.TvShowDetailsFragment
 import com.asmat.rolando.nightwing.tv_shows_tab.TvShowsTabFragment

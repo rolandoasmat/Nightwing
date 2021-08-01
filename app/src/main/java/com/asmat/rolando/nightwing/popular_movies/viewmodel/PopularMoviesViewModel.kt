@@ -1,4 +1,4 @@
-package com.asmat.rolando.nightwing.ui.popularmovies
+package com.asmat.rolando.nightwing.popular_movies.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,7 +23,6 @@ class PopularMoviesViewModel(
 ) : ViewModel() {
 
     private fun pager(): Pager<Int, PopularMovie> {
-        val pagingSource = databaseRepository.popularMoviesPagingSource()
         return Pager(
             // Configure how data is loaded by passing additional properties to
             // PagingConfig, such as prefetchDistance.
@@ -32,7 +31,7 @@ class PopularMoviesViewModel(
                 enablePlaceholders = true),
             remoteMediator = PopularMoviesRemoteMediator(databaseRepository, tmdbClient)
         ) {
-            pagingSource
+            databaseRepository.popularMoviesPagingSource()
         }
     }
     val flow = pager()

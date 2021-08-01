@@ -1,4 +1,4 @@
-package com.asmat.rolando.nightwing.ui.popularmovies
+package com.asmat.rolando.nightwing.movies
 
 import androidx.recyclerview.widget.DiffUtil
 import com.asmat.rolando.nightwing.ui.moviegrid.MovieGridItemUiModel

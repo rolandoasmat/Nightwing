@@ -1,4 +1,4 @@
-package com.asmat.rolando.nightwing.ui.popularmovies
+package com.asmat.rolando.nightwing.movies
 
 import android.view.View
 import android.view.ViewGroup

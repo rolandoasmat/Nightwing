@@ -1,4 +1,4 @@
-package com.asmat.rolando.nightwing.ui.popularmovies
+package com.asmat.rolando.nightwing.popular_movies.view
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

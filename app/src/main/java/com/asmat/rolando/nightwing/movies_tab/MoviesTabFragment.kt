@@ -14,7 +14,7 @@ import com.asmat.rolando.nightwing.home_tab.HomeTabFragmentDirections
 import com.asmat.rolando.nightwing.ui.row_view.RowViewItemUiModel
 import com.asmat.rolando.nightwing.ui.row_view.RowView
 import com.asmat.rolando.nightwing.ui.nowplayingmovies.NowPlayingMoviesViewModel
-import com.asmat.rolando.nightwing.ui.popularmovies.PopularMoviesViewModel
+import com.asmat.rolando.nightwing.popular_movies.viewmodel.PopularMoviesViewModel
 import com.asmat.rolando.nightwing.ui.topratedmovies.TopRatedMoviesViewModel
 import com.asmat.rolando.nightwing.ui.upcomingmovies.UpcomingMoviesViewModel
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
