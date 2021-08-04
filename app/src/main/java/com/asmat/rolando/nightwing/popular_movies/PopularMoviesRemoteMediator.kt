@@ -22,7 +22,7 @@ class PopularMoviesRemoteMediator(
     val moviesDao = database.moviesDAO()
 
     // The page that a movie ID belongs to
-    val keysTable = mutableMapOf<Long, RemoteKeys>()
+    val keysTable = mutableMapOf<Int, RemoteKeys>()
 
     class RemoteKeys(val previousKey: Int?, val nextKey: Int?)
 

@@ -13,7 +13,7 @@ interface MoviesDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllPopularMovies(movies: List<PopularMovie>)
 
-    @Query("SELECT * FROM popular_movies order by id")
+    @Query("SELECT * FROM popular_movies")
     fun popularMoviesPagingSource(): PagingSource<Int, PopularMovie>
 
     @Query("DELETE FROM popular_movies")
