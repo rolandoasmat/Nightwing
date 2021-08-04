@@ -141,9 +141,9 @@ class PopularMoviesRemoteMediator(
         // The paging library is trying to load data after the anchor position
         // Get the item closest to the anchor position
         return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.id?.let { movieId ->
+            state.closestItemToPosition(position)?.id?.let { id ->
 //                repoDatabase.remoteKeysDao().remoteKeysRepoId(repoId)
-                keysTable[movieId]
+                keysTable[id]
             }
         }
     }
