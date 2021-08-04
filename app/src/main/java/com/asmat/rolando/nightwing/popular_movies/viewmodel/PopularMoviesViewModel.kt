@@ -1,6 +1,7 @@
 package com.asmat.rolando.nightwing.popular_movies.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import com.asmat.rolando.nightwing.database.DatabaseRepository
 import com.asmat.rolando.nightwing.database.NightwingDatabase
@@ -26,7 +27,7 @@ class PopularMoviesViewModel(
         return Pager(
             // Configure how data is loaded by passing additional properties to
             // PagingConfig, such as prefetchDistance.
-            config = PagingConfig(pageSize = 20),
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             remoteMediator = PopularMoviesRemoteMediator(database, tmdbClient)
         ) {
             database.moviesDAO().popularMoviesPagingSource()
@@ -39,6 +40,7 @@ class PopularMoviesViewModel(
                 movie.toMovieGridItemUiModel()
             }
         }
+        .cachedIn(viewModelScope)
 
 
 }

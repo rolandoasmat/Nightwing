@@ -1,6 +1,7 @@
 package com.asmat.rolando.nightwing.popular_movies.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.asmat.rolando.nightwing.movies.MoviesPagingDataAdapter
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_popular_movies.*
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -46,7 +48,12 @@ class PopularMoviesFragment: Fragment() {
         popularMoviesRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         popularMoviesRecyclerView.adapter = pagingAdapter
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.flow.collectLatest { pagingData ->
+            viewModel
+                .flow
+                .distinctUntilChanged()
+                .collectLatest { pagingData ->
+                Log.v("RAA", "Got new paging data: $pagingData")
+
                 pagingAdapter.submitData(pagingData)
             }
         }

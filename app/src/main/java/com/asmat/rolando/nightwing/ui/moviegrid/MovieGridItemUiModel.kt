@@ -14,7 +14,7 @@ fun PopularMovie.toMovieGridItemUiModel(): MovieGridItemUiModel {
         URLUtils.getImageURL342(path)
     }
     return MovieGridItemUiModel(
-        id = this.id,
+        id = this.movieId!!,
         title = this.title ?: "Unknown title",
         posterURL = posterURL
     )
