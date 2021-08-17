@@ -27,8 +27,9 @@ class MoviesPagingDataAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val data = getItem(position)
-        holder.bind(data)
+        getItem(position)?.let { data ->
+            holder.bind(data)
+        }
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -44,8 +45,8 @@ class MoviesPagingDataAdapter(
             }
         }
 
-        fun bind(uiModel: MovieGridItemUiModel?) {
-            uiModel?.posterURL?.let { url ->
+        fun bind(uiModel: MovieGridItemUiModel) {
+            uiModel.posterURL?.let { url ->
                 Picasso.get()
                     .load(url)
                     .resize(340, 500)
@@ -55,7 +56,7 @@ class MoviesPagingDataAdapter(
                 val image = resources.getDrawable(R.drawable.ic_photo_default, null)
                 poster?.setImageDrawable(image)
             }
-            label?.text = uiModel?.title ?: "Loading..."
+            label?.text = uiModel.title ?: "Loading..."
         }
     }
 

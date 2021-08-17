@@ -6,15 +6,18 @@ import com.asmat.rolando.nightwing.networking.models.MoviesResponse
 
 @Entity(tableName = "popular_movies")
 class PopularMovie(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
+    val primaryKey: String,
     val id: Int,
     val title: String?,
     val posterPath: String?
 )
 
 fun MoviesResponse.Movie.toPopularMovie(): PopularMovie {
+    val primaryKey = this.id!! + 7000000
     return PopularMovie(
-        id = this.id!!,
+        primaryKey = primaryKey.toString(),
+        id = id!!,
         title = this.original_title,
         posterPath = this.poster_path
     )
