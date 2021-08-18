@@ -14,7 +14,7 @@ class PopularMovie(
 )
 
 fun MoviesResponse.Movie.toPopularMovie(): PopularMovie {
-    val primaryKey = this.id!! + 7000000
+    val primaryKey = this.id!!
     return PopularMovie(
         primaryKey = primaryKey.toString(),
         id = id!!,
