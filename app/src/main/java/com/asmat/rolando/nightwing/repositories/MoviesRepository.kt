@@ -1,11 +1,17 @@
 package com.asmat.rolando.nightwing.repositories
 
-
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.asmat.rolando.nightwing.database.DatabaseRepository
+import com.asmat.rolando.nightwing.database.NightwingDatabase
+import com.asmat.rolando.nightwing.database.entities.PopularMovie
 import com.asmat.rolando.nightwing.database.entities.SavedMovie
 import com.asmat.rolando.nightwing.model.*
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 import com.asmat.rolando.nightwing.networking.models.*
+import com.asmat.rolando.nightwing.popular_movies.PopularMoviesRemoteMediator
 import com.asmat.rolando.nightwing.ui.recommended_movies.RecommendedMoviesPaginatedRequest
 import io.reactivex.Single
 import kotlinx.coroutines.flow.Flow
@@ -16,11 +22,26 @@ import javax.inject.Singleton
 /**
  * Used by ViewModels to access movie related data sources
  */
+@OptIn(ExperimentalPagingApi::class)
 @Singleton
 open class MoviesRepository @Inject constructor(
         private val databaseRepository: DatabaseRepository,
         private val tmdbClient: TheMovieDBClient,
-        private val schedulersProvider: SchedulersProvider) {
+        private val schedulersProvider: SchedulersProvider,
+        private val database: NightwingDatabase
+) {
+
+    fun popularMoviesPagination(): Flow<PagingData<PopularMovie>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = false),
+            remoteMediator = PopularMoviesRemoteMediator(database, tmdbClient),
+            pagingSourceFactory = {
+                database.moviesDAO().popularMoviesPagingSource()
+            }
+        ).flow
+    }
 
     fun isSavedMovie(id: Int): Flow<Boolean> = databaseRepository.getSavedMovie(id).map { it != null }
 

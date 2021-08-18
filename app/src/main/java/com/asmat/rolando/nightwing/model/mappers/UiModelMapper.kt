@@ -3,6 +3,7 @@ package com.asmat.rolando.nightwing.model.mappers
 import com.asmat.rolando.nightwing.model.Movie
 import com.asmat.rolando.nightwing.cast_details.MovieCreditUiModel
 import com.asmat.rolando.nightwing.cast_details.PersonMovieCreditsUiModel
+import com.asmat.rolando.nightwing.database.entities.PopularMovie
 import com.asmat.rolando.nightwing.database.entities.SavedMovie
 import com.asmat.rolando.nightwing.database.entities.SavedTvShow
 import com.asmat.rolando.nightwing.movie_details.MovieDetailsUIModel
@@ -155,6 +156,17 @@ open class UiModelMapper @Inject constructor(private val searchDataModelsMapper:
                     body = episode.overview
                 )
             }
+        )
+    }
+
+    fun popularMovieToMovieGridItemUiModel(data: PopularMovie): MovieGridItemUiModel {
+        val posterURL = data.posterPath?.let { path ->
+            URLUtils.getImageURL342(path)
+        }
+        return MovieGridItemUiModel(
+            id = data.id,
+            title = data.title ?: "Unknown title",
+            posterURL = posterURL
         )
     }
 
