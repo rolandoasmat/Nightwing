@@ -11,7 +11,7 @@ import com.asmat.rolando.nightwing.database.entities.SavedMovie
 import com.asmat.rolando.nightwing.model.*
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 import com.asmat.rolando.nightwing.networking.models.*
-import com.asmat.rolando.nightwing.popular_movies.PopularMoviesRemoteMediator
+import com.asmat.rolando.nightwing.popular_movies.view.PopularMoviesRemoteMediator
 import com.asmat.rolando.nightwing.ui.recommended_movies.RecommendedMoviesPaginatedRequest
 import io.reactivex.Single
 import kotlinx.coroutines.flow.Flow

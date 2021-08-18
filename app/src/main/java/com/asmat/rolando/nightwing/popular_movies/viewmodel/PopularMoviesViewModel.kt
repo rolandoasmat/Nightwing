@@ -20,5 +20,5 @@ class PopularMoviesViewModel(
             }
         }
         .cachedIn(viewModelScope)
-    
+
 }

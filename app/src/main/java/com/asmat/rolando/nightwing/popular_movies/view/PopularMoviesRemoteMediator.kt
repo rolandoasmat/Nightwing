@@ -1,6 +1,5 @@
-package com.asmat.rolando.nightwing.popular_movies
+package com.asmat.rolando.nightwing.popular_movies.view
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -30,15 +29,10 @@ class PopularMoviesRemoteMediator(
         loadType: LoadType,
         state: PagingState<Int, PopularMovie>
     ): MediatorResult {
-        Log.v("RAA", "Load type: $loadType")
-        val numOfPages = state.pages.count()
-        Log.v("RAA", "Num of pages: $numOfPages")
         var numOfItems = 0
         state.pages.forEach {
             numOfItems += it.data.count()
         }
-        Log.v("RAA", "Num of numOfItems: $numOfItems")
-
         val page = when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
@@ -74,17 +68,14 @@ class PopularMoviesRemoteMediator(
 
 
         try {
-            Log.v("RAA", "Fetching page: $page")
-            Log.v("RAA", "\n")
             val movies = fetchPage(page)!!
-
             val endOfPaginationReached = movies.isEmpty()
             database.withTransaction {
                 // clear all tables in the database
                 if (loadType == LoadType.REFRESH) {
 //                    database.remoteKeysDao().clearRemoteKeys()
                     keysTable.clear()
-                    database.moviesDAO().clearAllPopularMovies()
+                    moviesDao.clearAllPopularMovies()
                 }
                 val prevKey = if (page == 1) null else page - 1
                 val nextKey = if (endOfPaginationReached) null else page + 1
@@ -93,7 +84,7 @@ class PopularMoviesRemoteMediator(
                     keysTable[it.id] = remoteKeys
                 }
 //                database.remoteKeysDao().insertAll(keys)
-                database.moviesDAO().insertAllPopularMovies(movies)
+                moviesDao.insertAllPopularMovies(movies)
             }
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (exception: IOException) {
