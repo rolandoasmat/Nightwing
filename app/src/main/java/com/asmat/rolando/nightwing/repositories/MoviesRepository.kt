@@ -8,10 +8,14 @@ import com.asmat.rolando.nightwing.database.DatabaseRepository
 import com.asmat.rolando.nightwing.database.NightwingDatabase
 import com.asmat.rolando.nightwing.database.entities.PopularMovie
 import com.asmat.rolando.nightwing.database.entities.SavedMovie
+import com.asmat.rolando.nightwing.database.entities.toPopularMovie
 import com.asmat.rolando.nightwing.model.*
+import com.asmat.rolando.nightwing.networking.NetworkBoundResource
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 import com.asmat.rolando.nightwing.networking.models.*
 import com.asmat.rolando.nightwing.popular_movies.view.PopularMoviesRemoteMediator
+import com.asmat.rolando.nightwing.tv_season_details.domain.TvShowSeason
+import com.asmat.rolando.nightwing.tv_season_details.domain.toTvShowSeason
 import com.asmat.rolando.nightwing.ui.recommended_movies.RecommendedMoviesPaginatedRequest
 import io.reactivex.Single
 import kotlinx.coroutines.flow.Flow
@@ -41,6 +45,19 @@ open class MoviesRepository @Inject constructor(
                 database.moviesDAO().popularMoviesPagingSource()
             }
         ).flow
+    }
+
+    fun popularMoviesSinglePage(): Flow<Resource<List<PopularMovie>>> {
+        return object: NetworkBoundResource<List<PopularMovie>>(null) {
+            override suspend fun fetchData(): NetworkResponse<List<PopularMovie>> {
+                val response = tmdbClient.getPopularMoviesSuspend(1)
+                return response.body()?.results?.map { it.toPopularMovie() }?.let { data ->
+                    NetworkResponse.Success(data)
+                } ?: run {
+                    NetworkResponse.Failure(response.message())
+                }
+            }
+        }.load()
     }
 
     fun isSavedMovie(id: Int): Flow<Boolean> = databaseRepository.getSavedMovie(id).map { it != null }
