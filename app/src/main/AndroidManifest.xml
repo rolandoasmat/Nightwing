@@ -20,7 +20,8 @@
 
         <!-- Main Activity -->
         <activity
-            android:name="com.asmat.rolando.nightwing.main.MainActivity">
+            android:name="com.asmat.rolando.nightwing.main.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
