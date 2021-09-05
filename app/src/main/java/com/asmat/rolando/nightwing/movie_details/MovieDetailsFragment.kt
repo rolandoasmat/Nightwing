@@ -102,7 +102,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
 
         viewModel.director.observe(viewLifecycleOwner) {
             directorLabel?.text = it
-            moreFromDirectorMoviesRow?.setTitle(resources.getString(R.string.more_from_director, it))
+            moreFromDirectorMoviesRow?.configure(title = resources.getString(R.string.more_from_director, it))
         }
 
         // Movie icons

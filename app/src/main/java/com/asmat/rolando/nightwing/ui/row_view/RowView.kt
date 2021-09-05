@@ -31,14 +31,14 @@ class RowView @JvmOverloads constructor(
         movieRowRecyclerView.adapter = rowAdapter
     }
 
-    fun configure(title: String? = null, seeAllButtonEnabled: Boolean = true, callback: Callback) {
+    fun configure(
+        title: String? = null,
+        seeAllButtonEnabled: Boolean = false,
+        callback: Callback? = null)
+    {
         movieTitleLabel.text = title
         seeAllLabel.isGone = !seeAllButtonEnabled
         this.callback = callback
-    }
-
-    fun setTitle(title: String) {
-        movieTitleLabel.text = title
     }
 
     fun setData(data: List<RowViewItemUiModel>) {
