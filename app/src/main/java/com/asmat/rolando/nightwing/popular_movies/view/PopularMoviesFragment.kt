@@ -47,15 +47,9 @@ class PopularMoviesFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         popularMoviesRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         popularMoviesRecyclerView.adapter = pagingAdapter
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel
-                .flow
-                .distinctUntilChanged()
-                .collectLatest { pagingData ->
-                Log.v("RAA", "Got new paging data: $pagingData")
-
-                pagingAdapter.submitData(pagingData)
-            }
+        viewModel.popularMovies.observe(viewLifecycleOwner) { pagingData ->
+            Log.v("RAA", "Got new paging data: $pagingData")
+            pagingAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
         }
     }
 

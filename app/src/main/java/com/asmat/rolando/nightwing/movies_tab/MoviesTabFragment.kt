@@ -14,7 +14,6 @@ import com.asmat.rolando.nightwing.home_tab.HomeTabFragmentDirections
 import com.asmat.rolando.nightwing.ui.row_view.RowViewItemUiModel
 import com.asmat.rolando.nightwing.ui.row_view.RowView
 import com.asmat.rolando.nightwing.ui.nowplayingmovies.NowPlayingMoviesViewModel
-import com.asmat.rolando.nightwing.popular_movies.viewmodel.PopularMoviesViewModel
 import com.asmat.rolando.nightwing.ui.topratedmovies.TopRatedMoviesViewModel
 import com.asmat.rolando.nightwing.ui.upcomingmovies.UpcomingMoviesViewModel
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
@@ -26,7 +25,7 @@ class MoviesTabFragment: Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    private val popularMoviesViewModel: PopularMoviesViewModel by viewModels { viewModelFactory }
+    private val popularMoviesRowViewModel: PopularMoviesRowViewModel by viewModels { viewModelFactory }
     private val topRatedMoviesViewModel: TopRatedMoviesViewModel by viewModels { viewModelFactory }
     private val nowPlayingMoviesViewModel: NowPlayingMoviesViewModel by viewModels { viewModelFactory }
     private val upcomingMoviesViewModel: UpcomingMoviesViewModel by viewModels { viewModelFactory }
@@ -42,11 +41,11 @@ class MoviesTabFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpRows()
+        configureRows()
         observeLiveData()
     }
 
-    private fun setUpRows() {
+    private fun configureRows() {
         popularMoviesRow.configure(title = "Popular", callback = object: RowView.Callback {
             override fun onSeeAllClicked() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToPopularMoviesGrid()
@@ -57,10 +56,10 @@ class MoviesTabFragment: Fragment() {
                 findNavController().navigate(action)
             }
             override fun onRetry() {
-//                popularMoviesViewModel.load()
+                popularMoviesRowViewModel.load()
             }
         })
-//        popularMoviesViewModel.load()
+        popularMoviesRowViewModel.load()
 
         topRatedMoviesRow.configure(title = "Top Rated", callback = object: RowView.Callback {
             override fun onSeeAllClicked() {
@@ -120,6 +119,9 @@ class MoviesTabFragment: Fragment() {
 //        popularMoviesViewModel.error.observe(viewLifecycleOwner) {
 //            popularMoviesRow.setRetry(it != null)
 //        }
+        popularMoviesRowViewModel.rowViewUiModel.observe(viewLifecycleOwner) {
+            popularMoviesRow.setData(it.items)
+        }
     }
 
     private fun observeTopRatedMoviesViewModel() {

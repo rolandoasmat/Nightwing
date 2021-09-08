@@ -33,7 +33,7 @@ class RowView @JvmOverloads constructor(
 
     fun configure(
         title: String? = null,
-        seeAllButtonEnabled: Boolean = false,
+        seeAllButtonEnabled: Boolean = true,
         callback: Callback? = null)
     {
         movieTitleLabel.text = title

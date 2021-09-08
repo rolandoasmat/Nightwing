@@ -15,6 +15,7 @@ import com.asmat.rolando.nightwing.tv_season_details.TvSeasonEpisodesUiModel
 import com.asmat.rolando.nightwing.tv_season_details.domain.TvShowSeason
 import com.asmat.rolando.nightwing.ui.grid.GridItemUiModel
 import com.asmat.rolando.nightwing.ui.row_view.RowViewItemUiModel
+import com.asmat.rolando.nightwing.ui.row_view.RowViewUiModel
 import com.asmat.rolando.nightwing.utilities.DateUtils
 import com.asmat.rolando.nightwing.utilities.URLUtils
 import javax.inject.Inject
@@ -24,7 +25,9 @@ import javax.inject.Singleton
  * Maps data objects to UiModel classes.
  */
 @Singleton
-open class UiModelMapper @Inject constructor(private val searchDataModelsMapper: SearchDataModelsMapper) {
+open class UiModelMapper @Inject constructor(
+    private val searchDataModelsMapper: SearchDataModelsMapper
+    ) {
 
     fun map(movies: List<Movie>?): List<MovieGridItemUiModel>? {
         return movies?.map {
@@ -168,6 +171,17 @@ open class UiModelMapper @Inject constructor(private val searchDataModelsMapper:
             title = data.title ?: "Unknown title",
             posterURL = posterURL
         )
+    }
+
+    fun mapPopularMoviesToRowViewUiModel(data: List<PopularMovie>): RowViewUiModel {
+        val rowItems = data.map {
+            val posterURL = it.posterPath?.let { path ->
+                URLUtils.getImageURL342(path)
+            }
+            RowViewItemUiModel(it.id, posterURL, it.title ?: "Unknown title")
+        }
+        return RowViewUiModel(rowItems)
+
     }
 
 }
