@@ -9,13 +9,12 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.asmat.rolando.nightwing.R
-import com.asmat.rolando.nightwing.ui.moviegrid.BaseMoviesGridAdapter
 import com.asmat.rolando.nightwing.ui.moviegrid.MovieGridItemUiModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.poster_grid_item.view.*
 
 class MoviesPagingDataAdapter(
-    private val callback: BaseMoviesGridAdapter.Callback? = null,
+    private val callback: Callback? = null,
     diffCallback: DiffUtil.ItemCallback<MovieGridItemUiModel>
 ) : PagingDataAdapter<MovieGridItemUiModel, MoviesPagingDataAdapter.ViewHolder>(diffCallback) {
 

@@ -109,18 +109,16 @@ class MoviesTabFragment: Fragment() {
     }
 
     private fun observePopularMoviesViewModel() {
-//        popularMoviesViewModel.uiModels.observe(viewLifecycleOwner) {
-//            val data = it.map { movieGridItem -> RowViewItemUiModel(movieGridItem.id, movieGridItem.posterURL, movieGridItem.title) }
-//            popularMoviesRow.setData(data)
-//        }
-//        popularMoviesViewModel.loading.observe(viewLifecycleOwner) {
-//            popularMoviesRow.setLoading(it == true)
-//        }
-//        popularMoviesViewModel.error.observe(viewLifecycleOwner) {
-//            popularMoviesRow.setRetry(it != null)
-//        }
-        popularMoviesRowViewModel.rowViewUiModel.observe(viewLifecycleOwner) {
-            popularMoviesRow.setData(it.items)
+        popularMoviesRowViewModel.run {
+            rowViewUiModel.observe(viewLifecycleOwner) {
+                popularMoviesRow.setData(it.items)
+            }
+            loading.observe(viewLifecycleOwner) {
+                popularMoviesRow.setLoading(it)
+            }
+            error.observe(viewLifecycleOwner) {
+                popularMoviesRow.setRetry(it)
+            }
         }
     }
 

@@ -21,6 +21,10 @@ class PopularMoviesRowViewModel(
     val loading: LiveData<Boolean>
         get() = _loading
 
+    private val _error = MutableLiveData<Boolean>()
+    val error: LiveData<Boolean>
+        get() = _error
+
     private val _rowViewUiModel = MutableLiveData<RowViewUiModel>()
     val rowViewUiModel: LiveData<RowViewUiModel>
         get() = _rowViewUiModel
@@ -35,6 +39,7 @@ class PopularMoviesRowViewModel(
 
     private fun handleResource(resource: Resource<List<PopularMovie>>) {
         _loading.value = resource is Resource.Loading
+        _error.value = resource is Resource.Error
         resource.data?.let { popularMovies ->
             val uiModel = uiModelMapper.mapPopularMoviesToRowViewUiModel(popularMovies)
             _rowViewUiModel.value = uiModel

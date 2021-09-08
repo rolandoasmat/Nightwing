@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.asmat.rolando.nightwing.NightwingApplication
@@ -17,18 +16,15 @@ import com.asmat.rolando.nightwing.movies.MovieGridItemComparator
 import com.asmat.rolando.nightwing.movies.MoviesPagingDataAdapter
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_popular_movies.*
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class PopularMoviesFragment: Fragment() {
+class PopularMoviesFragment: Fragment(), MoviesPagingDataAdapter.Callback {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel: PopularMoviesViewModel by viewModels { viewModelFactory }
 
-    val pagingAdapter = MoviesPagingDataAdapter(null, MovieGridItemComparator)
+    private val pagingAdapter = MoviesPagingDataAdapter(this, MovieGridItemComparator)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +49,7 @@ class PopularMoviesFragment: Fragment() {
         }
     }
 
-    fun goToMovieDetailsScreen(movieID: Int) {
+    override fun itemPressed(movieID: Int) {
         val action = PopularMoviesFragmentDirections.actionPopularMoviesGridToMovieDetailsScreen(movieID)
         findNavController().navigate(action)
     }
