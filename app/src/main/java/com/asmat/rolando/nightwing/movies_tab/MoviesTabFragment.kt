@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
@@ -46,7 +45,7 @@ class MoviesTabFragment: Fragment() {
     }
 
     private fun configureRows() {
-        popularMoviesRow.configure(title = "Popular", callback = object: RowView.Callback {
+        popularMoviesRow.configure(title = "Popular Movies", callback = object: RowView.Callback {
             override fun onSeeAllClicked() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToPopularMoviesGrid()
                 findNavController().navigate(action)

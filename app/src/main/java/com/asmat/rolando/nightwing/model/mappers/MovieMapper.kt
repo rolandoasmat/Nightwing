@@ -1,9 +1,9 @@
 package com.asmat.rolando.nightwing.model.mappers
 
 import com.asmat.rolando.nightwing.model.Movie
+import com.asmat.rolando.nightwing.model.MovieSummary
 import com.asmat.rolando.nightwing.networking.models.MovieDetailsResponse
 import com.asmat.rolando.nightwing.networking.models.MoviesResponse
-import com.asmat.rolando.nightwing.ui.moviegrid.MovieGridItemUiModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -30,5 +30,13 @@ open class MovieMapper @Inject constructor() {
                 data.title ?: "",
                 data.backdrop_path,
                 data.vote_average ?: 0.0)
+    }
+
+    fun movieResponseToMovieSummary(data: MoviesResponse.Movie): MovieSummary {
+        return MovieSummary(
+            id = data.id!!,
+            title = data.title,
+            posterPath = data.poster_path
+        )
     }
 }

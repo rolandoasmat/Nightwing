@@ -6,7 +6,7 @@ import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
 import com.asmat.rolando.nightwing.repositories.MoviesRepository
 import kotlinx.coroutines.flow.Flow
 
-class PopularMoviesRowViewModel(
+class TopRatedMoviesRowViewModel(
     moviesRepository: MoviesRepository,
     uiModelMapper: UiModelMapper
 ): MoviesRowViewModel(moviesRepository, uiModelMapper) {
