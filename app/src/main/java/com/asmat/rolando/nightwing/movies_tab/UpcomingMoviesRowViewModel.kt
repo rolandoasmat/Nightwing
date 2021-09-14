@@ -6,13 +6,13 @@ import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
 import com.asmat.rolando.nightwing.repositories.MoviesRepository
 import kotlinx.coroutines.flow.Flow
 
-class TopRatedMoviesRowViewModel(
+class UpcomingMoviesRowViewModel(
     moviesRepository: MoviesRepository,
     uiModelMapper: UiModelMapper
 ): MoviesRowViewModel(moviesRepository, uiModelMapper) {
 
     override fun moviesFlow(): Flow<Resource<List<MovieSummary>>> {
-        return moviesRepository.topRatedMoviesSinglePage()
+        return moviesRepository.upcomingMoviesSinglePage()
     }
 
 }

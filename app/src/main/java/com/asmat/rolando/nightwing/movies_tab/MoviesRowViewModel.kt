@@ -4,19 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.asmat.rolando.nightwing.database.entities.PopularMovie
-import com.asmat.rolando.nightwing.model.Movie
 import com.asmat.rolando.nightwing.model.MovieSummary
 import com.asmat.rolando.nightwing.model.Resource
 import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
-import com.asmat.rolando.nightwing.repositories.MoviesRepository
 import com.asmat.rolando.nightwing.ui.row_view.RowViewUiModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 abstract class MoviesRowViewModel(
-    protected val moviesRepository: MoviesRepository,
     protected val uiModelMapper: UiModelMapper
 ): ViewModel() {
 
