@@ -48,13 +48,22 @@ open class TheMovieDBClient {
         return service.getTopRatedMovies(page)
     }
 
+    suspend fun getTopRatedMoviesSuspend(page: Int) = service.getTopRatedMoviesSuspend(page)
+
+
     open fun getNowPlayingMovies(page: Int): Single<MoviesResponse> {
         return service.getNowPlayingMovies(page)
     }
 
+    suspend fun getNowPlayingMoviesSuspend(page: Int) = service.getNowPlayingMoviesSuspend(page)
+
+
     open fun getUpcomingMovies(page: Int): Single<MoviesResponse> {
         return service.getUpcomingMovies(page)
     }
+
+    suspend fun getUpcomingMoviesSuspend(page: Int) = service.getUpcomingMoviesSuspend(page)
+
 
     open fun getMovieDetails(movieID: Int): Single<MovieDetailsResponse> {
         return service.getMovieDetails(movieID)
@@ -74,7 +83,11 @@ open class TheMovieDBClient {
 
     open fun getSimilarMovies(movieID: Int) = service.getSimilarMovies(movieID)
 
+    suspend fun getSimilarMoviesSuspend(movieID: Int) = service.getSimilarMoviesSuspend(movieID)
+
     open fun getMovieRecommendations(movieID: Int) = service.getMovieRecommendations(movieID)
+
+    suspend fun getMovieRecommendationsSuspend(movieID: Int) = service.getMovieRecommendationsSuspend(movieID)
 
     // region Search
     open fun searchMovie(searchString: String, page: Int): Single<MoviesResponse> {

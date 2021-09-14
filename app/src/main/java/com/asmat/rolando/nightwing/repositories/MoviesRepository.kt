@@ -61,6 +61,51 @@ open class MoviesRepository @Inject constructor(
         }.load()
     }
 
+    fun topRatedMoviesSinglePage(): Flow<Resource<List<MovieSummary>>> {
+        return object: NetworkBoundResource<List<MovieSummary>>(null) {
+            override suspend fun fetchData(): NetworkResponse<List<MovieSummary>> {
+                val response = tmdbClient.getTopRatedMoviesSuspend(1)
+                return response.body()?.results?.map {
+                    movieMapper.movieResponseToMovieSummary(it)
+                }?.let { data ->
+                    NetworkResponse.Success(data)
+                } ?: run {
+                    NetworkResponse.Failure(response.message())
+                }
+            }
+        }.load()
+    }
+
+    fun nowPlayingMoviesSinglePage(): Flow<Resource<List<MovieSummary>>> {
+        return object: NetworkBoundResource<List<MovieSummary>>(null) {
+            override suspend fun fetchData(): NetworkResponse<List<MovieSummary>> {
+                val response = tmdbClient.getNowPlayingMoviesSuspend(1)
+                return response.body()?.results?.map {
+                    movieMapper.movieResponseToMovieSummary(it)
+                }?.let { data ->
+                    NetworkResponse.Success(data)
+                } ?: run {
+                    NetworkResponse.Failure(response.message())
+                }
+            }
+        }.load()
+    }
+
+    fun upcomingMoviesSinglePage(): Flow<Resource<List<MovieSummary>>> {
+        return object: NetworkBoundResource<List<MovieSummary>>(null) {
+            override suspend fun fetchData(): NetworkResponse<List<MovieSummary>> {
+                val response = tmdbClient.getUpcomingMoviesSuspend(1)
+                return response.body()?.results?.map {
+                    movieMapper.movieResponseToMovieSummary(it)
+                }?.let { data ->
+                    NetworkResponse.Success(data)
+                } ?: run {
+                    NetworkResponse.Failure(response.message())
+                }
+            }
+        }.load()
+    }
+
     fun isSavedMovie(id: Int): Flow<Boolean> = databaseRepository.getSavedMovie(id).map { it != null }
 
     suspend fun setSavedMovie(movie: SavedMovie) = databaseRepository.insertSavedMovie(movie)
@@ -100,9 +145,35 @@ open class MoviesRepository @Inject constructor(
         return tmdbClient.getMovieCredits(movieID).subscribeOn(schedulersProvider.ioScheduler)
     }
 
-    fun getSimilarMovies(movieID: Int) = tmdbClient.getSimilarMovies(movieID).subscribeOn(schedulersProvider.ioScheduler)
+    fun getSimilarMovies(movieID: Int): Flow<Resource<List<MovieSummary>>> {
+        return object: NetworkBoundResource<List<MovieSummary>>(null) {
+            override suspend fun fetchData(): NetworkResponse<List<MovieSummary>> {
+                val response = tmdbClient.getSimilarMoviesSuspend(movieID)
+                return response.body()?.results?.map {
+                    movieMapper.movieResponseToMovieSummary(it)
+                }?.let { data ->
+                    NetworkResponse.Success(data)
+                } ?: run {
+                    NetworkResponse.Failure(response.message())
+                }
+            }
+        }.load()
+    }
 
-    fun getMovieRecommendations(movieID: Int) = tmdbClient.getMovieRecommendations(movieID).subscribeOn(schedulersProvider.ioScheduler)
+    fun getMovieRecommendations(movieID: Int): Flow<Resource<List<MovieSummary>>> {
+        return object: NetworkBoundResource<List<MovieSummary>>(null) {
+            override suspend fun fetchData(): NetworkResponse<List<MovieSummary>> {
+                val response = tmdbClient.getMovieRecommendationsSuspend(movieID)
+                return response.body()?.results?.map {
+                    movieMapper.movieResponseToMovieSummary(it)
+                }?.let { data ->
+                    NetworkResponse.Success(data)
+                } ?: run {
+                    NetworkResponse.Failure(response.message())
+                }
+            }
+        }.load()
+    }
 
     companion object {
         private const val POPULAR_MOVIES_PAGE_SIZE = 20

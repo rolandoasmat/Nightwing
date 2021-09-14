@@ -20,11 +20,20 @@ interface TheMovieDBService {
     @GET("movie/top_rated")
     fun getTopRatedMovies(@Query("page") page: Int): Single<MoviesResponse>
 
+    @GET("movie/top_rated")
+    suspend fun getTopRatedMoviesSuspend(@Query("page") page: Int): Response<MoviesResponse>
+
     @GET("movie/now_playing")
     fun getNowPlayingMovies(@Query("page") page: Int): Single<MoviesResponse>
 
+    @GET("movie/now_playing")
+    suspend fun getNowPlayingMoviesSuspend(@Query("page") page: Int): Response<MoviesResponse>
+
     @GET("movie/upcoming")
     fun getUpcomingMovies(@Query("page") page: Int): Single<MoviesResponse>
+
+    @GET("movie/upcoming")
+    suspend fun getUpcomingMoviesSuspend(@Query("page") page: Int): Response<MoviesResponse>
 
     @GET("movie/{movie_id}")
     fun getMovieDetails(@Path("movie_id") id: Int): Single<MovieDetailsResponse>
@@ -41,8 +50,14 @@ interface TheMovieDBService {
     @GET("movie/{movie_id}/recommendations")
     fun getMovieRecommendations(@Path("movie_id") id: Int): Single<MoviesResponse>
 
+    @GET("movie/{movie_id}/recommendations")
+    suspend fun getMovieRecommendationsSuspend(@Path("movie_id") id: Int): Response<MoviesResponse>
+
     @GET("movie/{movie_id}/similar")
     fun getSimilarMovies(@Path("movie_id") id: Int): Single<MoviesResponse>
+
+    @GET("movie/{movie_id}/similar")
+    suspend fun getSimilarMoviesSuspend(@Path("movie_id") id: Int): Response<MoviesResponse>
     //endregion
 
     //region search/*
