@@ -4,10 +4,14 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isGone
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import com.asmat.rolando.nightwing.R
 import com.asmat.rolando.nightwing.extensions.gone
 import com.asmat.rolando.nightwing.extensions.visible
+import com.asmat.rolando.nightwing.movies_tab.MoviesRowViewModel
 import com.asmat.rolando.nightwing.ui.common.BaseLinearAdapter
+import kotlinx.android.synthetic.main.fragment_movies_tab.*
 import kotlinx.android.synthetic.main.row_view.view.*
 
 class RowView @JvmOverloads constructor(
@@ -41,7 +45,21 @@ class RowView @JvmOverloads constructor(
         this.callback = callback
     }
 
-    fun setData(data: List<RowViewItemUiModel>) {
+    fun observe(viewModel: MoviesRowViewModel, viewLifecycleOwner: LifecycleOwner) {
+        viewModel.run {
+            rowViewUiModel.observe(viewLifecycleOwner) {
+                setData(it.items)
+            }
+            loading.observe(viewLifecycleOwner) {
+                setLoading(it)
+            }
+            error.observe(viewLifecycleOwner) {
+                setRetry(it)
+            }
+        }
+    }
+
+    private fun setData(data: List<RowViewItemUiModel>) {
         if (data.isEmpty()) {
             this.gone()
         } else {
@@ -50,7 +68,7 @@ class RowView @JvmOverloads constructor(
         }
     }
 
-    fun setLoading(isLoading: Boolean) {
+    private fun setLoading(isLoading: Boolean) {
         if (isLoading) {
             loadingBar?.visible()
         } else {
@@ -58,7 +76,7 @@ class RowView @JvmOverloads constructor(
         }
     }
 
-    fun setRetry(showRetry: Boolean) {
+    private fun setRetry(showRetry: Boolean) {
         if (showRetry) {
             retryButton?.visible()
         } else {

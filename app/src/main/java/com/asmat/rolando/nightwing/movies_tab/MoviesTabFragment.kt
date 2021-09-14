@@ -10,11 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
 import com.asmat.rolando.nightwing.home_tab.HomeTabFragmentDirections
-import com.asmat.rolando.nightwing.ui.row_view.RowViewItemUiModel
 import com.asmat.rolando.nightwing.ui.row_view.RowView
-import com.asmat.rolando.nightwing.ui.nowplayingmovies.NowPlayingMoviesViewModel
-import com.asmat.rolando.nightwing.ui.topratedmovies.TopRatedMoviesViewModel
-import com.asmat.rolando.nightwing.ui.upcomingmovies.UpcomingMoviesViewModel
 import com.asmat.rolando.nightwing.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_movies_tab.*
 import javax.inject.Inject
@@ -25,9 +21,9 @@ class MoviesTabFragment: Fragment() {
     lateinit var viewModelFactory: ViewModelFactory
 
     private val popularMoviesRowViewModel: PopularMoviesRowViewModel by viewModels { viewModelFactory }
-    private val topRatedMoviesViewModel: TopRatedMoviesViewModel by viewModels { viewModelFactory }
-    private val nowPlayingMoviesViewModel: NowPlayingMoviesViewModel by viewModels { viewModelFactory }
-    private val upcomingMoviesViewModel: UpcomingMoviesViewModel by viewModels { viewModelFactory }
+    private val topRatedMoviesViewModel: TopRatedMoviesRowViewModel by viewModels { viewModelFactory }
+    private val nowPlayingMoviesViewModel: NowPlayingMoviesRowViewModel by viewModels { viewModelFactory }
+    private val upcomingMoviesViewModel: UpcomingMoviesRowViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,62 +97,9 @@ class MoviesTabFragment: Fragment() {
     }
 
     private fun observeLiveData() {
-        observePopularMoviesViewModel()
-        observeTopRatedMoviesViewModel()
-        observeNowPlayingMoviesViewModel()
-        observeUpcomingMoviesViewModel()
-    }
-
-    private fun observePopularMoviesViewModel() {
-        popularMoviesRowViewModel.run {
-            rowViewUiModel.observe(viewLifecycleOwner) {
-                popularMoviesRow.setData(it.items)
-            }
-            loading.observe(viewLifecycleOwner) {
-                popularMoviesRow.setLoading(it)
-            }
-            error.observe(viewLifecycleOwner) {
-                popularMoviesRow.setRetry(it)
-            }
-        }
-    }
-
-    private fun observeTopRatedMoviesViewModel() {
-        topRatedMoviesViewModel.uiModels.observe(viewLifecycleOwner) {
-            val data = it.map { movieGridItem -> RowViewItemUiModel(movieGridItem.id, movieGridItem.posterURL, movieGridItem.title) }
-            topRatedMoviesRow.setData(data)
-        }
-        topRatedMoviesViewModel.loading.observe(viewLifecycleOwner) {
-            topRatedMoviesRow.setLoading(it == true)
-        }
-        topRatedMoviesViewModel.error.observe(viewLifecycleOwner) {
-            topRatedMoviesRow.setRetry(it != null)
-        }
-    }
-
-    private fun observeNowPlayingMoviesViewModel() {
-        nowPlayingMoviesViewModel.uiModels.observe(viewLifecycleOwner) {
-            val data = it.map { movieGridItem -> RowViewItemUiModel(movieGridItem.id, movieGridItem.posterURL, movieGridItem.title) }
-            nowPlayingMoviesRow.setData(data)
-        }
-        nowPlayingMoviesViewModel.loading.observe(viewLifecycleOwner) {
-            nowPlayingMoviesRow.setLoading(it == true)
-        }
-        nowPlayingMoviesViewModel.error.observe(viewLifecycleOwner) {
-            nowPlayingMoviesRow.setRetry(it != null)
-        }
-    }
-
-    private fun observeUpcomingMoviesViewModel() {
-        upcomingMoviesViewModel.uiModels.observe(viewLifecycleOwner) {
-            val data = it.map { movieGridItem -> RowViewItemUiModel(movieGridItem.id, movieGridItem.posterURL, movieGridItem.title) }
-            upcomingMoviesRow.setData(data)
-        }
-        upcomingMoviesViewModel.loading.observe(viewLifecycleOwner) {
-            upcomingMoviesRow.setLoading(it == true)
-        }
-        upcomingMoviesViewModel.error.observe(viewLifecycleOwner) {
-            upcomingMoviesRow.setRetry(it != null)
-        }
+        popularMoviesRow.observe(popularMoviesRowViewModel, viewLifecycleOwner)
+        topRatedMoviesRow.observe(topRatedMoviesViewModel, viewLifecycleOwner)
+        nowPlayingMoviesRow.observe(nowPlayingMoviesViewModel, viewLifecycleOwner)
+        upcomingMoviesRow.observe(upcomingMoviesViewModel, viewLifecycleOwner)
     }
 }
