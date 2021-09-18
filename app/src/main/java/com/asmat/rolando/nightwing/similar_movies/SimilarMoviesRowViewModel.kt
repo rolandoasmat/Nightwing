@@ -8,10 +8,10 @@ import com.asmat.rolando.nightwing.repositories.MoviesRepository
 import kotlinx.coroutines.flow.Flow
 
 class SimilarMoviesRowViewModel (
-    moviesRepository: MoviesRepository,
+    private val moviesRepository: MoviesRepository,
     uiModelMapper: UiModelMapper,
     movieId: Int
-): MoviesRowViewModel(moviesRepository, uiModelMapper) {
+): MoviesRowViewModel(uiModelMapper) {
 
     override fun moviesFlow(): Flow<Resource<List<MovieSummary>>> {
         return moviesRepository.getSimilarMoviesSuspend(movieId)

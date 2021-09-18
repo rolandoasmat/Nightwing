@@ -137,38 +137,38 @@ class MovieDetailsViewModel(
                     cast.value = result.cast
                     result.crew.find { it.job ==  DIRECTOR }?.let { director ->
                         this.director.value = director.name
-                        getDirectorCredits(director.id)
+//                        getDirectorCredits(director.id)
                     }
                 }, { error ->
                     castError.value = error
                     cast.value = null
                 })
 
-        moviesRepository
-                .getSimilarMovies(movieID)
-                .observeOn(mainThreadScheduler)
-                .subscribe({ result ->
-                    val movies = result.results?.map {
-                        val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}
-                        RowViewItemUiModel(it.id ?: 0, posterURL ?: "", it.title ?: "")
-                    }
-                    _similarMovies.value = movies
-                }, { error ->
-                    // TODO show error
-                })
+//        moviesRepository
+//                .getSimilarMovies(movieID)
+//                .observeOn(mainThreadScheduler)
+//                .subscribe({ result ->
+//                    val movies = result.results?.map {
+//                        val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}
+//                        RowViewItemUiModel(it.id ?: 0, posterURL ?: "", it.title ?: "")
+//                    }
+//                    _similarMovies.value = movies
+//                }, { error ->
+//                    // TODO show error
+//                })
 
-        moviesRepository
-                .getMovieRecommendations(movieID)
-                .observeOn(mainThreadScheduler)
-                .subscribe({ result ->
-                    val movies = result.results?.map {
-                        val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}
-                        RowViewItemUiModel(it.id ?: 0,posterURL ?: "", it.title ?: "")
-                    }
-                    _recommendedMovies.value = movies
-                }, { error ->
-                    // TODO show error
-                })
+//        moviesRepository
+//                .getMovieRecommendations(movieID)
+//                .observeOn(mainThreadScheduler)
+//                .subscribe({ result ->
+//                    val movies = result.results?.map {
+//                        val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}
+//                        RowViewItemUiModel(it.id ?: 0,posterURL ?: "", it.title ?: "")
+//                    }
+//                    _recommendedMovies.value = movies
+//                }, { error ->
+//                    // TODO show error
+//                })
 
         moviesRepository
                 .getMovieReviews(movieID)
@@ -181,21 +181,22 @@ class MovieDetailsViewModel(
                 })
     }
 
-    private fun getDirectorCredits(personID: Int) {
-        peopleRepository
-                .getPersonMovieCredits(personID)
-                .observeOn(mainThreadScheduler)
-                .subscribe({ result ->
-                    val directorCredits = result.crew?.filter { it.job == DIRECTOR }
-                    val movies = directorCredits?.map {
-                        val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}
-                        RowViewItemUiModel(it.id ?: 0,posterURL ?: "", it.title ?: "")
-                    }
-                    _directorMovies.value = movies
-                }, { error ->
-                    // TODO show error
-                })
-    }
+//    private fun getDirectorCredits(personID: Int) {
+//        peopleRepository
+//                .getPersonMovieCredits(personID)
+//
+//                .observeOn(mainThreadScheduler)
+//                .subscribe({ result ->
+//                    val directorCredits = result.crew?.filter { it.job == DIRECTOR }
+//                    val movies = directorCredits?.map {
+//                        val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}
+//                        RowViewItemUiModel(it.id ?: 0,posterURL ?: "", it.title ?: "")
+//                    }
+//                    _directorMovies.value = movies
+//                }, { error ->
+//                    // TODO show error
+//                })
+//    }
 
     companion object {
         private const val DIRECTOR = "Director"
