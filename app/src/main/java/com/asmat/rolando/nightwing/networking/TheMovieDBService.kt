@@ -79,7 +79,7 @@ interface TheMovieDBService {
     fun getPersonDetails(@Path("person_id") id: Int): Single<PersonDetailsResponse>
 
     @GET("person/{person_id}/movie_credits")
-    fun getPersonMovieCredits(@Path("person_id") id: Int): Single<PersonMovieCredits>
+    suspend fun getPersonMovieCredits(@Path("person_id") id: Int): Response<PersonMovieCredits>
     //endregion
 
     //region TV Shows

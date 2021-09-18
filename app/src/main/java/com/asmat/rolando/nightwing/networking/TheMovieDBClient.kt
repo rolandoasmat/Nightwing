@@ -107,9 +107,7 @@ open class TheMovieDBClient {
         return service.getPersonDetails(id)
     }
 
-    open fun getPersonMovieCredits(personID: Int): Single<PersonMovieCredits> {
-        return service.getPersonMovieCredits(personID)
-    }
+    suspend fun getPersonMovieCredits(personID: Int) =  service.getPersonMovieCredits(personID)
 
     //region TV Shows
     fun getPopularTvShows(page: Int) = service.getPopularTvShows(page)

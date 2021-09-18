@@ -1,11 +1,12 @@
 package com.asmat.rolando.nightwing.repositories
 
-import com.asmat.rolando.nightwing.model.SearchPersonsPaginatedRequest
+import com.asmat.rolando.nightwing.model.*
+import com.asmat.rolando.nightwing.networking.NetworkBoundResource
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 import com.asmat.rolando.nightwing.networking.models.PersonDetailsResponse
-import com.asmat.rolando.nightwing.networking.models.PersonMovieCredits
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -29,8 +30,17 @@ open class PeopleRepository @Inject constructor(
         return tmdbClient.getPersonDetails(id).subscribeOn(Schedulers.io())
     }
 
-    fun getPersonMovieCredits(id: Int) : Single<PersonMovieCredits> {
-        return tmdbClient.getPersonMovieCredits(id).subscribeOn(Schedulers.io())
+    fun getPersonMovieCredits(id: Int) : Flow<Resource<PersonMovieCredits>> {
+        return object: NetworkBoundResource<PersonMovieCredits>(null) {
+            override suspend fun fetchData(): NetworkResponse<PersonMovieCredits> {
+                val response = tmdbClient.getPersonMovieCredits(id)
+                return response.body()?.let { data ->
+                    NetworkResponse.Success(data.toDataModel())
+                } ?: run {
+                    NetworkResponse.Failure(response.message())
+                }
+            }
+        }.load()
     }
 
 }
