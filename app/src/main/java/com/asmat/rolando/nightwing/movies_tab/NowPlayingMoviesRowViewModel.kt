@@ -7,9 +7,9 @@ import com.asmat.rolando.nightwing.repositories.MoviesRepository
 import kotlinx.coroutines.flow.Flow
 
 class NowPlayingMoviesRowViewModel(
-    moviesRepository: MoviesRepository,
+    private val moviesRepository: MoviesRepository,
     uiModelMapper: UiModelMapper
-): MoviesRowViewModel(moviesRepository, uiModelMapper) {
+): MoviesRowViewModel(uiModelMapper) {
 
     override fun moviesFlow(): Flow<Resource<List<MovieSummary>>> {
         return moviesRepository.nowPlayingMoviesSinglePage()
