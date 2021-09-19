@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.Flow
 class SimilarMoviesRowViewModel (
     private val moviesRepository: MoviesRepository,
     uiModelMapper: UiModelMapper,
-    movieId: Int
+    private val movieId: Int
 ): MoviesRowViewModel(uiModelMapper) {
 
     override fun moviesFlow(): Flow<Resource<List<MovieSummary>>> {
-        return moviesRepository.getSimilarMoviesSuspend(movieId)
+        return moviesRepository.getSimilarMovies(movieId)
     }
 
 }

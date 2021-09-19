@@ -2,35 +2,43 @@ package com.asmat.rolando.nightwing.cast_details
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.asmat.rolando.nightwing.model.PersonMovieCredits
+import com.asmat.rolando.nightwing.model.Resource
 import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
-import com.asmat.rolando.nightwing.repositories.MoviesRepository
 import com.asmat.rolando.nightwing.repositories.PeopleRepository
-import io.reactivex.Scheduler
-import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-class PersonMovieCreditsViewModel(private val peopleRepository: PeopleRepository,
-                                  private val uiModelMapper: UiModelMapper,
-                                  private val mainThreadScheduler: Scheduler,
-                                  private val moviesRepository: MoviesRepository): ViewModel() {
-    private val compositeDisposable = CompositeDisposable()
+class PersonMovieCreditsViewModel(
+    private val peopleRepository: PeopleRepository,
+    private val uiModelMapper: UiModelMapper,
+    private val personID: Int
+    ): ViewModel() {
 
     val uiModel = MutableLiveData<PersonMovieCreditsUiModel>()
 
-    fun init(personID: Int) {
-        val disposable = peopleRepository
-                .getPersonMovieCredits(personID)
-                .observeOn(mainThreadScheduler)
-                .subscribe({ response ->
-                    uiModel.value = uiModelMapper.map(response)
-                }, { error ->
-                    // TODO handle error
-                })
-        compositeDisposable.add(disposable)
+    init {
+        viewModelScope.launch {
+            peopleRepository.getPersonMovieCredits(personID).collect { resource ->
+                handleMovieCreditsResponse(resource)
+            }
+        }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.dispose()
+    private fun handleMovieCreditsResponse(resource: Resource<PersonMovieCredits>) {
+        when (resource) {
+            is Resource.Loading -> {
+                // TODO
+            }
+            is Resource.Success -> {
+                resource.data?.let { credits ->
+                    uiModel.value = uiModelMapper.mapPersonMovieCredits(credits)
+                }
+            }
+            is Resource.Error -> {
+                // TODO
+            }
+        }
     }
-
 }

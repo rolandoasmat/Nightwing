@@ -7,6 +7,7 @@ import com.asmat.rolando.nightwing.database.entities.PopularMovie
 import com.asmat.rolando.nightwing.database.entities.SavedMovie
 import com.asmat.rolando.nightwing.database.entities.SavedTvShow
 import com.asmat.rolando.nightwing.model.MovieSummary
+import com.asmat.rolando.nightwing.model.PersonMovieCredits
 import com.asmat.rolando.nightwing.movie_details.MovieDetailsUIModel
 import com.asmat.rolando.nightwing.networking.models.*
 import com.asmat.rolando.nightwing.popular_people_tab.PopularPersonUiModel
@@ -49,28 +50,6 @@ open class UiModelMapper @Inject constructor(
             val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url)}
             MovieGridItemUiModel(it.id ?: 0, it.title ?: "", posterURL)
         }
-    }
-
-    fun map(data: PersonMovieCredits): PersonMovieCreditsUiModel {
-        val mapped = data.cast?.filter {
-            it.release_date?.isEmpty() == false
-        }?.sortedByDescending {
-            DateUtils.transform(it.release_date ?: "")
-        }?.map {
-            val posterURL = it.poster_path?.let { url -> URLUtils.getImageURL342(url) }
-            val movieID = it.id ?: 0
-            MovieCreditUiModel(movieID, posterURL, it.character, it.title)
-        }
-
-        val movieCreditsWithBackdropImage = data.cast?.filter { it.backdrop_path != null }
-
-        val backdropURL = if (movieCreditsWithBackdropImage?.isEmpty() == true) {
-            null
-        } else {
-            movieCreditsWithBackdropImage?.random()?.backdrop_path?.let { URLUtils.getImageURL780(it) }
-        }
-        return PersonMovieCreditsUiModel(backdropURL, mapped
-                ?: emptyList())
     }
 
     fun mapMovies(response: List<MoviesResponse.Movie>) = searchDataModelsMapper.mapMovies(response)
@@ -191,6 +170,29 @@ open class UiModelMapper @Inject constructor(
             RowViewItemUiModel(it.id, posterURL, it.title ?: "Unknown title")
         }
         return RowViewUiModel(rowItems)
+    }
+
+    fun mapPersonMovieCredits(data: PersonMovieCredits): PersonMovieCreditsUiModel {
+        val mapped = data.cast?.filter {
+            it.releaseDate?.isEmpty() == false
+        }?.sortedByDescending {
+            DateUtils.transform(it.releaseDate ?: "")
+        }?.map {
+            val posterURL = it.posterPath?.let { url -> URLUtils.getImageURL342(url) }
+            val movieID = it.id ?: 0
+            MovieCreditUiModel(movieID, posterURL, it.character, it.title)
+        }
+
+        val movieCreditsWithBackdropImage = data.cast?.filter { it.backdropPath != null }
+
+        val backdropURL = if (movieCreditsWithBackdropImage?.isEmpty() == true) {
+            null
+        } else {
+            movieCreditsWithBackdropImage?.random()?.backdropPath?.let { URLUtils.getImageURL780(it) }
+        }
+        return PersonMovieCreditsUiModel(
+            backdropURL,
+            mapped ?: emptyList())
     }
 
 }

@@ -127,17 +127,17 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
             updateCast(cast)
         })
 
-        viewModel.similarMovies.observe(viewLifecycleOwner) {
-            similarMoviesRow.setData(it)
-        }
+//        viewModel.similarMovies.observe(viewLifecycleOwner) {
+//            similarMoviesRow.setData(it)
+//        }
 
-        viewModel.recommendedMovies.observe(viewLifecycleOwner) {
-            recommendedMoviesRow.setData(it)
-        }
+//        viewModel.recommendedMovies.observe(viewLifecycleOwner) {
+//            recommendedMoviesRow.setData(it)
+//        }
 
-        viewModel.directorMovies.observe(viewLifecycleOwner) {
-            moreFromDirectorMoviesRow.setData(it)
-        }
+//        viewModel.directorMovies.observe(viewLifecycleOwner) {
+//            moreFromDirectorMoviesRow.setData(it)
+//        }
 
         viewModel.reviews.observe(viewLifecycleOwner, Observer { reviews ->
             updateReviews(reviews)

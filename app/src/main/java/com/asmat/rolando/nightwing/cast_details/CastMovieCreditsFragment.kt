@@ -74,7 +74,7 @@ class CastMovieCreditsFragment: Fragment(), MovieCreditsAdapter.ItemCallback {
         val numOfColumns = ViewUtils.calculateNumberOfColumns(requireActivity())
         movieCreditsRecyclerView?.layoutManager = androidx.recyclerview.widget.GridLayoutManager(context, numOfColumns)
         movieCreditsRecyclerView?.adapter = adapter
-        personID?. let { id -> viewModel.init(id) }
+//        personID?. let { id -> viewModel.init(id) }
         observeViewModel()
     }
 
