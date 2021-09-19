@@ -83,9 +83,9 @@ class TvShowDetailsFragment: Fragment() {
             }
             tvShowCollapsingToolbar?.title = it.name
         }
-        viewModel.seasons.observe(viewLifecycleOwner) {
-            seasonsRowView?.setData(it)
-        }
+//        viewModel.seasons.observe(viewLifecycleOwner) {
+//            seasonsRowView?.setData(it)
+//        }
         viewModel.isSaved.observe(viewLifecycleOwner) {
             heartIcon?.isSelected = it == true
         }

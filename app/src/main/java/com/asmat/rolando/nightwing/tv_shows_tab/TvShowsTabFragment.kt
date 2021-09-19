@@ -73,14 +73,14 @@ class TvShowsTabFragment: Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.popularTvShows.observe(viewLifecycleOwner) {
-            popularTvShowsRow.setData(it)
-        }
-        viewModel.topRatedTvShows.observe(viewLifecycleOwner) {
-            topRatedTvShowsRow.setData(it)
-        }
-        viewModel.onTheAirTvShows.observe(viewLifecycleOwner) {
-            onTheAirTvShowsRow.setData(it)
-        }
+//        viewModel.popularTvShows.observe(viewLifecycleOwner) {
+//            popularTvShowsRow.setData(it)
+//        }
+//        viewModel.topRatedTvShows.observe(viewLifecycleOwner) {
+//            topRatedTvShowsRow.setData(it)
+//        }
+//        viewModel.onTheAirTvShows.observe(viewLifecycleOwner) {
+//            onTheAirTvShowsRow.setData(it)
+//        }
     }
 }

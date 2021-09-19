@@ -12,7 +12,10 @@ import com.asmat.rolando.nightwing.cast_details.PersonMovieCreditsViewModel
 import com.asmat.rolando.nightwing.database.DatabaseRepository
 import com.asmat.rolando.nightwing.database.NightwingDatabase
 import com.asmat.rolando.nightwing.movie_details.MovieDetailsViewModel
+import com.asmat.rolando.nightwing.movies_tab.NowPlayingMoviesRowViewModel
 import com.asmat.rolando.nightwing.movies_tab.PopularMoviesRowViewModel
+import com.asmat.rolando.nightwing.movies_tab.TopRatedMoviesRowViewModel
+import com.asmat.rolando.nightwing.movies_tab.UpcomingMoviesRowViewModel
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 import com.asmat.rolando.nightwing.popular_people_tab.PopularPeopleViewModel
 import com.asmat.rolando.nightwing.repositories.TvShowsRepository
@@ -55,7 +58,7 @@ class ViewModelFactory @Inject constructor(
             modelClass.isAssignableFrom(UpcomingMoviesViewModel::class.java) -> UpcomingMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
             modelClass.isAssignableFrom(MovieDetailsViewModel::class.java) -> MovieDetailsViewModel(moviesRepository, peopleRepository, dataModelMapper, deepLinksUtils, AndroidSchedulers.mainThread(), uiModelMapper) as T
             modelClass.isAssignableFrom(CastDetailsViewModel::class.java) -> CastDetailsViewModel(peopleRepository, AndroidSchedulers.mainThread()) as T
-            modelClass.isAssignableFrom(PersonMovieCreditsViewModel::class.java) -> PersonMovieCreditsViewModel(peopleRepository, uiModelMapper, AndroidSchedulers.mainThread(), moviesRepository) as T
+            modelClass.isAssignableFrom(PersonMovieCreditsViewModel::class.java) -> PersonMovieCreditsViewModel(peopleRepository, uiModelMapper, 1) as T
             modelClass.isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel(moviesRepository, peopleRepository, tvShowsRepository, uiModelMapper) as T
             modelClass.isAssignableFrom(RecommendedMoviesViewModel::class.java) -> RecommendedMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
             modelClass.isAssignableFrom(PopularPeopleViewModel::class.java) -> PopularPeopleViewModel(peopleRepository, uiModelMapper) as T
@@ -68,6 +71,9 @@ class ViewModelFactory @Inject constructor(
             modelClass.isAssignableFrom(SavedTvShowsViewModel::class.java) -> SavedTvShowsViewModel(tvShowsRepository, uiModelMapper) as T
             modelClass.isAssignableFrom(TvSeasonDetailsViewModel::class.java) -> TvSeasonDetailsViewModel(tvShowsRepository, uiModelMapper) as T
             modelClass.isAssignableFrom(PopularMoviesRowViewModel::class.java) -> PopularMoviesRowViewModel(moviesRepository, uiModelMapper) as T
+            modelClass.isAssignableFrom(TopRatedMoviesRowViewModel::class.java) -> TopRatedMoviesRowViewModel(moviesRepository, uiModelMapper) as T
+            modelClass.isAssignableFrom(NowPlayingMoviesRowViewModel::class.java) -> NowPlayingMoviesRowViewModel(moviesRepository, uiModelMapper) as T
+            modelClass.isAssignableFrom(UpcomingMoviesRowViewModel::class.java) -> UpcomingMoviesRowViewModel(moviesRepository, uiModelMapper) as T
             else -> {
                 throw IllegalArgumentException("Unknown ViewModel class")
             }
