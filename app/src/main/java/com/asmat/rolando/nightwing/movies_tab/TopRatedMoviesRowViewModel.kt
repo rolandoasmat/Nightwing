@@ -17,7 +17,7 @@ class TopRatedMoviesRowViewModel(
     }
 
     override fun transformDataToUiModel(data: List<MovieSummary>): RowViewUiModel {
-        TODO("Not yet implemented")
+        return uiModelMapper.mapMoviesToRowViewUiModel(data)
     }
 
 }

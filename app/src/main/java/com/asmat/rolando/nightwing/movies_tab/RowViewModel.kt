@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.asmat.rolando.nightwing.model.Resource
-import com.asmat.rolando.nightwing.ui.row_view.RowViewItemUiModel
 import com.asmat.rolando.nightwing.ui.row_view.RowViewUiModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
