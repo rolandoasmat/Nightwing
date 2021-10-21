@@ -24,6 +24,8 @@ class TvShowsTabFragment: Fragment() {
 
     val viewModel: TvShowsTabViewModel by viewModels { viewModelFactory }
 
+    private val popularTvShowsRowViewModel: PopularTvShowsRowViewModel by viewModels { viewModelFactory }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity?.applicationContext as NightwingApplication).component().inject(this)
@@ -50,7 +52,10 @@ class TvShowsTabFragment: Fragment() {
                 findNavController().navigate(action)
             }
             override fun onCardClicked(id: Int) = navigateToTvShowDetails(id)
+            override fun onRetry() = popularTvShowsRowViewModel.load()
         })
+        popularTvShowsRowViewModel.load()
+
         topRatedTvShowsRow.configure(title = "Top Rated", seeAllButtonEnabled = true, callback = object: RowView.Callback{
             override fun onSeeAllClicked() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToTopRatedTvShowsFragment()
@@ -73,6 +78,7 @@ class TvShowsTabFragment: Fragment() {
     }
 
     private fun observeViewModel() {
+        popularTvShowsRow.observe(popularTvShowsRowViewModel, viewLifecycleOwner)
 //        viewModel.popularTvShows.observe(viewLifecycleOwner) {
 //            popularTvShowsRow.setData(it)
 //        }

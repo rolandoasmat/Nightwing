@@ -4,6 +4,7 @@ import com.asmat.rolando.nightwing.database.DatabaseRepository
 import com.asmat.rolando.nightwing.database.entities.SavedTvShow
 import com.asmat.rolando.nightwing.model.Resource
 import com.asmat.rolando.nightwing.model.TvShowSummary
+import com.asmat.rolando.nightwing.model.mappers.TvShowMapper
 import com.asmat.rolando.nightwing.networking.NetworkBoundResource
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 import com.asmat.rolando.nightwing.networking.models.TvShowsResponse
@@ -20,7 +21,9 @@ import javax.inject.Singleton
 class TvShowsRepository @Inject constructor(
         private val tmdbClient: TheMovieDBClient,
         private val schedulersProvider: SchedulersProvider,
-        private val databaseRepository: DatabaseRepository) {
+        private val databaseRepository: DatabaseRepository,
+        private val tvShowMapper: TvShowMapper
+) {
 
     val searchTvShowsPaginatedRequest = SearchTvShowsPaginatedRequest(tmdbClient, schedulersProvider )
 
@@ -28,7 +31,14 @@ class TvShowsRepository @Inject constructor(
 
     fun popularTvShowsSinglePage() = object: NetworkBoundResource<List<TvShowSummary>>(null) {
         override suspend fun fetchData(): NetworkResponse<List<TvShowSummary>> {
-            TODO("Not yet implemented")
+            val response = tmdbClient.popularTvShowsSinglePage()
+            return response.body()?.let { tvShowResponse ->
+                tvShowMapper.map(tvShowResponse)
+            }?.let { data ->
+                NetworkResponse.Success(data)
+            } ?: run {
+                NetworkResponse.Failure(response.message())
+            }
         }
     }.load()
 

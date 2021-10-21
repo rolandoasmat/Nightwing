@@ -18,7 +18,7 @@ class PopularTvShowsRowViewModel(
     }
 
     override fun transformDataToUiModel(data: List<TvShowSummary>): RowViewUiModel {
-        TODO("Not yet implemented")
+        return uiModelMapper.mapTvShowsToRowViewUiModel(data)
     }
 
 }

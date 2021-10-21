@@ -8,6 +8,7 @@ import com.asmat.rolando.nightwing.database.entities.SavedMovie
 import com.asmat.rolando.nightwing.database.entities.SavedTvShow
 import com.asmat.rolando.nightwing.model.MovieSummary
 import com.asmat.rolando.nightwing.model.PersonMovieCredits
+import com.asmat.rolando.nightwing.model.TvShowSummary
 import com.asmat.rolando.nightwing.movie_details.MovieDetailsUIModel
 import com.asmat.rolando.nightwing.networking.models.*
 import com.asmat.rolando.nightwing.popular_people_tab.PopularPersonUiModel
@@ -167,7 +168,9 @@ open class UiModelMapper @Inject constructor(
             val posterURL = it.posterPath?.let { path ->
                 URLUtils.getImageURL342(path)
             }
-            RowViewItemUiModel(it.id, posterURL, it.title ?: "Unknown title")
+            RowViewItemUiModel(
+                id = it.id, posterURL,
+                title = it.title ?: "Unknown title")
         }
         return RowViewUiModel(rowItems)
     }
@@ -193,6 +196,17 @@ open class UiModelMapper @Inject constructor(
         return PersonMovieCreditsUiModel(
             backdropURL,
             mapped ?: emptyList())
+    }
+
+    fun mapTvShowsToRowViewUiModel(data: List<TvShowSummary>): RowViewUiModel {
+        return RowViewUiModel(items = data.map { summary ->
+            RowViewItemUiModel(
+                id = summary.id,
+                url = summary.posterPath,
+                title = summary.title ?: "Unknown TV show"
+            )
+        })
+
     }
 
 }

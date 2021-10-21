@@ -10,7 +10,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-abstract class RowViewModel<DomainDataModel>(): ViewModel() {
+// TODO move to ui package
+abstract class RowViewModel<DomainDataModel>: ViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean>
