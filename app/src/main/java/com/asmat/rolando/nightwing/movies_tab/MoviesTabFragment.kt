@@ -20,7 +20,7 @@ class MoviesTabFragment: Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    private val popularMoviesRowViewModel: PopularMoviesRowViewModel by viewModels { viewModelFactory }
+    private val popularMoviesViewModel: PopularMoviesRowViewModel by viewModels { viewModelFactory }
     private val topRatedMoviesViewModel: TopRatedMoviesRowViewModel by viewModels { viewModelFactory }
     private val nowPlayingMoviesViewModel: NowPlayingMoviesRowViewModel by viewModels { viewModelFactory }
     private val upcomingMoviesViewModel: UpcomingMoviesRowViewModel by viewModels { viewModelFactory }
@@ -51,10 +51,10 @@ class MoviesTabFragment: Fragment() {
                 findNavController().navigate(action)
             }
             override fun onRetry() {
-                popularMoviesRowViewModel.load()
+                popularMoviesViewModel.load()
             }
         })
-        popularMoviesRowViewModel.load()
+        popularMoviesViewModel.load()
 
         topRatedMoviesRow.configure(title = "Top Rated", callback = object: RowView.Callback {
             override fun onSeeAllClicked() {
@@ -97,7 +97,7 @@ class MoviesTabFragment: Fragment() {
     }
 
     private fun observeLiveData() {
-        popularMoviesRow.observe(popularMoviesRowViewModel, viewLifecycleOwner)
+        popularMoviesRow.observe(popularMoviesViewModel, viewLifecycleOwner)
         topRatedMoviesRow.observe(topRatedMoviesViewModel, viewLifecycleOwner)
         nowPlayingMoviesRow.observe(nowPlayingMoviesViewModel, viewLifecycleOwner)
         upcomingMoviesRow.observe(upcomingMoviesViewModel, viewLifecycleOwner)

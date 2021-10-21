@@ -5,6 +5,7 @@ import com.asmat.rolando.nightwing.database.entities.SavedTvShow
 import com.asmat.rolando.nightwing.model.Resource
 import com.asmat.rolando.nightwing.networking.NetworkBoundResource
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
+import com.asmat.rolando.nightwing.networking.models.TvShowsResponse
 import com.asmat.rolando.nightwing.search.SearchTvShowsPaginatedRequest
 import com.asmat.rolando.nightwing.tv_season_details.domain.TvShowSeason
 import com.asmat.rolando.nightwing.tv_season_details.domain.toTvShowSeason
@@ -23,6 +24,12 @@ class TvShowsRepository @Inject constructor(
     val searchTvShowsPaginatedRequest = SearchTvShowsPaginatedRequest(tmdbClient, schedulersProvider )
 
     fun getPopularTvShows(page: Int) = tmdbClient.getPopularTvShows(page).subscribeOn(schedulersProvider.ioScheduler)
+
+    fun popularTvShowsSinglePage() = object: NetworkBoundResource<TvShowsResponse>() {
+        override suspend fun fetchData(): NetworkResponse<TvShowsResponse> {
+            TODO("Not yet implemented")
+        }
+    }.load()
 
     fun getTopRatedTvShows(page: Int) = tmdbClient.getTopRatedTvShows(page).subscribeOn(schedulersProvider.ioScheduler)
 

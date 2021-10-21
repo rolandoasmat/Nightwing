@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+// TODO rename to more generic naming since reused for TV rows
 abstract class MoviesRowViewModel(
     protected val uiModelMapper: UiModelMapper
 ): ViewModel() {
