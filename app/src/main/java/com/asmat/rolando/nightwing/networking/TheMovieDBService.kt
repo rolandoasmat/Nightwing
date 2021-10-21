@@ -90,6 +90,12 @@ interface TheMovieDBService {
     suspend fun getPopularTvShowsSuspend(@Query("page") page: Int): Response<TvShowsResponse>
 
     @GET("tv/top_rated")
+    suspend fun getTopRatedTvShowsSuspend(@Query("page") page: Int): Response<TvShowsResponse>
+
+    @GET("tv/on_the_air")
+    suspend fun getOnTheAirTvShowsSuspend(@Query("page") page: Int): Response<TvShowsResponse>
+
+    @GET("tv/top_rated")
     fun getTopRatedTvShows(@Query("page") page: Int): Single<TvShowsResponse>
 
     @GET("tv/on_the_air")

@@ -113,6 +113,8 @@ open class TheMovieDBClient {
     fun getPopularTvShows(page: Int) = service.getPopularTvShows(page)
 
     suspend fun popularTvShowsSinglePage() = service.getPopularTvShowsSuspend(1)
+    suspend fun topRatedTvShowsSinglePage() = service.getTopRatedTvShowsSuspend(1)
+    suspend fun onTheAirTvShowsSinglePage() = service.getOnTheAirTvShowsSuspend(1)
 
     fun getTopRatedTvShows(page: Int) = service.getTopRatedTvShows(page)
 

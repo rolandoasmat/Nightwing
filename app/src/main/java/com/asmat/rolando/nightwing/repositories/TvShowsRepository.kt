@@ -42,6 +42,32 @@ class TvShowsRepository @Inject constructor(
         }
     }.load()
 
+    fun topRatedTvShowsSinglePage() = object: NetworkBoundResource<List<TvShowSummary>>(null) {
+        override suspend fun fetchData(): NetworkResponse<List<TvShowSummary>> {
+            val response = tmdbClient.topRatedTvShowsSinglePage()
+            return response.body()?.let { tvShowResponse ->
+                tvShowMapper.map(tvShowResponse)
+            }?.let { data ->
+                NetworkResponse.Success(data)
+            } ?: run {
+                NetworkResponse.Failure(response.message())
+            }
+        }
+    }.load()
+
+    fun onTheAirTvShowsSinglePage() = object: NetworkBoundResource<List<TvShowSummary>>(null) {
+        override suspend fun fetchData(): NetworkResponse<List<TvShowSummary>> {
+            val response = tmdbClient.onTheAirTvShowsSinglePage()
+            return response.body()?.let { tvShowResponse ->
+                tvShowMapper.map(tvShowResponse)
+            }?.let { data ->
+                NetworkResponse.Success(data)
+            } ?: run {
+                NetworkResponse.Failure(response.message())
+            }
+        }
+    }.load()
+
     fun getTopRatedTvShows(page: Int) = tmdbClient.getTopRatedTvShows(page).subscribeOn(schedulersProvider.ioScheduler)
 
     fun getOnTheAirTvShows(page: Int) = tmdbClient.getOnTheAirTvShows(page).subscribeOn(schedulersProvider.ioScheduler)

@@ -14,7 +14,7 @@ class OnTheAirTvShowsRowViewModel(
 ): RowViewModel<TvShowSummary>() {
 
     override fun dataFlow(): Flow<Resource<List<TvShowSummary>>> {
-        return tvShowsRepository.popularTvShowsSinglePage()
+        return tvShowsRepository.onTheAirTvShowsSinglePage()
     }
 
     override fun transformDataToUiModel(data: List<TvShowSummary>): RowViewUiModel {

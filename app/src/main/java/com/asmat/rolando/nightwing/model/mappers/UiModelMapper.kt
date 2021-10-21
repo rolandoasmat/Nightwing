@@ -202,7 +202,7 @@ open class UiModelMapper @Inject constructor(
         return RowViewUiModel(items = data.map { summary ->
             RowViewItemUiModel(
                 id = summary.id,
-                url = summary.posterPath,
+                url = summary.posterPath?.let { url -> URLUtils.getImageURL342(url) },
                 title = summary.title ?: "Unknown TV show"
             )
         })
