@@ -3,6 +3,7 @@ package com.asmat.rolando.nightwing.repositories
 import com.asmat.rolando.nightwing.database.DatabaseRepository
 import com.asmat.rolando.nightwing.database.entities.SavedTvShow
 import com.asmat.rolando.nightwing.model.Resource
+import com.asmat.rolando.nightwing.model.TvShowSummary
 import com.asmat.rolando.nightwing.networking.NetworkBoundResource
 import com.asmat.rolando.nightwing.networking.TheMovieDBClient
 import com.asmat.rolando.nightwing.networking.models.TvShowsResponse
@@ -25,8 +26,8 @@ class TvShowsRepository @Inject constructor(
 
     fun getPopularTvShows(page: Int) = tmdbClient.getPopularTvShows(page).subscribeOn(schedulersProvider.ioScheduler)
 
-    fun popularTvShowsSinglePage() = object: NetworkBoundResource<TvShowsResponse>() {
-        override suspend fun fetchData(): NetworkResponse<TvShowsResponse> {
+    fun popularTvShowsSinglePage() = object: NetworkBoundResource<List<TvShowSummary>>(null) {
+        override suspend fun fetchData(): NetworkResponse<List<TvShowSummary>> {
             TODO("Not yet implemented")
         }
     }.load()

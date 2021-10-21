@@ -1,19 +1,24 @@
 package com.asmat.rolando.nightwing.tv_shows_tab
 
-import com.asmat.rolando.nightwing.model.MovieSummary
 import com.asmat.rolando.nightwing.model.Resource
+import com.asmat.rolando.nightwing.model.TvShowSummary
 import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
-import com.asmat.rolando.nightwing.movies_tab.MoviesRowViewModel
+import com.asmat.rolando.nightwing.movies_tab.RowViewModel
 import com.asmat.rolando.nightwing.repositories.TvShowsRepository
+import com.asmat.rolando.nightwing.ui.row_view.RowViewUiModel
 import kotlinx.coroutines.flow.Flow
 
 class PopularTvShowsRowViewModel(
     private val tvShowsRepository: TvShowsRepository,
-    uiModelMapper: UiModelMapper
-): MoviesRowViewModel(uiModelMapper) {
+    private val uiModelMapper: UiModelMapper
+): RowViewModel<TvShowSummary>() {
 
-    override fun moviesFlow(): Flow<Resource<List<MovieSummary>>> {
+    override fun dataFlow(): Flow<Resource<List<TvShowSummary>>> {
         return tvShowsRepository.popularTvShowsSinglePage()
+    }
+
+    override fun transformDataToUiModel(data: List<TvShowSummary>): RowViewUiModel {
+        TODO("Not yet implemented")
     }
 
 }

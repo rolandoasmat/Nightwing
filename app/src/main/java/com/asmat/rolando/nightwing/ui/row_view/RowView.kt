@@ -4,14 +4,12 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isGone
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.asmat.rolando.nightwing.R
 import com.asmat.rolando.nightwing.extensions.gone
 import com.asmat.rolando.nightwing.extensions.visible
-import com.asmat.rolando.nightwing.movies_tab.MoviesRowViewModel
+import com.asmat.rolando.nightwing.movies_tab.RowViewModel
 import com.asmat.rolando.nightwing.ui.common.BaseLinearAdapter
-import kotlinx.android.synthetic.main.fragment_movies_tab.*
 import kotlinx.android.synthetic.main.row_view.view.*
 
 class RowView @JvmOverloads constructor(
@@ -45,7 +43,7 @@ class RowView @JvmOverloads constructor(
         this.callback = callback
     }
 
-    fun observe(viewModel: MoviesRowViewModel, viewLifecycleOwner: LifecycleOwner) {
+    fun observe(viewModel: RowViewModel<*>, viewLifecycleOwner: LifecycleOwner) {
         viewModel.run {
             rowViewUiModel.observe(viewLifecycleOwner) {
                 setData(it.items)

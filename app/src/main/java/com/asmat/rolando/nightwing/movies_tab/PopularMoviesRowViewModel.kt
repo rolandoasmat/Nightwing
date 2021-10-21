@@ -4,15 +4,20 @@ import com.asmat.rolando.nightwing.model.MovieSummary
 import com.asmat.rolando.nightwing.model.Resource
 import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
 import com.asmat.rolando.nightwing.repositories.MoviesRepository
+import com.asmat.rolando.nightwing.ui.row_view.RowViewUiModel
 import kotlinx.coroutines.flow.Flow
 
 class PopularMoviesRowViewModel(
     private val moviesRepository: MoviesRepository,
-    uiModelMapper: UiModelMapper
-): MoviesRowViewModel(uiModelMapper) {
+    private val uiModelMapper: UiModelMapper
+): RowViewModel<MovieSummary>() {
 
-    override fun moviesFlow(): Flow<Resource<List<MovieSummary>>> {
+    override fun dataFlow(): Flow<Resource<List<MovieSummary>>> {
         return moviesRepository.popularMoviesSinglePage()
+    }
+
+    override fun transformDataToUiModel(data: List<MovieSummary>): RowViewUiModel {
+        TODO("Not yet implemented")
     }
 
 }

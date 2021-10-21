@@ -4,18 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.asmat.rolando.nightwing.model.MovieSummary
 import com.asmat.rolando.nightwing.model.Resource
-import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
+import com.asmat.rolando.nightwing.ui.row_view.RowViewItemUiModel
 import com.asmat.rolando.nightwing.ui.row_view.RowViewUiModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-// TODO rename to more generic naming since reused for TV rows
-abstract class MoviesRowViewModel(
-    protected val uiModelMapper: UiModelMapper
-): ViewModel() {
+abstract class RowViewModel<DomainDataModel>(): ViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean>
@@ -29,22 +25,23 @@ abstract class MoviesRowViewModel(
     val rowViewUiModel: LiveData<RowViewUiModel>
         get() = _rowViewUiModel
 
-    abstract fun moviesFlow(): Flow<Resource<List<MovieSummary>>>
+    abstract fun dataFlow(): Flow<Resource<List<DomainDataModel>>>
+
+    abstract fun transformDataToUiModel(data: List<DomainDataModel>): RowViewUiModel
 
     fun load() {
         viewModelScope.launch {
-            moviesFlow().collect {
+            dataFlow().collect {
                 handleResource(it)
             }
         }
     }
 
-    private fun handleResource(resource: Resource<List<MovieSummary>>) {
+    private fun handleResource(resource: Resource<List<DomainDataModel>>) {
         _loading.value = resource is Resource.Loading
         _error.value = resource is Resource.Error
-        resource.data?.let { movies ->
-            val uiModel = uiModelMapper.mapMoviesToRowViewUiModel(movies)
-            _rowViewUiModel.value = uiModel
+        resource.data?.let { items ->
+            _rowViewUiModel.value = transformDataToUiModel(items)
         }
     }
 }

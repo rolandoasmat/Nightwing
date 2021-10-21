@@ -4,24 +4,29 @@ import com.asmat.rolando.nightwing.model.MovieSummary
 import com.asmat.rolando.nightwing.model.PersonMovieCredits
 import com.asmat.rolando.nightwing.model.Resource
 import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
-import com.asmat.rolando.nightwing.movies_tab.MoviesRowViewModel
+import com.asmat.rolando.nightwing.movies_tab.RowViewModel
 import com.asmat.rolando.nightwing.repositories.PeopleRepository
+import com.asmat.rolando.nightwing.ui.row_view.RowViewUiModel
 import com.asmat.rolando.nightwing.utilities.URLUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class DirectorMovieCreditsRowViewModel (
     private val peopleRepository: PeopleRepository,
-    uiModelMapper: UiModelMapper,
+    private val uiModelMapper: UiModelMapper,
     private val directorId: Int
-): MoviesRowViewModel(uiModelMapper) {
+): RowViewModel<MovieSummary>() {
 
-    override fun moviesFlow(): Flow<Resource<List<MovieSummary>>> {
+    override fun dataFlow(): Flow<Resource<List<MovieSummary>>> {
         return peopleRepository
             .getPersonMovieCredits(directorId)
             .map {
                 transformResource(it)
             }
+    }
+
+    override fun transformDataToUiModel(data: List<MovieSummary>): RowViewUiModel {
+        return uiModelMapper.mapMoviesToRowViewUiModel(data)
     }
 
     private fun transformResource(resource: Resource<PersonMovieCredits>): Resource<List<MovieSummary>> {
