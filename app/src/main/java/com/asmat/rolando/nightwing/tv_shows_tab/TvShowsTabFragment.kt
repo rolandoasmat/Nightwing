@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.asmat.rolando.nightwing.HomeDirections
 import com.asmat.rolando.nightwing.NightwingApplication
@@ -25,6 +24,8 @@ class TvShowsTabFragment: Fragment() {
     val viewModel: TvShowsTabViewModel by viewModels { viewModelFactory }
 
     private val popularTvShowsRowViewModel: PopularTvShowsRowViewModel by viewModels { viewModelFactory }
+    private val topRatedTvShowsRowViewModel: TopRatedTvShowsRowViewModel by viewModels { viewModelFactory }
+    private val onTheAirTvShowsRowViewModel: OnTheAirTvShowsRowViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,14 +63,19 @@ class TvShowsTabFragment: Fragment() {
                 findNavController().navigate(action)
             }
             override fun onCardClicked(id: Int) = navigateToTvShowDetails(id)
+            override fun onRetry() = topRatedTvShowsRowViewModel.load()
         })
+        topRatedTvShowsRowViewModel.load()
+
         onTheAirTvShowsRow.configure(title = "On The Air", seeAllButtonEnabled = true, callback = object: RowView.Callback{
             override fun onSeeAllClicked() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToOnTheAirTvShowsFragment()
                 findNavController().navigate(action)
             }
             override fun onCardClicked(id: Int) = navigateToTvShowDetails(id)
+            override fun onRetry() = onTheAirTvShowsRowViewModel.load()
         })
+        onTheAirTvShowsRowViewModel.load()
     }
 
     private fun navigateToTvShowDetails(id: Int) {
@@ -79,14 +85,7 @@ class TvShowsTabFragment: Fragment() {
 
     private fun observeViewModel() {
         popularTvShowsRow.observe(popularTvShowsRowViewModel, viewLifecycleOwner)
-//        viewModel.popularTvShows.observe(viewLifecycleOwner) {
-//            popularTvShowsRow.setData(it)
-//        }
-//        viewModel.topRatedTvShows.observe(viewLifecycleOwner) {
-//            topRatedTvShowsRow.setData(it)
-//        }
-//        viewModel.onTheAirTvShows.observe(viewLifecycleOwner) {
-//            onTheAirTvShowsRow.setData(it)
-//        }
+        topRatedTvShowsRow.observe(topRatedTvShowsRowViewModel, viewLifecycleOwner)
+        onTheAirTvShowsRow.observe(onTheAirTvShowsRowViewModel, viewLifecycleOwner)
     }
 }
