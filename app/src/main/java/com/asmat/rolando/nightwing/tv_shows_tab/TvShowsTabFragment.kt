@@ -21,8 +21,6 @@ class TvShowsTabFragment: Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    val viewModel: TvShowsTabViewModel by viewModels { viewModelFactory }
-
     private val popularTvShowsRowViewModel: PopularTvShowsRowViewModel by viewModels { viewModelFactory }
     private val topRatedTvShowsRowViewModel: TopRatedTvShowsRowViewModel by viewModels { viewModelFactory }
     private val onTheAirTvShowsRowViewModel: OnTheAirTvShowsRowViewModel by viewModels { viewModelFactory }

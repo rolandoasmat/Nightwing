@@ -29,7 +29,6 @@ import com.asmat.rolando.nightwing.tv_show_details.TvShowDetailsViewModel
 import com.asmat.rolando.nightwing.tv_shows_tab.OnTheAirTvShowsRowViewModel
 import com.asmat.rolando.nightwing.tv_shows_tab.PopularTvShowsRowViewModel
 import com.asmat.rolando.nightwing.tv_shows_tab.TopRatedTvShowsRowViewModel
-import com.asmat.rolando.nightwing.tv_shows_tab.TvShowsTabViewModel
 import com.asmat.rolando.nightwing.tv_shows_tab.on_the_air.OnTheAirTvShowsViewModel
 import com.asmat.rolando.nightwing.tv_shows_tab.popular.PopularTvShowsViewModel
 import com.asmat.rolando.nightwing.tv_shows_tab.top_rated.TopRatedTvShowsViewModel
@@ -65,7 +64,6 @@ class ViewModelFactory @Inject constructor(
             modelClass.isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel(moviesRepository, peopleRepository, tvShowsRepository, uiModelMapper) as T
             modelClass.isAssignableFrom(RecommendedMoviesViewModel::class.java) -> RecommendedMoviesViewModel(moviesRepository, uiModelMapper, dataModelMapper) as T
             modelClass.isAssignableFrom(PopularPeopleViewModel::class.java) -> PopularPeopleViewModel(peopleRepository, uiModelMapper) as T
-            modelClass.isAssignableFrom(TvShowsTabViewModel::class.java) -> TvShowsTabViewModel(tvShowsRepository, uiModelMapper) as T
             modelClass.isAssignableFrom(PopularTvShowsViewModel::class.java) -> PopularTvShowsViewModel(tvShowsRepository, uiModelMapper) as T
             modelClass.isAssignableFrom(TopRatedTvShowsViewModel::class.java) -> TopRatedTvShowsViewModel(tvShowsRepository, uiModelMapper) as T
             modelClass.isAssignableFrom(OnTheAirTvShowsViewModel::class.java) -> OnTheAirTvShowsViewModel(tvShowsRepository, uiModelMapper) as T
