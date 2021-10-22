@@ -36,7 +36,7 @@ class SearchViewModel(
         MutableLiveData<List<SearchResultUiModel.Person>>(uiModels)
     }
 
-    private val _tvShows: LiveData<List<SearchResultUiModel.TvShow>> = Transformations.switchMap(tvShowsRepository.searchTvShowsPaginatedRequest.data) { response ->
+    private val _tvShows: LiveData<List<SearchResultUiModel.TvShow>> = Transformations.switchMap(tvShowsRepository.searchTvShowsPaginatedRequest().data()) { response ->
         val uiModels = mapper.mapTvShows(response)
         MutableLiveData<List<SearchResultUiModel.TvShow>>(uiModels)
     }
@@ -80,7 +80,7 @@ class SearchViewModel(
                     peopleRepository.loadMorePersonsSearchResults()
                 }
                 SearchMode.TV_SHOWS -> {
-                    tvShowsRepository.searchTvShowsPaginatedRequest.loadMore()
+                    tvShowsRepository.searchTvShowsPaginatedRequest().loadMore()
                 }
             }
         }
@@ -106,8 +106,8 @@ class SearchViewModel(
                     peopleRepository.loadPersonsSearchResults()
                 }
                 SearchMode.TV_SHOWS -> {
-                    tvShowsRepository.searchTvShowsPaginatedRequest.setSearchTerm(term)
-                    tvShowsRepository.searchTvShowsPaginatedRequest.load()
+                    tvShowsRepository.searchTvShowsPaginatedRequest().setSearchTerm(term)
+                    tvShowsRepository.searchTvShowsPaginatedRequest().load()
                 }
             }
         }

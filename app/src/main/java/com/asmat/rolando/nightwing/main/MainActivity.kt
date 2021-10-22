@@ -36,10 +36,14 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(R.id.homeScreen, R.id.searchScreen,  R.id.savedTab)
         )
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.label == "Movie Details" || destination.label == "Cast Details" || destination.label == "TV Show Details") {
+                supportActionBar?.hide()
+            } else {
+                supportActionBar?.show()
+            }
+        }
         setupActionBarWithNavController(navController, appBarConfiguration)
-
-        // TODO only hide when in a details screen and show otherwise
-        supportActionBar?.hide()
     }
 
     override fun onSupportNavigateUp(): Boolean {

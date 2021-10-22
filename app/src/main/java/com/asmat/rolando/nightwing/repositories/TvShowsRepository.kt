@@ -25,7 +25,8 @@ open class TvShowsRepository @Inject constructor(
         private val tvShowMapper: TvShowMapper
 ) {
 
-    val searchTvShowsPaginatedRequest = SearchTvShowsPaginatedRequest(tmdbClient, schedulersProvider )
+    private val _searchTvShowsPaginatedRequest = SearchTvShowsPaginatedRequest(tmdbClient, schedulersProvider )
+    open fun searchTvShowsPaginatedRequest() = _searchTvShowsPaginatedRequest
 
     fun getPopularTvShows(page: Int) = tmdbClient.getPopularTvShows(page).subscribeOn(schedulersProvider.ioScheduler)
 

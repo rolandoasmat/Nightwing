@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
 import com.asmat.rolando.nightwing.networking.models.MoviesResponse
 import com.asmat.rolando.nightwing.networking.models.PersonsResponse
+import com.asmat.rolando.nightwing.networking.models.TvShowsResponse
 import com.asmat.rolando.nightwing.repositories.MoviesRepository
 import com.asmat.rolando.nightwing.repositories.PeopleRepository
 import com.asmat.rolando.nightwing.repositories.TvShowsRepository
@@ -24,6 +25,8 @@ class SearchViewModelTests {
     @Mock lateinit var moviesRepository: MoviesRepository
     @Mock lateinit var peopleRepository: PeopleRepository
     @Mock lateinit var tvShowsRepository: TvShowsRepository
+    @Mock lateinit var searchTvShowsPaginatedRequest: SearchTvShowsPaginatedRequest
+    @Mock lateinit var searchTvShowsPaginatedRequestData: MutableLiveData<List<TvShowsResponse.Item>>
     @Mock lateinit var mapper: UiModelMapper
 
     private val movieSearchResultsData = MutableLiveData<List<MoviesResponse.Movie>>()
@@ -36,6 +39,8 @@ class SearchViewModelTests {
         MockitoAnnotations.initMocks(this)
         whenever(moviesRepository.movieSearchResultsData()).thenReturn(movieSearchResultsData)
         whenever(peopleRepository.personsSearchResultsData()).thenReturn(personsSearchResultsData)
+        whenever(searchTvShowsPaginatedRequest.data()).thenReturn(searchTvShowsPaginatedRequestData)
+        whenever(tvShowsRepository.searchTvShowsPaginatedRequest()).thenReturn(searchTvShowsPaginatedRequest)
         viewModel = SearchViewModel(moviesRepository, peopleRepository, tvShowsRepository, mapper)
     }
 

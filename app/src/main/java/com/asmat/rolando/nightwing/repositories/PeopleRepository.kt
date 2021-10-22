@@ -20,7 +20,7 @@ open class PeopleRepository @Inject constructor(
 
     private val searchPersonsPaginatedRequest = SearchPersonsPaginatedRequest(tmdbClient, schedulersProvider.ioScheduler, schedulersProvider.mainScheduler)
 
-    open fun personsSearchResultsData() = searchPersonsPaginatedRequest.data
+    open fun personsSearchResultsData() = searchPersonsPaginatedRequest.data()
     open fun setPersonsSearchQueryText(query: String) = searchPersonsPaginatedRequest.setSearchTerm(query)
     open fun loadPersonsSearchResults() = searchPersonsPaginatedRequest.load()
     fun loadMorePersonsSearchResults() = searchPersonsPaginatedRequest.loadMore()

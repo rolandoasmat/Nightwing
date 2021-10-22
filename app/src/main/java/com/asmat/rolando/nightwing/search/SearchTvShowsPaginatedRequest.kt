@@ -7,7 +7,7 @@ import com.asmat.rolando.nightwing.networking.models.TvShowsResponse
 import com.asmat.rolando.nightwing.repositories.SchedulersProvider
 import io.reactivex.Single
 
-data class SearchTvShowsPaginatedRequest(
+open class SearchTvShowsPaginatedRequest(
         private val tmdbClient: TheMovieDBClient,
         private val schedulersProvider: SchedulersProvider) : PaginatedRequest<TvShowsResponse.Item>(schedulersProvider.mainScheduler){
 

@@ -27,7 +27,7 @@ abstract class PaginatedMovieGridViewModel(moviesRepository: MoviesRepository,
     val errorLoadingMore by lazy { paginatedRequest.errorLoadingMore }
 
     override val uiModels: LiveData<List<MovieGridItemUiModel>>
-        get() = Transformations.map(paginatedRequest.data) {
+        get() = Transformations.map(paginatedRequest.data()) {
             uiModelMapper.mapToGridUiModels(it)
         }
 
@@ -44,7 +44,7 @@ abstract class PaginatedMovieGridViewModel(moviesRepository: MoviesRepository,
     override fun load() {
         init()
         if (onlyLoadIfDataIsNull) {
-            if (paginatedRequest.data.value == null) {
+            if (paginatedRequest.data().value == null) {
                 paginatedRequest.load()
             }
         } else {
@@ -60,8 +60,8 @@ abstract class PaginatedMovieGridViewModel(moviesRepository: MoviesRepository,
     }
 
     private fun init() {
-        paginatedRequest.data.removeObserver {  }
-        paginatedRequest.data.observeForever { movieResponses ->
+        paginatedRequest.data().removeObserver {  }
+        paginatedRequest.data().observeForever { movieResponses ->
             movies.value = dataModelMapper.map(movieResponses)
         }
     }

@@ -10,12 +10,13 @@ import io.reactivex.disposables.Disposable
  * data request.
  */
 @Deprecated(message = "Replace with Paging3 library")
-abstract class PaginatedRequest<T>(open val mainThreadScheduler: Scheduler) {
+open abstract class PaginatedRequest<T>(open val mainThreadScheduler: Scheduler) {
 
     private var pageToLoad = 1
     private var totalNumOfPages: Int? = null
 
-    val data = MutableLiveData<List<T>>()
+    private val _data = MutableLiveData<List<T>>()
+    open fun data() = _data
     val loading = MutableLiveData<Boolean>()
     val loadingMore = MutableLiveData<Boolean>()
     val error = MutableLiveData<Throwable>()
@@ -44,7 +45,7 @@ abstract class PaginatedRequest<T>(open val mainThreadScheduler: Scheduler) {
                 .observeOn(mainThreadScheduler)
                 .subscribe({ pagedData ->
                     loading.value = false
-                    data.value = pagedData.items
+                    _data.value = pagedData.items
                     totalNumOfPages = pagedData.totalNumOfPages
                     pageToLoad++
                 }, { loadError ->
@@ -74,10 +75,10 @@ abstract class PaginatedRequest<T>(open val mainThreadScheduler: Scheduler) {
         loadMoreSubscription = fetchData(pageToLoad)
                 .observeOn(mainThreadScheduler)
                 .subscribe({ pagedData ->
-                    val currentItems = data.value ?: emptyList()
+                    val currentItems = _data.value ?: emptyList()
                     val newList = currentItems + pagedData.items
                     loadingMore.value = false
-                    data.value = newList
+                    _data.value = newList
                     pageToLoad++
                 }, { loadError ->
                     loadingMore.value = false
@@ -90,7 +91,7 @@ abstract class PaginatedRequest<T>(open val mainThreadScheduler: Scheduler) {
      * Gets the item at a given position, null otherwise
      */
     fun getItem(index: Int): T? {
-        return data.value?.getOrNull(index)
+        return _data.value?.getOrNull(index)
     }
 
     /**
@@ -99,7 +100,7 @@ abstract class PaginatedRequest<T>(open val mainThreadScheduler: Scheduler) {
     open fun reset() {
         pageToLoad = 1
         totalNumOfPages = null
-        data.value = null
+        _data.value = null
         loading.value = null
         loadingMore.value = null
         error.value = null

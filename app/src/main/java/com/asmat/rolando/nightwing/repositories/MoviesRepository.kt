@@ -124,7 +124,7 @@ open class MoviesRepository @Inject constructor(
     private val searchMoviesPaginatedRequest = SearchMoviesPaginatedRequest(tmdbClient, schedulersProvider.ioScheduler, schedulersProvider.mainScheduler)
     val recommendedMoviesPaginatedRequest = RecommendedMoviesPaginatedRequest(tmdbClient, schedulersProvider)
 
-    open fun movieSearchResultsData() = searchMoviesPaginatedRequest.data
+    open fun movieSearchResultsData() = searchMoviesPaginatedRequest.data()
     open fun setMovieSearchQueryText(query: String) = searchMoviesPaginatedRequest.setSearchTerm(query)
     open fun loadMovieSearchResults() = searchMoviesPaginatedRequest.load()
     open fun loadMoreMovieSearchResults() = searchMoviesPaginatedRequest.loadMore()
