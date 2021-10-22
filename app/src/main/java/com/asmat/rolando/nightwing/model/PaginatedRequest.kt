@@ -9,6 +9,7 @@ import io.reactivex.disposables.Disposable
  * Encapsulates the states and data of a paginated
  * data request.
  */
+@Deprecated(message = "Replace with Paging3 library")
 abstract class PaginatedRequest<T>(open val mainThreadScheduler: Scheduler) {
 
     private var pageToLoad = 1

@@ -34,15 +34,6 @@ import javax.inject.Inject
 
 class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUiModel> {
 
-    companion object {
-        const val MOVIE_ID_ARG = "movieIdArg"
-        fun newInstance(extras: Bundle?): MovieDetailsFragment {
-            val fragment = MovieDetailsFragment()
-            fragment.arguments = extras
-            return fragment
-        }
-    }
-
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     val viewModel: MovieDetailsViewModel by viewModels{ viewModelFactory }
@@ -335,4 +326,13 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
         }
     }
     //endregion
+
+    companion object {
+        const val MOVIE_ID_ARG = "movieIdArg"
+        fun newInstance(extras: Bundle?): MovieDetailsFragment {
+            val fragment = MovieDetailsFragment()
+            fragment.arguments = extras
+            return fragment
+        }
+    }
 }

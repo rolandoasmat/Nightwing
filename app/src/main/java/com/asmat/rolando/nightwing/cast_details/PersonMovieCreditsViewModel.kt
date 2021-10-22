@@ -21,7 +21,7 @@ class PersonMovieCreditsViewModel(
     init {
         viewModelScope.launch {
             peopleRepository.getPersonMovieCredits(personID).collect { resource ->
-                handleMovieCreditsResponse(resource)
+//                handleMovieCreditsResponse(resource)
             }
         }
     }

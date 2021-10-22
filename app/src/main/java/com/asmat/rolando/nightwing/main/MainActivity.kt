@@ -37,6 +37,9 @@ class MainActivity : AppCompatActivity() {
             setOf(R.id.homeScreen, R.id.searchScreen,  R.id.savedTab)
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        // TODO only hide when in a details screen and show otherwise
+        supportActionBar?.hide()
     }
 
     override fun onSupportNavigateUp(): Boolean {
