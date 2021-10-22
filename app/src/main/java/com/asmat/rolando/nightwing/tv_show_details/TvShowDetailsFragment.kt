@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_tv_show_details.*
 import kotlinx.android.synthetic.main.fragment_tv_show_details.toolbar
 import javax.inject.Inject
 
-class TvShowDetailsFragment: Fragment() {
+class TvShowDetailsFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -32,7 +32,11 @@ class TvShowDetailsFragment: Fragment() {
 
     val args: TvShowDetailsFragmentArgs by navArgs()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_tv_show_details, container, false)
     }
 
@@ -50,13 +54,6 @@ class TvShowDetailsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        seasonsRowView?.configure(title = "Seasons", seeAllButtonEnabled = false, callback = object : RowView.Callback {
-            override fun onCardClicked(id: Int) {
-                val action = TvShowDetailsFragmentDirections
-                    .actionTvShowDetailsToTvSeasonDetails(args.tvShowIdArg, id)
-                findNavController().navigate(action)
-            }
-        })
         heartContainer?.setOnClickListener {
             viewModel.heartIconTapped()
         }
@@ -78,14 +75,25 @@ class TvShowDetailsFragment: Fragment() {
             statusLabel?.text = it.status
             it.backdropUrl?.let { url ->
                 Picasso.get()
-                        .load(url)
-                        .into(tvShowBackdrop)
+                    .load(url)
+                    .into(tvShowBackdrop)
             }
             tvShowCollapsingToolbar?.title = it.name
         }
-//        viewModel.seasons.observe(viewLifecycleOwner) {
-//            seasonsRowView?.setData(it)
-//        }
+        viewModel.seasons.observe(viewLifecycleOwner) { items ->
+            seasonsRowView?.configure(
+                title = "Seasons",
+                seeAllButtonEnabled = false,
+                callback = object : RowView.Callback {
+                    override fun onCardClicked(id: Int) {
+                        val action = TvShowDetailsFragmentDirections
+                            .actionTvShowDetailsToTvSeasonDetails(args.tvShowIdArg, id)
+                        findNavController().navigate(action)
+                    }
+                },
+                data = items
+            )
+        }
         viewModel.isSaved.observe(viewLifecycleOwner) {
             heartIcon?.isSelected = it == true
         }
@@ -96,16 +104,20 @@ class TvShowDetailsFragment: Fragment() {
 
     private fun setupToolbar() {
         val appBarConfiguration = AppBarConfiguration(findNavController().graph)
-        tvShowCollapsingToolbar?.setupWithNavController(toolbar, findNavController(), appBarConfiguration)
+        tvShowCollapsingToolbar?.setupWithNavController(
+            toolbar,
+            findNavController(),
+            appBarConfiguration
+        )
     }
 
     private fun shareTvShow(data: ShareData?) {
         data?.let {
             val mimeType = "text/plain"
             val intent = ShareCompat.IntentBuilder.from(requireActivity())
-                    .setChooserTitle(it.title)
-                    .setType(mimeType)
-                    .setText(it.message).intent
+                .setChooserTitle(it.title)
+                .setType(mimeType)
+                .setText(it.message).intent
             startActivity(Intent.createChooser(intent, it.title))
         }
     }

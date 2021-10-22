@@ -36,11 +36,15 @@ class RowView @JvmOverloads constructor(
     fun configure(
         title: String? = null,
         seeAllButtonEnabled: Boolean = true,
-        callback: Callback? = null)
+        callback: Callback? = null,
+        data: List<RowViewItemUiModel>? = null)
     {
         movieTitleLabel.text = title
         seeAllLabel.isGone = !seeAllButtonEnabled
         this.callback = callback
+        data?.let { items ->
+            setData(items)
+        }
     }
 
     fun observe(viewModel: RowViewModel<*>, viewLifecycleOwner: LifecycleOwner) {
