@@ -18,9 +18,11 @@ import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
 import com.asmat.rolando.nightwing.extensions.gone
 import com.asmat.rolando.nightwing.extensions.visible
+import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
 import com.asmat.rolando.nightwing.networking.models.CreditsResponse
 import com.asmat.rolando.nightwing.networking.models.ReviewsResponse
 import com.asmat.rolando.nightwing.networking.models.VideosResponse
+import com.asmat.rolando.nightwing.repositories.MoviesRepository
 import com.asmat.rolando.nightwing.ui.common.BaseLinearAdapter
 import com.asmat.rolando.nightwing.ui.row_view.RowViewItemUiModel
 import com.asmat.rolando.nightwing.ui.row_view.RowView
@@ -42,6 +44,10 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
     private lateinit var trailersLinearAdapter: TrailersLinearAdapter
     private lateinit var castLinearAdapter: CastLinearAdapter
     private lateinit var reviewsLinearAdapter: ReviewsLinearAdapter
+
+    val similarMoviesRowViewModel: SimilarMoviesRowViewModel by lazy {
+        viewModelFactory.getSimilarMoviesRowViewModel(movieID)
+    }
 
     private val movieID: Int
         get() {
@@ -118,9 +124,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
             updateCast(cast)
         })
 
-//        viewModel.similarMovies.observe(viewLifecycleOwner) {
-//            similarMoviesRow.setData(it)
-//        }
+        similarMoviesRow.observe(similarMoviesRowViewModel, viewLifecycleOwner)
 
 //        viewModel.recommendedMovies.observe(viewLifecycleOwner) {
 //            recommendedMoviesRow.setData(it)
@@ -184,7 +188,9 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
     private fun setupSimilarMoviesRow() {
         similarMoviesRow.configure("Similar Movies", false, object : RowView.Callback {
             override fun onCardClicked(id: Int) = navigateToMovieDetails(id)
+            override fun onRetry() = similarMoviesRowViewModel.load()
         })
+        similarMoviesRowViewModel.load()
     }
 
     private fun setupRecommendedMoviesRow() {
