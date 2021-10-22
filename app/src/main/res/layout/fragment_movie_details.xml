@@ -154,7 +154,8 @@
             <com.asmat.rolando.nightwing.ui.row_view.RowView
                 android:id="@+id/moreFromDirectorMoviesRow"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
             <!--Reviews-->
             <TextView

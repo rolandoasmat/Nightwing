@@ -12,6 +12,7 @@ import com.asmat.rolando.nightwing.cast_details.PersonMovieCreditsViewModel
 import com.asmat.rolando.nightwing.database.DatabaseRepository
 import com.asmat.rolando.nightwing.database.NightwingDatabase
 import com.asmat.rolando.nightwing.movie_details.MovieDetailsViewModel
+import com.asmat.rolando.nightwing.movie_details.RecommendedMoviesRowViewModel
 import com.asmat.rolando.nightwing.movie_details.SimilarMoviesRowViewModel
 import com.asmat.rolando.nightwing.movies_tab.NowPlayingMoviesRowViewModel
 import com.asmat.rolando.nightwing.movies_tab.PopularMoviesRowViewModel
@@ -87,6 +88,10 @@ class ViewModelFactory @Inject constructor(
 
     fun getSimilarMoviesRowViewModel(movieID: Int): SimilarMoviesRowViewModel {
         return SimilarMoviesRowViewModel(moviesRepository, uiModelMapper, movieID)
+    }
+
+    fun getRecommendedMoviesRowViewModel(movieID: Int): RecommendedMoviesRowViewModel {
+        return RecommendedMoviesRowViewModel(moviesRepository, uiModelMapper, movieID)
     }
 
 }

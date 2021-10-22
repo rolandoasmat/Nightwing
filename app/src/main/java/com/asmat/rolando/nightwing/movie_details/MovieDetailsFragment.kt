@@ -49,6 +49,12 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
         viewModelFactory.getSimilarMoviesRowViewModel(movieID)
     }
 
+    val recommendedMoviesRowViewModel: RecommendedMoviesRowViewModel by lazy {
+        viewModelFactory.getRecommendedMoviesRowViewModel(movieID)
+    }
+
+    lateinit var moreMoviesFromDirectorRowViewModel: MoreMoviesFromDirectorRowViewModel
+
     private val movieID: Int
         get() {
             return requireArguments().getInt(MOVIE_ID_ARG)
@@ -97,9 +103,10 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
             taglineLabel.text = it.tagline
         }
 
+        // TODO refactor row of director movies
         viewModel.director.observe(viewLifecycleOwner) {
-            directorLabel?.text = it
-            moreFromDirectorMoviesRow?.configure(title = resources.getString(R.string.more_from_director, it))
+//            directorLabel?.text = it
+//            moreFromDirectorMoviesRow?.configure(title = resources.getString(R.string.more_from_director, it))
         }
 
         // Movie icons
@@ -126,9 +133,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
 
         similarMoviesRow.observe(similarMoviesRowViewModel, viewLifecycleOwner)
 
-//        viewModel.recommendedMovies.observe(viewLifecycleOwner) {
-//            recommendedMoviesRow.setData(it)
-//        }
+        recommendedMoviesRow.observe(recommendedMoviesRowViewModel, viewLifecycleOwner)
 
 //        viewModel.directorMovies.observe(viewLifecycleOwner) {
 //            moreFromDirectorMoviesRow.setData(it)
@@ -146,7 +151,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
         setupCastRecyclerView()
         setupSimilarMoviesRow()
         setupRecommendedMoviesRow()
-        setupDirectorMoviesRow()
+//        setupDirectorMoviesRow()
     }
 
     private fun setupToolbar() {
@@ -194,13 +199,15 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
     }
 
     private fun setupRecommendedMoviesRow() {
-        recommendedMoviesRow.configure("Recommended movies", true, object: RowView.Callback {
+        recommendedMoviesRow.configure("Recommended movies", false, object: RowView.Callback {
             override fun onSeeAllClicked() {
                 val action = MovieDetailsFragmentDirections.actionMovieDetailsScreenToRecommendedMoviesGrid(movieID)
                 findNavController().navigate(action)
             }
             override fun onCardClicked(id: Int) = navigateToMovieDetails(id)
+            override fun onRetry() = recommendedMoviesRowViewModel.load()
         })
+        recommendedMoviesRowViewModel.load()
     }
 
     private fun setupDirectorMoviesRow() {
@@ -223,10 +230,6 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
         reviewsRecyclerView.adapter = reviewsLinearAdapter
         reviewsRecyclerView.isNestedScrollingEnabled = false
     }
-
-    //endregion
-
-    //region Update UI
 
     private fun updateBackdrop(url: String?) {
         url?.let {
@@ -318,9 +321,6 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
         startActivity(Intent.createChooser(intent, title))
     }
 
-    //endregion
-
-    //region Icons
     private fun updateHeart(enable: Boolean) {
         heartIcon?.isSelected = enable
     }
@@ -331,7 +331,6 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
             findNavController().navigate(action)
         }
     }
-    //endregion
 
     companion object {
         const val MOVIE_ID_ARG = "movieIdArg"
