@@ -18,7 +18,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TvShowsRepository @Inject constructor(
+open class TvShowsRepository @Inject constructor(
         private val tmdbClient: TheMovieDBClient,
         private val schedulersProvider: SchedulersProvider,
         private val databaseRepository: DatabaseRepository,

@@ -6,7 +6,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SchedulersProvider @Inject constructor() {
+open class SchedulersProvider @Inject constructor() {
 
     val mainScheduler = AndroidSchedulers.mainThread()
 

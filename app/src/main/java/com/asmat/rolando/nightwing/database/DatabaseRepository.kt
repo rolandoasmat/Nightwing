@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 @Deprecated(message = "Decided to inject NightwingDatabase instead. This extra layer is not needed.")
 @Singleton
-class DatabaseRepository @Inject constructor(private val db: NightwingDatabase) {
+open class DatabaseRepository @Inject constructor(private val db: NightwingDatabase) {
 
     // Movies
 

@@ -52,10 +52,10 @@ class MoviesRepositoryTest {
 
     // Favorite movies
 
-    @Test
-    fun getFavoriteMovie_databaseManagerInvoked() {
-        // Arrange
-        val id = 4444
+//    @Test
+//    fun getFavoriteMovie_databaseManagerInvoked() {
+//        // Arrange
+//        val id = 4444
 //        val expected = MutableLiveData<FavoriteMovie>()
 //        expected.value = TestObjectsFactory.favoriteMovie()
 //        whenever(mockDatabaseManager.getFavoriteMovie(id)).thenReturn(expected)
@@ -66,10 +66,10 @@ class MoviesRepositoryTest {
 //        // Assert
 //        verify(mockDatabaseManager).getFavoriteMovie(id)
 //        Assert.assertEquals(expected.value, actual.value)
-    }
+//    }
 
-    @Test
-    fun removeFavoriteMovie_databaseManagerInvoked() {
+//    @Test
+//    fun removeFavoriteMovie_databaseManagerInvoked() {
 //        // Arrange
 //        val id = 4444
 //        whenever(mockDatabaseManager.deleteFavoriteMovie(id)).thenReturn(Single.just(1))
@@ -79,11 +79,11 @@ class MoviesRepositoryTest {
 //
 //        // Assert
 //        verify(mockDatabaseManager).deleteFavoriteMovie(id)
-    }
+//    }
 
-    @Test
-    fun insertFavoriteMovie_databaseManagerInvoked() {
-        // Arrange
+//    @Test
+//    fun insertFavoriteMovie_databaseManagerInvoked() {
+//        // Arrange
 //        val movie = TestObjectsFactory.favoriteMovie()
 //        whenever(mockDatabaseManager.addFavoriteMovie(movie)).thenReturn(Completable.complete())
 //
@@ -92,11 +92,11 @@ class MoviesRepositoryTest {
 //
 //        // Assert
 //        verify(mockDatabaseManager).addFavoriteMovie(movie)
-    }
+//    }
 
-    @Test
-    fun getAllFavoriteMovies_databaseManagerInvoked() {
-        // Arrange
+//    @Test
+//    fun getAllFavoriteMovies_databaseManagerInvoked() {
+//        // Arrange
 //        val expected = MutableLiveData<List<FavoriteMovie>>()
 //        expected.value = TestObjectsFactory.favoriteMovies()
 //        whenever(mockDatabaseManager.getAllFavoriteMovies()).thenReturn(expected)
@@ -107,13 +107,13 @@ class MoviesRepositoryTest {
 //        // Assert
 //        verify(mockDatabaseManager).getAllFavoriteMovies()
 //        Assert.assertEquals(expected.value, actual.value)
-    }
+//    }
 
     // Watch later movies
 
-    @Test
-    fun getWatchLaterMovie_databaseManagerInvoked() {
-        // Arrange
+//    @Test
+//    fun getWatchLaterMovie_databaseManagerInvoked() {
+//         Arrange
 //        val id = 4444
 //        val expected = MutableLiveData<WatchLaterMovie>()
 //        expected.value = TestObjectsFactory.watchLaterMovie()
@@ -125,11 +125,11 @@ class MoviesRepositoryTest {
 //        // Assert
 //        verify(mockDatabaseManager).getWatchLaterMovie(id)
 //        Assert.assertEquals(expected.value, actual.value)
-    }
+//    }
 
-    @Test
-    fun removeWatchLaterMovie_databaseManagerInvoked() {
-        // Arrange
+//    @Test
+//    fun removeWatchLaterMovie_databaseManagerInvoked() {
+//         Arrange
 //        val id = 4444
 //        whenever(mockDatabaseManager.deleteWatchLaterMovie(id)).thenReturn(Single.just(1))
 //
@@ -138,11 +138,11 @@ class MoviesRepositoryTest {
 //
 //        // Assert
 //        verify(mockDatabaseManager).deleteWatchLaterMovie(id)
-    }
+//    }
 
-    @Test
-    fun insertWatchLaterMovie_databaseManagerInvoked() {
-        // Arrange
+//    @Test
+//    fun insertWatchLaterMovie_databaseManagerInvoked() {
+//         Arrange
 //        val movie = TestObjectsFactory.watchLaterMovie()
 //        whenever(mockDatabaseManager.addWatchLaterMovie(movie)).thenReturn(Completable.complete())
 //
@@ -151,11 +151,11 @@ class MoviesRepositoryTest {
 //
 //        // Assert
 //        verify(mockDatabaseManager).addWatchLaterMovie(movie)
-    }
+//    }
 
-    @Test
-    fun getAllWatchLaterMovies_databaseManagerInvoked() {
-        // Arrange
+//    @Test
+//    fun getAllWatchLaterMovies_databaseManagerInvoked() {
+//         Arrange
 //        val expected = MutableLiveData<List<WatchLaterMovie>>()
 //        expected.value = TestObjectsFactory.watchLaterMovies()
 //        whenever(mockDatabaseManager.getAllWatchLaterMovies()).thenReturn(expected)
@@ -166,7 +166,7 @@ class MoviesRepositoryTest {
 //        // Assert
 //        verify(mockDatabaseManager).getAllWatchLaterMovies()
 //        Assert.assertEquals(expected.value, actual.value)
-    }
+//    }
 
     // Network
 
