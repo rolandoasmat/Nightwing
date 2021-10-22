@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/rolandoasmat/Movie-Night.svg?branch=develop)](https://travis-ci.org/rolandoasmat/Movie-Night)
+[![rolandoasmat](https://circleci.com/gh/rolandoasmat/nightwing.svg?style=svg)](https://app.circleci.com/pipelines/github/rolandoasmat/Nightwing)
 
 # Nightwing
 Android application to browse, save and share movies or tv shows!
