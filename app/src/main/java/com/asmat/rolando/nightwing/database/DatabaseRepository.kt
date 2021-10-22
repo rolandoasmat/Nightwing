@@ -6,6 +6,7 @@ import com.asmat.rolando.nightwing.database.entities.SavedTvShow
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@Deprecated(message = "Decided to inject NightwingDatabase instead. This extra layer is not needed.")
 @Singleton
 class DatabaseRepository @Inject constructor(private val db: NightwingDatabase) {
 

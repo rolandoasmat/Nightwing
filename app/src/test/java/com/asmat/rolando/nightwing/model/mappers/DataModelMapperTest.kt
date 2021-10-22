@@ -12,17 +12,13 @@ class DataModelMapperTest {
 
     @Mock
     lateinit var mockMovieMapper: MovieMapper
-    @Mock
-    lateinit var mockFavoriteMovieMapper: FavoriteMovieMapper
-    @Mock
-    lateinit var mockWatchLaterMovieMapper: WatchLaterMovieMapper
 
     lateinit var mapper: DataModelMapper
 
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        mapper = DataModelMapper(mockMovieMapper, mockFavoriteMovieMapper, mockWatchLaterMovieMapper)
+        mapper = DataModelMapper(mockMovieMapper)
     }
 
     @Test

@@ -7,6 +7,7 @@ import com.asmat.rolando.nightwing.networking.models.MoviesResponse
 import com.asmat.rolando.nightwing.networking.models.PersonsResponse
 import com.asmat.rolando.nightwing.repositories.MoviesRepository
 import com.asmat.rolando.nightwing.repositories.PeopleRepository
+import com.asmat.rolando.nightwing.repositories.TvShowsRepository
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Before
@@ -22,6 +23,7 @@ class SearchViewModelTests {
 
     @Mock lateinit var moviesRepository: MoviesRepository
     @Mock lateinit var peopleRepository: PeopleRepository
+    @Mock lateinit var tvShowsRepository: TvShowsRepository
     @Mock lateinit var mapper: UiModelMapper
 
     private val movieSearchResultsData = MutableLiveData<List<MoviesResponse.Movie>>()
@@ -34,7 +36,7 @@ class SearchViewModelTests {
         MockitoAnnotations.initMocks(this)
         whenever(moviesRepository.movieSearchResultsData()).thenReturn(movieSearchResultsData)
         whenever(peopleRepository.personsSearchResultsData()).thenReturn(personsSearchResultsData)
-        viewModel = SearchViewModel(moviesRepository, peopleRepository, mapper)
+        viewModel = SearchViewModel(moviesRepository, peopleRepository, tvShowsRepository, mapper)
     }
 
     @Test

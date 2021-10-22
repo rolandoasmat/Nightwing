@@ -1,7 +1,5 @@
 package com.asmat.rolando.nightwing
 
-import com.asmat.rolando.nightwing.database.entities.FavoriteMovie
-import com.asmat.rolando.nightwing.database.entities.WatchLaterMovie
 import com.asmat.rolando.nightwing.model.Movie
 import com.asmat.rolando.nightwing.networking.models.*
 
@@ -15,42 +13,6 @@ object TestObjectsFactory {
                 "test title",
                 "test backdrop path",
                 4.4)
-    }
-
-    fun favoriteMovie(id: Int = 4444): FavoriteMovie {
-        return FavoriteMovie(id,
-                "$id test poster path",
-                "$id test overview",
-                "$id test release data",
-                "$id test title",
-                "$id test backdrop path",
-                4.44)
-    }
-
-    fun favoriteMovies(count: Int = 4): List<FavoriteMovie> {
-        val list = mutableListOf<FavoriteMovie>()
-        for (i in 1..count) {
-            list.add(favoriteMovie(i))
-        }
-        return list
-    }
-
-    fun watchLaterMovie(id: Int = 4444): WatchLaterMovie {
-        return WatchLaterMovie(id,
-                "$id test poster path",
-                "$id test overview",
-                "$id test release data",
-                "$id test title",
-                "$id test backdrop path",
-                4.44)
-    }
-
-    fun watchLaterMovies(count: Int = 4): List<WatchLaterMovie> {
-        val list = mutableListOf<WatchLaterMovie>()
-        for (i in 1..count) {
-            list.add(watchLaterMovie(i))
-        }
-        return list
     }
 
     fun videosResponse(): VideosResponse {
@@ -128,7 +90,7 @@ object TestObjectsFactory {
                 "test backdrop path",
                 "test overview",
                 "test poster path")
-        return PersonMovieCredits(listOf(castCredit, castCredit, castCredit))
+        return PersonMovieCredits(listOf(castCredit, castCredit, castCredit), emptyList())
     }
     fun moviesResponse(): MoviesResponse.Movie {
         return MoviesResponse.Movie("test poster path",
