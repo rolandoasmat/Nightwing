@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.asmat.rolando.nightwing.model.MovieSummary
 import com.asmat.rolando.nightwing.model.PersonMovieCredits
 import com.asmat.rolando.nightwing.model.Resource
 import com.asmat.rolando.nightwing.model.mappers.UiModelMapper

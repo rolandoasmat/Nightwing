@@ -34,13 +34,16 @@ class CastMovieCreditsFragment: Fragment(), MovieCreditsAdapter.ItemCallback {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel: PersonMovieCreditsViewModel by viewModels { viewModelFactory }
+
+    val viewModel: PersonMovieCreditsViewModel by lazy {
+        viewModelFactory.getPersonMovieCreditsViewModel(personID)
+    }
 
     private var listener: Listener? = null
 
     private val adapter by lazy { MovieCreditsAdapter(this) }
 
-    private val personID: Int? by lazy { arguments?.getInt(ARG_PERSON_ID) }
+    private val personID: Int by lazy { arguments?.getInt(ARG_PERSON_ID) ?: 1 } // TODO show error
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +77,6 @@ class CastMovieCreditsFragment: Fragment(), MovieCreditsAdapter.ItemCallback {
         val numOfColumns = ViewUtils.calculateNumberOfColumns(requireActivity())
         movieCreditsRecyclerView?.layoutManager = androidx.recyclerview.widget.GridLayoutManager(context, numOfColumns)
         movieCreditsRecyclerView?.adapter = adapter
-//        personID?. let { id -> viewModel.init(id) }
         observeViewModel()
     }
 

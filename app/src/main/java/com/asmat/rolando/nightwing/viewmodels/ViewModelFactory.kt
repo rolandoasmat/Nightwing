@@ -48,10 +48,7 @@ class ViewModelFactory @Inject constructor(
     private val tvShowsRepository: TvShowsRepository,
     private val dataModelMapper: DataModelMapper,
     private val uiModelMapper: UiModelMapper,
-    private val deepLinksUtils: DeepLinksUtils,
-    private val tmdbClient: TheMovieDBClient,
-    private val databaseRepository: DatabaseRepository,
-    private val database: NightwingDatabase
+    private val deepLinksUtils: DeepLinksUtils
 ) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -86,12 +83,12 @@ class ViewModelFactory @Inject constructor(
         }
     }
 
-    fun getSimilarMoviesRowViewModel(movieID: Int): SimilarMoviesRowViewModel {
-        return SimilarMoviesRowViewModel(moviesRepository, uiModelMapper, movieID)
-    }
+    // TODO replace with @AssistedInject
 
-    fun getRecommendedMoviesRowViewModel(movieID: Int): RecommendedMoviesRowViewModel {
-        return RecommendedMoviesRowViewModel(moviesRepository, uiModelMapper, movieID)
-    }
+    fun getSimilarMoviesRowViewModel(movieID: Int) = SimilarMoviesRowViewModel(moviesRepository, uiModelMapper, movieID)
+
+    fun getRecommendedMoviesRowViewModel(movieID: Int) = RecommendedMoviesRowViewModel(moviesRepository, uiModelMapper, movieID)
+
+    fun getPersonMovieCreditsViewModel(personID: Int) = PersonMovieCreditsViewModel(peopleRepository, uiModelMapper, personID)
 
 }
