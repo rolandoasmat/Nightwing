@@ -1,8 +1,10 @@
 package com.asmat.rolando.nightwing.cast_details
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.asmat.rolando.nightwing.model.MovieSummary
 import com.asmat.rolando.nightwing.model.PersonMovieCredits
 import com.asmat.rolando.nightwing.model.Resource
 import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
@@ -16,12 +18,14 @@ class PersonMovieCreditsViewModel(
     private val personID: Int
     ): ViewModel() {
 
-    val uiModel = MutableLiveData<PersonMovieCreditsUiModel>()
+    private val _uiModel = MutableLiveData<PersonMovieCreditsUiModel>()
+    val uiModel: LiveData<PersonMovieCreditsUiModel>
+        get() = _uiModel
 
     init {
         viewModelScope.launch {
-            peopleRepository.getPersonMovieCredits(personID).collect { resource ->
-//                handleMovieCreditsResponse(resource)
+            peopleRepository.getActorMovieCredits(personID).collect { resource ->
+                handleMovieCreditsResponse(resource)
             }
         }
     }
@@ -33,7 +37,7 @@ class PersonMovieCreditsViewModel(
             }
             is Resource.Success -> {
                 resource.data?.let { credits ->
-                    uiModel.value = uiModelMapper.mapPersonMovieCredits(credits)
+                    _uiModel.value = uiModelMapper.mapPersonMovieCredits(credits)
                 }
             }
             is Resource.Error -> {

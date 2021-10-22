@@ -33,7 +33,7 @@ open class PeopleRepository @Inject constructor(
         return tmdbClient.getPersonDetails(id).subscribeOn(Schedulers.io())
     }
 
-    fun getPersonMovieCredits(id: Int) : Flow<Resource<List<MovieSummary>>> {
+    fun getDirectorMovieCredits(id: Int) : Flow<Resource<List<MovieSummary>>> {
         return object: NetworkBoundResource<List<MovieSummary>>(null) {
             override suspend fun fetchData(): NetworkResponse<List<MovieSummary>> {
                 val response = tmdbClient.getPersonMovieCredits(id)
@@ -47,6 +47,19 @@ open class PeopleRepository @Inject constructor(
                             posterPath = posterURL ?: "")
                     } ?: emptyList()
                     NetworkResponse.Success(movies)
+                } ?: run {
+                    NetworkResponse.Failure(response.message())
+                }
+            }
+        }.load()
+    }
+
+    fun getActorMovieCredits(id: Int) : Flow<Resource<PersonMovieCredits>> {
+        return object: NetworkBoundResource<PersonMovieCredits>(null) {
+            override suspend fun fetchData(): NetworkResponse<PersonMovieCredits> {
+                val response = tmdbClient.getPersonMovieCredits(id)
+                return response.body()?.toDataModel()?.let { data ->
+                    NetworkResponse.Success(data)
                 } ?: run {
                     NetworkResponse.Failure(response.message())
                 }

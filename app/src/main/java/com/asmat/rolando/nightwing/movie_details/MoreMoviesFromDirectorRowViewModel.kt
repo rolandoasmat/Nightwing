@@ -4,7 +4,6 @@ import com.asmat.rolando.nightwing.model.MovieSummary
 import com.asmat.rolando.nightwing.model.Resource
 import com.asmat.rolando.nightwing.model.mappers.UiModelMapper
 import com.asmat.rolando.nightwing.movies_tab.RowViewModel
-import com.asmat.rolando.nightwing.repositories.MoviesRepository
 import com.asmat.rolando.nightwing.repositories.PeopleRepository
 import com.asmat.rolando.nightwing.ui.row_view.RowViewUiModel
 import kotlinx.coroutines.flow.Flow
@@ -16,7 +15,7 @@ class MoreMoviesFromDirectorRowViewModel(
 ): RowViewModel<MovieSummary>() {
 
     override fun dataFlow(): Flow<Resource<List<MovieSummary>>> {
-        return peopleRepository.getPersonMovieCredits(directorID)
+        return peopleRepository.getDirectorMovieCredits(directorID)
     }
 
     override fun transformDataToUiModel(data: List<MovieSummary>): RowViewUiModel {
