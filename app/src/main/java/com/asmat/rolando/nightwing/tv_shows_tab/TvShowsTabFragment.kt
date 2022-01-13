@@ -50,7 +50,7 @@ class TvShowsTabFragment: Fragment() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToPopularTvShowsFragment()
                 findNavController().navigate(action)
             }
-            override fun onCardClicked(id: Int) = navigateToTvShowDetails(id)
+            override fun onCardClicked(id: Int, view: View) = navigateToTvShowDetails(id)
             override fun onRetry() = popularTvShowsRowViewModel.load()
         })
         popularTvShowsRowViewModel.load()
@@ -60,7 +60,7 @@ class TvShowsTabFragment: Fragment() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToTopRatedTvShowsFragment()
                 findNavController().navigate(action)
             }
-            override fun onCardClicked(id: Int) = navigateToTvShowDetails(id)
+            override fun onCardClicked(id: Int, view: View) = navigateToTvShowDetails(id)
             override fun onRetry() = topRatedTvShowsRowViewModel.load()
         })
         topRatedTvShowsRowViewModel.load()
@@ -70,7 +70,7 @@ class TvShowsTabFragment: Fragment() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToOnTheAirTvShowsFragment()
                 findNavController().navigate(action)
             }
-            override fun onCardClicked(id: Int) = navigateToTvShowDetails(id)
+            override fun onCardClicked(id: Int, view: View) = navigateToTvShowDetails(id)
             override fun onRetry() = onTheAirTvShowsRowViewModel.load()
         })
         onTheAirTvShowsRowViewModel.load()

@@ -164,7 +164,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(), androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
         trailersRecyclerView.layoutManager = layoutManager
         trailersLinearAdapter = TrailersLinearAdapter(object: BaseLinearAdapter.Callback<VideosResponse.Video> {
-            override fun cardClicked(item: VideosResponse.Video) {
+            override fun cardClicked(item: VideosResponse.Video, view: View) {
                 val url = URLUtils.getYoutubeURL(item.key)
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 intent.resolveActivity(requireActivity().packageManager)?.let {
@@ -181,7 +181,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(), androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
         castRecyclerView.layoutManager = layoutManager
         castLinearAdapter = CastLinearAdapter(object: BaseLinearAdapter.Callback<Cast>{
-            override fun cardClicked(item: Cast) {
+            override fun cardClicked(item: Cast, view: View) {
                 val action = MovieDetailsFragmentDirections.actionMovieDetailsScreenToCastDetailsScreen(item.id)
                 findNavController().navigate(action)
             }
@@ -192,7 +192,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
 
     private fun setupSimilarMoviesRow() {
         similarMoviesRow.configure("Similar Movies", false, object : RowView.Callback {
-            override fun onCardClicked(id: Int) = navigateToMovieDetails(id)
+            override fun onCardClicked(id: Int, view: View) = navigateToMovieDetails(id)
             override fun onRetry() = similarMoviesRowViewModel.load()
         })
         similarMoviesRowViewModel.load()
@@ -204,7 +204,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
                 val action = MovieDetailsFragmentDirections.actionMovieDetailsScreenToRecommendedMoviesGrid(movieID)
                 findNavController().navigate(action)
             }
-            override fun onCardClicked(id: Int) = navigateToMovieDetails(id)
+            override fun onCardClicked(id: Int, view: View) = navigateToMovieDetails(id)
             override fun onRetry() = recommendedMoviesRowViewModel.load()
         })
         recommendedMoviesRowViewModel.load()
@@ -212,7 +212,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
 
     private fun setupDirectorMoviesRow() {
         moreFromDirectorMoviesRow.configure(null, false, object: RowView.Callback {
-            override fun onCardClicked(id: Int) = navigateToMovieDetails(id)
+            override fun onCardClicked(id: Int, view: View) = navigateToMovieDetails(id)
         })
     }
 
@@ -325,7 +325,7 @@ class MovieDetailsFragment: Fragment(), BaseLinearAdapter.Callback<RowViewItemUi
         heartIcon?.isSelected = enable
     }
 
-    override fun cardClicked(item: RowViewItemUiModel) {
+    override fun cardClicked(item: RowViewItemUiModel, view: View) {
         item.id?.let { movieID ->
             val action = MovieDetailsFragmentDirections.actionMovieDetailsScreenToMovieDetailsScreen(movieID)
             findNavController().navigate(action)

@@ -16,6 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/infoContainer"
+        android:transitionName="movie_grid_to_details"
         tools:background="@color/colorAccent"
         tools:layout_height="200dp"/>
 

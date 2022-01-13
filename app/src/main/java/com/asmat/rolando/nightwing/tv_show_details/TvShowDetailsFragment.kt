@@ -85,7 +85,7 @@ class TvShowDetailsFragment : Fragment() {
                 title = "Seasons",
                 seeAllButtonEnabled = false,
                 callback = object : RowView.Callback {
-                    override fun onCardClicked(id: Int) {
+                    override fun onCardClicked(id: Int, view: View) {
                         val action = TvShowDetailsFragmentDirections
                             .actionTvShowDetailsToTvSeasonDetails(args.tvShowIdArg, id)
                         findNavController().navigate(action)

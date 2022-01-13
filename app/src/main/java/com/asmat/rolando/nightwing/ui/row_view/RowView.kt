@@ -2,6 +2,7 @@ package com.asmat.rolando.nightwing.ui.row_view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isGone
 import androidx.lifecycle.LifecycleOwner
@@ -88,13 +89,13 @@ class RowView @JvmOverloads constructor(
 
     interface Callback {
         fun onSeeAllClicked() { }
-        fun onCardClicked(id: Int)
+        fun onCardClicked(id: Int, view: View)
         fun onRetry() { }
     }
 
-    override fun cardClicked(item: RowViewItemUiModel) {
+    override fun cardClicked(item: RowViewItemUiModel, view: View) {
         item.id?.let { id ->
-            this.callback?.onCardClicked(id)
+            this.callback?.onCardClicked(id, view)
         }
     }
 }

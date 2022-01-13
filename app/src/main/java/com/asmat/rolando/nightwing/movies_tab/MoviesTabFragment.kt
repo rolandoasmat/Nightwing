@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.R
@@ -46,9 +49,15 @@ class MoviesTabFragment: Fragment() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToPopularMoviesGrid()
                 findNavController().navigate(action)
             }
-            override fun onCardClicked(id: Int) {
+            override fun onCardClicked(id: Int, view: View) {
+                // Do shared element transition
                 val action = HomeTabFragmentDirections.actionGlobalActionToMovieDetailsScreen(id)
-                findNavController().navigate(action)
+                val name = "movie_grid_to_details"
+                view.findViewById<ImageView>(R.id.itemRowCardImage)?.let { imageView ->
+                    ViewCompat.setTransitionName(imageView, name)
+                    val extras = FragmentNavigatorExtras(imageView to name)
+                    findNavController().navigate(action, extras)
+                }
             }
             override fun onRetry() {
                 popularMoviesViewModel.load()
@@ -61,7 +70,7 @@ class MoviesTabFragment: Fragment() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToTopRatedMoviesGrid()
                 findNavController().navigate(action)
             }
-            override fun onCardClicked(id: Int) {
+            override fun onCardClicked(id: Int, view: View) {
                 val action = HomeTabFragmentDirections.actionGlobalActionToMovieDetailsScreen(id)
                 findNavController().navigate(action)
             }
@@ -74,7 +83,7 @@ class MoviesTabFragment: Fragment() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToNowPlayingMoviesGrid()
                 findNavController().navigate(action)
             }
-            override fun onCardClicked(id: Int) {
+            override fun onCardClicked(id: Int, view: View) {
                 val action = HomeTabFragmentDirections.actionGlobalActionToMovieDetailsScreen(id)
                 findNavController().navigate(action)
             }
@@ -87,7 +96,7 @@ class MoviesTabFragment: Fragment() {
                 val action = HomeTabFragmentDirections.actionGlobalActionToUpcomingMoviesGrid()
                 findNavController().navigate(action)
             }
-            override fun onCardClicked(id: Int) {
+            override fun onCardClicked(id: Int, view: View) {
                 val action = HomeTabFragmentDirections.actionGlobalActionToMovieDetailsScreen(id)
                 findNavController().navigate(action)
             }

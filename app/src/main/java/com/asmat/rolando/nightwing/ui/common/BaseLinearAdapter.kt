@@ -3,6 +3,9 @@ package com.asmat.rolando.nightwing.ui.common
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.view.ViewCompat
+import com.asmat.rolando.nightwing.R
 
 abstract class BaseLinearAdapter<T, V : BaseLinearAdapter<T, V>.ViewHolder>(private val callback: Callback<T>? = null) : androidx.recyclerview.widget.RecyclerView.Adapter<V>() {
 
@@ -39,15 +42,18 @@ abstract class BaseLinearAdapter<T, V : BaseLinearAdapter<T, V>.ViewHolder>(priv
 
         override fun onClick(v: View) {
             data.getOrNull(adapterPosition)?.let { item ->
-                callback?.cardClicked(item)
+                callback?.cardClicked(item, v)
             }
+//            v.findViewById<ImageView>(R.id.itemRowCardImage)?.let { imageView ->
+//                ViewCompat.setTransitionName(imageView, "movie_grid_to_details")
+//            }
         }
 
         abstract fun bind(item: T)
     }
 
     interface Callback<T> {
-        fun cardClicked(item: T)
+        fun cardClicked(item: T, view: View)
     }
 
 }
