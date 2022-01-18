@@ -22,7 +22,7 @@
 <!--    TODO deepLink also doesn't work if app is already open-->
     <!--    MOVIE DETAILS-->
     <fragment
-        android:id="@+id/movieDetailsScreen"
+        android:id="@+id/movieDetailsScreenDeepLink"
         android:name="com.asmat.rolando.nightwing.movie_details.MovieDetailsFragment"
         android:label="Movie Details"
         tools:layout="@layout/fragment_movie_details" >
@@ -43,18 +43,6 @@
             app:destination="@id/recommendedMoviesGrid" />
     </fragment>
     <fragment
-        android:id="@+id/castDetailsScreen"
-        android:name="com.asmat.rolando.nightwing.cast_details.CastDetailsFragment"
-        android:label="Cast Details"
-        tools:layout="@layout/fragment_cast_details" >
-        <argument
-            android:name="castIdArg"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_castDetailsScreen_to_movieDetailsScreen"
-            app:destination="@id/movieDetailsScreen" />
-    </fragment>
-    <fragment
         android:id="@+id/recommendedMoviesGrid"
         android:name="com.asmat.rolando.nightwing.ui.recommended_movies.RecommendedMoviesFragment"
         android:label="Recommended Movies"
@@ -67,9 +55,10 @@
             app:destination="@id/movieDetailsScreen" />
     </fragment>
     <!--    MOVIE DETAILS-->
+
     <!--    TV SHOW DETAILS-->
     <fragment
-        android:id="@+id/tvShowDetailsScreen"
+        android:id="@+id/tvShowDetailsScreenDeepLink"
         android:name="com.asmat.rolando.nightwing.tv_show_details.TvShowDetailsFragment"
         android:label="TV Show Details"
         tools:layout="@layout/fragment_tv_show_details" >
@@ -81,7 +70,6 @@
             app:argType="integer" />
     </fragment>
     <!--    TV SHOW DETAILS-->
-
 
     <!-- GRIDS -->
     <fragment
@@ -140,7 +128,6 @@
 
 
     <!-- TV SHOWS -->
-
     <fragment
         android:id="@+id/popularTvShowsFragment"
         android:name="com.asmat.rolando.nightwing.tv_shows_tab.popular.PopularTvShowsFragment"
