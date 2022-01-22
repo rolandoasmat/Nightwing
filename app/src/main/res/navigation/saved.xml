@@ -19,7 +19,7 @@
     <!-- GLOBAL ACTIONS -->
     <action
         android:id="@+id/action_globalAction_to_movieDetailsScreen"
-        app:destination="@id/movie_details" >
+        app:destination="@id/movie_details_graph" >
         <argument
             android:name="movieIdArg"
             app:argType="integer" />

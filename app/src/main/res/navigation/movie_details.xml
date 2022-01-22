@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/movie_details"
+    android:id="@+id/movie_details_graph"
     app:startDestination="@+id/movieDetailsScreen">
 
     <fragment

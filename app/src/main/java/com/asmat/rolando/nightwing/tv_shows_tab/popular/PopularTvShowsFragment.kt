@@ -3,7 +3,6 @@ package com.asmat.rolando.nightwing.tv_shows_tab.popular
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.asmat.rolando.nightwing.HomeDirections
 import com.asmat.rolando.nightwing.NightwingApplication
 import com.asmat.rolando.nightwing.home_tab.HomeTabFragmentDirections
 import com.asmat.rolando.nightwing.ui.grid.GridFragment

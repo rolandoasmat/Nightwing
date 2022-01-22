@@ -8,11 +8,12 @@ import com.asmat.rolando.nightwing.ui.common.BaseSectionsPagerAdapter
 
 class HomeTabPagerAdapter(fragment: Fragment): BaseSectionsPagerAdapter(fragment) {
 
+    private val moviesFragment = MoviesTabFragment()
+    private val tvShowsTabFragment = TvShowsTabFragment()
+    private val popularPeopleGridFragment = PopularPeopleTabFragment()
+
     override val fragments: Array<Fragment>
         get() {
-            val moviesFragment = MoviesTabFragment()
-            val tvShowsTabFragment = TvShowsTabFragment()
-            val popularPeopleGridFragment = PopularPeopleTabFragment()
             return arrayOf(moviesFragment, tvShowsTabFragment, popularPeopleGridFragment)
         }
 }
