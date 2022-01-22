@@ -20,7 +20,7 @@
     <action
         android:id="@+id/globalAction_searchTab_to_movieDetailsScreen"
         app:destination="@id/movie_details_graph"
-        app:popUpTo="@+id/search_graph" >
+         >
         <argument
             android:name="movieIdArg"
             app:argType="integer" />
@@ -29,7 +29,7 @@
     <action
         android:id="@+id/action_globalAction_to_castDetailsScreen"
         app:destination="@id/cast_details"
-        app:popUpTo="@+id/search_graph" >
+        >
         <argument
             android:name="castIdArg"
             app:argType="integer" />
@@ -38,8 +38,7 @@
 
     <action
         android:id="@+id/action_globalAction_to_tvShowDetailsScreen"
-        app:destination="@id/tv_show_details"
-        app:popUpTo="@+id/search_graph" >
+        app:destination="@id/tv_show_details">
         <argument
             android:name="tvShowIdArg"
             app:argType="integer" />

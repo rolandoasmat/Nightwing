@@ -33,6 +33,22 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.setupWithNavController(navController)
 
+        bottomNavigationView.setOnItemReselectedListener { item ->
+            Log.v("RAA", "$item got item")
+            when (item.title) {
+                "Home" -> {
+                    navController.popBackStack(R.id.homeScreen, false)
+                }
+                "Search" -> {
+                    navController.popBackStack(R.id.searchScreen, false)
+                }
+                "Saved" -> {
+                    navController.popBackStack(R.id.savedTab, false)
+
+                }
+            }
+        }
+
         // Setup the ActionBar with navController and 3 top level destinations
         appBarConfiguration = AppBarConfiguration(
             setOf(R.id.homeScreen, R.id.searchScreen,  R.id.savedTab)

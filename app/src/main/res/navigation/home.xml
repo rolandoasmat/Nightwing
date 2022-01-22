@@ -80,7 +80,7 @@
         <action
             android:id="@+id/action_popularMoviesGrid_to_movieDetailsScreen"
             app:destination="@id/movie_details_graph"
-            app:popUpTo="@+id/home_graph">
+            >
             <argument
                 android:name="movieIdArg"
                 app:argType="integer" />
@@ -174,8 +174,7 @@
     <!-- GLOBAL ACTIONS -->
     <action
         android:id="@+id/globalAction_homeTab_to_movieDetailsScreen"
-        app:destination="@id/movie_details_graph"
-        >
+        app:destination="@id/movie_details_graph">
         <argument
             android:name="movieIdArg"
             app:argType="integer" />
@@ -183,8 +182,7 @@
 
     <action
         android:id="@+id/action_globalAction_to_tvShowDetailsScreen"
-        app:destination="@id/tv_show_details"
-        app:popUpTo="@+id/home_graph">
+        app:destination="@id/tv_show_details">
         <argument
             android:name="tvShowIdArg"
             app:argType="integer" />
@@ -193,36 +191,36 @@
     <action
         android:id="@+id/action_globalAction_to_popularMoviesGrid"
         app:destination="@id/popularMoviesGrid"
-        app:popUpTo="@+id/home_graph"/>
+        />
     <action
         android:id="@+id/action_globalAction_to_topRatedMoviesGrid"
         app:destination="@id/topRatedMoviesGrid"
-        app:popUpTo="@+id/home_graph"/>
+        />
     <action
         android:id="@+id/action_globalAction_to_nowPlayingMoviesGrid"
         app:destination="@id/nowPlayingMoviesGrid"
-        app:popUpTo="@+id/home_graph"/>
+        />
     <action
         android:id="@+id/action_globalAction_to_upcomingMoviesGrid"
         app:destination="@id/upcomingMoviesGrid"
-        app:popUpTo="@+id/home_graph"/>
+        />
     <action
         android:id="@+id/action_globalAction_to_popularTvShowsFragment"
         app:destination="@id/popularTvShowsFragment"
-        app:popUpTo="@+id/home_graph"/>
+        />
     <action
         android:id="@+id/action_globalAction_to_topRatedTvShowsFragment"
         app:destination="@id/topRatedTvShowsFragment"
-        app:popUpTo="@+id/home_graph"/>
+        />
     <action
         android:id="@+id/action_globalAction_to_onTheAirTvShowsFragment"
         app:destination="@id/onTheAirTvShowsFragment"
-        app:popUpTo="@+id/home_graph"/>
+        />
 
     <action
         android:id="@+id/action_globalAction_to_personDetailsScreen"
         app:destination="@id/cast_details"
-        app:popUpTo="@+id/home_graph">
+        >
         <argument
             android:name="castIdArg"
             app:argType="integer" />
