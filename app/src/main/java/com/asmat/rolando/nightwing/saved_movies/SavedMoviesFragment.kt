@@ -54,7 +54,7 @@ class SavedMoviesFragment: Fragment() {
     private fun setup() {
         adapter = GridAdapter(object : GridAdapter.Callback{
             override fun cardClicked(id: Int) {
-                val action = SavedFragmentDirections.actionGlobalActionToMovieDetailsScreen(id)
+                val action = SavedFragmentDirections.globalActionSavedTabToMovieDetailsScreen(id)
                 findNavController().navigate(action)
             }
         })

@@ -18,7 +18,7 @@
 
     <!-- GLOBAL ACTIONS -->
     <action
-        android:id="@+id/action_globalAction_to_movieDetailsScreen"
+        android:id="@+id/globalAction_savedTab_to_movieDetailsScreen"
         app:destination="@id/movie_details_graph" >
         <argument
             android:name="movieIdArg"

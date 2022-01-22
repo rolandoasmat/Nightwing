@@ -7,7 +7,7 @@
         android:title="Home" />
 
     <item
-        android:id="@+id/search"
+        android:id="@+id/search_graph"
         android:icon="@drawable/ic_search"
         android:title="Search" />
 

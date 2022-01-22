@@ -3,8 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/search"
+    android:id="@+id/search_graph"
     app:startDestination="@+id/searchScreen">
+
+    <include app:graph="@navigation/movie_details" />
+    <include app:graph="@navigation/cast_details" />
+    <include app:graph="@navigation/tv_show_details" />
 
     <fragment
         android:id="@+id/searchScreen"
@@ -12,28 +16,30 @@
         android:label="Search"
         tools:layout="@layout/fragment_search" />
 
-    <include app:graph="@navigation/movie_details" />
+    <!-- Global Actions -->
     <action
-        android:id="@+id/action_globalAction_to_movieDetailsScreen"
-        app:destination="@id/movie_details_graph" >
+        android:id="@+id/globalAction_searchTab_to_movieDetailsScreen"
+        app:destination="@id/movie_details_graph"
+        app:popUpTo="@+id/search_graph" >
         <argument
             android:name="movieIdArg"
             app:argType="integer" />
     </action>
 
-    <include app:graph="@navigation/cast_details" />
     <action
         android:id="@+id/action_globalAction_to_castDetailsScreen"
-        app:destination="@id/cast_details" >
+        app:destination="@id/cast_details"
+        app:popUpTo="@+id/search_graph" >
         <argument
             android:name="castIdArg"
             app:argType="integer" />
     </action>
 
-    <include app:graph="@navigation/tv_show_details" />
+
     <action
         android:id="@+id/action_globalAction_to_tvShowDetailsScreen"
-        app:destination="@id/tv_show_details" >
+        app:destination="@id/tv_show_details"
+        app:popUpTo="@+id/search_graph" >
         <argument
             android:name="tvShowIdArg"
             app:argType="integer" />

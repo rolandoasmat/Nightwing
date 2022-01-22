@@ -51,7 +51,7 @@ class MoviesTabFragment: Fragment() {
             }
             override fun onCardClicked(id: Int, view: View) {
                 // Do shared element transition
-                val action = HomeTabFragmentDirections.actionGlobalActionToMovieDetailsScreen(id)
+                val action = HomeTabFragmentDirections.globalActionHomeTabToMovieDetailsScreen(id)
                 val name = "movie_grid_to_details"
                 view.findViewById<ImageView>(R.id.itemRowCardImage)?.let { imageView ->
                     ViewCompat.setTransitionName(imageView, name)
@@ -71,7 +71,7 @@ class MoviesTabFragment: Fragment() {
                 findNavController().navigate(action)
             }
             override fun onCardClicked(id: Int, view: View) {
-                val action = HomeTabFragmentDirections.actionGlobalActionToMovieDetailsScreen(id)
+                val action = HomeTabFragmentDirections.globalActionHomeTabToMovieDetailsScreen(id)
                 findNavController().navigate(action)
             }
             override fun onRetry() = topRatedMoviesViewModel.load()
@@ -84,7 +84,7 @@ class MoviesTabFragment: Fragment() {
                 findNavController().navigate(action)
             }
             override fun onCardClicked(id: Int, view: View) {
-                val action = HomeTabFragmentDirections.actionGlobalActionToMovieDetailsScreen(id)
+                val action = HomeTabFragmentDirections.globalActionHomeTabToMovieDetailsScreen(id)
                 findNavController().navigate(action)
             }
             override fun onRetry() = nowPlayingMoviesViewModel.load()
@@ -97,7 +97,7 @@ class MoviesTabFragment: Fragment() {
                 findNavController().navigate(action)
             }
             override fun onCardClicked(id: Int, view: View) {
-                val action = HomeTabFragmentDirections.actionGlobalActionToMovieDetailsScreen(id)
+                val action = HomeTabFragmentDirections.globalActionHomeTabToMovieDetailsScreen(id)
                 findNavController().navigate(action)
             }
             override fun onRetry() = upcomingMoviesViewModel.load()
